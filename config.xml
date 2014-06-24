@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <module>
+            <name>envoimoinscher</name>
+            <displayName><![CDATA[EnvoiMoinsCher]]></displayName>
+            <version><![CDATA[3.0.3]]></version>
+            <description><![CDATA[Module de livraison : 21 transporteurs &agrave; tarifs n&eacute;goci&eacute;s]]></description>
+            <author><![CDATA[EnvoiMoinsCher]]></author>
+            <tab><![CDATA[shipping_logistics]]></tab>
+            <is_configurable>1</is_configurable>
+            <need_instance>1</need_instance>
+	<limited_countries></limited_countries>
+        </module>

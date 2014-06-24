@@ -1,0 +1,12 @@
+Pour créer un icon et son hover : 
+
+	- Dimension les icônes en 48x48
+	- Pour l'image sans hover
+		- Prendre l'image coloré
+		- Aller dans Image > Réglages > Teintes/Saturations (Ctrl + U)
+			- Coché "Redéfinir"
+			- Mettre le second curseur "Saturation" tout à gauche
+			- Cliquer sur "Ok"
+		- Sélectionner toute l'image (Ctrl + A)
+		- Copier (Ctrl + C)
+		- Puis la collé sur le sprite
