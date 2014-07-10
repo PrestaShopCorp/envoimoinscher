@@ -131,7 +131,7 @@ class Envoimoinscher extends CarrierModule
 		$this->pricing = array(
 			'real' => $this->l('the real price'),
 			'scale' => $this->l('the package')
-		);		
+		);
 		$this->name = 'envoimoinscher';
 		$this->tab = 'shipping_logistics';
 		$this->version = '3.0.4';
@@ -498,9 +498,9 @@ class Envoimoinscher extends CarrierModule
 		$cookie = $this->getContext()->cookie;
 
 		$helper = new EnvoimoinscherHelper();
-		
+
 		$api_params = $this->model->getApiParams($this->ws_name, $this->version);
-		
+
 		$ver = explode('.', _PS_VERSION_);
 
 		// on verifie si les offres ont ete mises a jour recement
@@ -512,7 +512,7 @@ class Envoimoinscher extends CarrierModule
 			$date_update = strtotime($last_update);
 			$send_offers_update_warning = $date_update < $date_limit;
 		}
-		
+
 		$datas = array(
 			'tab_news'       => $this->model->getApiNews($this->ws_name, $this->version),
 			'tpl_news'       => _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/news.tpl',
@@ -1759,7 +1759,7 @@ class Envoimoinscher extends CarrierModule
 	 * @return false
 	 */
 	public function getOrderShippingCost($ref, $shipping_cost)
-	{		
+	{
 		$cookie = $this->getContext()->cookie;
 		$cart_context = $this->getContext()->cart;
 
@@ -1787,10 +1787,10 @@ class Envoimoinscher extends CarrierModule
 		$update = false;
 		if ($price_row !== 'false')
 		{
-	
+
 			$date_eap_timestamp = strtotime($price_row['date_eap']);
-			
-			$query = 'SELECT `date_upd` FROM `'._DB_PREFIX_.'configuration` WHERE `name` = '.PS_SHIPPING_HANDLING;
+
+			$query = 'SELECT `date_upd` FROM `'._DB_PREFIX_.'configuration` WHERE `name` = '.(float)Configuration::get('PS_SHIPPING_HANDLING');
 			$date_upd_cfg_timestamp = strtotime(DB::getInstance()->getValue($query));
 
 			$update = $date_eap_timestamp < $date_upd_cfg_timestamp || $date_upd_cfg_timestamp === false;
@@ -2534,7 +2534,7 @@ class Envoimoinscher extends CarrierModule
 		$inputs['info']['value'] = implode('|', $inputs['info']['value']);
 		$inputs['name']['value'] = implode('|', $inputs['name']['value']);
 		$inputs['id']['value'] = implode('|', $inputs['id']['value']);
-			
+
 		$smarty->assign('points', $points);
 		$smarty->assign('inputs', $inputs);
 
@@ -3087,40 +3087,40 @@ class Envoimoinscher extends CarrierModule
 		$avg_weight = (float)Configuration::get('EMC_AVERAGE_WEIGHT');
 
 		$additional_cost = 0;
-		if ($rows && count($rows) > 0)
+		if ($rows && count($rows) > 0 && current($rows)['id_address_delivery'] != '0')
 		{
 			$current = current($rows);
 
-			foreach ($rows as $row)
-			{
-				$row['real_weight'] = EnvoimoinscherHelper::normalizeToKg(Configuration::get('PS_WEIGHT_UNIT'), $row['real_weight']);
-				$weight += $row['productQuantity'] * $row['real_weight'];
-				// if we haven't product weight, take average weight option
-				if ($row['productQuantity'] * $row['real_weight'] == 0)
-					$weight += $avg_weight * $row['productQuantity'];
-				// if product has some mandatory fees, add it into ship price
-				if ($row['additional_shipping_cost'] > 0)
-					$additional_cost += (float)$row['additional_shipping_cost'];
-			}
+				foreach ($rows as $row)
+				{
+					$row['real_weight'] = EnvoimoinscherHelper::normalizeToKg(Configuration::get('PS_WEIGHT_UNIT'), $row['real_weight']);
+					$weight += $row['productQuantity'] * $row['real_weight'];
+					// if we haven't product weight, take average weight option
+					if ($row['productQuantity'] * $row['real_weight'] == 0)
+						$weight += $avg_weight * $row['productQuantity'];
+					// if product has some mandatory fees, add it into ship price
+					if ($row['additional_shipping_cost'] > 0)
+						$additional_cost += (float)$row['additional_shipping_cost'];
+				}
 
-			// delivery address
-			$street = $current['address1'];
+				// delivery address
+				$street = $current['address1'];
 
-			if ($current['address2'] != '')
-				$street .= $current['address2'];
+				if ($current['address2'] != '')
+					$street .= $current['address2'];
 
-			$type = 'particulier';
+				$type = 'particulier';
 
-			if ($current['company'] != '')
-				$type = 'entreprise';
-			$address = array(
-				'id_zone'  => $current['id_zone'],
-				'type'     => $type,
-				'country'  => $current['iso_code'],
-				'city'     => $current['city'],
-				'postcode' => $current['postcode'],
-				'street'   => $street);
-			$id_currency = $current['id_currency'];
+				if ($current['company'] != '')
+					$type = 'entreprise';
+				$address = array(
+					'id_zone'  => $current['id_zone'],
+					'type'     => $type,
+					'country'  => $current['iso_code'],
+					'city'     => $current['city'],
+					'postcode' => $current['postcode'],
+					'street'   => $street);
+				$id_currency = $current['id_currency'];
 		}
 		else
 		{
