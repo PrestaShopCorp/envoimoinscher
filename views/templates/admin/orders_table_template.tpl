@@ -27,15 +27,15 @@
 		<thead>
 			<tr class="small">
 				<th><input type="checkbox" name="selectAll{$id|escape:'htmlall'}" id="selectOrDeselectAll{$id|escape:'htmlall'}" class="deselectAll" checked="checked" value="{$id|escape:'htmlall'}" /></th>
-				<th>Destinataire</th>
-				<th><p style="width:160px;">Dates prévues</p></th> 
-				<th><p style="width:100px;">Statut</p></th>
-				<th><p style="width:70px;">Coût transport <br />réel (TTC, €)</p></th>
-				<th><p style="width:70px;">Coût transport <br />client (TTC)</p></th>
-				<th>Montant total</th>
-				<th>Référence EnvoiMoinsCher</th>
-				<th>Transporteur <br />(Offre)</th>
-				<th>Fiche commande</th>
+				<th>{l s='recipient' mod='envoimoinscher'}</th>
+				<th><p style="width:160px;">{l s='estimated date' mod='envoimoinscher'}</p></th> 
+				<th><p style="width:100px;">{l s='status' mod='envoimoinscher'}</p></th>
+				<th><p style="width:70px;">{l s='transportation cost real' mod='envoimoinscher'}</p></th>
+				<th><p style="width:70px;">{l s='transportation cost client' mod='envoimoinscher'}</p></th>
+				<th>{l s='total amount' mod='envoimoinscher'}</th>
+				<th>{l s='EMC reference' mod='envoimoinscher'}</th>
+				<th>{l s='carrier (offer)' mod='envoimoinscher'}</th>
+				<th>{l s='record order' mod='envoimoinscher'}</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -63,18 +63,35 @@
 				<td>{$order.total_paid|escape:'htmlall'}&nbsp;{$order.sign|escape:'htmlall'}</td>
 				<td>{$order.ref_emc_eor|escape:'htmlall'}</td>
 				<td>{if isset($order.carrierName)}{$order.carrierName}{/if}</td>
-				<td><a href="index.php?controller=AdminOrders&id_order={$order.idOrder|escape:'htmlall'}&vieworder&token={$tokenOrder|escape:'htmlall'}" class="action_module">Voir</a></td>
+				<td><a href="index.php?controller=AdminOrders&id_order={$order.idOrder|escape:'htmlall'}&vieworder&token={$tokenOrder|escape:'htmlall'}" class="action_module">{l s='see' mod='envoimoinscher'}</a></td>
 				<td>
 					{if $order.date_order_eor != ''} 
 					{if $order.generated_ed == "0"}
-					<span id="labelgen{$order.idOrder}">bordereau{if $order.parcels_eor > 1}x{/if} en cours de génération</span>
+					<span id="labelgen{$order.idOrder|escape:'html'}">
+					{if $order.parcels_eor > 1}
+						{l s='slips currenttly generating' mod='envoimoinscher'}
+					{else}
+						{l s='slip currenttly generating' mod='envoimoinscher'}
+					{/if}
+					</span>
 					{/if}  
 					<span id="label{$order.idOrder}" {if $order.generated_ed == "0"}style="display:none;"{/if}>
-						<a href="{if $order.parcels_eor > 1}index.php?controller=AdminEnvoiMoinsCher&option=download&token={$token}&order={$order.idOrder}{else}{$order.link_ed}{/if}" class="action_module" target="_blank">télécharger bordereau{if $order.parcels_eor > 1}x{/if}</a> 
-						<br /><br /><a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$order.idOrder|escape:'htmlall'}&option=tracking&token={$token|escape:'htmlall'}" class="action_module openTrackPopup" target="_blank">suivre l'envoi</a> 
+						<a href="{if $order.parcels_eor > 1}index.php?controller=AdminEnvoiMoinsCher&option=download&token={$token}&order={$order.idOrder}{else}{$order.link_ed}{/if}" class="action_module" target="_blank">
+						{if $order.parcels_eor > 1}
+							{l s='download slips' mod='envoimoinscher'}
+						{else}
+							{l s='download slip' mod='envoimoinscher'}
+						{/if}
+						</a> 
+						<br /><br />
+						<a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$order.idOrder|escape:'htmlall'}&option=tracking&token={$token|escape:'htmlall'}" class="action_module openTrackPopup" target="_blank">
+						{l s='track shipment' mod='envoimoinscher'}
+						</a> 
 					</span>
 					{else}
-					<a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$order.idOrder|escape:'htmlall'}&option=send&token={$token|escape:'htmlall'}" class="action_module">expédier</a>
+					<a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$order.idOrder|escape:'htmlall'}&option=send&token={$token|escape:'htmlall'}" class="action_module">
+						{l s='ship' mod='envoimoinscher'}
+					</a>
 					{/if}
 				</td>
 			</tr>

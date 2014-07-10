@@ -23,6 +23,10 @@
  * International Registred Trademark & Property of PrestaShop SA
  *}
 
+{if $local_fancybox}
+	<link href="{$emcBaseDir|unescape:'html'}/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
+	<script type="text/javascript" src="{$emcBaseDir|unescape:'html'}/js/jquery.boxfancy.js"></script>
+{/if}
 <script type="text/javascript">
 var baseWeight = "{$weight|escape:'htmlall'}";
 var orderId = "{$orderId|escape:'htmlall'}";

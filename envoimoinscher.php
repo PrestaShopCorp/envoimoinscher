@@ -27,9 +27,9 @@
 if (!defined('_PS_VERSION_'))
 	exit;
 
-require_once(_PS_MODULE_DIR_.'/envoimoinscher/EnvoimoinscherModel.php');
-require_once(_PS_MODULE_DIR_.'/envoimoinscher/EnvoimoinscherHelper.php');
-require_once(_PS_MODULE_DIR_.'/envoimoinscher/EnvoimoinscherOrder.php');
+require_once(_PS_MODULE_DIR_.'/envoimoinscher/includes/EnvoimoinscherModel.php');
+require_once(_PS_MODULE_DIR_.'/envoimoinscher/includes/EnvoimoinscherHelper.php');
+require_once(_PS_MODULE_DIR_.'/envoimoinscher/includes/EnvoimoinscherOrder.php');
 
 class Envoimoinscher extends CarrierModule
 {
@@ -47,45 +47,35 @@ class Envoimoinscher extends CarrierModule
 	 * @var array
 	 * @access protected
 	 */
-	protected $environments =
-		array(
-			'TEST' => array(
-				'link' => 'https://test.envoimoinscher.com',
-				'alias' => 'de test'
-			),
-			'PROD' => array(
-				'link' => 'https://www.envoimoinscher.com',
-				'alias' => 'de production'
-			)
-		);
+	protected $environments = array();
 
 	/**
 	 * Shipping types.
 	 * @var array
 	 * @access protected
 	 */
-	protected $ship_types = array('colis', 'encombrant', 'palette', 'pli');
+	protected $ship_types = array();
 
 	/**
 	 * List with civilities used on quotation and shippment order.
 	 * @var array
 	 * @access protected
 	 */
-	protected $civilities = array('M' => 'M', 'Mme' => 'Mme', 'Mlle' => 'Mlle');
+	protected $civilities = array();
 
 	/**
 	 * List with order modes (automatic or manually)
 	 * @var array
 	 * @access protected
 	 */
-	protected $modes = array('automatique', 'manuel');
+	protected $modes = array();
 
 	/**
 	 * Pricing types.
 	 * @var array
 	 * @access protected
 	 */
-	protected $pricing = array('real' => 'le prix réel', 'scale' => 'le forfait');
+	protected $pricing = array();
 
 	/**
 	 * Database instance.
@@ -109,12 +99,41 @@ class Envoimoinscher extends CarrierModule
 	private $link = null;
 
 	private $shipping_cost_cache = array();
-	private $api_params_cache = array();
 
 	public function __construct()
 	{
+		// local parameters initialisation
+		$this->environments = array(
+			'TEST' => array(
+				'link' => 'https://test.envoimoinscher.com',
+				'alias' => $this->l('of test')
+			),
+			'PROD' => array(
+				'link' => 'https://www.envoimoinscher.com',
+				'alias' => $this->l('of production')
+			)
+		);
+		$this->ship_types = array(
+			'colis',
+			'encombrant',
+			'palette',
+			'pli'
+		);
+		$this->civilities = array(
+			'M' => $this->l('M'),
+			'Mme' => $this->l('Mme'),
+			'Mlle' => $this->l('Miss')
+		);
+		$this->modes = array(
+			$this->l('automatic'),
+			$this->l('manual')
+		);
+		$this->pricing = array(
+			'real' => $this->l('the real price'),
+			'scale' => $this->l('the package')
+		);		
 		$this->name = 'envoimoinscher';
-		$this->tab = 'shipping_logistics'; // tab_module
+		$this->tab = 'shipping_logistics';
 		$this->version = '3.0.4';
 		$this->author = 'EnvoiMoinsCher';
 		$this->local_version = '3.0.4';
@@ -122,12 +141,27 @@ class Envoimoinscher extends CarrierModule
 		$this->page = basename(__FILE__, '.php');
 		$this->displayName = 'EnvoiMoinsCher';
 		$this->ws_name = 'Prestashop';
-		$this->description = 'Module de livraison : 21 transporteurs à tarifs négociés';
-		if (!defined('__DIR__'))
-			define('__DIR__', _PS_MODULE_DIR_.'/envoimoinscher');
-		// commente require(dirname(__FILE__).'/backward_compatibility/backward.php');
+		//'Module de livraison : 21 transporteurs à tarifs négociés';
+		$this->description = $this->l('Shipping module : 21 carriers with negotiated prices');
 		$this->model = new EnvoimoinscherModel(Db::getInstance(), $this->name);
 		$this->link = new Link();
+
+		/* Backward compatibility */
+		if (_PS_VERSION_ < '1.5')
+			require(_PS_MODULE_DIR_.$this->name.'/backward_compatibility/backward.php');
+	}
+
+	private function initContext()
+	{
+		if (class_exists('Context'))
+			$this->context = Context::getContext();
+		/*else
+		{ // this should be useless now
+			global $smarty, $cookie;
+			$this->context = new StdClass();
+			$this->context->smarty = $smarty;
+			$this->context->cookie = $cookie;
+		}*/
 	}
 
 	/**
@@ -139,460 +173,23 @@ class Envoimoinscher extends CarrierModule
 	{
 		if (!extension_loaded('curl'))
 		{
-			$error  = '[ENVOIMOINSCHER]['.time().'] installation :  Impossible d\'installer le module car';
-			$error .= 'l\'extension cURL n\'est pas activée, voir avec votre webmaster pour l\'activer.';
+			$error  = '[ENVOIMOINSCHER]['.time().'] '.$this->l('installation : cannot install the module, curl is not available');
 			Logger::addLog($error);
 			return false;
 		}
-		$query = array();
-		$query[] = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.'emc_categories`';
-		$query[] = '
-				 CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'emc_categories` (
-				 `id_eca` int(11) NOT NULL,
-				 `emc_categories_id_eca` int(11) NOT NULL,
-				 `name_eca` varchar(100) NOT NULL,
-				 PRIMARY KEY (`id_eca`)
-				 ) DEFAULT CHARSET=utf8 ';
 
-		$query[] = '
-			 INSERT INTO `'._DB_PREFIX_.'emc_categories` (`id_eca`, `emc_categories_id_eca`, `name_eca`) VALUES
-			 (10000, 0, "Livres et documents"),
-			 (10100, 10000, "Documents sans valeur commerciale"),
-			 (10120, 10000, "Journaux"),
-			 (10130, 10000, "Magazines, revues"),
-			 (10140, 10000, "Manuels techniques"),
-			 (10150, 10000, "Livres"),
-			 (10160, 10000, "Passeports"),
-			 (10170, 10000, "Billets d\'avion"),
-			 (10180, 10000, "Radiographies"),
-			 (10190, 10000, "Photographies"),
-			 (10200, 10000, "Courrier interne d\'entreprise"),
-			 (10210, 10000, "Propositions commerciales"),
-			 (10220, 10000, "Documents publicitaires"),
-			 (10230, 10000, "Catalogues, rapports annuels"),
-			 (10240, 10000, "Listings informatiques"),
-			 (10250, 10000, "Plans, dessins"),
-			 (10260, 10000, "Documents d\'impression"),
-			 (10280, 10000, "Patrons"),
-			 (10290, 10000, "Etiquettes, autocollants"),
-			 (10300, 10000, "Documents d\'appels d\'offres"),
-			 (20000, 0, "Alimentation et matières périssables"),
-			 (20100, 20000, "Denrées alimentaires non périssables"),
-			 (20102, 20000, "Produits frais et périssables"),
-			 (20103, 20000, "Produits réfrigérés"),
-			 (20105, 20000, "Produits surgelés"),
-			 (20110, 20000, "Boissons non alcoolisées"),
-			 (20120, 20000, "Boissons alcoolisées"),
-			 (20130, 20000, "Plantes, fleurs, semences"),
-			 (30000, 0, "Produits"),
-			 (30100, 30000, "Cosmétiques, bien-être"),
-			 (30200, 30000, "Pharmacie, médicaments"),
-			 (30300, 30000, "Chimie, droguerie, produits d\'entretien"),
-			 (50190, 30000, "Tabac"),
-			 (50200, 30000, "Parfums"),
-			 (40000, 0, "Habillement et accessoires"),
-			 (40100, 40000, "Chaussures"),
-			 (40110, 40000, "Tissus, vêtements neufs"),
-			 (40120, 40000, "Vêtements usagés"),
-			 (40125, 40000, "Accessoires vestimentaires, de mode"),
-			 (40130, 40000, "Cuirs, peaux, maroquinerie"),
-			 (40150, 40000, "Bijoux fantaisie"),
-			 (50160, 40000, "Bijoux, objets précieux"),
-			 (50000, 0, "Appareils et matériels"),
-			 (50100, 50000, "Matériel médical"),
-			 (50110, 50000, "Informatique, High tech, téléphonie fixe"),
-			 (50113, 50000, "Téléphonie mobile et accessoires"),
-			 (50114, 50000, "Téléviseurs, écrans d\'ordinateur"),
-			 (50120, 50000, "Autres appareils et matériels"),
-			 (50130, 50000, "Supports numériques, CD, DVD"),
-			 (50140, 50000, "Pièces de rechange et accessoires (auto)"),
-			 (50150, 50000, "Pièces de rechange et accessoires (autres)"),
-			 (50170, 50000, "Montres, horlogerie (hors bijoux)"),
-			 (50330, 50000, "Articles de camping, de pêche"),
-			 (50350, 50000, "Articles de sport (hors vêtement)"),
-			 (50360, 50000, "Instruments de musique et accessoires"),
-			 (50380, 50000, "Matériel de chauffage, chaudronnerie"),
-			 (50390, 50000, "Matériel de labo, optique, de mesure"),
-			 (50395, 50000, "Matériel électrique, transfo., câbles"),
-			 (50400, 50000, "Fournitures de bureau, papeterie, recharges"),
-			 (50420, 50000, "Moteurs"),
-			 (50430, 50000, "Motos, scooters"),
-			 (50440, 50000, "Vélos, cycles sans moteur"),
-			 (50450, 50000, "Outillage, outils, bricolage"),
-			 (50490, 50000, "Plomberie, tubes plastiques"),
-			 (50500, 50000, "Quincaillerie, robinetterie, serrurerie"),
-			 (60000, 0, "Mobilier et décoration"),
-			 (60100, 60000, "Mobilier d\'habitation"),
-			 (60102, 60000, "Mobilier de bureau"),
-			 (60105, 60000, "Mobilier démonté sous emballage"),
-			 (60108, 60000, "Mobilier ancien (antiquité)"),
-			 (60110, 60000, "Electroménager "),
-			 (60112, 60000, "Petit électroménager, petits appareils ménagers"),
-			 (60120, 60000, "Objets ou tableaux cotés, de collection, miroirs, vitres"),
-			 (60122, 60000, "Objets et tableaux courants "),
-			 (60124, 60000, "Lampes, luminaire"),
-			 (60126, 60000, "Tapis"),
-			 (60128, 60000, "Toiles, rideaux, draps"),
-			 (60129, 60000, "Sanitaires, verres, cristallerie, bibelots"),
-			 (60130, 60000, "Autres objets fragiles et sculptures"),
-			 (70000, 0, "Effets personnels, cadeaux"),
-			 (50180, 70000, "Cadeaux, cadeaux entreprise"),
-			 (70100, 70000, "Bagages, valises, malles"),
-			 (70200, 70000, "Petit déménagement, cartons, effets personnels") ';
-
-		$query[] = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.'emc_dimensions`';
-		$query[] = '
-				 CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'emc_dimensions` (
-				 `id_ed` int(3) NOT NULL AUTO_INCREMENT,
-				 `length_ed` int(3) NOT NULL,
-				 `width_ed` int(3) NOT NULL,
-				 `height_ed` int(3) NOT NULL,
-				 `weight_from_ed` float NOT NULL,
-				 `weight_ed` float NOT NULL,
-				 PRIMARY KEY (`id_ed`)
-			   )  DEFAULT CHARSET=utf8 ';
-
-		$query[] = '
-			 INSERT INTO '._DB_PREFIX_.'emc_dimensions (`id_ed`, `length_ed`, `width_ed`, `height_ed`, `weight_from_ed`, `weight_ed`) VALUES
-			 (1, 18, 18, 18, 0, 1),
-			 (2, 22, 22, 22, 1, 2),
-			 (3, 26, 26, 26, 2, 3),
-			 (4, 28, 28, 28, 3, 4),
-			 (5, 31, 31, 31, 4, 5),
-			 (6, 33, 33, 33, 5, 6),
-			 (7, 34, 34, 34, 6, 7),
-			 (8, 36, 36, 36, 7, 8),
-			 (9, 37, 37, 37, 8, 9),
-			 (10, 39, 39, 39, 9, 10),
-			 (11, 44, 44, 44, 10, 15),
-			 (12, 56, 56, 56, 15, 20),
-			 (13, 57, 57, 57, 20, 50) ';
-
-		$query[] = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.'emc_documents`';
-		$query[] = '
-				 CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'emc_documents` (
-				 `id_ed` int(11) NOT NULL AUTO_INCREMENT,
-				 `'._DB_PREFIX_.'orders_id_order` int(10) unsigned NOT NULL,
-				 `'._DB_PREFIX_.'cart_id_cart` int(10) unsigned NOT NULL,
-				 `link_ed` varchar(255) NOT NULL,
-				 `generated_ed` int(1) NOT NULL DEFAULT 0,
-				 `type_ed` enum("label","proforma") NOT NULL,
-				 PRIMARY KEY (`id_ed`),
-				 KEY `'._DB_PREFIX_.'orders_id_order` (`'._DB_PREFIX_.'orders_id_order`)
-			   ) DEFAULT CHARSET=utf8 ';
-
-		$query[] = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.'emc_operators`';
-		$query[] = '
-				 CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'emc_operators` (
-				 `id_eo` int(2) NOT NULL AUTO_INCREMENT,
-				 `name_eo` varchar(100) NOT NULL,
-				 `code_eo` char(4) NOT NULL,
-				 PRIMARY KEY (`id_eo`)
-				 )  DEFAULT CHARSET=utf8 ';
-
-		$query[] = '
-			 INSERT INTO `'._DB_PREFIX_.'emc_operators` (`id_eo`, `name_eo`, `code_eo`) VALUES
-			 (1, "DHL Freight", "DHLF"),
-			 (2, "Distribike", "DTBK"),
-			 (3, "FedEx", "FEDX"),
-			 (4, "Guisnel", "GUIN"),
-			 (5, "Premier Air Courier", "PACO"),
-			 (6, "Sernam", "SERN"),
-			 (7, "Sodexi", "SODX"),
-			 (8, "Relais Colis", "SOGP"),
-			 (9, "TNT", "TNTE"),
-			 (10, "UPS", "UPSE"),
-			 (11, "Chronopost", "CHRP"),
-			 (12, "Aramex", "ARAM"),
-			 (13, "Saga Express", "SAGA"),
-			 (14, "Colis Privé", "COPR"),
-			 (15, "Evertrans", "EVER"),
-			 (16, "Kordex", "KODX"),
-			 (17, "Top Chrono", "TOPC"),
-			 (18, "SLS-GCI", "SLSP"),
-			 (19, "Agediss", "AGED"),
-			 (20, "Mondial Relay", "MONR"),
-			 (21, "DHL Express", "DHLE"),
-			 (22, "Low Cost Express", "LOCO"),
-			 (23, "Colis Privé", "COPR"),
-			 (24, "La Poste", "POFR");';
-
-		$query[] = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.'emc_orders`';
-		$query[] = '
-		  CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'emc_orders` (
-		  `'._DB_PREFIX_.'orders_id_order` int(10) unsigned NOT NULL,
-		  `emc_operators_code_eo` char(4) NOT NULL,
-		  `price_ht_eor` float NOT NULL,
-		  `price_ttc_eor` float NOT NULL,
-		  `ref_emc_eor` char(20) NOT NULL,
-		  `service_eor` varchar(20) NOT NULL,
-		  `date_order_eor` datetime NOT NULL,
-		  `ref_ope_eor` varchar(20) NOT NULL,
-		  `info_eor` varchar(20) NOT NULL,
-		  `date_collect_eor` datetime NOT NULL,
-		  `date_del_eor` datetime NOT NULL,
-		  `date_del_real_eor` datetime NOT NULL,
-		  `tracking_eor` CHAR(255) NOT NULL,
-		  `parcels_eor` INT(4) NOT NULL,
-		  `base_url_eor` VARCHAR(255) NOT NULL,
-		  PRIMARY KEY (`'._DB_PREFIX_.'orders_id_order`),
-		  KEY `emc_operators_code_eo`(`emc_operators_code_eo`)
-		  ) DEFAULT CHARSET=utf8 ';
-
-		$query[] = '
-			 CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'emc_orders_errors` (
-			 `'._DB_PREFIX_.'orders_id_order` int(10) unsigned NOT NULL,
-			 `errors_eoe` TEXT NOT NULL,
-			 PRIMARY KEY (`'._DB_PREFIX_.'orders_id_order`)
-			 ) DEFAULT CHARSET=utf8 ';
-
-		$query[] = '
-			 CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'emc_orders_parcels` (
-			 `'._DB_PREFIX_.'orders_id_order` int(10) unsigned NOT NULL,
-			 `number_eop` INT(10) unsigned NOT NULL,
-			 `weight_eop` DECIMAL(5,2) NOT NULL,
-			 `length_eop` INT(3) NOT NULL,
-			 `width_eop` INT(3) NOT NULL,
-			 `height_eop` INT(3) NOT NULL,
-			 PRIMARY KEY (`'._DB_PREFIX_.'orders_id_order`, `number_eop`)
-			 ) DEFAULT CHARSET=utf8 ';
-
-		$query[] = '
-			 CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'emc_orders_plannings` (
-			 `id_eopl` INT (10) unsigned NOT NULL AUTO_INCREMENT,
-			 `orders_eopl` TEXT NOT NULL,
-			 `stats_eopl` VARCHAR(500) NOT NULL,
-			 `errors_eopl` TEXT NOT NULL,
-			 `date_eopl` DATETIME NOT NULL,
-			 `type_eopl` INT(1) NOT NULL,
-			 PRIMARY KEY (`id_eopl`)
-			 ) DEFAULT CHARSET=utf8 ';
-
-		$query[] = '
-			 CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'emc_orders_post` (
-			 `'._DB_PREFIX_.'orders_id_order` int(10) unsigned NOT NULL,
-			 `data_eopo` TEXT NOT NULL,
-			 `date_eopo` DATETIME NOT NULL,
-			 PRIMARY KEY (`'._DB_PREFIX_.'orders_id_order`)
-			 ) DEFAULT CHARSET=utf8 ';
-
-		$query[] = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.'emc_orders_tmp`';
-		$query[] = '
-			 CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'emc_orders_tmp` (
-			 `'._DB_PREFIX_.'orders_id_order` int(10) unsigned NOT NULL,
-			 `data_eot` text NOT NULL,
-			 `date_eot` datetime NOT NULL,
-			 `errors_eot` text NOT NULL,
-			 PRIMARY KEY (`'._DB_PREFIX_.'orders_id_order`)
-			 ) DEFAULT CHARSET=utf8 ';
-
-		$query[] = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.'emc_points`';
-		$query[] = '
-			 CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'emc_points` (
-			 `'._DB_PREFIX_.'orders_id_order` int(10) unsigned NOT NULL,
-			 `point_ep` varchar(10) NOT NULL,
-			 `emc_operators_code_eo` char(4) NOT NULL,
-			 PRIMARY KEY (`'._DB_PREFIX_.'orders_id_order`)
-			 ) DEFAULT CHARSET=utf8 ';
-
-		$query[] = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.'emc_services`';
-		$query[] = '
-			 CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'emc_services` (
-			 `id_es` int(3) NOT NULL AUTO_INCREMENT,
-			 `id_carrier` int(11) NOT NULL DEFAULT 0,
-			 `code_es` varchar(40) NOT NULL,
-			 `emc_operators_code_eo` char(4) NOT NULL,
-			 `label_es` varchar(100) NOT NULL,
-			 `desc_es` varchar(150) NOT NULL,
-			 `desc_store_es` varchar(150) NOT NULL,
-			 `label_store_es` varchar(100) NOT NULL,
-			 `price_type_es` int(1) NOT NULL,
-			 `is_parcel_point_es` int(1) NOT NULL,
-			 `is_parcel_dropoff_point_es` int(1) NOT NULL,
-			 `family_es` int(1) NOT NULL,
-			 `type_es` int(1) NOT NULL,
-			 PRIMARY KEY (`id_es`),
-			 KEY (`id_carrier`),
-			 KEY `emc_operators_code_eo` (`emc_operators_code_eo`),
-			 KEY `code_es` (`code_es`)
-			 ) DEFAULT CHARSET=utf8 ';
-
-		$query[] = '
-			 INSERT INTO `'._DB_PREFIX_.'emc_services` (`id_es`, `code_es`, `emc_operators_code_eo`, `label_es`, `desc_es`, `desc_store_es`,
-			  `label_store_es`, `price_type_es`, `is_parcel_point_es`, `is_parcel_dropoff_point_es`, `family_es`, `type_es`) VALUES
-				(1, "RelaisColis", "SOGP", "Relais Colis eco", "Dépôt en Relais Colis - Livraison en Relais Colis en 10 jours, en France",
-			   "Livraison en Relais Colis en 10 jours", "Relais Colis®", 0, 1, 1, 1, 1),
-				(2, "Standard", "UPSE", "UPS Standard", "Livraison à domicile en 24h à 72h (avant 19h), en France et dans les pays européens",
-			   "Livraison à domicile en 24h à 72h (avant 19h)", "UPS Standard", 0, 0, 0, 2, 2),
-				(3, "ExpressSaver", "UPSE", "UPS Express Saver", "Livraison à domicile en 72h  (avant 19h), à l\'international  (hors délai de douanes)",
-			   "Livraison à domicile en 72h (avant 19h, hors délai de douanes)", "UPS Express Saver", 0, 0, 0, 2, 2),
-				(4, "InternationalEconomy", "FEDX", "FedEx International Economy",
-				 "Livraison à domicile en 5 jours à l\'international (hors délai de douanes)", "Livraison à domicile en 5 jours (hors délai de douanes)",
-				 "FedEx International Economy", 0, 0, 0, 2, 2),
-				(5, "InternationalPriority", "FEDX", "FedEx International Priority", "Livraison express à domicile, en 24h à 48h (hors délai de douanes)",
-				 "Livraison express à domicile en 24h à 48h (hors délai de douanes)", "FedEx International Priority", 0, 0, 0, 2, 2),
-				(6, "ExpressNational", "TNTE", "13:00 Express", "Livraison express à domicile le lendemain (avant 13h), en France",
-				 "Livraison express à domicile le lendemain (avant 13h)", "13:00 Express", 1, 0, 0, 2, 2),
-				(7, "Chrono13", "CHRP", "Chrono13",
-		 "Dépôt en bureau de poste - Livraison express à domicile, le lendemain (avant 13h), en France.Dépôt en bureau de poste si la livraison rate.",
-				 "Livraison express à domicile, le lendemain (avant 13h). Si la livraison rate, dépôt en bureau de poste", "Chrono13", 0, 0, 0, 1, 1),
-				(8, "ChronoInternationalClassic", "CHRP", "Chrono Classic",
-				 "Dépôt en bureau de poste - Livraison à domicile en 2 à 4 jours, à l\'international (hors délai de douanes)",
-				 "Livraison à domicile en 2 à 4 jours (hors délai de douanes)", "Chrono Classic", 0, 0, 0, 1, 1),
-				(9, "ExpressStandard", "SODX", "Express Standard", "Livraison à domicile en 2 à 3 jours, en France", "Livraison à domicile en 2 à 3 jours",
-				 "Express Standard", 0, 0, 0, 2, 2),
-				(10, "ExpressStandardInterColisMarch", "SODX", "Inter Express Standard",
-				 "Livraison à domicile en 7 à 10 jours, à l\'international (hors délai de douanes)",
-				 "Livraison à domicile en 7 à 10 jours (hors délai de douanes)", "Inter Express Standard", 0, 0, 0, 2, 2),
-				(11, "ExpressStandardInterPlisDSVC", "SODX", "Inter Express Standard doc",
-				 "Livraison à domicile en 7 à 10 jours, à l\'international (hors délai de douanes)",
-				 "Livraison à domicile en 7 à 10 jours (hors délai de douanes)", "Inter Express Standard doc", 0, 0, 0, 2, 2),
-				(12, "CpourToi", "MONR", "C.pourToi®", "Dépôt en point relais - Livraison en point relais en 3 à 5 jours, en France",
-				 "Livraison en point relais en 3 à 5 jours", "C.pourToi®", 0, 1, 1, 1, 1),
-				(13, "CpourToiEurope", "MONR", "C.pourToi® - Europe",
-				 "Dépôt en point relais - Livraison en point relais en 4 à 6 jours, dans certains pays d\'Europe",
-				 "Livraison en point relais en 4 à 6 jours", "C.pourToi®", 0, 1, 1, 1, 1),
-				(14, "ExpressWorldwide", "DHLE", "DHL Express Worldwide",
-				 "Livraison express à domicile en 24h à 72h, à l\'international (hors délai de douanes)",
-				 "Livraison express à domicile en 24h à 72h (hors délai de douanes)", "DHL Express Worldwide", 0, 0, 0, 2, 2),
-				(15, "EconomyExpressInternational", "TNTE", "Economy Express",
-				 "Livraison à domicile en 2 à 5 jours, à l\'international (hors délai de douanes)",
-				 "Livraison à domicile en 2 à 5 jours (hors délai de douanes)", "Economy Express", 0, 0, 0, 2, 2),
-				(16, "DepotexpressEurope", "LOCO", "Dépôt Express Europe",
-				 "Dépôt en bureau de poste - Livraison à domicile en 2 à 4 jours, en Europe (hors délai de douanes)",
-				 "Livraison à domicile en 2 à 4 jours (hors délai de douanes)", "Dépôt Express Europe", 0, 0, 0, 2, 2),
-				(17, "Depotexpress", "LOCO", "Dépôt Express",
-	 "Dépôt en bureau de poste - Livraison express à domicile, le lendemain (avant 13h), en France. Dépôt en bureau de poste si la livraison rate.",
-				 "Livraison express à domicile, le lendemain (avant 13h). Si la livraison rate, dépôt en bureau de poste", "Dépôt Express", 0, 0, 0, 2, 2),
-				(18, "ChronoRelais", "CHRP", "Chrono Relais", "Livraison en points relais Chronopost", "Livraison en points relais Chronopost",
-				 "Chrono Relais", 0, 1, 0, 1, 1),
-				(19, "ExpressInternationalColis", "TNTE", "Express International",
-				 "Livraison à domicile en 1 à 7 jours, à l\'international (hors délai de douanes)",
-				 "Livraison à domicile en 1 à 7 jours (hors délai de douanes)", "Express International", 0, 0, 0, 2, 2),
-				(20, "EASY", "COPR", "Colis Privé EASY",
-				 "Livraison à domicile en 2 à 3 jours. En cas d\'absence, 2nde présentation ou dépôt en relais. <b>Offre sous conditions de volume.</b>",
-				 "Livraison à domicile en 2 à 3 jours. En cas d\'absence, 2nde présentation ou dépôt en relais Kiala", "Colis Privé EASY", 0, 0, 0, 1, 1),
-				(21, "Chrono18", "CHRP", "Chrono18",
-	 "Dépôt en bureau de poste - Livraison express à domicile, le lendemain (avant 18h), en France. Dépôt en bureau de poste si la livraison rate.",
-				 "Livraison express à domicile, le lendemain (avant 18h). Si la livraison rate, dépôt en bureau de poste", "Chrono18", 0, 0, 0, 1, 1),
-				(22, "ColissimoAccess", "POFR", "La Poste Colissimo Access France",
-				 "Délai indicatif de 48h en jours ouvrables pour les envois en France métropolitaine. Remise sans signature.",
-				 "Livraison à domicile en 48h", "La Poste Colissimo Access France. Remise sans signature.", 0, 0, 0, 1, 1),
-				(23, "ColissimoExpert", "POFR", "La Poste Colissimo Expert France",
-				 "Délai indicatif de 48h en jours ouvrables pour les envois en France métropolitaine. Remise contre signature.",
-				 "Livraison à domicile en 48h", "La Poste Colissimo Expert France. Remise contre signature.", 0, 0, 0, 1, 1);';
-
-		$query[] = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.'emc_operators_categories`';
-		$query[] = '
-			 CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'emc_operators_categories` (
-			 `id_eoca` int(11) NOT NULL AUTO_INCREMENT,
-			 `id_eo` int(11) NOT NULL,
-			 `id_eca` int(11) NOT NULL,
-			 PRIMARY KEY (`id_eoca`),
-			 UNIQUE KEY `id_eo` (`id_eo`, `id_eca`)
-			 ) DEFAULT CHARSET=utf8 ';
-
-		$query[] = 'INSERT INTO `'._DB_PREFIX_.'emc_operators_categories` (id_eo, id_eca) VALUES
-		 (11, 10300), (11, 20102), (11, 20103), (11, 20105), (11, 20130), (11, 30200), (11, 30300),
-		 (11, 50114), (11, 50160), (11, 50190), (11, 50200), (11, 50420), (11, 60100), (11, 60102),
-		 (11, 60108), (11, 60110), (11, 60120), (11, 70100), (8, 10160), (8, 10170), (8, 10300),
-		 (8, 20100), (8, 20102), (8, 20103), (8, 20105), (8, 20110), (8, 20120), (8, 20130), (8, 30200),
-		 (8, 30300), (8, 50114), (8, 50160), (8, 50190), (8, 50200), (8, 50430), (8, 60100), (8, 60102),
-		 (8, 60108), (8, 60110), (8, 60120), (8, 60129), (8, 70100), (20, 10300), (20, 20102), (20, 20103),
-		 (20, 20105), (20, 20130), (20, 30200), (20, 30300), (20, 50114), (20, 50160), (20, 50190), (20, 50200),
-		 (20, 60100), (20, 60102), (20, 60108), (20, 60110), (20, 60120), (20, 70100), (20, 70200), (23, 10160),
-		 (23, 10170), (23, 10300), (23, 20102), (23, 20103), (23, 20105), (23, 20130), (23, 30200), (23, 30300),
-		 (23, 50114), (23, 50160), (23, 50190), (23, 50200), (23, 50430), (23, 60100), (23, 60102), (23, 60108),
-		 (23, 60110), (23, 60120), (23, 70100), (21, 10300), (21, 20100), (21, 20102), (21, 20103), (21, 20105),
-		 (21, 20110), (21, 20120), (21, 20130), (21, 30200), (21, 30300), (21, 50114), (21, 50160), (21, 50190),
-		 (21, 50200), (21, 50420), (21, 50430), (21, 60100), (21, 60102), (21, 60108), (21, 60110), (21, 60120),
-		 (21, 60124), (21, 60129), (21, 60130), (21, 70100), (21, 70200), (3, 10300), (3, 20102), (3, 20103),
-		 (3, 20105), (3, 20130), (3, 30200), (3, 30300), (3, 50114), (3, 50160), (3, 50190), (3, 50200),
-		 (3, 60100), (3, 60102), (3, 60108), (3, 60110), (3, 60120), (3, 70100), (3, 70200), (22, 10300),
-		 (22, 20102), (22, 20103), (22, 20105), (22, 20130), (22, 30200), (22, 30300), (22, 50114),
-		 (22, 50160), (22, 50190), (22, 50200), (22, 50420), (22, 60100), (22, 60102), (22, 60108),
-		 (22, 60110), (22, 60120), (22, 70100), (7, 10160), (7, 10170), (7, 10300), (7, 20102), (7, 20103),
-		 (7, 20105), (7, 20120), (7, 20130), (7, 30200), (7, 30300), (7, 40120), (7, 50114), (7, 50160),
-		 (7, 50190), (7, 50200), (7, 50430), (7, 60100), (7, 60102), (7, 60108), (7, 60110), (7, 60120),
-		 (7, 60129), (7, 60130), (9, 10160), (9, 20102), (9, 20103), (9, 20105), (9, 20120), (9, 20130),
-		 (9, 30200), (9, 30300), (9, 50114), (9, 50160), (9, 50190), (9, 50200), (9, 50430), (9, 60100),
-		 (9, 60102), (9, 60108), (9, 60110),  (9, 60120), (9, 70100), (10, 10160), (10, 20102), (10, 20103),
-		 (10, 20105), (10, 20110), (10, 20120), (10, 20130), (10, 30200), (10, 30300), (10, 50100), (10, 50110),
-		 (10, 50113), (10, 50114), (10, 50120), (10, 50160), (10, 50190), (10, 50200), (10, 50360), (10, 50390),
-		 (10, 50420), (10, 50430), (10, 50450), (10, 60100), (10, 60102), (10, 60108), (10, 60110),  (10, 60120),
-		 (10, 60124), (10, 60129), (10, 60130), (10, 70100), (10, 70200) ';
-
-		$query[] = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.'emc_tracking`';
-		$query[] = '
-			 CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'emc_tracking` (
-			 `id_et` int(11) NOT NULL AUTO_INCREMENT,
-			 `'._DB_PREFIX_.'orders_id_order` int(10) unsigned NOT NULL,
-			 `state_et` char(4) NOT NULL,
-			 `date_et` datetime NOT NULL,
-			 `text_et` text NOT NULL,
-			 `localisation_et` varchar(50) NOT NULL,
-			 PRIMARY KEY (`id_et`),
-			 KEY `'._DB_PREFIX_.'orders_id_order` (`'._DB_PREFIX_.'orders_id_order`)
-			 ) DEFAULT CHARSET=utf8 ';
-
-		$query[] = 'DROP TABLE IF EXISTS `'._DB_PREFIX_.'emc_api_pricing`';
-		$query[] = '
-			CREATE TABLE IF NOT EXISTS `'._DB_PREFIX_.'emc_api_pricing` (
-				`id_ap` VARCHAR(255) NOT NULL,
-				`'._DB_PREFIX_.'cart_id_cart` int(10) unsigned NOT NULL,
-				`prices_eap` text NOT NULL,
-				`price_eap` float NOT NULL DEFAULT 0,
-				`date_eap` DATETIME NOT NULL,
-				`carriers_eap` TEXT NOT NULL,
-				`treated_eap` TEXT,
-				`free_shipping_eap` INT(1) NOT NULL COMMENT "0 - no, 1 - yes",
-				`point_eap` VARCHAR( 40 ),
-				`order_done_eap` INT(1) NOT NULL COMMENT "0 - not done, 1 - done" DEFAULT 0,
-				`points_eap` TEXT NOT NULL,
-				`date_delivery` TEXT NOT NULL,
-				PRIMARY KEY (`id_ap`)
-		) DEFAULT CHARSET=utf8 ';
+		$sql_file = Tools::file_get_contents(_PS_MODULE_DIR_.'/envoimoinscher/sql/install.sql');
+		$sql_file = str_replace('{PREFIXE}', _DB_PREFIX_, $sql_file);
+		$query = explode('--- query ---', $sql_file);
 
 		// do relations only when InnoDB engine (prevent errors on Prestashop 1.3)
-		if (strtolower(_MYSQL_ENGINE_) == 'innodb')
+		if (Tools::strtolower(_MYSQL_ENGINE_) == 'innodb')
 		{
-			$query[] = '
-				 ALTER TABLE `'._DB_PREFIX_.'emc_documents`
-				 ADD CONSTRAINT `emc_documents_ibfk_1` FOREIGN KEY (`'._DB_PREFIX_.'orders_id_order`)
-				 REFERENCES `'._DB_PREFIX_.'orders` (`id_order`) ON DELETE CASCADE ';
-
-			$query[] = '
-				 ALTER TABLE `'._DB_PREFIX_.'emc_orders`
-				 ADD CONSTRAINT `emc_orders_ibfk_3` FOREIGN KEY (`'._DB_PREFIX_.'orders_id_order`)
-				 REFERENCES `'._DB_PREFIX_.'orders` (`id_order`) ON DELETE CASCADE;';
-
-			$query[] = '
-				 ALTER TABLE `'._DB_PREFIX_.'emc_orders_tmp`
-				 ADD CONSTRAINT `emc_orders_tmp_ibfk_1` FOREIGN KEY (`'._DB_PREFIX_.'orders_id_order`)
-				 REFERENCES `'._DB_PREFIX_.'orders` (`id_order`) ON DELETE CASCADE;';
-
-			$query[] = '
-				 ALTER TABLE `'._DB_PREFIX_.'emc_points`
-				 ADD FOREIGN KEY (`'._DB_PREFIX_.'orders_id_order`)
-				 REFERENCES `'._DB_PREFIX_.'orders` (`id_order`) ON DELETE CASCADE;';
-
-			$query[] = '
-				 ALTER TABLE `'._DB_PREFIX_.'emc_tracking`
-				 ADD FOREIGN KEY (`'._DB_PREFIX_.'orders_id_order`)
-				 REFERENCES `'._DB_PREFIX_.'orders` (`id_order`) ON DELETE CASCADE ;';
-
-			$query[] = '
-				 ALTER TABLE `'._DB_PREFIX_.'emc_api_pricing`
-				 ADD FOREIGN KEY (`'._DB_PREFIX_.'cart_id_cart`)
-				 REFERENCES `'._DB_PREFIX_.'cart` (`id_cart`) ON DELETE CASCADE ;';
+			$sql_file = Tools::file_get_contents(_PS_MODULE_DIR_.'/envoimoinscher/sql/install_innodb.sql');
+			$sql_file = str_replace('{PREFIXE}', _DB_PREFIX_, $sql_file);
+			$query_innodb = explode('--- query ---', $sql_file);
+			$query = array_merge($query, $query_innodb);
 		}
-
-		$query[] = '
-			ALTER TABLE `'._DB_PREFIX_.'carrier` ADD `emc_services_id_es` INT(3) NOT NULL AFTER `id_carrier`, ADD INDEX (`emc_services_id_es`)';
-
-		// emc_type : 0 => shipping rate, 1 => API price
-		$query[] = '
-			ALTER TABLE `'._DB_PREFIX_.'carrier` ADD `emc_type` INT(1) NOT NULL';
 
 		// Delete configuration
 		Configuration::deleteByName('EMC_ENVO');
@@ -602,7 +199,7 @@ class Envoimoinscher extends CarrierModule
 
 		// Set default configuration
 		Configuration::updateValue('EMC_USER', 0);
-		Configuration::updateValue('EMC_MSG', 'La plate-forme d\'expéditions est actuellement indisponible');
+		Configuration::updateValue('EMC_MSG', $this->l('Platform\'s shipments is currently unavailable'));
 		Configuration::updateValue('EMC_SRV_MODE', 'config');
 		Configuration::updateValue('EMC_MASS', EnvoimoinscherModel::WITH_CHECK);
 		Configuration::updateValue('EMC_TRACK_MODE', false);
@@ -620,15 +217,12 @@ class Envoimoinscher extends CarrierModule
 		Configuration::updateValue('EMC_TYPE', 'colis');
 		Configuration::updateValue('EMC_ORDER', 0);
 		Configuration::updateValue('EMC_WRAPPING', '');
-		Configuration::updateValue('EMC_LABEL_DELIVERY_DATE', 'Livraison prévue : {DATE}');
+		Configuration::updateValue('EMC_LABEL_DELIVERY_DATE', $this->l('Delivery scheduled : {DATE}'));
 		Configuration::updateValue('EMC_TRACK_MODE', '2');
 		Configuration::updateValue('EMC_LAST_CARRIER_UPDATE', '');
 
-		// We avoid the auto update if we install the module
-		Configuration::updateValue('EMC_AUTO_UPDATE_202', 'done');
-
 		// Set default configuration state
-		$states = OrderState::getOrderStates((int)Context::getContext()->language->id);
+		$states = OrderState::getOrderStates((int)$this->getContext()->language->id);
 
 		foreach ($states as $state)
 		{
@@ -652,8 +246,7 @@ class Envoimoinscher extends CarrierModule
 		{
 			if (Db::getInstance()->execute($q) === false)
 			{
-				Logger::addLog('[ENVOIMOINSCHER]['.time().'] installation :  Une erreur d\'installation s\'est produite sur la requête : '.$q);
-				// do rollback
+				Logger::addLog('[ENVOIMOINSCHER]['.time().'] '.$this->l('installation :  An error occured on the query : ').$q);
 				$this->tablesRollback();
 				return false;
 			}
@@ -673,102 +266,26 @@ class Envoimoinscher extends CarrierModule
 		$this->registerHook('displayCarrierList');
 		$this->registerHook('updateCarrier');
 		$this->registerHook('header');
-		// $this->registerHook('shoppingCart');
+		// $this->registerHEnvoimoinscherHelperook('shoppingCart');
 		$this->registerHook('adminOrder');
 		$this->registerHook('footer');
 		$this->registerHook('DisplayBackOfficeHeader');
 
 		$tab = new Tab();
 		$tab->class_name = 'AdminEnvoiMoinsCher';
-		$tab->id_parent = (int)Tab::getIdFromClassName('AdminParentOrders');
+		$tab->id_parent = (int)Tab::getIdFromClassName('AdminParentShipping');
 		if ($tab->id_parent == 0)
 			$tab->id_parent = 3;
 		$tab->module = 'envoimoinscher';
 		$tab->name[(int)Configuration::get('PS_LANG_DEFAULT')] = 'EnvoiMoinsCher';
 		if ($tab->add() === false)
 		{
-			Logger::addLog('[ENVOIMOINSCHER]['.time().'] installation :  Impossible de rajouter le Tab dans le menu');
+			Logger::addLog('[ENVOIMOINSCHER]['.time().'] '.$this->l('installation : Impossible to add the EnvoiMoinsCher button in the menu'));
 			$this->tablesRollback();
 			return false;
 		}
+
 		return true;
-	}
-
-	/**
-	 * Update the module
-	 * necessary as the sql update sometime isn't enough (especially for hook updates)
-	 * @access public
-	 * @return void
-	 */
-	public function autoUpdate()
-	{
-		// hook update
-		$this->registerHook('DisplayBackOfficeHeader');
-		// database update
-		Db::getInstance()->Execute('ALTER TABLE  '._DB_PREFIX_.'emc_services ADD  type_es INT(1) NOT NULL');
-		Db::getInstance()->Execute('UPDATE '._DB_PREFIX_.'emc_services SET type_es = family_es WHERE 1');
-		Db::getInstance()->Execute('UPDATE '._DB_PREFIX_.'emc_services SET type_es = 1 WHERE id_es = 7');
-		Db::getInstance()->Execute('CREATE TABLE IF NOT EXISTS '._DB_PREFIX_.'emc_operators_categories
-						 (id_eoca int(11) NOT NULL AUTO_INCREMENT,  id_eo int(11) NOT NULL,  id_eca int(11) NOT NULL,
-						 PRIMARY KEY (id_eoca),  UNIQUE KEY id_eo (id_eo,id_eca) )');
-		Db::getInstance()->Execute('INSERT INTO '._DB_PREFIX_.'emc_operators_categories (id_eo, id_eca) VALUES
-		(11, 10300), (11, 20102), (11, 20103), (11, 20105), (11, 20130), (11, 30200), (11, 30300), (11, 50114), (11, 50160),
-		(11, 50190), (11, 50200), (11, 50420), (11, 60100), (11, 60102), (11, 60108), (11, 60110), (11, 60120), (11, 70100),
-		(8, 10160), (8, 10170), (8, 10300), (8, 20100), (8, 20102), (8, 20103), (8, 20105), (8, 20110), (8, 20120), (8, 20130),
-		(8, 30200), (8, 30300), (8, 50114), (8, 50160), (8, 50190), (8, 50200), (8, 50430), (8, 60100), (8, 60102), (8, 60108),
-		(8, 60110), (8, 60120), (8, 60129), (8, 70100), (20, 10300), (20, 20102), (20, 20103), (20, 20105), (20, 20130), (20, 30200),
-		(20, 30300), (20, 50114), (20, 50160), (20, 50190), (20, 50200), (20, 60100), (20, 60102), (20, 60108), (20, 60110), (20, 60120),
-		(20, 70100), (20, 70200), (23, 10160), (23, 10170), (23, 10300), (23, 20102), (23, 20103), (23, 20105), (23, 20130), (23, 30200),
-		(23, 30300), (23, 50114), (23, 50160), (23, 50190), (23, 50200), (23, 50430), (23, 60100), (23, 60102), (23, 60108), (23, 60110),
-		(23, 60120), (23, 70100), (21, 10300), (21, 20100), (21, 20102), (21, 20103), (21, 20105), (21, 20110), (21, 20120), (21, 20130),
-		(21, 30200), (21, 30300), (21, 50114), (21, 50160), (21, 50190), (21, 50200), (21, 50420), (21, 50430), (21, 60100), (21, 60102),
-		(21, 60108), (21, 60110), (21, 60120), (21, 60124), (21, 60129), (21, 60130), (21, 70100), (21, 70200), (3, 10300), (3, 20102),
-		(3, 20103), (3, 20105), (3, 20130), (3, 30200), (3, 30300), (3, 50114), (3, 50160), (3, 50190), (3, 50200), (3, 60100), (3, 60102),
-		(3, 60108), (3, 60110), (3, 60120), (3, 70100), (3, 70200), (22, 10300), (22, 20102), (22, 20103), (22, 20105), (22, 20130),
-		(22, 30200), (22, 30300), (22, 50114), (22, 50160), (22, 50190), (22, 50200), (22, 50420), (22, 60100), (22, 60102), (22, 60108),
-		(22, 60110), (22, 60120), (22, 70100), (7, 10160), (7, 10170), (7, 10300), (7, 20102), (7, 20103), (7, 20105), (7, 20120), (7, 20130),
-		(7, 30200), (7, 30300), (7, 40120), (7, 50114), (7, 50160), (7, 50190), (7, 50200), (7, 50430), (7, 60100), (7, 60102), (7, 60108),
-		(7, 60110), (7, 60120), (7, 60129), (7, 60130), (9, 10160), (9, 20102), (9, 20103), (9, 20105), (9, 20120), (9, 20130), (9, 30200),
-		(9, 30300), (9, 50114), (9, 50160), (9, 50190), (9, 50200), (9, 50430), (9, 60100), (9, 60102), (9, 60108), (9, 60110),  (9, 60120),
-		(9, 70100), (10, 10160), (10, 20102), (10, 20103), (10, 20105), (10, 20110), (10, 20120), (10, 20130), (10, 30200), (10, 30300),
-		(10, 50100), (10, 50110), (10, 50113), (10, 50114), (10, 50120), (10, 50160), (10, 50190), (10, 50200), (10, 50360), (10, 50390),
-		(10, 50420), (10, 50430), (10, 50450), (10, 60100), (10, 60102), (10, 60108), (10, 60110),  (10, 60120), (10, 60124), (10, 60129),
-		(10, 60130), (10, 70100), (10, 70200)');
-		Db::getInstance()->Execute('ALTER TABLE '._DB_PREFIX_.'emc_operators ADD  map TEXT NOT NULL');
-		Db::getInstance()->Execute('ALTER TABLE '._DB_PREFIX_.'emc_services ADD  is_parcel_dropoff_point_es INT(1) NOT NULL');
-		Db::getInstance()->Execute('UPDATE '._DB_PREFIX_.'emc_services SET is_parcel_dropoff_point_es = 0');
-		Db::getInstance()->Execute('UPDATE '._DB_PREFIX_.'emc_services SET is_parcel_dropoff_point_es = 1 WHERE is_parcel_point_es = 1');
-		Db::getInstance()->Execute('UPDATE '._DB_PREFIX_.'emc_services SET is_parcel_dropoff_point_es = 0 WHERE code_es = \'ChronoRelais\'');
-		// configuration update
-		if (Configuration::get('EMC_USER') == '') 			Configuration::updateValue('EMC_USER', 0);
-		if (Configuration::get('EMC_MSG') == '') 				Configuration::updateValue('EMC_MSG', 'La plate-forme d\'expéditions est actuellement indisponible');
-		if (Configuration::get('EMC_MASS') == '') 			Configuration::updateValue('EMC_MASS', EnvoimoinscherModel::WITH_CHECK);
-		if (Configuration::get('EMC_TRACK_MODE') == '') Configuration::updateValue('EMC_TRACK_MODE', false);
-		if (Configuration::get('EMC_ASSU') == '') 			Configuration::updateValue('EMC_ASSU', '');
-		if (Configuration::get('EMC_INDI') == '') 			Configuration::updateValue('EMC_INDI', true);
-		if (Configuration::get('EMC_MULTIPARCEL') == '')Configuration::updateValue('EMC_MULTIPARCEL', false);
-		if (Configuration::get('EMC_PICKUP_J1') == '')	Configuration::updateValue('EMC_PICKUP_J1', '2');
-		if (Configuration::get('EMC_PICKUP_F1') == '') 	Configuration::updateValue('EMC_PICKUP_F1', '0');
-		if (Configuration::get('EMC_PICKUP_T1') == '') 	Configuration::updateValue('EMC_PICKUP_T1', '17');
-		if (Configuration::get('EMC_PICKUP_J2') == '') 	Configuration::updateValue('EMC_PICKUP_J2', '3');
-		if (Configuration::get('EMC_PICKUP_F2') == '') 	Configuration::updateValue('EMC_PICKUP_F2', '17');
-		if (Configuration::get('EMC_PICKUP_T2') == '') 	Configuration::updateValue('EMC_PICKUP_T2', '24');
-		if (Configuration::get('EMC_NATURE') == '') 		Configuration::updateValue('EMC_NATURE', false);
-		if (Configuration::get('EMC_ENV') == '') 				Configuration::updateValue('EMC_ENV', 'TEST');
-		if (Configuration::get('EMC_TYPE') == '') 			Configuration::updateValue('EMC_TYPE', 'colis');
-		if (Configuration::get('EMC_ORDER') == '') 			Configuration::updateValue('EMC_ORDER', 0);
-		if (Configuration::get('EMC_TRACK_MODE') == '') Configuration::updateValue('EMC_TRACK_MODE', 2);
-		Configuration::updateValue('EMC_SRV_MODE', 'config');
-		Configuration::updateValue('EMC_LABEL_DELIVERY_DATE', 'Livraison prévue : {DATE}');
-	}
-
-	/**
-	 * Install updates in the database.
-	 * @access public
-	 * @return boolean True if correct, false otherwise.
-	 */
-	public function installUpdate()
-	{
 	}
 
 	/**
@@ -822,6 +339,11 @@ class Envoimoinscher extends CarrierModule
 		return true;
 	}
 
+	public function getContext()
+	{
+		return $this->context;
+	}
+
 	/**
 	 * Rollback SQL queries.
 	 * @access private
@@ -860,73 +382,13 @@ class Envoimoinscher extends CarrierModule
 		);
 	}
 
-	/**
-	 * Return an array with the options necessary for the configuration
-	 * @access public
-	 * @return array
-	 */
-	public function getApiParams()
+	public function useLocalFancybox()
 	{
-		require_once(__DIR__.'/Env/WebService.php');
-		require_once(__DIR__.'/Env/Quotation.php');
+		$nums = explode('.', _PS_VERSION_);
 
-		$login = Configuration::get('EMC_LOGIN');
-		$pass = Configuration::get('EMC_PASS');
-		$key = Configuration::get('EMC_KEY');
-		$env = Configuration::get('EMC_ENV');
-
-		$cache_code = $login.$pass.$key.$env;
-		if (isset($this->api_params_cache[$cache_code]))
-			return $this->api_params_cache[$cache_code];
-
-		$params = array();
-		$params['error_code'] = array();
-
-		if ($login == '' && $pass == '' && $key == '')
-			return $params;
-
-		// get a quotation for the params
-		$from = array('pays' => 'FR','code_postal' => '75002','ville' => 'Paris','type' => 'entreprise','adresse' => '');
-		$to = array('pays' => 'FR','code_postal' => '75002','ville' => 'Paris','type' => 'particulier','adresse' => '');
-		$date = new DateTime();
-		$quot_info = array('collecte' => $date->format('Y-m-d'),'delai' => 'aucun','valeur' => '10','code_contenu' => 10120,'operateur' => 'POFR');
-		$cot_cl = new EnvQuotation(array('user' => $login, 'pass' => $pass, 'key' => $key));
-		$cot_cl->setPlatformParams($this->ws_name, _PS_VERSION_, $this->version);
-		$cot_cl->setPerson('expediteur', $from);
-		$cot_cl->setPerson('destinataire', $to);
-		$cot_cl->setEnv(strtolower($env));
-		$cot_cl->setType('colis', array(1 => array('poids' => 1,'longueur' => 20,'largeur' => 20,'hauteur' => 20)));
-		$cot_cl->getQuotation($quot_info);
-		$cot_cl->getOffers(false);
-
-		foreach ($cot_cl->offers as $offer)
-			if ($offer['operator']['code'] == 'POFR' && !isset($params['type_emballage.emballage']))
-				$params['type_emballage.emballage'] = $offer['mandatory']['type_emballage.emballage'];
-
-		$params['error_code'] = $cot_cl->resp_errors_list;
-
-		// Liste des patterns d'erreurs attendu, pas ce qu'il y a de plus optimisé mais en attendant d'avoir mieux ça fera l'affaire
-		foreach ($params['error_code'] as $i => $error)
-			$params['error_code'][$i]['id'] = $this->getApiErrorCode($error['message']);
-
-		$this->api_params_cache[$cache_code] = $params;
-		return $params;
-	}
-
-	public function getApiErrorCode($message)
-	{
-		$error_list = array(
-			'access_denied - invalid API key' 								=> 'API error : Invalid API key',
-			'access_denied - invalid user password' 					=> 'API error : Invalid password',
-			'access_denied - wrong credentials' 							=> 'API error : Wrong credentials',
-			'access_denied - Invalid account payment method' 	=> 'API error : Invalid account payment method',
-		);
-
-		foreach ($error_list as $err => $id)
-			if (strpos($message, $err) !== false)
-				return $id;
-
-		return false;
+		return (int)$nums[0] <= 1
+			&& isset($nums[1]) && (int)$nums[1] <= 5
+			&& isset($nums[2]) && (int)$nums[2] < 3;
 	}
 
 	/**
@@ -936,24 +398,15 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function getContent()
 	{
-		global $smarty;
-
+		$smarty = $this->getContext()->smarty;
 		$content = $this->postProcess();
 
 		// on effectue automatiquement la première mise à jour des offres, si la connexion le permet
 		if (Configuration::get('EMC_LAST_CARRIER_UPDATE') == '')
 			$this->loadAllCarriers(false);
 
-		// on applique la mise à jour du module si on vient d'une version < 3.0.0
-		if (Configuration::get('EMC_AUTO_UPDATE_202') != 'done')
-		{
-			$this->autoUpdate();
-			Configuration::updateValue('EMC_AUTO_UPDATE_202', 'done');
-			header('Location: '.$_SERVER['REQUEST_URI']);
-		}
-
-		require_once(__DIR__.'/Env/WebService.php');
-		require_once(__DIR__.'/Env/User.php');
+		require_once('Env/WebService.php');
+		require_once('Env/User.php');
 
 		// get default contact data
 		$address_if_filled = array(
@@ -1031,7 +484,7 @@ class Envoimoinscher extends CarrierModule
 				$content = '';
 			}
 		}
-
+		$datas['emcBaseDir'] = _MODULE_DIR_.'/envoimoinscher/';
 		$smarty->assign($datas);
 
 		$content .= $this->getContentBody();
@@ -1041,13 +494,13 @@ class Envoimoinscher extends CarrierModule
 
 	private function getContentBody()
 	{
-		$api_params = $this->getApiParams();
-
-		$smarty = $this->context->smarty;
-		$cookie = $this->context->cookie;
+		$smarty = $this->getContext()->smarty;
+		$cookie = $this->getContext()->cookie;
 
 		$helper = new EnvoimoinscherHelper();
-
+		
+		$api_params = $this->model->getApiParams($this->ws_name, $this->version);
+		
 		$ver = explode('.', _PS_VERSION_);
 
 		// on verifie si les offres ont ete mises a jour recement
@@ -1055,24 +508,24 @@ class Envoimoinscher extends CarrierModule
 		$send_offers_update_warning = true;
 		if ($last_update != '')
 		{
-			$date_limit = new DateTime();
-			$date_limit = date_sub($date_limit, date_interval_create_from_date_string('1 month'));
-			//$date_limit->sub(new DateInterval('P1M'));
-			$date_update = new DateTime($last_update);
+			$date_limit = time() - (60 * 60 * 24 * 30);
+			$date_update = strtotime($last_update);
 			$send_offers_update_warning = $date_update < $date_limit;
 		}
-
+		
 		$datas = array(
-			'need_update'		=> $send_offers_update_warning,
-			'PS_ver'				=> $ver[0],
-			'PS_ver'				=> $ver[0],
-			'PS_subver'			=> $ver[1],
-			'API_errors'		=> $api_params['error_code'],
-			'EMC_config'    => $helper->configArray($this->model->getConfigData()),
-			'multiShipping' => Configuration::get('PS_ALLOW_MULTISHIPPING'),
-			'successForm'   => (int)$cookie->success_form,
-			'upgrades'      => $this->parseUpgradeXml(__DIR__.'/upgrades/upgrades.xml'),
-			'modulePath'    => $this->_path
+			'tab_news'       => $this->model->getApiNews($this->ws_name, $this->version),
+			'tpl_news'       => _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/news.tpl',
+			'local_fancybox' => $this->useLocalFancybox(),
+			'need_update'	 => $send_offers_update_warning,
+			'PS_ver'		 => $ver[0],
+			'PS_subver'		 => $ver[1],
+			'module_version' => $this->version,
+			'API_errors'	 => $api_params['error_code'],
+			'EMC_config'     => $helper->configArray($this->model->getConfigData()),
+			'multiShipping'  => Configuration::get('PS_ALLOW_MULTISHIPPING'),
+			'successForm'    => (int)$cookie->success_form,
+			'modulePath'     => $this->_path
 		);
 
 		$smarty->assign($datas);
@@ -1082,12 +535,12 @@ class Envoimoinscher extends CarrierModule
 
 	public function getContentHelp()
 	{
-		$smarty = $this->context->smarty;
+		$smarty = $this->getContext()->smarty;
 
 		//$helper = new EnvoimoinscherHelper();
 		$datas = array(
 			'link'     => new Link(),
-			'upgrades' => $this->parseUpgradeXml(__DIR__.'/upgrades/upgrades.xml')
+			'upgrades' => $this->parseUpgradeXml(_PS_MODULE_DIR_.'envoimoinscher/sql/upgrades/upgrades.xml')
 		);
 
 		$smarty->assign($datas);
@@ -1101,8 +554,8 @@ class Envoimoinscher extends CarrierModule
 	 */
 	private function getContentMerchant()
 	{
-		$smarty = $this->context->smarty;
-		//$id_lang = (int)$this->context->language->id;
+		$smarty = $this->getContext()->smarty;
+		//$id_lang = (int)$this->getContext()->language->id;
 
 		$helper = new EnvoimoinscherHelper();
 
@@ -1127,7 +580,7 @@ class Envoimoinscher extends CarrierModule
 	 */
 	private function getContentCarriers($type)
 	{
-		$smarty = $this->context->smarty;
+		$smarty = $this->getContext()->smarty;
 
 		$helper = new EnvoimoinscherHelper();
 
@@ -1197,10 +650,9 @@ class Envoimoinscher extends CarrierModule
 	 */
 	private function getContentSends($all = true)
 	{
-		$smarty = $this->context->smarty;
-		//$id_lang = (int)$this->context->language->id;
+		$smarty = $this->getContext()->smarty;
 
-		$api_params = $this->getApiParams();
+		$api_params = $this->model->getApiParams($this->ws_name, $this->version);
 
 		// we build the array $wrapping_types (wrapping type for POFR)
 		$wrapping_types = array();
@@ -1208,7 +660,7 @@ class Envoimoinscher extends CarrierModule
 			foreach ($api_params['type_emballage.emballage']['array'] as $type)
 				$wrapping_types[count($wrapping_types)] = array(
 					'id' => $type,
-					'name' => substr($type, strpos($type, '-') + 1)
+					'name' => Tools::substr($type, strpos($type, '-') + 1)
 				);
 
 		$helper = new EnvoimoinscherHelper();
@@ -1217,7 +669,9 @@ class Envoimoinscher extends CarrierModule
 		$config['wsName'] = $this->ws_name; // add wsName to config
 		$config['localVersion'] = $this->local_version; // Add localVersionto config
 		// Get pickup conf
-		if (!isset($config['EMC_PICKUP_J1']))
+		if (!isset($config['EMC_PICKUP_J1']) ||
+			!isset($config['EMC_PICKUP_F1']) ||
+			!isset($config['EMC_PICKUP_T1']))
 			$pick_up_conf = array(
 				array(
 					'j'    => 0,
@@ -1245,11 +699,13 @@ class Envoimoinscher extends CarrierModule
 
 		$datas = array(
 			// Configuration
+			'local_fancybox'        => $this->useLocalFancybox(),
+			'emcBaseDir'			=> _MODULE_DIR_.'/envoimoinscher/',
 			'EMC_config'           	=> $config,
 			'shipTypes'            	=> $this->ship_types,
 			'shipNature'           	=> $this->model->getCategoriesTree($config),
 			'shipWrappingAvailable'	=> count($wrapping_types) > 0,
-			'shipWrapping' 				 	=> $wrapping_types,
+			'shipWrapping'          => $wrapping_types,
 			'pickupConf'           	=> $pick_up_conf,
 			'withoutMass'          	=> EnvoimoinscherModel::WITHOUT_CHECK,
 			'withMass'             	=> EnvoimoinscherModel::WITH_CHECK,
@@ -1267,8 +723,8 @@ class Envoimoinscher extends CarrierModule
 
 	private function getContentSettings()
 	{
-		$smarty = $this->context->smarty;
-		$id_lang = (int)$this->context->language->id;
+		$smarty = $this->getContext()->smarty;
+		$id_lang = (int)$this->getContext()->language->id;
 		$helper = new EnvoimoinscherHelper();
 
 		$config = $helper->configArray($this->model->getConfigData()); // Get configs
@@ -1278,7 +734,7 @@ class Envoimoinscher extends CarrierModule
 
 		$user_class = new EnvUser(array('user' => $config['EMC_LOGIN'], 'pass' => $config['EMC_PASS'], 'key' => $config['EMC_KEY']));
 		$user_class->setPlatformParams($this->ws_name, _PS_VERSION_, $this->version);
-		$user_class->setEnv(strtolower($config['EMC_ENV']));
+		$user_class->setEnv(Tools::strtolower($config['EMC_ENV']));
 		$user_class->getEmailConfiguration();
 
 		$datas = array(
@@ -1300,7 +756,7 @@ class Envoimoinscher extends CarrierModule
 	public function hookDisplayBackOfficeHeader()
 	{
 		if (Tools::getValue('controller') === 'AdminModules')
-			$this->context->controller->addCSS($this->_path.'/css/back-office.css', 'all');
+			$this->getContext()->controller->addCSS($this->_path.'/css/back-office.css', 'all');
 	}
 
 	/**
@@ -1361,7 +817,8 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function tests()
 	{
-		global $smarty, $cookie;
+		$smarty = $this->getContext()->smarty;
+		$cookie = $this->getContext()->cookie;
 		$helper = new EnvoimoinscherHelper;
 		$config = $helper->configArray($this->model->getConfigData());
 
@@ -1472,8 +929,8 @@ class Envoimoinscher extends CarrierModule
 
 		if (!empty($_POST) && Tools::isSubmit('submitForm'))
 		{
-			require_once(__DIR__.'/Env/WebService.php');
-			require_once(__DIR__.'/Env/Quotation.php');
+			require_once('Env/WebService.php');
+			require_once('Env/Quotation.php');
 			$product_ids = explode('_', Tools::getValue('product'));
 			$attributes = $product_ids;
 			$id = array_shift($attributes);
@@ -1532,7 +989,7 @@ class Envoimoinscher extends CarrierModule
 			elseif (count($offers) == 0)
 			{
 				$error = 1;
-				$error_msg = 'Pas d\'offres correspondant à votre recherche';
+				$error_msg = $this->l('No offers found for your research');
 			}
 			else
 			{
@@ -1559,7 +1016,8 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function ordersTable()
 	{
-		global $cookie, $smarty;
+		$smarty = $this->getContext()->smarty;
+		$cookie = $this->getContext()->cookie;
 		$helper = new EnvoimoinscherHelper;
 		$config = $helper->configArray($this->model->getConfigData());
 
@@ -1567,6 +1025,10 @@ class Envoimoinscher extends CarrierModule
 		$orders = $this->model->getEligibleOrders(array('lang' => $cookie->id_lang));
 		$planning = $this->model->getLastPlanning();
 		$orders_to_send = unserialize($planning['orders_eopl']);
+		$smarty->assign('tab_news', $this->model->getApiNews($this->ws_name, $this->version));
+		$smarty->assign('tpl_news', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/news.tpl');
+		$smarty->assign('local_fancybox', $this->useLocalFancybox());
+		$smarty->assign('emcBaseDir', _MODULE_DIR_.'/envoimoinscher/');
 		$smarty->assign('tokenOrder', Tools::getAdminToken('AdminOrders'.(int)Tab::getIdFromClassName('AdminOrders').(int)$cookie->id_employee));
 		$smarty->assign('token', Tools::getValue('token'));
 		$smarty->assign('ordersEmc', $orders['emc']);
@@ -1582,12 +1044,12 @@ class Envoimoinscher extends CarrierModule
 		$smarty->assign('showErrorsTable', count($orders['errors']) > 0);
 		$smarty->assign('successSend', (int)$cookie->success_send);
 		$smarty->assign('errorLabels', (int)$cookie->error_labels);
-		$smarty->assign('pagerTemplate', __DIR__.'/views/templates/admin/pager_template.tpl');
-		$smarty->assign('submenuTemplate', __DIR__.'/views/templates/admin/order_submenu_template.tpl');
-		$smarty->assign('ordersTableTemplate', __DIR__.'/views/templates/admin/orders_table_template.tpl');
-		$smarty->assign('massTemplate', __DIR__.'/views/templates/admin/massOrders.tpl');
-		$smarty->assign('ordersSendTop', __DIR__.'/views/templates/admin/table_send.tpl');
-		$smarty->assign('ordersSendBottom', __DIR__.'/views/templates/admin/table_send.tpl');
+		$smarty->assign('pagerTemplate', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/pager_template.tpl');
+		$smarty->assign('submenuTemplate', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/order_submenu_template.tpl');
+		$smarty->assign('ordersTableTemplate', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/orders_table_template.tpl');
+		$smarty->assign('massTemplate', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/massOrders.tpl');
+		$smarty->assign('ordersSendTop', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/table_send.tpl');
+		$smarty->assign('ordersSendBottom', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/table_send.tpl');
 		$smarty->assign('actual', '');
 		$smarty->assign('actual', '');
 		$smarty->assign('baseDir', __PS_BASE_URI__);
@@ -1605,8 +1067,8 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function initOrder()
 	{
-		require_once(__DIR__.'/Env/WebService.php');
-		require_once(__DIR__.'/Env/Quotation.php');
+		require_once(_PS_MODULE_DIR_.'/envoimoinscher/Env/WebService.php');
+		require_once(_PS_MODULE_DIR_.'/envoimoinscher/Env/Quotation.php');
 		$admin_link_base = $this->link->getAdminLink('AdminEnvoiMoinsCher');
 		$helper = new EnvoimoinscherHelper();
 		$config = $helper->configArray($this->model->getConfigData());
@@ -1649,7 +1111,7 @@ class Envoimoinscher extends CarrierModule
 		}
 		elseif (Tools::getValue('mode') == 'skip')
 		{
-			$emc_order->skipOrder((int)$_GET['previous']);
+			$emc_order->skipOrder((int)Tools::getValue('previous'));
 			$emc_order->incrementSkipped();
 			$emc_order->updateOrdersLsit();
 			Tools::redirectAdmin($admin_link_base.'&id_order='.(int)Tools::getValue('id_order').'&option=send');
@@ -1661,7 +1123,7 @@ class Envoimoinscher extends CarrierModule
 			$emc_order->cleanOrders(true);
 		}
 		ob_end_clean();
-		echo json_encode($result);
+		echo Tools::jsonEncode($result);
 		die();
 	}
 
@@ -1685,7 +1147,9 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function ordersHistoryTable()
 	{
-		global $cookie, $smarty;
+		$smarty = $this->getContext()->smarty;
+		$cookie = $this->getContext()->cookie;
+
 		$smarty->assign('tokenOrder', Tools::getAdminToken('AdminOrders'.(int)Tab::getIdFromClassName('AdminOrders').(int)$cookie->id_employee));
 		$count_query = Db::getInstance()->ExecuteS('SELECT COUNT(eo.'._DB_PREFIX_.'orders_id_order) AS allCmd FROM '._DB_PREFIX_.'emc_orders eo
 			 JOIN '._DB_PREFIX_.'orders o ON eo.'._DB_PREFIX_.'orders_id_order = o.id_order
@@ -1697,9 +1161,9 @@ class Envoimoinscher extends CarrierModule
 		$page = 1;
 		$per_page = 20;
 		$all_pages = $count_query[0]['allCmd'];
-		if (isset($_GET['p']))
-			$page = (int)$_GET['p'];
-		require_once(__DIR__.'/lib/Pager.php');
+		if (Tools::isSubmit('p'))
+			$page = (int)Tools::getValue('p');
+		require_once('lib/Pager.php');
 		$pager = new Pager(array(
 			'before' => 5,
 			'after' => 5,
@@ -1713,14 +1177,18 @@ class Envoimoinscher extends CarrierModule
 
 		// get EnvoiMoinsCher orders
 		$orders = $this->model->getDoneOrders(array('lang' => $cookie->id_lang, 'start' => $start, 'limit' => $per_page));
+		$smarty->assign('tab_news', $this->model->getApiNews($this->ws_name, $this->version));
+		$smarty->assign('tpl_news', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/news.tpl');
+		$smarty->assign('local_fancybox', $this->useLocalFancybox());
+		$smarty->assign('emcBaseDir', _MODULE_DIR_.'/envoimoinscher/');
 		$smarty->assign('token', Tools::getValue('token'));
 		$smarty->assign('orders', $orders);
 		$smarty->assign('allOrders', count($orders));
 		$smarty->assign('successSend', (int)$cookie->success_send);
 		$smarty->assign('errorLabels', (int)$cookie->error_labels);
-		$smarty->assign('pagerTemplate', __DIR__.'/views/templates/admin/pager_template.tpl');
-		$smarty->assign('ordersTableTemplate', __DIR__.'/views/templates/admin/orders_table_template.tpl');
-		$smarty->assign('submenuTemplate', __DIR__.'/views/templates/admin/order_submenu_template.tpl');
+		$smarty->assign('pagerTemplate', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/pager_template.tpl');
+		$smarty->assign('ordersTableTemplate', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/orders_table_template.tpl');
+		$smarty->assign('submenuTemplate', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/order_submenu_template.tpl');
 		$smarty->assign('actual', 'history');
 		$smarty->assign('baseDir', __PS_BASE_URI__);
 		$cookie->success_send = 0;
@@ -1735,7 +1203,9 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function send()
 	{
-		global $cookie, $smarty;
+		$smarty = $this->getContext()->smarty;
+		$cookie = $this->getContext()->cookie;
+
 		$order_id = (int)Tools::getValue('id_order');
 		$post_data = $this->model->getPostData($order_id);
 		$emc_order = new EnvoimoinscherOrder($this->model);
@@ -1743,9 +1213,13 @@ class Envoimoinscher extends CarrierModule
 		$helper = new EnvoimoinscherHelper;
 		$data = $this->model->prepareOrderInfo($order_id, $helper->configArray($this->model->getConfigData()));
 		if ($data['is_pp'] == 1)
+		{
+			$url = Envoimoinscher::getMapByOpe($data['code_eo']);
 			$helper->setFields('depot.pointrelais',
-				array('helper' => '<p class="note"><a data-fancybox-type="iframe" href="'.Envoimoinscher::getMapByOpe($data['code_eo']).
-				'" style="width:1000px;height:1000px;" class="getParcelPoint action_module fancybox">'.$this->l('Get parcel point').'</a></p>'));
+				array('helper' => '<p class="note"><a data-fancybox-type="iframe" target="_blank" href="'.$url.
+				'" style="width:1000px;height:1000px;" class="getParcelPoint action_module fancybox">'.$this->l('Get parcel point').'</a><br/>'.
+				$this->l('If the popup do not show up : ').'<a target="_blank" href="'.$url.'">'.$this->l('clic here').'</a></p>'));
+		}
 		else if ($data['is_pp'] == 2)
 			$helper->setFields('depot.pointrelais',
 				array(
@@ -1754,11 +1228,15 @@ class Envoimoinscher extends CarrierModule
 					'hidden' => true
 				)
 			);
-		$helper->setFields('retrait.pointrelais',
-			array('helper' => '<p class="note"><a data-fancybox-type="iframe" href="'.Envoimoinscher::getMapByOpe($data['code_eo'],
+		$url = Envoimoinscher::getMapByOpe(
+			$data['code_eo'],
 			urlencode($data['delivery']['ville']),
 			$data['delivery']['code_postal'],
-			urlencode($data['delivery']['adresse'])).'" class="getParcelPoint fancybox action_module">'.$this->l('Get parcel point').'</a></p>'));
+			urlencode($data['delivery']['adresse']));
+		$helper->setFields('retrait.pointrelais',
+			array('helper' => '<p class="note"><a data-fancybox-type="iframe" target="_blank" href="'.$url.
+				'" class="getParcelPoint fancybox action_module">'.$this->l('Get parcel point').'</a><br/>'.
+				$this->l('If the popup do not show up : ').'<a target="_blank" href="'.$url.'">'.$this->l('clic here').'</a></p>'));
 
 		// Check if we have data from previous sending try
 		//$show_dst_block = false;
@@ -1770,6 +1248,7 @@ class Envoimoinscher extends CarrierModule
 		}
 		$emc_carrier = isset($data['order'][0]['external_module_name']) && $data['order'][0]['external_module_name'] == $this->name;
 		$offer_data = $this->getOfferToSendPage($data, $helper, $post_data);
+		$smarty->assign('local_fancybox', $this->useLocalFancybox());
 		$smarty->assign('proforma', $offer_data['isProforma']);
 		$smarty->assign('proformaData', $offer_data['proforma']);
 		$smarty->assign('offer', $offer_data['offer']);
@@ -1796,6 +1275,7 @@ class Envoimoinscher extends CarrierModule
 		$smarty->assign('multiParcel', $data['config']['EMC_MULTIPARCEL'] == 'on');
 		$smarty->assign('token', Tools::getValue('token'));
 		$smarty->assign('alreadyPassed', $this->isPassed($order_id));
+		$smarty->assign('emcBaseDir', _MODULE_DIR_.'/envoimoinscher/');
 		$weight = $data['productWeight'];
 		$parcels = $post_data['parcels'];
 		$parcels_length = count($parcels);
@@ -1817,16 +1297,16 @@ class Envoimoinscher extends CarrierModule
 		unset($cookie->emc_order_parcels);
 		$smarty->assign('adminImg', _PS_ADMIN_IMG_);
 		$smarty->assign('baseDirCss', __PS_BASE_URI__);
-		$smarty->assign('moduleBaseDir', _MODULE_DIR_.'envoimoinscher/');
+		$smarty->assign('moduleBaseDir', _PS_MODULE_DIR_.'envoimoinscher/');
 		$smarty->assign('showDstBlock', count($delivery_info) > 1 || (!$emc_carrier && !$offer_data['isFound']));
 		$smarty->assign('weight', $weight);
-		$smarty->assign('tableTemplate', __DIR__.'/views/templates/admin/offersTable.tpl');
-		$smarty->assign('notFoundTemplate', __DIR__.'/views/templates/admin/offersNotFound.tpl');
+		$smarty->assign('tableTemplate', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/offersTable.tpl');
+		$smarty->assign('notFoundTemplate', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/offersNotFound.tpl');
 		$smarty->assign('ordersAll', $order_stats['total']);
 		$smarty->assign('ordersDone', $order_stats['skipped'] + $order_stats['ok'] + $order_stats['errors']);
 		$smarty->assign('orderTodo', $order_stats['total'] - ($order_stats['skipped'] + $order_stats['ok'] + $order_stats['errors']));
 		$smarty->assign('nextOrderId', $emc_order->getNextOrderId());
-		$smarty->assign('massTemplate', __DIR__.'/views/templates/admin/massOrders.tpl');
+		$smarty->assign('massTemplate', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/massOrders.tpl');
 		$smarty->assign('checkAssu', ((int)Configuration::get('EMC_ASSU') == 1));
 		if ($post_data['emcErrorSend'] == 1 && ($order_stats['total'] == 0 || $emc_order->isErrorType()))
 		{
@@ -1868,14 +1348,14 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function getOffersNewWeight()
 	{
-		global $smarty;
-		$order_id = (int)$_GET['id_order'];
+		$smarty = $this->getContext()->smarty;
+		$order_id = (int)Tools::getValue('id_order');
 		$helper = new EnvoimoinscherHelper;
 		$data = $this->model->prepareOrderInfo(
 			$order_id,
 			$helper->configArray($this->model->getConfigData()),
-			(float)str_replace(',', '.', $_POST['weight']));
-		$data['productWeight'] = (float)str_replace(',', '.', $_POST['weight']);
+			(float)str_replace(',', '.', Tools::getValue('weight')));
+		$data['productWeight'] = (float)str_replace(',', '.', Tools::getValue('weight'));
 		// If option 'use content as parcel description' is checked
 		if ((int)$data['config']['EMC_CONTENT_AS_DESC'] == 1)
 		{
@@ -1907,7 +1387,8 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function command()
 	{
-		global $cookie;
+		$cookie = $this->getContext()->cookie;
+
 		$helper = new EnvoimoinscherHelper;
 		$config = $helper->configArray($this->model->getConfigData());
 		$order_id = (int)Tools::getValue('id_order');
@@ -1966,11 +1447,12 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function replaceOffer()
 	{
-		global $cookie;
-		require_once(__DIR__.'/Env/WebService.php');
-		require_once(__DIR__.'/Env/Quotation.php');
-		$order_id = (int)$_GET['id_order'];
-		$code = explode('_', $_GET['code']);
+		$cookie = $this->getContext()->cookie;
+
+		require_once('Env/WebService.php');
+		require_once('Env/Quotation.php');
+		$order_id = (int)Tools::getValue('id_order');
+		$code = explode('_', Tools::getValue('code'));
 		if (ctype_alnum($code[0]) && ctype_alnum($code[1]))
 		{
 			$rows = Db::getInstance()->ExecuteS('SELECT * FROM '._DB_PREFIX_.'emc_services es
@@ -1998,6 +1480,7 @@ class Envoimoinscher extends CarrierModule
 				Db::getInstance()->autoExecute(_DB_PREFIX_.'carrier', $data, 'INSERT');
 				$lang_data['id_carrier'] = (int)Db::getInstance()->Insert_ID();
 				Db::getInstance()->autoExecute(_DB_PREFIX_.'carrier_lang', $lang_data, 'INSERT');
+				// prestashop standard ...
 				$carrier = array('id_carrier' => $lang_data['id_carrier'], 'id_group' => '');
 				Db::getInstance()->autoExecute(_DB_PREFIX_.'carrier_group', $carrier, 'INSERT');
 				$rows[0]['id_carrier'] = $lang_data['id_carrier'];
@@ -2016,8 +1499,8 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function getTracking()
 	{
-		global $smarty;
-		$order_id = (int)$_GET['id_order'];
+		$smarty = $this->getContext()->smarty;
+		$order_id = (int)Tools::getValue('id_order');
 		// get tracking informations
 		$order = $this->model->getOrderData($order_id);
 		$smarty->assign('rows', $this->model->getTrackingInfos($order_id));
@@ -2034,13 +1517,14 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function getOfferToSendPage($data, $helper, $session_data = array())
 	{
-		global $cookie;
+		$cookie = $this->getContext()->cookie;
+
 		if (isset($session_data['quote']) && count($session_data['quote']) > 0)
 			$quote_data = $session_data['quote'];
 		if (isset($session_data['parcels']) && count($session_data['parcels']) > 0)
 			$data['parcels'] = $session_data['parcels'];
-		require_once(__DIR__.'/Env/WebService.php');
-		require_once(__DIR__.'/Env/Quotation.php');
+		require_once('Env/WebService.php');
+		require_once('Env/Quotation.php');
 		$offers_orders = $this->model->getOffersOrder();
 		// EnvoiMoinsCher library
 		$cot_cl = new EnvQuotation(
@@ -2074,7 +1558,7 @@ class Envoimoinscher extends CarrierModule
 			'version' 									=> $this->local_version
 		);
 
-		$cot_cl->setEnv(strtolower($data['config']['EMC_ENV']));
+		$cot_cl->setEnv(Tools::strtolower($data['config']['EMC_ENV']));
 		$cot_cl->setPerson(
 			'expediteur',
 			array(
@@ -2108,10 +1592,11 @@ class Envoimoinscher extends CarrierModule
 					EnvoimoinscherHelper::constructServiceCodeFromApi($offer['service']['code']) == $data['order'][0]['code_es'])
 			{
 				// handle session data
+				$offer['priceIns'] = (float)isset($offer['insurance']) ? $offer['insurance']['tax-exclusive'] : 0;
 				$offer['priceHTNoIns']  = $offer['price']['tax-exclusive'];
 				$offer['priceTTCNoIns'] = $offer['price']['tax-inclusive'];
-				$offer['priceHT']       = $offer['price']['tax-exclusive'] + (float)isset($offer['insurance']) ? $offer['insurance']['tax-exclusive'] : 0;
-				$offer['priceTTC']      = $offer['price']['tax-inclusive'] + (float)isset($offer['insurance']) ? $offer['insurance']['tax-inclusive'] : 0;
+				$offer['priceHT']       = $offer['price']['tax-exclusive'] + $offer['priceIns'];
+				$offer['priceTTC']      = $offer['price']['tax-inclusive'] + $offer['priceIns'];
 				$offer['insurance']     = $data['default']['assurance.selection'];
 
 				$offer['collect']       = date('d-m-Y', strtotime($offer['collection']['date']));
@@ -2247,18 +1732,18 @@ class Envoimoinscher extends CarrierModule
 	{
 		$missed = array();
 		$dictionnary = array(
-			'EMC_KEY' => 'la clé API',
-			'EMC_LOGIN' => 'le login EnvoiMoinsCher',
-			'EMC_PASS' => 'le mot de passe EnvoiMoinsCher',
-			'EMC_FNAME' => 'le prénom',
-			'EMC_LNAME' => 'le nom',
-			'EMC_COMPANY' => 'la société',
-			'EMC_ADDRESS' => 'l\'adresse',
-			'EMC_POSTALCODE' => 'le code postal',
-			'EMC_CITY' => 'la ville',
-			'EMC_TEL' => 'le numéro dé téléphone',
-			'EMC_MAIL' => 'l\'adresse e-mail',
-			'EMC_PICKUP' => 'le jour d\'enlèvement');
+			'EMC_KEY' => $this->l('the API key'),
+			'EMC_LOGIN' => $this->l('the EnvoiMoinsCher login'),
+			'EMC_PASS' => $this->l('the EnvoiMoinsCher password'),
+			'EMC_FNAME' => $this->l('the first name'),
+			'EMC_LNAME' => $this->l('the name'),
+			'EMC_COMPANY' => $this->l('the company'),
+			'EMC_ADDRESS' => $this->l('the address'),
+			'EMC_POSTALCODE' => $this->l('the postal code'),
+			'EMC_CITY' => $this->l('the town'),
+			'EMC_TEL' => $this->l('the phone number'),
+			'EMC_MAIL' => $this->l('the email address'),
+			'EMC_PICKUP' => $this->l('the pickup day'));
 		foreach ($values as $k => $value)
 			if (in_array($k, $obligatory) && trim($value) == '')
 				$missed[] = $dictionnary[$k];
@@ -2274,21 +1759,26 @@ class Envoimoinscher extends CarrierModule
 	 * @return false
 	 */
 	public function getOrderShippingCost($ref, $shipping_cost)
-	{
-		global $cookie;
-		// global $cookie;
-		$cart_context = Context::getContext()->cart;
+	{		
+		$cookie = $this->getContext()->cookie;
+		$cart_context = $this->getContext()->cart;
 
-		$cache_code = $this->id_carrier.spl_object_hash($ref).$shipping_cost;
+		$cache_code = 'cache_'.$this->id_carrier.spl_object_hash($ref).$shipping_cost;
 
 		// cache of shipping cost
-		if (isset($this->shipping_cost_cache[$cache_code]))
-			return $this->shipping_cost_cache[$cache_code];
+		if ($cookie->__isset($cache_code))
+			return $cookie->__get($cache_code);
 
 		if (Configuration::get('EMC_SRV_MODE') == EnvoimoinscherModel::MODE_CONFIG)
 			return false;
 
-		$pricing_code = EnvoimoinscherHelper::getPricingCode($cart_context);
+		// for backoffice orders
+		$pricing_code = '';
+		if (isset($cart_context))
+			$pricing_code = EnvoimoinscherHelper::getPricingCode($cart_context);
+		else
+			return;
+
 		// ajax page : get carrier pricing from database
 		$price_row = Db::getInstance()->getRow('SELECT *
 			 FROM `'._DB_PREFIX_.'emc_api_pricing`
@@ -2297,25 +1787,22 @@ class Envoimoinscher extends CarrierModule
 		$update = false;
 		if ($price_row !== 'false')
 		{
-			$date_eap = date_create($price_row['date_eap']);
-			$date_eap_timestamp = date_timestamp_get($date_eap);
-			$query = 'SELECT `date_upd` FROM `'._DB_PREFIX_.'configuration` WHERE `name` = "PS_SHIPPING_HANDLING" ';
-
-			$date_upd_cfg = date_create(DB::getInstance()->getValue($query));
-			$date_upd_cfg_timestamp = date_timestamp_get($date_upd_cfg);
+	
+			$date_eap_timestamp = strtotime($price_row['date_eap']);
+			
+			$query = 'SELECT `date_upd` FROM `'._DB_PREFIX_.'configuration` WHERE `name` = '.PS_SHIPPING_HANDLING;
+			$date_upd_cfg_timestamp = strtotime(DB::getInstance()->getValue($query));
 
 			$update = $date_eap_timestamp < $date_upd_cfg_timestamp || $date_upd_cfg_timestamp === false;
+
 		}
 
 		if ($price_row === false || $update === true)
 		{
 			$addresses_array = array();
 			$addresses_array[] = (int)$ref->id_address_delivery;
-			require_once(__DIR__.'/Env/WebService.php');
-			require_once(__DIR__.'/Env/Quotation.php');
-			// load only services which have shipping_external = 1
-			//$helper = new EnvoimoinscherHelper;
-			//$config = $helper->configArray($this->model->getConfigData());
+			require_once('Env/WebService.php');
+			require_once('Env/Quotation.php');
 			// get informations about the current order
 			$cart_data = $this->prepareQuotationCartData($ref->id, $ref->id_address_delivery);
 			// get dimensions
@@ -2351,15 +1838,18 @@ class Envoimoinscher extends CarrierModule
 
 			if (isset($offers[$this->id_carrier]))
 			{
-				Db::getInstance()->autoExecute(_DB_PREFIX_.'emc_api_pricing', $offers[$this->id_carrier]['pricingData'], 'REPLACE');
+				Db::getInstance()->autoExecute(_DB_PREFIX_.'emc_api_pricing', $offers[$this->id_carrier]['pricingData'], 'INSERT IGNORE');
 				$return = $offers[$this->id_carrier]['priceHT_db'];
 			}
 			else if (count($offers) === 0)
 			{
-				Logger::addLog('[ENVOIMOINSCHER]['.time().'] Aucune offre trouvée pour l\'adresse de destination '.
-					$cookie->customer_firstname.' '.$cookie->customer_lastname.', '.
-					$cart_data['address']['street'].' '.$cart_data['address']['postcode'].' '.
-					$cart_data['address']['country'].', le poids du panier est de '.$cart_data['weight'].' kg', 4);
+				Logger::addLog('[ENVOIMOINSCHER]['.time().'] '.$this->l('No offers found for the address %s %s, %s %s %s, the cart weighs %s kg',
+					$cookie->customer_firstname,
+					$cookie->customer_lastname,
+					$cart_data['address']['street'],
+					$cart_data['address']['postcode'],
+					$cart_data['address']['country'],
+					$cart_data['weight']), 4);
 				$return = false;
 			}
 			else
@@ -2374,13 +1864,13 @@ class Envoimoinscher extends CarrierModule
 				$return = $prices[$ref->id_address_delivery][$this->id_carrier]['price_ht'];
 		}
 
-		$this->shipping_cost_cache[$cache_code] = $return;
+		$cookie->__set($cache_code, $return);
+
 		return $return;
 	}
 
 	public function getPackageShippingCost($r, $s, $products = null)
 	{
-		// prestashop standards ...
 		if (isset($s) || isset($products)) $this->getOrderShippingCost($r, 322);
 		return $this->getOrderShippingCost($r, 322);
 	}
@@ -2442,7 +1932,7 @@ class Envoimoinscher extends CarrierModule
 			if ($ajax)
 			{
 				ob_end_clean();
-				echo 'Votre module doit être en mode de configuration';
+				echo $this->l('Your module must be in offline mode.');
 				die();
 			}
 			else
@@ -2459,15 +1949,15 @@ class Envoimoinscher extends CarrierModule
 		//$ope_save = $operators;
 
 		// on recupere les services depuis le serveur envoimoinscher
-		require_once(__DIR__.'/Env/WebService.php');
-		require_once(__DIR__.'/Env/CarriersList.php');
+		require_once('Env/WebService.php');
+		require_once('Env/CarriersList.php');
 		$login = Configuration::get('EMC_LOGIN');
 		$pass = Configuration::get('EMC_PASS');
 		$key = Configuration::get('EMC_KEY');
 		$env = Configuration::get('EMC_ENV');
 		$lib = new EnvCarriersList(array('user' => $login, 'pass' => $pass, 'key' => $key));
 		$lib->setPlatformParams($this->ws_name, _PS_VERSION_, $this->version);
-		$lib->setEnv(strtolower($env));
+		$lib->setEnv(Tools::strtolower($env));
 		$lib->loadCarriersList($this->ws_name, $this->version);
 
 		if ($lib->curl_error)
@@ -2475,7 +1965,7 @@ class Envoimoinscher extends CarrierModule
 			if ($ajax)
 			{
 				ob_end_clean();
-				echo 'Erreur lors de l\'envoi de la requête : ';
+				echo $this->l('Error while updating your offers : ');
 				foreach ($lib->resp_errors_list as $message)
 					echo '<br />'.$message['message'];
 				die();
@@ -2488,7 +1978,7 @@ class Envoimoinscher extends CarrierModule
 			if ($ajax)
 			{
 				ob_end_clean();
-				echo 'La requête n\'est pas valide : ';
+				echo $this->l('Error while updating your offers : ');
 				foreach ($lib->resp_errors_list as $message)
 					echo '<br />'.$message['message'];
 				die();
@@ -2572,17 +2062,17 @@ class Envoimoinscher extends CarrierModule
 		// On met à jour la base
 		// Requête insert services
 		$query = array();
-		$query[0] = '';
+		$sql = '';
 		$first_line = true;
 		if (count($srv_to_insert) > 0)
 		{
-			$query[0] .= 'INSERT INTO '._DB_PREFIX_.'emc_services VALUES';
+			$sql = 'INSERT INTO '._DB_PREFIX_.'emc_services VALUES';
 			foreach ($srv_to_insert as $service)
 			{
 				if (!$first_line)
-					$query[0] .= ',';
+					$sql .= ',';
 				$first_line = false;
-				$query[0] .= '(null,0,"'.$service['srv_code'].
+				$sql .= '(null,0,"'.$service['srv_code'].
 															'","'.$service['ope_code'].
 															'","'.$service['srv_name'].
 															'","'.$service['label_store'].
@@ -2592,30 +2082,31 @@ class Envoimoinscher extends CarrierModule
 															','.$service['parcel_dropoff_point'].
 															','.$service['family'].
 															','.$service['zone'].
-															')';
+															');';
 			}
-			$query[0] .= ';';
+			$sql .= ';';
+			$query[] = $sql;
 		}
 		// Requête insert opeateurs
 		if (count($ope_to_insert) > 0)
 		{
-			$query[0] .= 'INSERT INTO '._DB_PREFIX_.'emc_operators VALUES';
+			$sql = 'INSERT INTO '._DB_PREFIX_.'emc_operators VALUES';
 			$first_line = true;
 			foreach ($ope_to_insert as $operator)
 			{
 				if (!$first_line)
-					$query[0] .= ',';
+					$sql .= ',';
 				$first_line = false;
-				$query[0] .= '(null,"'.$operator['ope_name'].'","'.$operator['ope_code'].'")';
+				$sql .= '(null,"'.$operator['ope_name'].'","'.$operator['ope_code'].'")';
 			}
-			$query[0] .= ';';
+			$sql .= ';';
+			$query[] = $sql;
 		}
 
 		// Requête update services
-		$query[1] = '';
 		foreach ($srv_to_update as $service)
 		{
-			$query[1] .= 'UPDATE '._DB_PREFIX_.'emc_services SET
+			$sql = 'UPDATE '._DB_PREFIX_.'emc_services SET
 										 label_es = "'.$service['srv_name'].'"
 										 ,desc_es = "'.$service['label_store'].'"
 										 ,desc_store_es = "'.$service['description'].'"
@@ -2627,53 +2118,56 @@ class Envoimoinscher extends CarrierModule
 										 ,type_es = '.$service['zone'].'
 										 WHERE code_es = "'.$service['srv_code'].'"
 										 AND emc_operators_code_eo = "'.$service['ope_code'].'";';
+			$query[] = $sql;
 		}
 		// Requête update operateurs
 		foreach ($ope_to_update as $operator)
 		{
-			$query[1] .= 'UPDATE '._DB_PREFIX_.'emc_operators SET
+			$sql = 'UPDATE '._DB_PREFIX_.'emc_operators SET
 				 name_eo = "'.$operator['ope_name'].'" WHERE code_eo = "'.$operator['ope_code'].'";';
+			$query[] = $sql;
 		}
 
 		// Requête delete services
-		$query[2] = '';
-		$query[3] = '';
 		if (count($srv_to_delete) > 0)
 		{
-			$query[2] .= 'DELETE FROM '._DB_PREFIX_.'carrier WHERE ';
+			$sql = 'DELETE FROM '._DB_PREFIX_.'carrier WHERE ';
 			$first_line = true;
 			foreach ($srv_to_delete as $service)
 			{
 				if (!$first_line)
-					$query[2] .= ' OR ';
+					$sql .= ' OR ';
 				$first_line = false;
-				$query[2] .= 'emc_services_id_es = '.$service['id_es'];
+				$sql .= 'emc_services_id_es = '.$service['id_es'];
 			}
-			$query[2] .= ';';
-			$query[3] .= 'DELETE FROM '._DB_PREFIX_.'emc_services WHERE ';
+			$sql .= ';';
+			$query[] = $sql;
+			$sql = 'DELETE FROM '._DB_PREFIX_.'emc_services WHERE ';
 			$first_line = true;
 			foreach ($srv_to_delete as $service)
 			{
 				if (!$first_line)
-					$query[3] .= ' OR ';
+					$sql .= ' OR ';
 				$first_line = false;
-				$query[3] .= 'id_es = '.$service['id_es'];
+				$sql .= 'id_es = '.$service['id_es'];
 			}
-			$query[3] .= ';';
+			$sql .= ';';
+			$query[] = $sql;
 		}
 		// Requête delete operateurs
 		$first_line = true;
 		if (count($ope_to_delete) > 0)
 		{
-			$query[2] .= 'DELETE FROM '._DB_PREFIX_.'emc_operators WHERE ';
+			$sql = 'DELETE FROM '._DB_PREFIX_.'emc_operators WHERE ';
 			foreach ($ope_to_delete as $operator)
 			{
 				if (!$first_line)
-					$query[2] .= ' OR ';
+					$sql .= ' OR ';
 				$first_line = false;
-				$query[2] .= 'id_eo = '.$operator['id_eo'];
+				$sql .= 'id_eo = '.$operator['id_eo'];
 			}
-			$query[2] .= ';';
+			$sql .= ';';
+			$query[] = $sql;
 		}
 
 		Db::getInstance()->execute('START TRANSACTION;');
@@ -2681,12 +2175,12 @@ class Envoimoinscher extends CarrierModule
 		{
 			if ($q != '' && Db::getInstance()->execute($q) === false)
 			{
-				Logger::addLog('[ENVOIMOINSCHER]['.time().'] Mise à jour : Erreur lors de la mise à jour des offres disponible : '.$q);
+				Logger::addLog('[ENVOIMOINSCHER]['.time().'] '.$this->l('Update : Error while updating your offers : ').$q);
 				if ($ajax)
 				{
 					Db::getInstance()->execute('ROLLBACK;');
 					ob_end_clean();
-					echo 'Erreur lors de la mise à jour des offres disponible : '.$q;
+					echo $this->l('Error while updating your offers : ').$q;
 					die();
 				}
 				else
@@ -2712,7 +2206,7 @@ class Envoimoinscher extends CarrierModule
 		if ($ajax)
 		{
 			ob_end_clean();
-			echo json_encode($result);
+			echo Tools::jsonEncode($result);
 			die();
 		}
 		else
@@ -2728,6 +2222,7 @@ class Envoimoinscher extends CarrierModule
 	public function dateToString($date)
 	{
 		$date_data = explode('/', strftime('%w/%d/%m/%Y', strtotime($date)));
+
 		return $this->l('day'.$date_data[0]).' '.$date_data[1].' '.$this->l('month'.$date_data[2]).' '.$date_data[3];
 	}
 
@@ -2743,8 +2238,8 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function hookAdminOrder($params)
 	{
-		global $smarty;
-		require_once(realpath(dirname(__FILE__).'/EnvoimoinscherHelper.php'));
+		$smarty = $this->getContext()->smarty;
+		require_once(_PS_MODULE_DIR_.'/envoimoinscher/includes/EnvoimoinscherHelper.php');
 		$helper = new EnvoimoinscherHelper;
 		// check if order belongs to module and if the carrier handles parcel points
 		$point = $this->model->getPointInfos($params['id_order']);
@@ -2768,8 +2263,10 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function hookProcessCarrier($params, $redirect = true)
 	{
-		global $cookie;
+		$cookie = $this->getContext()->cookie;
+
 		$price = 0.0;
+
 		if ($redirect || !$redirect)$price = 0.0;
 		$cart_id = (int)$params['cart']->id;
 		$error_occured = false;
@@ -2784,13 +2281,15 @@ class Envoimoinscher extends CarrierModule
 				{
 					$codes = explode('-', $ope[0]['point_eap']);
 					if ((!isset($codes[0]) || !isset($codes[1])) ||
-							(isset($codes[0]) && isset($codes[1]) && (trim($codes[0]) != $ope[0]['emc_operators_code_eo'] || !ctype_alnum(trim($codes[1])))))
+						(isset($codes[0]) && isset($codes[1]) && (trim($codes[0]) != $ope[0]['emc_operators_code_eo'] || !ctype_alnum(trim($codes[1])))))
 						$correct_code = false;
 				}
-				if (isset($ope[0]) && $ope[0]['is_parcel_point_es'] == 1 && !$correct_code && $_POST['ajax'] != 'true' && $_GET['ajax'] != 'true')
+				if (isset($ope[0]) && $ope[0]['is_parcel_point_es'] == 1 &&
+					!$correct_code && Tools::getValue('ajax') != 'true' &&
+					Tools::getValue('ajax') != 'true')
 				{
 					$error_occured = true;
-					Logger::addLog('[ENVOIMOINSCHER]['.time().'] Le point relais obligé, n\'a pas été choisi pour le panier '.$cart_id, 4);
+					Logger::addLog('[ENVOIMOINSCHER]['.time().'] '.$this->l('The mandatory parcel point has not been chosen for the cart %s', $cart_id), 4);
 					$variable = 'choosePoint'.$ope[0]['emc_operators_code_eo'].$o;
 					$cookie->$variable = 1;
 				}
@@ -2816,7 +2315,8 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function hooknewOrder($params)
 	{
-		global $cookie;
+		$cookie = $this->getContext()->cookie;
+
 		$cookie->emc_carrier = '';
 		// Get cart carrier (if EnvoiMoinsCher, make some supplementary operations)
 		$row = $this->model->getCarrierByCartPricing($params['cart']->id);
@@ -2844,15 +2344,18 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function hookOrderDetail($params)
 	{
-		global $cookie, $smarty;
-		require_once(realpath(dirname(__FILE__).'/EnvoimoinscherHelper.php'));
+		$smarty = $this->getContext()->smarty;
+		$cookie = $this->getContext()->cookie;
+
+		require_once(_PS_MODULE_DIR_.'/envoimoinscher/includes/EnvoimoinscherHelper.php');
 		$helper = new EnvoimoinscherHelper;
 		// get tracking informations
-		$rows = $this->model->getTrackingByOrderAndCustomer($_GET['id_order'], $cookie->id_customer);
+		$rows = $this->model->getTrackingByOrderAndCustomer(Tools::getValue('id_order'), $cookie->id_customer);
 		$smarty->assign('rows', $rows);
 		$smarty->assign('isAdmin', false);
-		$point = $this->model->getPointInfos($_GET['id_order']);
+		$point = $this->model->getPointInfos(Tools::getValue('id_order'));
 		$is_point = 0;
+
 		if (is_array($params)) $is_point = 0;
 		if (isset($point['code']))
 		{
@@ -2887,7 +2390,7 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function hookHeader()
 	{
-		global $smarty;
+		$smarty = $this->getContext()->smarty;
 		$smarty->assign('emcBaseDir', _MODULE_DIR_.'/envoimoinscher/');
 		return $this->display(__FILE__, '/views/templates/admin/header_hook.tpl');
 	}
@@ -2901,7 +2404,7 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function hookDisplayCarrierList($params)
 	{
-		global $smarty;
+		$smarty = $this->getContext()->smarty;
 		$points = array();
 		$point = '';
 		$pricing = $this->model->getLastPrices(EnvoimoinscherHelper::getPricingCode($params['cart']));
@@ -2951,6 +2454,95 @@ class Envoimoinscher extends CarrierModule
 	}
 
 	/**
+	 * Get parcel points from a carrer and address (passed in get values)
+	 * @access public
+	 * @return void
+	 */
+	public function getPoints()
+	{
+		require_once(_PS_MODULE_DIR_.$this->name.'/Env/WebService.php');
+		require_once(_PS_MODULE_DIR_.$this->name.'/Env/ParcelPoint.php');
+		$smarty = $this->getContext()->smarty;
+
+		// Load the parcel points for the chosen carrier and address
+		$helper = new EnvoimoinscherHelper;
+		$carrier = (int)Tools::getValue('carrier');
+		$address_id = (int)Tools::getValue('addressId');
+		$env_cl = new Envoimoinscher;
+		$config = $helper->configArray(Db::getInstance()->ExecuteS('SELECT * FROM '._DB_PREFIX_.'configuration
+			 WHERE name LIKE "EMC_%"'));
+		$poi_cl = new EnvParcelPoint(array(
+			'user' => $config['EMC_LOGIN'],
+			'pass' => $config['EMC_PASS'],
+			'key' => $config['EMC_KEY']));
+		$poi_cl->setPlatformParams($env_cl->ws_name, _PS_VERSION_, $env_cl->version);
+		$poi_cl->setEnv(Tools::strtolower($config['EMC_ENV']));
+
+		$poi_cl->construct_list = true;
+		foreach (explode(',', Tools::getValue('points')) as $point)
+			if (ctype_alnum(Tools::getValue('country')))
+				$poi_cl->getParcelPoint('dropoff_point', $point, Tools::getValue('country'));
+
+		// add the inputs
+		$inputs = array();
+		$inputs['address'] = array();
+		$inputs['address']['name'] = 'parcelPoints'.$carrier.Tools::getValue('ope').$address_id;
+		$inputs['address']['id'] = 'parcelPoints'.$carrier.Tools::getValue('ope').$address_id;
+		$inputs['address']['value'] = array();
+		$inputs['info'] = array();
+		$inputs['info']['name'] = 'parcelInfos'.$carrier.Tools::getValue('ope').$address_id;
+		$inputs['info']['id'] = 'parcelInfos'.$carrier.Tools::getValue('ope').$address_id;
+		$inputs['info']['value'] = array();
+		$inputs['name'] = array();
+		$inputs['name']['name'] = 'parcelNames'.$carrier.Tools::getValue('ope').$address_id;
+		$inputs['name']['id'] = 'parcelNames'.$carrier.Tools::getValue('ope').$address_id;
+		$inputs['name']['value'] = array();
+		$inputs['id'] = array();
+		$inputs['id']['name'] = 'parcelIds'.$carrier.Tools::getValue('ope').$address_id;
+		$inputs['id']['id'] = 'parcelIds'.$carrier.Tools::getValue('ope').$address_id;
+		$inputs['id']['value'] = array();
+		$inputs['count'] = array();
+		$inputs['count']['name'] = 'counter'.$carrier.Tools::getValue('ope').$address_id;
+		$inputs['count']['id'] = 'counter'.$carrier.Tools::getValue('ope').$address_id;
+		$inputs['count']['value'] = 0;
+
+		// add parcel points
+		$points = array();
+		$i = 0;
+		foreach ($poi_cl->points['dropoff_point'] as $point)
+		{
+			if ($point['name'] != '')
+			{
+				$point['checked'] = $point['code'] == Tools::getValue('pointValue');
+				$point['js'] = 'selectPr(\''.$point['code'].'\', \''.(int)Tools::getValue('carrier').'\', \''.$address_id.'\');';
+				$point['class'] = 'point'.$carrier.$address_id;
+				$point['input_name'] = 'point'.$carrier.Tools::getValue('ope').$address_id;
+				$point['id'] = 'point'.$carrier.$point['code'].$address_id;
+
+				$inputs['address']['value'][] = $point['address'].', '.$point['zipcode'].' '.$point['city'];
+				$inputs['info']['value'][] = implode('<br />', $helper->setSchedule($point['schedule']));
+				$inputs['name']['value'][] = $point['name'];
+				$inputs['id']['value'][] = $point['code'];
+				$points[] = $point;
+			}
+			$i++;
+		}
+		if ($i == 0)
+			die('noPoint');
+
+		$inputs['address']['value'] = implode('|', $inputs['address']['value']);
+		$inputs['info']['value'] = implode('|', $inputs['info']['value']);
+		$inputs['name']['value'] = implode('|', $inputs['name']['value']);
+		$inputs['id']['value'] = implode('|', $inputs['id']['value']);
+			
+		$smarty->assign('points', $points);
+		$smarty->assign('inputs', $inputs);
+
+		echo $this->display(__FILE__, '/views/templates/front/get_points.tpl');
+		die();
+	}
+
+	/**
 	 * Sets parcel point in the database.
 	 * @access public
 	 * @param string $post_point Id of choosen parcel point.
@@ -2958,7 +2550,8 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function setPoint($post_point)
 	{
-		global $cookie;
+		$cookie = $this->getContext()->cookie;
+
 		$point = explode('-', $post_point);
 		if (ctype_alnum(trim($point[0])) && ctype_alnum(trim($point[1])))
 		{
@@ -2978,7 +2571,7 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function makeApiCall($params)
 	{
-		global $cookie;
+		$cookie = $this->getContext()->cookie;
 
 		// If no address selected, we set the default one
 		if ((empty($params['address']) || count($params['address']) === 0) ||
@@ -3073,7 +2666,7 @@ class Envoimoinscher extends CarrierModule
 			'version'      => $this->local_version
 		);
 
-		$cot_cl->setEnv(strtolower($config['EMC_ENV']));
+		$cot_cl->setEnv(Tools::strtolower($config['EMC_ENV']));
 
 		if (!$params['testPage'])
 			$cot_cl->setPerson(
@@ -3162,7 +2755,7 @@ class Envoimoinscher extends CarrierModule
 
 			//$error = 1;
 			$error_msg = $cot_cl->resp_errors_list[0]['message'];
-			Logger::addLog('[ENVOIMOINSCHER]['.time().'] Une erreur pendant la récupération des offres EnvoiMoinsCher :'.$error_msg, 4);
+			Logger::addLog('[ENVOIMOINSCHER]['.time().'] '.$this->l('Error while recovering offers : ').$error_msg, 4);
 		}
 		else
 		{
@@ -3179,7 +2772,7 @@ class Envoimoinscher extends CarrierModule
 				// look for discount type : free shipping
 				$discount_shipping = false;
 				if (!$params['testPage'])
-					foreach (Context::getContext()->cart->getCartRules() as $rule)
+					foreach ($this->getContext()->cart->getCartRules() as $rule)
 						if ((int)$rule['free_shipping'] == 1)
 							$discount_shipping = true;
 				$classes_css = 0;
@@ -3385,11 +2978,13 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function makeUpgrade()
 	{
-		global $cookie, $smarty;
+		$cookie = $this->getContext()->cookie;
+		$smarty = $this->getContext()->smarty;
+
 		$error = false;
-		$list = $this->parseUpgradeXml(__DIR__.'/upgrades/upgrades.xml');
-		$id = (int)$_GET['up_id'];
-		$queries = explode('-- REQUEST --', file_get_contents(__DIR__.'/upgrades/sql/'.$list[$id]['file']));
+		$list = $this->parseUpgradeXml(_PS_MODULE_DIR_.$this->name.'/sql/upgrades/upgrades.xml');
+		$id = (int)Tools::getValue('up_id');
+		$queries = explode('-- REQUEST --', Tools::file_get_contents(_PS_MODULE_DIR_.$this->name.'/sql/upgrades/'.$list[$id]['file']));
 		foreach ($queries as $q => $query)
 		{
 			$query = str_replace('{PREFIXE}', _DB_PREFIX_, $query);
@@ -3401,11 +2996,11 @@ class Envoimoinscher extends CarrierModule
 			unset($queries[$q]);
 		}
 		if (count($queries) > 0)
-			file_put_contents(__DIR__.'/upgrades/sql/'.$list[$id]['file'], implode('-- REQUEST --', $queries));
+			file_put_contents(_PS_MODULE_DIR_.$this->name.'/sql/upgrades/'.$list[$id]['file'], implode('-- REQUEST --', $queries));
 		else
 		{
-			$error = $this->removeUpgradeItem($id, __DIR__.'/upgrades/upgrades.xml');
-			unlink(__DIR__.'/upgrades/sql/'.$list[$id]['file']);
+			$error = $this->removeUpgradeItem($id, _PS_MODULE_DIR_.$this->name.'/sql/upgrades/upgrades.xml');
+			unlink(_PS_MODULE_DIR_.$this->name.'/sql/upgrades/'.$list[$id]['file']);
 		}
 		$smarty->assign('error', $error);
 		$smarty->assign('adminImg', _PS_ADMIN_IMG_);
@@ -3429,7 +3024,8 @@ class Envoimoinscher extends CarrierModule
 		foreach ($upgrades as $upgrade)
 		{
 			$date = strtotime($upgrade->getElementsByTagName('date')->item(0)->nodeValue);
-			$result[$upgrade->getElementsByTagName('id')->item(0)->nodeValue] = array('from' => $upgrade->getElementsByTagName('from')->item(0)->nodeValue,
+			$result[$upgrade->getElementsByTagName('id')->item(0)->nodeValue] = array(
+				'from' => $upgrade->getElementsByTagName('from')->item(0)->nodeValue,
 				'to' => $upgrade->getElementsByTagName('to')->item(0)->nodeValue,
 				'date' => date('d-m-Y', $date),
 				'description' => $upgrade->getElementsByTagName('description')->item(0)->nodeValue,
@@ -3450,8 +3046,8 @@ class Envoimoinscher extends CarrierModule
 		$error = true;
 		$dom_cl = new DOMDocument();
 		$dom_cl->load($file);
-		$main = $dom_cl->document_element;
 		$xpath = new DOMXPath($dom_cl);
+		$main = $xpath->evaluate('/upgrades')->item(0);
 		$upgrades = $xpath->evaluate('/upgrades/upgrade');
 		foreach ($upgrades as $upgrade)
 			if ($upgrade->getElementsByTagName('id')->item(0)->nodeValue == $id)
@@ -3554,13 +3150,14 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function downloadLabels()
 	{
-		global $cookie;
+		$cookie = $this->getContext()->cookie;
+
 		$orders_to_get = array();
-		if (isset($_POST['orders']))
-			foreach ($_POST['orders'] as $ord)
+		if (Tools::isSubmit('orders'))
+			foreach (Tools::getValue('orders') as $ord)
 				$orders_to_get[] = (int)$ord;
-		elseif (isset($_GET['order']))
-			$orders_to_get[] = (int)$_GET['order'];
+		elseif (Tools::isSubmit('order'))
+			$orders_to_get[] = (int)Tools::getValue('order');
 		$references = $this->model->getReferencesToLabels($orders_to_get);
 		$refs = array();
 		foreach ($references as $reference)
@@ -3574,7 +3171,7 @@ class Envoimoinscher extends CarrierModule
 			$options = array(
 				CURLOPT_RETURNTRANSFER => 1,
 				CURLOPT_URL => $this->environments[$config['EMC_ENV']]['link'].'/documents?type=bordereau&envoi='.implode(',', $refs),
-				CURLOPT_HTTPHEADER => array('Authorization: '.base64_encode($config['EMC_LOGIN'].':'.$config['EMC_PASS'])),
+				CURLOPT_HTTPHEADER => array('Authorization: '.$helper->encode($config['EMC_LOGIN'].':'.$config['EMC_PASS'])),
 				CURLOPT_CAINFO => dirname(__FILE__).'/ca/ca-bundle.crt',
 				CURLOPT_SSL_VERIFYPEER => true,
 				CURLOPT_SSL_VERIFYHOST => 2
@@ -3600,7 +3197,7 @@ class Envoimoinscher extends CarrierModule
 		$config = $helper->configArray($this->model->getConfigData());
 		$result = array();
 		$filename = $this->getEnvironment($config['EMC_ENV']).'/api/check_updates.html?module='.$this->ws_name.'&version='.$this->local_version;
-		$updates = (array)json_decode(file_get_contents($filename));
+		$updates = (array)Tools::jsonDecode(Tools::file_get_contents($filename));
 		foreach ($updates as $u => $update)
 		{
 			$info = (array)$update;
@@ -3611,7 +3208,7 @@ class Envoimoinscher extends CarrierModule
 				'url' => $this->getEnvironment($config['EMC_ENV']).$info['url']);
 		}
 		ob_end_clean();
-		echo json_encode($result);
+		echo Tools::jsonEncode($result);
 		die();
 	}
 
@@ -3627,7 +3224,7 @@ class Envoimoinscher extends CarrierModule
 			'pass' =>	$config['EMC_PASS'],
 			'key' => $config['EMC_KEY']));
 		$ser_class->setPlatformParams($this->ws_name, _PS_VERSION_, $this->version);
-		$ser_class->setEnv(strtolower($config['EMC_ENV']));
+		$ser_class->setEnv(Tools::strtolower($config['EMC_ENV']));
 		$ser_class->setParam(array('module' => $this->ws_name, 'version' => $this->local_version));
 		$ser_class->setGetParams();
 		$ser_class->getServices();
@@ -3664,8 +3261,9 @@ class Envoimoinscher extends CarrierModule
 					$service['srvInfos'] = $service_infos;
 					if ($this->model->insertService($service, $carrier))
 					{
-						$carrier_lower = strtolower($carrier['code']);
-						file_put_contents(_PS_MODULE_DIR_.'/envoimoinscher/img/detail_'.$carrier_lower.'.jpg', file_get_contents($carrier['logo_modules']));
+						$carrier_lower = Tools::strtolower($carrier['code']);
+						file_put_contents(_PS_MODULE_DIR_.'/envoimoinscher/img/detail_'.$carrier_lower.'.jpg', Tools::file_get_contents($carrier['logo_modules']));
+
 						$added++;
 						$offers_json['added'][] = $service['label'];
 					}
@@ -3704,7 +3302,7 @@ class Envoimoinscher extends CarrierModule
 				$offers_json['deleted'][] = $offer['label_es'];
 			}
 		ob_end_clean();
-		echo json_encode(array(
+		echo Tools::jsonEncode(array(
 			'added' => $added,
 			'updated' => $updated,
 			'deleted' => $deleted,
@@ -3726,29 +3324,29 @@ class Envoimoinscher extends CarrierModule
 			'pass' =>	$config['EMC_PASS'],
 			'key' => $config['EMC_KEY']));
 		$ors_class->setPlatformParams($this->ws_name, _PS_VERSION_, $this->version);
-		$ors_class->setEnv(strtolower($config['EMC_ENV']));
+		$ors_class->setEnv(Tools::strtolower($config['EMC_ENV']));
 		$ors_class->setGetParams(array('module' => $this->ws_name, 'version' => $this->local_version));
-		$ors_class->getOrderInformations($_GET['ref']);
+		$ors_class->getOrderInformations(Tools::getValue('ref'));
 		ob_end_clean();
 		if (!$ors_class->curl_error)
 		{
 			$label = Db::getInstance()->ExecuteS('SELECT *
 				 FROM '._DB_PREFIX_.'emc_documents
-				 WHERE '._DB_PREFIX_.'orders_id_order = '.(int)$_GET['order']);
+				 WHERE '._DB_PREFIX_.'orders_id_order = '.(int)Tools::getValue('order'));
 			if ((bool)$ors_class->order_info['labelAvailable'])
 			{
 				Db::getInstance()->autoExecute(
 					_DB_PREFIX_.'emc_documents',
 					array('generated_ed' => 1),
 					'UPDATE',
-					''._DB_PREFIX_.'orders_id_order = '.(int)$_GET['order']
+					''._DB_PREFIX_.'orders_id_order = '.(int)Tools::getValue('order')
 				);
 			}
 			Db::getInstance()->autoExecute(
 				_DB_PREFIX_.'emc_orders',
 				array('ref_ope_eor' => $ors_class->order_info['opeRef']),
 				'UPDATE',
-				''._DB_PREFIX_.'orders_id_order = '.(int)$_GET['order']
+				''._DB_PREFIX_.'orders_id_order = '.(int)Tools::getValue('order')
 			);
 			if (EnvoimoinscherModel::TRACK_OPE_TYPE == $config['EMC_TRACK_MODE'])
 			{
@@ -3756,16 +3354,16 @@ class Envoimoinscher extends CarrierModule
 					_DB_PREFIX_.'orders',
 					array('shipping_number' => $ors_class->order_info['opeRef']),
 					'UPDATE',
-					'id_order = '.(int)$_GET['order']
+					'id_order = '.(int)Tools::getValue('order')
 				);
 			}
 			$ors_class->order_info['error'] = 0;
 			$ors_class->order_info['labelUrl'] = $label[0]['link_ed'];
 			$ors_class->order_info['labelAvailable'] = (int)$ors_class->order_info['labelAvailable'];
-			echo json_encode($ors_class->order_info);
+			echo Tools::jsonEncode($ors_class->order_info);
 			die();
 		}
-		echo json_encode(array('error' => 1));
+		echo Tools::jsonEncode(array('error' => 1));
 		die();
 	}
 
@@ -3778,7 +3376,8 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function putOpe($ope, $is_discount)
 	{
-		global $cookie;
+		$cookie = $this->getContext()->cookie;
+
 		$cookie->emc_carrier = (int)$ope;
 		$cookie->emc_discount = $is_discount;
 	}
@@ -3795,7 +3394,7 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function editAddress()
 	{
-		$order_id = (int)$_GET['id_order'];
+		$order_id = (int)Tools::getValue('id_order');
 		// get old address data
 		$address = $this->model->getOrderData($order_id);
 		$company = $address[0]['company'];
@@ -3846,7 +3445,7 @@ class Envoimoinscher extends CarrierModule
 		if ($this->model->cleanCache())
 			$result['error'] = 0;
 		ob_end_clean();
-		echo json_encode($result);
+		echo Tools::jsonEncode($result);
 		die();
 	}
 
@@ -3866,7 +3465,7 @@ class Envoimoinscher extends CarrierModule
 									'&configure='.$this->name.
 									'&tab_module='.$this->tab.
 									'&module_name='.$this->name;
-		$this->context->smarty->assign('EMC_link', $this->link);
+		$this->getContext()->smarty->assign('EMC_link', $this->link);
 
 		// Get level configuration
 		$config_status = (int)Configuration::get('EMC_USER');
@@ -3902,20 +3501,20 @@ class Envoimoinscher extends CarrierModule
 			if ($status == EnvoimoinscherModel::MODE_ONLINE)
 				$this->model->passToOnlineMode();
 
-			json_encode(true);
+			Tools::jsonEncode(true);
 			exit;
 		}
 		// Save environment
 		else if (Tools::getValue('EMC_Env') && Tools::getValue('ajax'))
 		{
 			Configuration::updateValue('EMC_ENV', Tools::getValue('EMC_Env'));
-			json_encode(true);
+			Tools::jsonEncode(true);
 			exit;
 		}
 		// Load tabs
 		else if (Tools::getValue('ajax'))
 		{
-			$tab = ucfirst(strtolower(Tools::getValue('EMC_tab')));
+			$tab = Tools::ucfirst(Tools::strtolower(Tools::getValue('EMC_tab')));
 			/** Merchant Account **/
 			if ($tab === 'Merchant')
 				echo $this->getContentMerchant();
@@ -3976,7 +3575,7 @@ class Envoimoinscher extends CarrierModule
 				// update e-mail configuration
 				$user_class = new EnvUser(array('user' => $api_login, 'pass' => $api_pass, 'key' => $api_key));
 				$user_class->setPlatformParams($this->ws_name, _PS_VERSION_, $this->version);
-				$user_class->setEnv(strtolower($api_env));
+				$user_class->setEnv(Tools::strtolower($api_env));
 
 				$user_class->postEmailConfiguration(
 					array(
@@ -4058,7 +3657,7 @@ class Envoimoinscher extends CarrierModule
 
 		if (count($parcel_points) > 0)
 			foreach ($parcel_points as $carrier => $code)
-				Configuration::updateValue('EMC_PP_'.strtoupper($carrier), $code);
+				Configuration::updateValue('EMC_PP_'.Tools::strtoupper($carrier), $code);
 	}
 
 	/**
@@ -4274,12 +3873,12 @@ class Envoimoinscher extends CarrierModule
 		else
 			return $this->displayError($this->l('Thanks to choose type and nature of your picks.'));
 
-		if (Tools::getValue('pickupDay0') &&
-			(Tools::getValue('pickupFrom0') || (isset($_POST['pickupFrom0']) && $_POST['pickupFrom0'] == '0')) &&
-			(Tools::getValue('pickupTo0') || (isset($_POST['pickupTo0']) && $_POST['pickupTo0'] == '0')) &&
-			Tools::getValue('pickupDay1') &&
-			(Tools::getValue('pickupTo1') || (isset($_POST['pickupTo1']) && $_POST['pickupTo1'] == '0')) &&
-			(Tools::getValue('pickupFrom1') || (isset($_POST['pickupFrom1']) && $_POST['pickupFrom1'] == '0')))
+		if (Tools::isSubmit('pickupDay0') &&
+			(Tools::getValue('pickupFrom0') || (Tools::isSubmit('pickupFrom0') && Tools::getValue('pickupFrom0') == '0')) &&
+			(Tools::getValue('pickupTo0') || (Tools::isSubmit('pickupTo0') && Tools::getValue('pickupTo0') == '0')) &&
+			Tools::isSubmit('pickupDay1') &&
+			(Tools::getValue('pickupTo1') || (Tools::isSubmit('pickupTo1') && Tools::getValue('pickupTo1') == '0')) &&
+			(Tools::getValue('pickupFrom1') || (Tools::isSubmit('pickupFrom1') && Tools::getValue('pickupFrom1') == '0')))
 		{
 			// Update CFG
 			// News
@@ -4287,7 +3886,7 @@ class Envoimoinscher extends CarrierModule
 			Configuration::updateValue('EMC_MULTIPARCEL', Tools::getValue('EMC_multiparcel'));
 			Configuration::updateValue('EMC_WEIGHTMIN', (int)Tools::getValue('EMC_min_weight'));
 			Configuration::updateValue('EMC_AVERAGE_WEIGHT', str_replace(',', '.', Tools::getValue('EMC_default_weight')));
-			Configuration::updateValue('EMC_ASSU', Tools::getValue('EMC_use_axa'));
+			Configuration::updateValue('EMC_ASSU', Tools::isSubmit('EMC_use_axa')?Tools::getValue('EMC_use_axa'):1);
 			// Old
 			Configuration::updateValue('EMC_PICKUP_J1', Tools::getValue('pickupDay0'));
 			Configuration::updateValue('EMC_PICKUP_F1', Tools::getValue('pickupFrom0'));

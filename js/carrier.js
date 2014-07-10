@@ -35,16 +35,16 @@ function selectPoint(ref, link, operator, address)
   $('#mapContainer').css('top', (arr.top-50)+'px');
   $('#loaderPoints'+ref+address).show(); 
   $.ajax({
-    url: emcBaseDir+'/get_points.php',
+    url: emcBaseDir+'/ajax/get_points.php',
     type: 'POST', 
     data: { 'points' : $('#pointsList'+ref+address).val(), carrier : ref, ope: operator, addressId : address, country : $('#destCountry').val(), pointValue : parcelPointValue },
     success : function(res)
     {	
       if(res.indexOf("noPoint") != -1){
-    	alert("Désolé, nous ne trouvons pas de points relais pour cette zone.\nVous pouvez élargir la recherche en modifiant votre adresse de livraison. ")
+    	alert(carrier_translation.no_pickup_point_found_try_other_addr);
       }
       else{
-				res = '<p><b>Veuillez choisir le point de retrait de votre colis. Vous pouvez visualiser les points relais sur <a href="#" id="openMap" onclick="javascript:makeMap(\'MONR\', \''+ref+'\', \''+address+'\');return false;">cette carte</a></b></p>'+
+				res = '<p><b>'+carrier_translation.select_pickup_point1+'<a href="#" id="openMap" onclick="javascript:makeMap(\'MONR\', \''+ref+'\', \''+address+'\');return false;">'+carrier_translation.select_pickup_point2+'</a></b></p>'+
 				'<ul>'+res +'</ul>';
 	      $('#points'+ref+address).show();
 	      $('#points'+ref+address).html(res);
@@ -86,13 +86,14 @@ function initialize(ope, carrierdId, addressId)
   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
   points = $('#parcelPoints'+carrierdId+ope+addressId).val().split('|');
   infos = $('#parcelInfos'+carrierdId+ope+addressId).val().split('|');
+  console.log($('#parcelNames'+carrierdId+ope+addressId).val());
   parcelNames = $('#parcelNames'+carrierdId+ope+addressId).val().split('|');
   parcelIds = $('#parcelIds'+carrierdId+ope+addressId).val().split('|');
   for(var i = 0; i <  points.length ; i++)
   {
     (function(i) {
       var address = points[i];
-      infoParcel[i] = '<b>'+parcelNames[i]+'</b>' + '<br /><a href="#" onclick="javascript: selectPr(\''+parcelIds[i]+'\', \''+carrierdId+'\', \''+addressId+'\'); return false;">Sélectionner ce point</a> <br />'  + address + '<br />' + infos[i]; 
+      infoParcel[i] = '<b>'+parcelNames[i]+'</b>' + '<br /><a href="#" onclick="javascript: selectPr(\''+parcelIds[i]+'\', \''+carrierdId+'\', \''+addressId+'\'); return false;">'+carrier_translation.select_this_pickup_point+'</a> <br />'  + address + '<br />' + infos[i]; 
       if(geocoder)
       {
         geocoder.geocode({ 'address': address }, function(results, status) {
@@ -148,7 +149,7 @@ function selectPr(pr, carrierId, addressId)
 {
   makeOpeChecked(carrierId, 0, 0, addressId);
   $.ajax({
-    url: emcBaseDir+'set_point.php',
+    url: emcBaseDir+'ajax/set_point.php',
     type: 'POST', 
     data: { 'point' : pr }
   });
@@ -176,7 +177,7 @@ function handleParcelPoint(ref, carrier, price, priceHT, address)
   makeOpeChecked(carrier, price, priceHT, address);
   if(''+$('input[name="point'+carrier+ref+address+'"]:checked').val() == 'undefined')
   {
-    alert("Avant de continuer, veuillez sélectionner votre point relais");
+    alert(carrier_translation.before_continue_select_pickup_point);
     return false;
   }
 } 
@@ -208,7 +209,7 @@ function lookForPoints(ref)
       '</div><div id="points'+value+idAddress+'" class="pointsUl" style="display:none; padding:5px;min-width:300px;">'+
       '</div>');
     selectPoint(value,  ref , 'MONR', idAddress);
-    alert("Avant de continuer, sélectionnez votre point relais");
+    alert(carrier_translation.before_continue_select_pickup_point);
   }
 }
 

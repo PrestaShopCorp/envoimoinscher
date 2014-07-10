@@ -58,10 +58,10 @@
 							{$upgrade.date|escape:'htmlall'}
 						</td>
 						<td class="center">
-							{$upgrade.description|escape:'htmlall'}
+							{$upgrade.description|unescape:'html'}
 						</td>
 						<td class="center">
-							<a class="button" href="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall'}&up_id={$u|escape:'htmlall'}" class="action_module">effectuer</a>
+							<a class="button" href="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall'}&option=upgrade&up_id={$u|escape:'htmlall'}" class="action_module">effectuer</a>
 						</td>
 					</tr>
 				{/foreach}
@@ -85,7 +85,8 @@
 		<h2 class="title-help">{l s='Common questions' mod='envoimoinscher'}</h2>
 	
 	<li class="main-question"><h3>{l s='Where can i find help with the configuration?' mod='envoimoinscher'}</h3></li>
-	{l s='A documentation is available here:' mod='envoimoinscher'}<a href="http://www.envoimoinscher.com/api/download/user_guide-emc_prestashop.pdf" target="_blank" class="action_module">{l s='documentation' mod='envoimoinscher'}</a><br/>
+	{l s='A documentation is available here:' mod='envoimoinscher'}<a href="http://ecommerce.envoimoinscher.com/api/download/doc_prestashop_configurer.pdf" target="_blank" class="action_module">{l s='documentation' mod='envoimoinscher'}</a><br/>	
+	{l s='A documentation is also provided about sending method:' mod='envoimoinscher'}<a href="http://ecommerce.envoimoinscher.com/api/download/doc_prestashop_expedier.pdf" target="_blank" class="action_module">{l s='sending method' mod='envoimoinscher'}</a><br/>
 	{l s='Contact customer service for help' mod='envoimoinscher'}
 	
 	<li class="main-question"><h3>{l s='Can i test my module?' mod='envoimoinscher'}</h3></li>

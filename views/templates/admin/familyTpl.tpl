@@ -56,7 +56,7 @@
 					<td class="price">
 						{if in_array($offer.id_eo, $operators)}
 							<div class="center EMC_error">
-								{l s='Disable to %s' mod='envoimoinscher' sprintf={$nameCategory|escape:'htmlall'}}
+								{l s='Disable to %s' mod='envoimoinscher' sprintf={$nameCategory|escape:'html'}}
 							</div>
 						{/if}
 						<div id="field2-offer{$offer.id_es}" {if $offer.id_carrier == '' || in_array($offer.id_eo, $operators)} style="display:none;"{/if}>

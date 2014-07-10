@@ -24,8 +24,8 @@
  *}
 
 <div id="massStats">
-<p class="first">Expédition des commandes en cours</p>
-<p>A traiter : <span id="todo">{$all|escape:'htmlall'}</span></p>
-<p>Traitées : <span id="done">{$done|escape:'htmlall'}</span></p>
-<p><a href="index.php?controller=AdminEnvoiMoinsCher&option=cancelOrder&token={$token|escape:'htmlall'}" class="action_module">Annuler les envois restants</a></p>
+<p class="first">{l s='order currently shiping' mod='envoimoinscher'}</p>
+<p>{l s='pending :' mod='envoimoinscher'} <span id="todo">{$all|escape:'htmlall'}</span></p>
+<p>{l s='done :' mod='envoimoinscher'} <span id="done">{$done|escape:'htmlall'}</span></p>
+<p><a href="index.php?controller=AdminEnvoiMoinsCher&option=cancelOrder&token={$token|escape:'htmlall'}" class="action_module">{l s='cancel pending shipment' mod='envoimoinscher'}</a></p>
 </div>

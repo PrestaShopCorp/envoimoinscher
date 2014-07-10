@@ -23,6 +23,10 @@
  * International Registred Trademark & Property of PrestaShop SA
  *}
 
+	{if $local_fancybox}
+		<link href="{$emcBaseDir|unescape:'html'}/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
+		<script type="text/javascript" src="{$emcBaseDir|unescape:'html'}/js/jquery.boxfancy.js"></script>
+	{/if}
 	{literal}
 	<style type="text/css">
 	.table tr td {padding: 2px; color: #000000;}
@@ -53,9 +57,9 @@
 
 
 	{if $errorLabels == 1}
-	<div class="conf">Veuillez sélectionner le(s) bordereau(x) à télécharger.</div>
+	<div class="conf">{l s='please select slips to download' mod='envoimoinscher'}</div>
 	{/if}
-	<p>Les commandes ci-dessous sont celles dont vous avez déjà déclenché l'ordre d'envoi. Pour télécharger les bordereaux de plusieurs de vos envois, cochez les cases situées en-dessous des numéros de commande puis cliquez sur "Télécharger les bordereaux</p>
+	<p>{l s='list shipments, to download slips : check then clic "download"' mod='envoimoinscher'}</p>
 
 
 	{* include pager template *}

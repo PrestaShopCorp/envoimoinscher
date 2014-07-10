@@ -159,9 +159,9 @@
 			<div class="clear both"></div>
 		</fieldset>
 		<fieldset>
-			<legend>{l s='Assurancy' mod='envoimoinscher'}</legend>
+			<legend>{l s='Insurance' mod='envoimoinscher'}</legend>
 			<!-- Use AXA -->
-			<label for="EMC_use_axa">{l s='Use AXA assurancy:' mod='envoimoinscher'}</label>
+			<label for="EMC_use_axa">{l s='Use AXA insurance:' mod='envoimoinscher'}</label>
 			<div class="margin-form">
 				<input type="checkbox" name="EMC_use_axa" id="EMC_use_axa" value="1" {if Tools::getValue('EMC_use_axa', $EMC_config.EMC_ASSU) == "1"} checked="checked"{/if}/>
 				<p class="preference_description">

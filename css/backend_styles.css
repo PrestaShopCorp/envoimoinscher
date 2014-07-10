@@ -58,3 +58,59 @@ fieldset.gris table tr td.first, fieldset.gris table tr td.second {color: #b6b3b
 #confGen .floatAll label {width:auto; margin-right:10px;}
 #confGen .floatAll span {font-size:11px;margin-right:10px; margin-top:4px;}
 #confGen .floatAll span.big {width:15px; font-size:14px; margin-top:1px;}
+
+#order-menu{
+float:left;
+width:50%;
+height:200px;
+}
+
+#emc-news{
+font-size:15px;
+padding:0 0 20px 0;
+float:right;
+width:50%;
+height:200px;
+}
+
+#emc-news h4{
+margin:0 0 0 auto;
+max-width:830px;
+height:30px;
+}
+
+#emc-news ul{
+height:170px;
+overflow-y:auto;
+list-style-type:none;
+}
+
+#emc-news li {
+margin-left:auto;
+max-width:800px;
+border: 1px solid #999;
+padding:3px 8px;
+margin-bottom:5px;
+border-radius:5px;
+box-shadow: 0 0 11px #999;
+}
+
+.emc-alert{
+background-color:#FFEEEE;
+}
+.emc-info{
+background-color:#EEEEFF;
+}
+.emc-update{
+background-color:#EEFFEE;
+}
+
+.emc-alert b{
+color:red;
+}
+.emc-info b{
+color:blue;
+}
+.emc-update b{
+color:green;
+}

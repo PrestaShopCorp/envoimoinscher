@@ -70,7 +70,7 @@
 			{if isset($genders) && sizeof($genders)}
 				{foreach from=$genders item='gender'}
 					<input type="radio" name="EMC_gender"{if Tools::getValue('EMC_gender', $EMC_config.EMC_CIV) == $gender} checked="checked"{/if} value="{$gender}" id="Gender_{$gender}" />
-					<label for="Gender_{$gender|escape:'htmlall'}">{$gender|escape:'htmlall'}</label>
+					<label for="Gender_{$gender|escape:'htmlall'}">{l s=$gender mod='envoimoinscher'}</label>
 				{/foreach}
 			{/if}
 			<sup>*</sup>
