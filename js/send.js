@@ -121,7 +121,7 @@ $(document).ready(function() {
             $('#offerTable').html("");
             $('#notFoundOffer').html(content);
           } 
-					$('#submitForm').removeAttr("disabled");
+		  $('#submitForm').removeAttr("disabled");
         }
       });
       return false;

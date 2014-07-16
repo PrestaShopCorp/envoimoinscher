@@ -53,6 +53,10 @@
 	<script type="text/javascript" src="{$baseDir|escape:'htmlall'}modules/envoimoinscher/js/ordersSend.js"></script>
 	<link type="text/css" rel="stylesheet" href="{$baseDir|escape:'htmlall'}modules/envoimoinscher/css/backend_styles.css" />
 
+	{if $local_fancybox}
+		<link href="{$emcBaseDir|unescape:'html'}/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
+		<script type="text/javascript" src="{$emcBaseDir|unescape:'html'}/js/jquery.boxfancy.js"></script>
+	{/if}
 
 	{include file="$submenuTemplate" var=$actual}
 
@@ -63,12 +67,14 @@
 		{include file="$massTemplate" all=$ordersTodo done=0 token=$token}
 	</fieldset>
 	{elseif $normalOrderPassed == 1}
-	<div class="conf">La commande de livraison a été correctement passée.</div>
+	<div>
+		{l s='order delivery successfully send' mod='envoimoinscher'}
+	</div>
 	{/if}
 
 	{if $showEmcTable}
-	<h2>Commandes avec transporteur EnvoiMoinsCher sélectionné</h2>
-	<p>Voici les commandes pour lesquelles votre acheteur a choisi un transporteur EMC à l'étape "frais de port" sur votre boutique en ligne. Le transporteur EMC est déjà défini : vous pouvez expédiez ces commandes dès maintenant sans avoir à les compléter. Mais si vous souhaitez utiliser le multi-colis sur une commande, vous devez l'envoyer manuellement en cliquant sur "Expédier" en dernière colonne. Toute commande traitée sera classée dans l'historique, parfois après rafraîchissement de la page.</p>
+	<h2>{l s='EMC carrier order selected' mod='envoimoinscher'}</h2>
+	<p>{l s='list EMC carrier orders pending help' mod='envoimoinscher'}</p>
 	
 	<form id="orderDo1" method="post" action="index.php?controller=AdminEnvoiMoinsCher&option=initOrder&token={$token|escape:'htmlall'}"><div>
 		<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendTop"}</div>
@@ -79,12 +85,12 @@
 	</div></form>
 	<br /><br />
 	{else}
-	<p>Pas de commandes EnvoiMoinsCher à expédier.</p> 
+	<p>{l s='no EMC order to ship' mod='envoimoinscher'}</p> 
 	{/if}
 
 	{if $showOthersTable}
-	<h2>Commandes sans transporteur EnvoiMoinsCher sélectionné</h2>
-	<p>Voici les commandes pour lesquelles votre acheteur a désigné un transporteur autre que ceux proposés par le module EMC ou aucun transporteur. Si vous souhaitez en expédier avec notre module, vous devrez pour chacune d'entre elles sélectionner le transporteur EMC avant déclenchement de l'envoi</p>
+	<h2>{l s='order without EMC carrier' mod='envoimoinscher'}</h2>
+	<p>{l s='list no EMC carrier orders pending help' mod='envoimoinscher'}</p>
 	<form id="orderDo2" method="post" action="index.php?controller=AdminEnvoiMoinsCher&option=initOrder&token={$token|escape:'htmlall'}"><div>
 		<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendTop"}</div>
 		{include file="$ordersTableTemplate" id="2" orders=$ordersOthers tokenOrder=$tokenOrder type="without"}
@@ -97,14 +103,11 @@
 
 	{if $showErrorsTable}
 	<br /><br />
-	<h2 id="errorsTable">Commandes à compléter ou invalides</h2>
-	<p>Voici les commandes pour lesquelles il existe :
-		<br />- Des informations manquantes : l'offre de transport choisie par votre acheteur n'est plus disponible par exemple
-		<br />- Des erreurs de validation : numéro de téléphone du destinataire incorrect, etc.
-		<br /><br />Pour pouvoir expédier les commandes, vous devrez les compléter ou les corriger. Pour cela, vous
-		passerez automatiquement par l'écran de vérification des informations de chaque envoi. Dans le cas
-		où l'offre n'est plus disponible, vous pourrez sélectionner une nouvelle offre de transport qui
-		remplacera l'ancienne (n'oubliez pas d'en informer votre client), etc.
+	<h2 id="errorsTable">{l s='invalid or uncomplete order' mod='envoimoinscher'}</h2>
+	<p>{l s='list orders where :' mod='envoimoinscher'}
+		<br />{l s='list order list 1' mod='envoimoinscher'}
+		<br />{l s='list order list 2' mod='envoimoinscher'}
+		<br /><br />{l s='list order help' mod='envoimoinscher'}
 	</p>
 	<form id="orderDo3" method="post" action="index.php?controller=AdminEnvoiMoinsCher&option=initOrder&token={$token|escape:'htmlall'}"><div>
 		<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendTop"}</div>

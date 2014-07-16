@@ -35,30 +35,32 @@
 	var envUrl = "{/literal}{$envUrl}{literal}";
 	{/literal}
 	</script>
-	<script type="text/javascript" src="{$baseJs|escape:'htmlall'}jquery/plugins/fancybox/jquery.fancybox.js"></script>
 	<script type="text/javascript" src="{$baseDirCss|escape:'htmlall'}modules/envoimoinscher/js/send.js"></script>
 	<link type="text/css" rel="stylesheet" href="{$baseDirCss|escape:'htmlall'}modules/envoimoinscher/css/backend_styles.css" />
 	<link type="text/css" rel="stylesheet" href="{$baseDirCss|escape:'htmlall'}modules/envoimoinscher/css/backend_styles.css" />
+	{if $local_fancybox}
+		<link href="{$emcBaseDir|unescape:'html'}/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
+		<script type="text/javascript" src="{$emcBaseDir|unescape:'html'}/js/jquery.boxfancy.js"></script>
+	{/if}
 	{if $alreadyPassed}
-	<div class="alert error" style="width:400px;">L'envoi a déjà été passé pour cette commande. Si vous avez des questions, contactez le service après vente d'EnvoiMoinsCher au numéro
-		01 75 77 37 97.
+	<div class="alert error" style="width:400px;">{l s='shipment already send : Contact EMC for more info' mod='envoimoinscher'}
 	</div>
 	{else}
 	{if isset($showErrorMessage) && $showErrorMessage == 1 && $errorType == "order"}
-	<div class="alert error" style="width:400px;">La commande n'a pas été expédiée.Une erreur s'est produite :
+	<div class="alert error" style="width:400px;">{l s='order shipment failed :' mod='envoimoinscher'}
 		{$errorMessage|escape:'htmlall'}
 	</div>
 	{/if}
 
 	{if $ordersAll > 0}
 	<div class="path_bar">{include file="$massTemplate" all=$ordersAll done=$ordersDone token=$token}
-		{if $orderTodo > 1}<p><a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$nextOrderId}&option=initOrder&token={$token}&mode=skip&previous={$orderId}" class="action_module">Passer à la commande suivante</a></p>{/if}
+		{if $orderTodo > 1}<p><a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$nextOrderId}&option=initOrder&token={$token}&mode=skip&previous={$orderId}" class="action_module">{l s='next order' mod='envoimoinscher'}</a></p>{/if}
 	</div>
 	{/if}
-	<h2>Commande n° {$orderId|escape:'htmlall'}</h2>
+	<h2>{l s='order number :' mod='envoimoinscher'} {$orderId|escape:'htmlall'}</h2>
 	<div class="box-left">
 		{if $isFound}
-		<p><b>Informations sur l'offre</b></p>
+		<p><b>{l s='offer information' mod='envoimoinscher'}</b></p>
 		<div id="offerTable">
 			{include file="$tableTemplate" var=$offer}
 		</div><!-- offerTable -->
@@ -67,16 +69,16 @@
 		{elseif !$isFound}
 		<div class="alert error" style="width:400px;">
 			{if !$isEMCCarrier}
-			L'offre choisie par votre client sur cette commande n'est pas une offre du module EnvoiMoinsCher. Cette page vous permet de la remplacer par une offre EnvoiMoinsCher : sélectionnez-en une ci-dessous parmi celles que les transporteurs EnvoiMoinsCher proposent (prévenez votre client du changement de l'offre) afin de l'appliquer pour l'expédition de cette commande.
+				{l s='order offer not EMC carrier offer : select EMC offer' mod='envoimoinscher'}
 			{else}
-			L'offre choisie par votre client n'est plus disponible. Vous pouvez en sélectionner une nouvelle (prévenez votre client du changement de l'offre) ou réessayer plus tard.
+				{l s='order offer not avaliable : pick another one or try later' mod='envoimoinscher'}
 			{/if}
 		</div>
-		<p><b>L'offre sélectionnée par le client : </b> {$orderInfo.name|escape:'htmlall'}</p>
-		<p style="margin-top:20px;"><b>Les offres EnvoiMoinsCher</b></p>
+		<p><b>{l s='client selected offer :' mod='envoimoinscher'} </b> {$orderInfo.name|escape:'htmlall'}</p>
+		<p style="margin-top:20px;"><b>{l s='EMC offers :' mod='envoimoinscher'}</b></p>
 		{if isset($showErrorMessage) && $showErrorMessage == 1 && $errorType == "quote"}
 		<div class="alert error" style="width:400px;">
-			Aucune offre EnvoiMoinsCher n'a pas pu être trouvée. Une erreur s'est produite :
+			{l s='no EMC offer found : error :' mod='envoimoinscher'}
 			{$errorMessage|escape:'htmlall'}
 			{if $orderTodo <= 1}
 			<p><a href="index.php?controller=AdminEnvoiMoinsCher&option=cancelOrder&token={$token|escape:'htmlall'}" class="action_module">Annuler l'envoi</a></p>
@@ -261,8 +263,8 @@
 						{foreach from=$offer.insuranceHtml key=m item=mandatory}
 						{if count($mandatory) > 0 && $mandatory.type != "hidden"}
 						<tr class="assuTd" {if !$offer.insurance}style="display:none;"{/if}><th>{$mandatory.label}
-						</th><td class="paddingTableTd">{$mandatory.field|escape:'htmlall'}
-						{$mandatory.helper|escape:'htmlall'}
+						</th><td class="paddingTableTd">{$mandatory.field|unescape:'html'}
+						{$mandatory.helper|unescape:'html'}
 					</td>
 				</tr>
 				{else} {* Only hidden fields, these values shouldn't be modified *}

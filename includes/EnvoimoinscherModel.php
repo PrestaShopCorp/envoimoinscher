@@ -30,6 +30,8 @@ class EnvoimoinscherModel
 	private $db;
 	protected $module_name;
 
+	private $api_params_cache = array();
+
 	/**
 	* List with offers order (by price or date)
 	* @var array
@@ -64,10 +66,104 @@ class EnvoimoinscherModel
 	const TRACK_EMC_TYPE      = 1;
 	const TRACK_OPE_TYPE      = 2;
 
-	public function __construct(Db $db, $module)
+	public function __construct($db, $module)
 	{
 		$this->db = $db;
 		$this->module_name = $module;
+	}
+
+	/**
+	 * Return an array with the news for the module
+	 * @param $platform : platform name (will be prestashop here)
+	 * @param $version : version of the module
+	 * @access public
+	 * @return array
+	 */
+	public function getApiNews($platform, $version)
+	{
+		require_once(_PS_MODULE_DIR_.'envoimoinscher/Env/WebService.php');
+		require_once(_PS_MODULE_DIR_.'envoimoinscher/Env/News.php');
+
+		$login = Configuration::get('EMC_LOGIN');
+		$pass = Configuration::get('EMC_PASS');
+		$key = Configuration::get('EMC_KEY');
+		$env = Configuration::get('EMC_ENV');
+
+		$lib = new EnvNews(array('user' => $login, 'pass' => $pass, 'key' => $key));
+		$lib->setEnv(Tools::strtolower($env));
+		$lib->loadNews($platform, $version);
+
+		return $lib->news;
+	}
+
+	/**
+	 * Return an array with the options necessary for the configuration
+	 * @param $platform : platform name (will be prestashop here)
+	 * @param $version : version of the module
+	 * @access public
+	 * @return array
+	 */
+	public function getApiParams($platform, $version)
+	{
+		require_once(_PS_MODULE_DIR_.'envoimoinscher/Env/WebService.php');
+		require_once(_PS_MODULE_DIR_.'envoimoinscher/Env/Quotation.php');
+
+		$login = Configuration::get('EMC_LOGIN');
+		$pass = Configuration::get('EMC_PASS');
+		$key = Configuration::get('EMC_KEY');
+		$env = Configuration::get('EMC_ENV');
+
+		$cache_code = $login.$pass.$key.$env;
+		if (isset($this->api_params_cache[$cache_code]))
+			return $this->api_params_cache[$cache_code];
+
+		$params = array();
+		$params['error_code'] = array();
+
+		if ($login == '' && $pass == '' && $key == '')
+			return $params;
+
+		// get a quotation for the params
+		$from = array('pays' => 'FR','code_postal' => '75002','ville' => 'Paris','type' => 'entreprise','adresse' => '');
+		$to = array('pays' => 'FR','code_postal' => '75002','ville' => 'Paris','type' => 'particulier','adresse' => '');
+		$date = new DateTime();
+		$quot_info = array('collecte' => $date->format('Y-m-d'),'delai' => 'aucun','valeur' => '10','code_contenu' => 10120,'operateur' => 'POFR');
+		$lib = new EnvQuotation(array('user' => $login, 'pass' => $pass, 'key' => $key));
+		$lib->setPlatformParams($platform, _PS_VERSION_, $version);
+		$lib->setPerson('expediteur', $from);
+		$lib->setPerson('destinataire', $to);
+		$lib->setEnv(Tools::strtolower($env));
+		$lib->setType('colis', array(1 => array('poids' => 1,'longueur' => 20,'largeur' => 20,'hauteur' => 20)));
+		$lib->getQuotation($quot_info);
+		$lib->getOffers(false);
+
+		foreach ($lib->offers as $offer)
+			if ($offer['operator']['code'] == 'POFR' && !isset($params['type_emballage.emballage']))
+				$params['type_emballage.emballage'] = $offer['mandatory']['type_emballage.emballage'];
+
+		$params['error_code'] = $lib->resp_errors_list;
+
+		foreach ($params['error_code'] as $i => $error)
+			$params['error_code'][$i]['id'] = $this->getApiErrorCode($error['message']);
+
+		$this->api_params_cache[$cache_code] = $params;
+		return $params;
+	}
+
+	public function getApiErrorCode($message)
+	{
+		$error_list = array(
+			'access_denied - invalid API key'                => 'API error : Invalid API key',
+			'access_denied - invalid user password'          => 'API error : Invalid password',
+			'access_denied - wrong credentials'              => 'API error : Wrong credentials',
+			'access_denied - Invalid account payment method' => 'API error : Invalid account payment method',
+		);
+
+		foreach ($error_list as $err => $id)
+			if (strpos($message, $err) !== false)
+				return $id;
+
+		return false;
 	}
 
 	/**
@@ -156,45 +252,44 @@ class EnvoimoinscherModel
 	public function getEligibleOrders($params)
 	{
 		$sql = 'SELECT *, oc.id_carrier AS carrierId,
-			 c.name AS carrierName, cur.sign,
-			 o.id_order AS idOrder, SUBSTRING(a.firstname, 1, 1) AS firstNameShort,
-			 DATE_FORMAT(eo.date_del_eor, \'%d-%m-%Y\') AS dateDel,
-			 DATE_FORMAT(eo.date_collect_eor, \'%d-%m-%Y\') AS dateCol,
-			 DATE_FORMAT(eo.date_order_eor, \'%d-%m-%Y\') AS dateCom,
-			 (UNIX_TIMESTAMP("'.date('Y-m-d H:i:s').'") - UNIX_TIMESTAMP(eo.date_order_eor)) AS timeDifference,
-			 ROUND(eo.price_ttc_eor, 2) AS priceRound
+				 c.name AS carrierName, cur.sign,
+				 o.id_order AS idOrder, SUBSTRING(a.firstname, 1, 1) AS firstNameShort,
+				 DATE_FORMAT(eo.date_del_eor, \'%d-%m-%Y\') AS dateDel,
+				 DATE_FORMAT(eo.date_collect_eor, \'%d-%m-%Y\') AS dateCol,
+				 DATE_FORMAT(eo.date_order_eor, \'%d-%m-%Y\') AS dateCom,
+				 (UNIX_TIMESTAMP("'.date('Y-m-d H:i:s').'") - UNIX_TIMESTAMP(eo.date_order_eor)) AS timeDifference,
+				 ROUND(eo.price_ttc_eor, 2) AS priceRound
 			 FROM '._DB_PREFIX_.'orders o
 			 JOIN '._DB_PREFIX_.'order_carrier oc
-			 ON oc.id_order = o.id_order
+				 ON oc.id_order = o.id_order
 			 JOIN '._DB_PREFIX_.'carrier c
-			 ON c.id_carrier = oc.id_carrier
+				 ON c.id_carrier = oc.id_carrier
 			 LEFT JOIN '._DB_PREFIX_.'carrier_lang cl
-			 ON cl.id_carrier = c.id_carrier
+				 ON cl.id_carrier = c.id_carrier
 			 JOIN '._DB_PREFIX_.'address a
-			 ON a.id_address = o.id_address_delivery
+				 ON a.id_address = o.id_address_delivery
 			 JOIN '._DB_PREFIX_.'currency cur
-			 ON o.id_currency = cur.id_currency
+				 ON o.id_currency = cur.id_currency
 			 LEFT JOIN '._DB_PREFIX_.'emc_services es
-			 ON es.id_es = c.emc_services_id_es
+				 ON es.id_es = c.emc_services_id_es
 			 LEFT JOIN '._DB_PREFIX_.'emc_operators eop
-			 ON eop.code_eo = es.emc_operators_code_eo
+				 ON eop.code_eo = es.emc_operators_code_eo
 			 LEFT JOIN '._DB_PREFIX_.'order_history oh
-			 ON oh.id_order = o.id_order AND oh.id_order_history = (
-			 SELECT MAX(id_order_history)
-			 FROM '._DB_PREFIX_.'order_history moh
-			 WHERE moh.id_order = o.id_order
-			 GROUP BY moh.id_order)
+				 ON oh.id_order = o.id_order AND oh.id_order_history = (
+					 SELECT MAX(id_order_history)
+					 FROM '._DB_PREFIX_.'order_history moh
+					 WHERE moh.id_order = o.id_order
+					 GROUP BY moh.id_order)
 			 LEFT JOIN '._DB_PREFIX_.'order_state_lang osl
-			 ON osl.id_order_state = oh.id_order_state AND osl.id_lang = '.(int)$params['lang'].'
+				 ON osl.id_order_state = oh.id_order_state AND osl.id_lang = '.(int)$params['lang'].'
 			 LEFT JOIN '._DB_PREFIX_.'emc_orders eo
-			 ON eo.'._DB_PREFIX_.'orders_id_order = o.id_order
+				 ON eo.'._DB_PREFIX_.'orders_id_order = o.id_order
 			 LEFT JOIN '._DB_PREFIX_.'emc_documents d
-			 ON d.'._DB_PREFIX_.'orders_id_order = o.id_order AND type_ed = "label"
+				 ON d.'._DB_PREFIX_.'orders_id_order = o.id_order AND type_ed = "label"
 			 LEFT JOIN '._DB_PREFIX_.'emc_orders_errors er
-			 ON er.'._DB_PREFIX_.'orders_id_order = o.id_order
-			 WHERE
-			 (c.external_module_name = "envoimoinscher" OR o.delivery_number = 0)
-			 AND eo.ref_emc_eor IS NULL
+				 ON er.'._DB_PREFIX_.'orders_id_order = o.id_order
+				 WHERE (c.external_module_name = "envoimoinscher" OR o.delivery_number = 0)
+				 AND eo.ref_emc_eor IS NULL
 			 GROUP BY o.id_order
 			 ORDER BY o.id_order DESC';
 
@@ -222,38 +317,41 @@ class EnvoimoinscherModel
 	public function getDoneOrders($params)
 	{
 		$sql = 'SELECT *, cur.sign,
-			 o.id_order AS idOrder,
-			 SUBSTRING(a.firstname, 1, 1) AS firstNameShort,
-			 DATE_FORMAT(eo.date_del_eor, \'%d-%m-%Y\') AS dateDel,
-			 DATE_FORMAT(eo.date_collect_eor, \'%d-%m-%Y\') AS dateCol,
-			 DATE_FORMAT(eo.date_order_eor, \'%d-%m-%Y\') AS dateCom,
-			 (UNIX_TIMESTAMP("'.date('Y-m-d H:i:s').'") - UNIX_TIMESTAMP(eo.date_order_eor)) AS timeDifference,
-			 ROUND(eo.price_ttc_eor, 2) AS priceRound
+				 o.id_order AS idOrder,
+				 c.name AS carrierName,
+				 SUBSTRING(a.firstname, 1, 1) AS firstNameShort,
+				 DATE_FORMAT(eo.date_del_eor, \'%d-%m-%Y\') AS dateDel,
+				 DATE_FORMAT(eo.date_collect_eor, \'%d-%m-%Y\') AS dateCol,
+				 DATE_FORMAT(eo.date_order_eor, \'%d-%m-%Y\') AS dateCom,
+				 (UNIX_TIMESTAMP("'.date('Y-m-d H:i:s').'") - UNIX_TIMESTAMP(eo.date_order_eor)) AS timeDifference,
+				 ROUND(eo.price_ttc_eor, 2) AS priceRound
 			 FROM '._DB_PREFIX_.'emc_orders eo
 			 JOIN '._DB_PREFIX_.'orders o
-			 ON eo.'._DB_PREFIX_.'orders_id_order = o.id_order
+				 ON eo.'._DB_PREFIX_.'orders_id_order = o.id_order
 			 JOIN '._DB_PREFIX_.'carrier c
-			 ON c.id_carrier = o.id_carrier
+				 ON c.id_carrier = o.id_carrier
 			 JOIN '._DB_PREFIX_.'carrier_lang cl
-			 ON cl.id_carrier = c.id_carrier
+				 ON cl.id_carrier = c.id_carrier
 			 JOIN '._DB_PREFIX_.'address a
-			 ON a.id_address = o.id_address_delivery
+				 ON a.id_address = o.id_address_delivery
 			 JOIN '._DB_PREFIX_.'currency cur
-			 ON o.id_currency = cur.id_currency
+				 ON o.id_currency = cur.id_currency
 			 JOIN '._DB_PREFIX_.'emc_services es
-			 ON es.id_es = c.emc_services_id_es
+				 ON es.id_es = c.emc_services_id_es
 			 JOIN '._DB_PREFIX_.'emc_operators eop
-			 ON eop.code_eo = es.emc_operators_code_eo
+				 ON eop.code_eo = es.emc_operators_code_eo
 			 LEFT JOIN '._DB_PREFIX_.'emc_documents d
-			 ON d.'._DB_PREFIX_.'orders_id_order = o.id_order AND type_ed = "label"
+				 ON d.'._DB_PREFIX_.'orders_id_order = o.id_order AND type_ed = "label"
 			 LEFT JOIN '._DB_PREFIX_.'order_history oh
-			 ON oh.id_order = o.id_order AND oh.id_order_history = (
-			 SELECT MAX(id_order_history)
-			 FROM '._DB_PREFIX_.'order_history moh
-			 WHERE moh.id_order = o.id_order GROUP BY moh.id_order)
+				 ON oh.id_order = o.id_order AND oh.id_order_history = (
+					 SELECT MAX(id_order_history)
+					 FROM '._DB_PREFIX_.'order_history moh
+					 WHERE moh.id_order = o.id_order GROUP BY moh.id_order)
 			 LEFT JOIN '._DB_PREFIX_.'order_state_lang osl
-			 ON osl.id_order_state = oh.id_order_state AND osl.id_lang = '.(int)$params['lang'].'
-			 WHERE eo.ref_emc_eor != "" AND c.external_module_name = "envoimoinscher" AND cl.id_lang = '.(int)$params['lang'].'
+				 ON osl.id_order_state = oh.id_order_state AND osl.id_lang = '.(int)$params['lang'].'
+			 WHERE eo.ref_emc_eor != ""
+			 AND c.external_module_name = "envoimoinscher"
+			 AND cl.id_lang = '.(int)$params['lang'].'
 			 GROUP BY o.id_order
 			 ORDER BY o.id_order DESC LIMIT '.(int)$params['start'].', '.(int)$params['limit'].' ';
 		return $this->db->ExecuteS($sql);
@@ -280,71 +378,36 @@ class EnvoimoinscherModel
 	*/
 	public function prepareOrderInfo($order_id, $config)
 	{
-		$query = 'SELECT *, ap.point_eap,
+		$sql = 'SELECT *, ap.point_eap,
 				 a.firstname AS afirstname,
 				 a.lastname AS alastname,
 				 es.emc_operators_code_eo AS emc_operators_code_eo,
-				 es.is_parcel_point_es,
-				 o.total_products_wt AS totalOrder,
+				 es.is_parcel_point_es, o.total_products_wt AS totalOrder,
 				 c.id_carrier AS carrierId,
 				 CONCAT_WS("_", es.emc_operators_code_eo, es.code_es) AS offerCode
-				 FROM '._DB_PREFIX_.'orders o
-				 JOIN '._DB_PREFIX_.'carrier c
-				 ON c.id_carrier = o.id_carrier
-				 JOIN '._DB_PREFIX_.'address a
+			 FROM '._DB_PREFIX_.'orders o
+			 LEFT JOIN '._DB_PREFIX_.'order_carrier oc
+				 ON oc.id_order = o.id_order
+			 JOIN '._DB_PREFIX_.'carrier c
+				 ON o.id_carrier = c.id_carrier
+			 JOIN '._DB_PREFIX_.'address a
 				 ON a.id_address = o.id_address_delivery
-				 LEFT JOIN '._DB_PREFIX_.'customer cu
+			 LEFT JOIN '._DB_PREFIX_.'customer cu
 				 ON cu.id_customer = a.id_customer
-				 JOIN '._DB_PREFIX_.'country co
+			 JOIN '._DB_PREFIX_.'country co
 				 ON co.id_country = a.id_country
-				 LEFT JOIN '._DB_PREFIX_.'order_detail od
+			 LEFT JOIN '._DB_PREFIX_.'order_detail od
 				 ON od.id_order = o.id_order
-				 LEFT JOIN '._DB_PREFIX_.'emc_services es
+			 LEFT JOIN '._DB_PREFIX_.'emc_services es
 				 ON es.id_es = c.emc_services_id_es
-				 LEFT JOIN '._DB_PREFIX_.'emc_operators eo
+			 LEFT JOIN '._DB_PREFIX_.'emc_operators eo
 				 ON es.emc_operators_code_eo = eo.code_eo
-				 LEFT JOIN '._DB_PREFIX_.'emc_points ep
+			 LEFT JOIN '._DB_PREFIX_.'emc_points ep
 				 ON ep.'._DB_PREFIX_.'orders_id_order = o.id_order
-				 LEFT JOIN '._DB_PREFIX_.'emc_api_pricing ap
+			 LEFT JOIN '._DB_PREFIX_.'emc_api_pricing ap
 				 ON ap.'._DB_PREFIX_.'cart_id_cart = o.id_cart
-				 WHERE o.id_order = '.$order_id.' GROUP BY od.id_order_detail';
-		$row = $this->db->ExecuteS($query);
-
-		if (isset($row[0]) && (int)$row[0]['carrierId'] == 0)
-		{
-			$sql = 'SELECT *, ap.point_eap,
-					 a.firstname AS afirstname,
-					 a.lastname AS alastname,
-					 es.emc_operators_code_eo AS emc_operators_code_eo,
-					 es.is_parcel_point_es, o.total_products_wt AS totalOrder,
-					 c.id_carrier AS carrierId,
-					 CONCAT_WS("_", es.emc_operators_code_eo, es.code_es) AS offerCode
-					 FROM '._DB_PREFIX_.'orders o
-					 JOIN '._DB_PREFIX_.'order_carrier oc
-					 ON oc.id_order = o.id_order
-					 JOIN '._DB_PREFIX_.'carrier c
-					 ON oc.id_carrier = c.id_carrier
-					 JOIN '._DB_PREFIX_.'address a
-					 ON a.id_address = o.id_address_delivery
-					 LEFT JOIN '._DB_PREFIX_.'customer cu
-					 ON cu.id_customer = a.id_customer
-					 JOIN '._DB_PREFIX_.'country co
-					 ON co.id_country = a.id_country
-					 LEFT JOIN '._DB_PREFIX_.'order_detail od
-					 ON od.id_order = o.id_order
-					 LEFT JOIN '._DB_PREFIX_.'emc_services es
-					 ON es.id_es = c.emc_services_id_es
-					 LEFT JOIN '._DB_PREFIX_.'emc_operators eo
-					 ON es.emc_operators_code_eo = eo.code_eo
-					 LEFT JOIN '._DB_PREFIX_.'emc_points ep
-					 ON ep.'._DB_PREFIX_.'orders_id_order = o.id_order
-					 LEFT JOIN '._DB_PREFIX_.'emc_api_pricing ap
-					 ON ap.'._DB_PREFIX_.'cart_id_cart = o.id_cart
-					 WHERE o.id_order = '.$order_id.' GROUP BY od.id_order_detail';
-			$rows = $this->db->ExecuteS($sql);
-			if (count($rows) > 0)
-				$row = $rows;
-		}
+			 WHERE o.id_order = '.$order_id.' GROUP BY od.id_order_detail';
+		$row = $this->db->ExecuteS($sql);
 
 		if (isset($row) === false || count($row) == 0)
 			return array();
@@ -352,8 +415,8 @@ class EnvoimoinscherModel
 		$row[0]['id_carrier'] = (int)isset($row[0]['carrierId'])?$row[0]['carrierId'] : 0;
 		//POST weight value
 		$products_desc = array();
-		if (isset($_POST['weight']))
-			$product_weight = (float)str_replace(',', '.', $_POST['weight']);
+		if (Tools::isSubmit('weight'))
+			$product_weight = (float)str_replace(',', '.', Tools::getValue('weight'));
 		else
 		{
 			$product_weight = 0;
@@ -409,33 +472,33 @@ class EnvoimoinscherModel
 		$parcels_length = array();
 		$j = 1;
 
-		if (isset($_POST['multiParcel']) && (int)$_POST['multiParcel'] > 1)
+		if (Tools::isSubmit('multiParcel') && (int)Tools::getValue('multiParcel') > 1)
 		{
-			$nb = (int)$_POST['multiParcel'];
+			$nb = (int)Tools::getValue('multiParcel');
 			$parcels_w = array();
-			if (isset($_POST['parcels_w']) && $_POST['parcels_w'] != '')
-				$parcels_w = explode(';', $_POST['parcels_w']);
+			if (Tools::isSubmit('parcels_w') && Tools::getValue('parcels_w') != '')
+				$parcels_w = explode(';', Tools::getValue('parcels_w'));
 			else
 				for ($i = 0; $i < $nb; $i++)
-					$parcels_w[$i] = $_POST['parcel_w_'.($i + 1)];
+					$parcels_w[$i] = Tools::getValue('parcel_w_'.($i + 1));
 
-			if (isset($_POST['parcels_h']) && $_POST['parcels_h'] != '')
-				$parcels_h = explode(';', $_POST['parcels_h']);
+			if (Tools::isSubmit('parcels_h') && Tools::getValue('parcels_h') != '')
+				$parcels_h = explode(';', Tools::getValue('parcels_h'));
 			else
 				for ($i = 0; $i < $nb; $i++)
-					$parcels_h[$i] = $_POST['parcel_h_'.($i + 1)];
+					$parcels_h[$i] = Tools::getValue('parcel_h_'.($i + 1));
 
-			if (isset($_POST['parcels_d']) && $_POST['parcels_d'] != '')
-				$parcels_d = explode(';', $_POST['parcels_d']);
+			if (Tools::isSubmit('parcels_d') && Tools::getValue('parcels_d') != '')
+				$parcels_d = explode(';', Tools::getValue('parcels_d'));
 			else
 				for ($i = 0; $i < $nb; $i++)
-					$parcels_d[$i] = $_POST['parcel_d_'.($i + 1)];
+					$parcels_d[$i] = Tools::getValue('parcel_d_'.($i + 1));
 
-			if (isset($_POST['parcels_l']) && $_POST['parcels_l'] != '')
-				$parcels_l = explode(';', $_POST['parcels_l']);
+			if (Tools::isSubmit('parcels_l') && Tools::getValue('parcels_l') != '')
+				$parcels_l = explode(';', Tools::getValue('parcels_l'));
 			else
 				for ($i = 0; $i < $nb; $i++)
-					$parcels_l[$i] = $_POST['parcel_l_'.($i + 1)];
+					$parcels_l[$i] = Tools::getValue('parcel_l_'.($i + 1));
 
 			foreach ($parcels_w as $parcel_weight)
 			{
@@ -467,12 +530,12 @@ class EnvoimoinscherModel
 		else
 		{
 			$parcels_weight[1] = $product_weight;
-			if (isset($_POST['length']))
-				$parcels_length[1] = $_POST['length'];
-			if (isset($_POST['width']))
-				$parcels_width[1] = $_POST['width'];
-			if (isset($_POST['height']))
-				$parcels_height[1] = $_POST['height'];
+			if (Tools::isSubmit('length'))
+				$parcels_length[1] = Tools::getValue('length');
+			if (Tools::isSubmit('width'))
+				$parcels_width[1] = Tools::getValue('width');
+			if (Tools::isSubmit('height'))
+				$parcels_height[1] = Tools::getValue('height');
 		}
 
 		$final_parcels = array();
@@ -506,14 +569,14 @@ class EnvoimoinscherModel
 		$proforma = $this->makeProforma($row);
 		// put default informa
 
-		if (isset($config['EMC_PP_'.strtoupper($row[0]['offerCode'])]))
-			$default_point = $config['EMC_PP_'.strtoupper($row[0]['offerCode'])];
+		if (isset($config['EMC_PP_'.Tools::strtoupper($row[0]['offerCode'])]))
+			$default_point = $config['EMC_PP_'.Tools::strtoupper($row[0]['offerCode'])];
 		else
 			$default_point = null;
 
 		$insurance = false;
-		if (isset($_POST['insurance'])) $insurance = (bool)(int)$_POST['insurance'];
-		elseif (!isset($_POST['insurance']) && isset($_POST) && count($_POST) > 0) $insurance = false;
+		if (Tools::isSubmit('insurance')) $insurance = (bool)(int)Tools::getValue('insurance');
+		elseif (!Tools::isSubmit('insurance')) $insurance = false;// && isset($_POST) && count($_POST) > 0
 		elseif (isset($config['EMC_ASSU']) && (int)$config['EMC_ASSU'] == 1) $insurance = true;
 
 		$defaults = array(
@@ -704,7 +767,7 @@ class EnvoimoinscherModel
 	*/
 	public function getCarrierByCode($code)
 	{
-		if (strlen($code) != 4) return array();
+		if (Tools::strlen($code) != 4) return array();
 		return $this->db->ExecuteS('SELECT * FROM '._DB_PREFIX_.'emc_operators
 			WHERE code_eo = "'.$code.'"');
 	}
@@ -733,7 +796,9 @@ class EnvoimoinscherModel
 	*/
 	public function insertOrder($order_id, $data, $emc_order, $post)
 	{
-		global $cookie;
+		$emc = new Envoimoinscher();
+		$cookie = $emc->getContext()->cookie;
+
 		//insert into emc_orders
 		$date_collect_eor = $emc_order['collection']['date'].' '.(isset($emc_order['collection']['time'])?$emc_order['collection']['time']:'');
 		$date_del_eor = $emc_order['delivery']['date'].' '.(isset($emc_order['delivery']['time'])?$emc_order['delivery']['time']:'');
@@ -773,7 +838,8 @@ class EnvoimoinscherModel
 					''._DB_PREFIX_.'orders_id_order' => $order_id,
 					'link_ed'                        => $label,
 					'type_ed'                        => 'label',
-					'generated_ed'                   => 0
+					'generated_ed'                   => 0,
+					''._DB_PREFIX_.'cart_id_cart'    => $data['order'][0]['id_cart']
 				),
 				'REPLACE'
 			);
@@ -786,7 +852,8 @@ class EnvoimoinscherModel
 					''._DB_PREFIX_.'orders_id_order' => $order_id,
 					'link_ed'                        => $emc_order['proforma'],
 					'type_ed'                        => 'proforma',
-					'generated_ed'                   => 1
+					'generated_ed'                   => 1,
+					''._DB_PREFIX_.'cart_id_cart'    => $data['order'][0]['id_cart']
 				),
 				'REPLACE');
 		}
@@ -856,8 +923,8 @@ class EnvoimoinscherModel
 		//$codes = array();
 		if (isset($config['EMC_KEY']))
 		{
-			require_once(__DIR__.'/Env/WebService.php');
-			require_once(__DIR__.'/Env/ContentCategory.php');
+			require_once(_PS_MODULE_DIR_.$this->module_name.'/Env/WebService.php');
+			require_once(_PS_MODULE_DIR_.$this->module_name.'/Env/ContentCategory.php');
 			$content_cl = new EnvContentCategory(array('user' => $config['EMC_LOGIN'], 'pass' => $config['EMC_PASS'], 'key' => $config['EMC_KEY']));
 			$emc = new Envoimoinscher();
 			$content_cl->setPlatformParams($emc->ws_name, _PS_VERSION_, $emc->version);
@@ -1042,11 +1109,11 @@ class EnvoimoinscherModel
 		if (isset($address->id))
 			$id_address = $address->id;
 		else if (is_array($address))
-			return getCartInformations($cart, $address[0]);
+			return $this->getCartInformations($cart, $address[0]);
 		else
 			$id_address = $address;
 
-		if ($id_address > 0)
+		if ($id_address)
 		{
 			$address_clause = 'a.id_address = '.(int)$id_address;
 			return $this->db->ExecuteS('SELECT *, cp.quantity AS productQuantity FROM '._DB_PREFIX_.'cart ct
@@ -1084,9 +1151,9 @@ class EnvoimoinscherModel
 		if (isset($order[0]['id_order']) && $order[0]['point_ep'] != '')
 		{
 		//get parcel point informations
-			require_once(realpath(dirname(__FILE__).'/Env/WebService.php'));
-			require_once(realpath(dirname(__FILE__).'/Env/ParcelPoint.php'));
-			require_once(realpath(dirname(__FILE__).'/EnvoimoinscherHelper.php'));
+			require_once(_PS_MODULE_DIR_.'envoimoinscher/Env/WebService.php');
+			require_once(_PS_MODULE_DIR_.'envoimoinscher/Env/ParcelPoint.php');
+			require_once(_PS_MODULE_DIR_.'envoimoinscher/includes/EnvoimoinscherHelper.php');
 			$helper = new EnvoimoinscherHelper;
 			$config = $helper->configArray($this->getConfigData());
 			$poi_cl = new EnvParcelPoint(array('user' => $config['EMC_LOGIN'], 'pass' =>
@@ -1094,7 +1161,7 @@ class EnvoimoinscherModel
 			);
 			$emc = new Envoimoinscher();
 			$poi_cl->setPlatformParams($emc->ws_name, _PS_VERSION_, $emc->version);
-			$poi_cl->setEnv(strtolower($config['EMC_ENV']));
+			$poi_cl->setEnv(Tools::strtolower($config['EMC_ENV']));
 			$poi_cl->getParcelPoint('dropoff_point', $order[0]['emc_operators_code_eo'].'-'.$order[0]['point_ep'], $order[0]['iso_code']);
 			return $poi_cl->points['dropoff_point'];
 		}
@@ -1252,6 +1319,7 @@ class EnvoimoinscherModel
 	{
 		$langs = Language::getLanguages(true); 	//Get all langs enabled
 		$zones = Zone::getZones(true); 	//Gel all zones enabled
+		$emc = new Envoimoinscher();
 
 		//get 19.6% tax id
 		if (!isset($data['id_tax_rules_group']))
@@ -1260,9 +1328,12 @@ class EnvoimoinscherModel
 			$data['id_tax_rules_group'] = (int)$tax['id_tax'];
 		}
 		//Add field to Carrier
-		Carrier::$definition['fields']['emc_services_id_es'] = array('type' => ObjectModel::TYPE_INT, 'required' => true);
-		Carrier::$definition['fields']['emc_type']           = array('type' => ObjectModel::TYPE_INT, 'required' => true);
-
+		if (property_exists('Carrier', 'definition'))
+		{
+			$type = property_exists('ObjectModel', 'TYPE_INT')?ObjectModel::TYPE_INT:1;
+			Carrier::$definition['fields']['emc_services_id_es'] = array('type' => $type, 'required' => true);
+			Carrier::$definition['fields']['emc_type']           = array('type' => $type, 'required' => true);
+		}
 		//Set Carrieru
 		$carrier = new Carrier((int)$service['id_carrier']);
 
@@ -1280,7 +1351,7 @@ class EnvoimoinscherModel
 
 		if ($langs && count($langs) > 0)
 			foreach ($langs as $lang)
-				$carrier->delay[$lang['id_lang']] = substr(pSQL($service['desc_store_es']), 0, 128);
+				$carrier->delay[$lang['id_lang']] = Tools::substr(pSQL($service['desc_store_es']), 0, 128);
 
 		//Save carrier
 		if ($carrier->save() === false)
@@ -1293,9 +1364,13 @@ class EnvoimoinscherModel
 			 SET emc_services_id_es = '.$data['emc_services_id_es'].',emc_type = '.$data['emc_type'].'
 			 WHERE id_carrier = '.$carrier_id);
 
+		DB::getInstance()->Execute('UPDATE '._DB_PREFIX_.'emc_services
+			 SET id_carrier = '.$carrier_id.'
+			 WHERE id_es = '.$data['emc_services_id_es']);
+
 		if ((int)$service['id_carrier'] === 0)
 		{
-			$groups = Group::getGroups((int)Context::getContext()->language->id);
+			$groups = Group::getGroups((int)$emc->getContext()->language->id);
 			$datas = array();
 
 			if ($groups && count($groups) > 0)
@@ -1309,7 +1384,7 @@ class EnvoimoinscherModel
 				}
 			}
 
-			DB::getInstance()->autoExecute(_DB_PREFIX_.'carrier_group', $datas, 'REPLACE');
+			DB::getInstance()->autoExecute(_DB_PREFIX_.'carrier_group', $datas, 'INSERT IGNORE');
 		}
 
 		//Get Ranges price by carrier id
@@ -1339,8 +1414,7 @@ class EnvoimoinscherModel
 			foreach ($zones as $zone)
 				if (count($carrier->getZone((int)$zone['id_zone'])) === 0)
 					$carrier->addZone((int)$zone['id_zone']);
-
-		copy(__DIR__.'/img/detail_'.strtolower($service['code_eo']).'.jpg', _PS_IMG_DIR_.'s/'.(int)$carrier_id.'.jpg');
+		copy(_PS_MODULE_DIR_.$this->module_name.'/img/detail_'.Tools::strtolower($service['code_eo']).'.jpg', _PS_IMG_DIR_.'s/'.(int)$carrier_id.'.jpg');
 		return $carrier_id;
 	}
 
@@ -1465,21 +1539,9 @@ class EnvoimoinscherModel
 			 o.total_wrapping AS oWrapping, o.total_wrapping_tax_incl AS oWrappingInc,
 			 o.total_shipping AS oShipping, o.total_shipping_tax_excl AS oShippingExc,
 			 o.total_wrapping_tax_excl AS oWrappingExc, total_shipping_tax_incl AS oShippingInc
-			 FROM '._DB_PREFIX_.'order_carrier oc
-			 JOIN '._DB_PREFIX_.'orders o ON o.id_order = oc.id_order
+			 FROM '._DB_PREFIX_.'order o
+			 LEFT JOIN '._DB_PREFIX_.'order_carrier oc ON o.id_order = oc.id_order
 			 JOIN '._DB_PREFIX_.'carrier car ON oc.id_carrier = car.id_carrier
-			 JOIN '._DB_PREFIX_.'emc_api_pricing api ON '._DB_PREFIX_.'cart_id_cart = o.id_cart
-			 WHERE o.id_cart = '.(int)$id_cart);
-		if (count($orders) > 0) return $orders;
-		$orders = $this->db->executeS('SELECT car.*, api.*, o.id_order, o.id_address_delivery AS oAddress,
-			 o.total_paid AS oTotal, o.total_paid_tax_incl AS oTotalIncl,
-			 o.total_paid_tax_excl AS oTotalExc,
-			 o.total_products AS oProducts, o.total_products_wt AS oProductsWt,
-			 o.total_wrapping AS oWrapping, o.total_wrapping_tax_incl AS oWrappingInc,
-			 o.total_shipping AS oShipping, o.total_shipping_tax_excl AS oShippingExc,
-			 o.total_wrapping_tax_excl AS oWrappingExc, total_shipping_tax_incl AS oShippingInc
-			 FROM '._DB_PREFIX_.'orders o
-			 JOIN '._DB_PREFIX_.'carrier car ON o.id_carrier = car.id_carrier
 			 JOIN '._DB_PREFIX_.'emc_api_pricing api ON '._DB_PREFIX_.'cart_id_cart = o.id_cart
 			 WHERE o.id_cart = '.(int)$id_cart);
 		return $orders;

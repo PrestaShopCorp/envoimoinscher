@@ -22,5 +22,15 @@
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
-
-<div class="path_bar showBar"><a href="index.php?controller=AdminEnvoiMoinsCher&token={$token}" class="action_module" {if $actual != "history"}style="color: #000;"{/if}>Envoi en masse</a> | <a href="index.php?controller=AdminEnvoiMoinsCher&option=history&token={$token}" class="action_module" {if $actual == "history"}style="color: #000;"{/if}>Historique des envois traités</a></div>
+ 
+<div id="order-menu">
+	<div class="path_bar showBar">
+		<a href="index.php?controller=AdminEnvoiMoinsCher&token={$token}" class="action_module" {if $actual != "history"}style="color: #000;"{/if}>
+			{l s='mass shipping' mod='envoimoinscher'}
+		</a> | 
+		<a href="index.php?controller=AdminEnvoiMoinsCher&option=history&token={$token}" class="action_module" {if $actual == "history"}style="color: #000;"{/if}>
+			{l s='history items processed' mod='envoimoinscher'}
+		</a>
+	</div>
+</div>
+{include file="$tpl_news" tab_news=$tab_news}

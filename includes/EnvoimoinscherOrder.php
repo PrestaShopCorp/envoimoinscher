@@ -74,52 +74,23 @@ class EnvoimoinscherOrder
 	}
 
 	/**
-	 * Send order request to EnvoiMoinsCher's API and insert the data into Prestashop database.
-	 * @access public
-	 * @param boolean $do_skip If true, makes modifies array with orders to send.
-	 * @return boolean True for success, false otherwise.
+	 * Initialize the API Object for a make order
+	 * @access private
+	 * @return mixed : array with the quotation object and param used
 	 */
-	public function doOrder($do_skip = true)
+	private function getOrderObject()
 	{
-		global $cookie;
-		require_once(__DIR__.'/Env/WebService.php');
-		require_once(__DIR__.'/Env/Quotation.php');
-		require_once(__DIR__.'/EnvoimoinscherHelper.php');
+		require_once(_PS_MODULE_DIR_.'/envoimoinscher/Env/WebService.php');
+		require_once(_PS_MODULE_DIR_.'/envoimoinscher/Env/Quotation.php');
+		require_once(_PS_MODULE_DIR_.'/envoimoinscher/includes/EnvoimoinscherHelper.php');
+
+		$order_object = array();
 
 		$helper = new EnvoimoinscherHelper();
-		$result = false;
 
-		$dest_type = $this->order_data['delivery']['type'];
-		if ((int)Configuration::get('EMC_INDI') == 1) $dest_type = 'particulier';
-
-		// delivery informations
-		$dest_array = array(
-			'pays'        => $this->order_data['delivery']['pays'],
-			'code_postal' => $this->order_data['delivery']['code_postal'],
-			'ville'       => $this->order_data['delivery']['ville'],
-			'type'        => $dest_type,
-			'adresse'     => $this->order_data['delivery']['adresse'],
-			'civilite'    => 'M',
-			'prenom'      => $this->order_data['delivery']['prenom'],
-			'nom'         => $this->order_data['delivery']['nom'],
-			'email'       => $this->order_data['delivery']['email'],
-			'societe'     => $this->order_data['delivery']['societe'],
-			'tel'         => $helper->normalizeTelephone($this->order_data['delivery']['tel']),
-			'infos'       => $this->order_data['delivery']['other']
-		);
-
-		foreach ($this->post_dest_fields as $field => $value)
-		{
-			if (isset($_POST[$field]))
-			{
-				$dest_array[$value] = $_POST[$field];
-				unset($_POST[$field]);
-			}
-		}
-		$tmp_del = $dest_array;
-
-		// EnvoiMoinsCher library
-		$offers_orders = $this->model->getOffersOrder();
+		////////////////////////////////////////////////
+		////// generation of the quotation object //////
+		////////////////////////////////////////////////
 		$cot_cl = new EnvQuotation(
 			array(
 				'user' => $this->order_data['config']['EMC_LOGIN'],
@@ -127,6 +98,8 @@ class EnvoimoinscherOrder
 				'key'  => $this->order_data['config']['EMC_KEY']
 			)
 		);
+
+		$offers_orders = $this->model->getOffersOrder();
 		$emc = new Envoimoinscher();
 		$cot_cl->setPlatformParams($emc->ws_name, _PS_VERSION_, $emc->version);
 		$quot_info = array(
@@ -136,8 +109,11 @@ class EnvoimoinscherOrder
 			'version'      => $this->prestashop_config['version'],
 			'type_emballage.emballage' => Configuration::get('EMC_WRAPPING')
 		);
+		$cot_cl->setEnv(Tools::strtolower($this->order_data['config']['EMC_ENV']));
 
-		$cot_cl->setEnv(strtolower($this->order_data['config']['EMC_ENV']));
+		//////////////////////////////////////////////////
+		////// add the delivery and shipper address //////
+		//////////////////////////////////////////////////
 		$cot_cl->setPerson(
 			'expediteur',
 			array(
@@ -155,10 +131,37 @@ class EnvoimoinscherOrder
 				'infos'       => $this->order_data['config']['EMC_COMPL']
 			)
 		);
-		$cot_cl->setPerson('destinataire', $dest_array);
+		$dest_type = $this->order_data['delivery']['type'];
+		if ((int)Configuration::get('EMC_INDI') == 1) $dest_type = 'particulier';
 
-		// order data
-		//$parcel_weight = $this->order_data['productWeight'];
+		$dest_array = array(
+			'pays'        => $this->order_data['delivery']['pays'],
+			'code_postal' => $this->order_data['delivery']['code_postal'],
+			'ville'       => $this->order_data['delivery']['ville'],
+			'type'        => $dest_type,
+			'adresse'     => $this->order_data['delivery']['adresse'],
+			'civilite'    => 'M',
+			'prenom'      => $this->order_data['delivery']['prenom'],
+			'nom'         => $this->order_data['delivery']['nom'],
+			'email'       => $this->order_data['delivery']['email'],
+			'societe'     => $this->order_data['delivery']['societe'],
+			'tel'         => $helper->normalizeTelephone($this->order_data['delivery']['tel']),
+			'infos'       => $this->order_data['delivery']['other']
+		);
+		foreach ($this->post_dest_fields as $field => $value)
+		{
+			if (Tools::isSubmit($field))
+			{
+				$dest_array[$value] = Tools::getValue($field);
+				unset($_POST[$field]);
+			}
+		}
+		$cot_cl->setPerson('destinataire', $dest_array);
+		$order_object['tmp_del'] = $dest_array;
+
+		/////////////////////////////////////////////////
+		////// generate the quotation informations //////
+		/////////////////////////////////////////////////
 		$quot_info = array_merge($quot_info, $this->order_data['default']);
 		$quot_info['service'] = $this->offer_data['offer']['service']['code'];
 		$quot_info['operateur'] = $this->order_data['order'][0]['emc_operators_code_eo'];
@@ -170,18 +173,28 @@ class EnvoimoinscherOrder
 				if (isset($this->mapping[$p]))
 					$quot_info[$this->mapping[$p]] = $post;
 			$quot_info['operateur'] = $this->order_data['order'][0]['emc_operators_code_eo'];
-			$quot_info['description'] = $_POST[$this->order_data['config']['EMC_TYPE'].'_description'];
-			$quot_info['valeur_declaree.valeur'] = $_POST[$this->order_data['config']['EMC_TYPE'].'_valeur'];
-			$quot_info['valeur'] = $_POST[$this->order_data['config']['EMC_TYPE'].'_valeur'];
+			$quot_info['description'] = Tools::getValue($this->order_data['config']['EMC_TYPE'].'_description');
+			$quot_info['valeur_declaree.valeur'] = Tools::getValue($this->order_data['config']['EMC_TYPE'].'_valeur');
+			$quot_info['valeur'] = Tools::getValue($this->order_data['config']['EMC_TYPE'].'_valeur');
 			//$parcel_weight = (float)$_POST['weight'];
 		}
 		$quot_info['depot.pointrelais'] = $this->order_data['order'][0]['emc_operators_code_eo'].'-'.$quot_info['depot.pointrelais'];
 		$quot_info['retrait.pointrelais'] = $this->order_data['order'][0]['emc_operators_code_eo'].'-'.$quot_info['retrait.pointrelais'];
-		$tmp_quote = $quot_info;
 
-		$tmp_proforma = array();
-		// make pro forma
-		if ((Tools::getValue('proformaSand') == 1) || (!$_POST && $dest_array['pays'] != 'FR'))
+		// set tracking key
+		$shop_domain = Tools::getShopDomain();
+		$tracking_key = sha1($this->order_id.$helper->getValueToToken($quot_info).$_SERVER['REMOTE_ADDR'].time());
+		$url_params = '?key='.$tracking_key.'&order='.$this->order_id;
+		$quot_info['url_tracking'] = 'http://'.$shop_domain.'/'.__PS_BASE_URI__.'modules/envoimoinscher/tracking/tracking.php'.$url_params;
+
+		$order_object['tmp_quote'] = $quot_info;
+		$order_object['tracking_key'] = $tracking_key;
+
+		////////////////////////////////////////////////////
+		////// generate the proforma if international //////
+		////////////////////////////////////////////////////
+		$order_object['tmp_proforma'] = array();
+		if ((Tools::getValue('proformaSend') == 1) || (!$_POST && $dest_array['pays'] != 'FR'))
 		{
 			$proforma_post = array();
 			$proforma_weight = 0;
@@ -189,8 +202,8 @@ class EnvoimoinscherOrder
 			foreach ($this->order_data['proforma'] as $item)
 			{
 				$item['poids'] = (float)$item['poids'] - 0.01;
-				if (isset($_POST['desc_en_'.$i])) $item['description_en'] = $_POST['desc_en_'.$i];
-				if (isset($_POST['desc_fr_'.$i])) $item['description_fr'] = $_POST['desc_fr_'.$i];
+				if (Tools::isSubmit('desc_en_'.$i)) $item['description_en'] = Tools::getValue('desc_en_'.$i);
+				if (Tools::isSubmit('desc_fr_'.$i)) $item['description_fr'] = Tools::getValue('desc_fr_'.$i);
 				$proforma_post[$i] = $item;
 				if ($proforma_post[$i]['poids'] <= 0)
 					$proforma_post[$i]['poids'] = 0.001;
@@ -206,20 +219,35 @@ class EnvoimoinscherOrder
 			}
 			elseif ($proforma_weight == $this->order_data['productWeight'])
 				$proforma_post[$i - 1]['poids'] = $proforma_post[$i - 1]['poids'] - 0.01;
-			$tmp_proforma = $proforma_post;
+			$order_object['tmp_proforma'] = $proforma_post;
+			//$tmp_proforma = $proforma_post;
 			$cot_cl->setProforma($proforma_post);
 		}
-		// set tracking key
-		$shop_domain = Tools::getShopDomain();
 
-		$tracking_key = sha1($this->order_id.$helper->getValueToToken($quot_info).$_SERVER['REMOTE_ADDR'].time());
-		$url_params = '?key='.$tracking_key.'&order='.$this->order_id;
-		$quot_info['url_tracking'] = 'http://'.$shop_domain.'/'.__PS_BASE_URI__.'modules/envoimoinscher/tracking.php'.$url_params;
-
+		////////////////////////////////////////////////////
+		////// add the parcel data (size, weight etc) //////
+		////////////////////////////////////////////////////
 		$cot_cl->setType($this->order_data['config']['EMC_TYPE'], $this->order_data['parcels']);
-		$tmp_parcels = $this->order_data['parcels'];
-		$order_passed = $cot_cl->makeOrder($quot_info, true);
-		//$data_emc = 'emcOrder'.$this->order_id;
+		$order_object['tmp_parcels'] = $this->order_data['parcels'];
+
+		$order_object['object'] = $cot_cl;
+
+		return $order_object;
+	}
+
+	/**
+	 * Send order request to EnvoiMoinsCher's API and insert the data into Prestashop database.
+	 * @access public
+	 * @param boolean $do_skip If true, makes modifies array with orders to send.
+	 * @return boolean True for success, false otherwise.
+	 */
+	public function doOrder($do_skip = true)
+	{
+		$emc = new Envoimoinscher();
+		$cookie = $emc->getContext()->cookie;
+
+		$order_object = $this->getOrderObject();
+		$order_passed = $order_object['object']->makeOrder($order_object['tmp_quote'], true);
 
 		$mass_order = false;
 		// if 'todo' exists, we send more than one order
@@ -229,23 +257,23 @@ class EnvoimoinscherOrder
 			$this->skipOrder($this->order_id);
 		}
 
-		if (!$cot_cl->curl_error && !$cot_cl->resp_error && $order_passed)
-		{
+		if (!$order_object['object']->curl_error && !$order_object['object']->resp_error && $order_passed)
+		{// order was passed
 			$result = true;
-			// order was passed
-			$this->order_data['tracking_key'] = $tracking_key;
+
+			$this->order_data['tracking_key'] = $order_object['tracking_key'];
 			$this->order_data['new_order_state'] = $this->order_data['config']['EMC_CMD'];
 			$this->order_data['employee'] = (int)$cookie->id_employee;
-			$this->model->insertOrder($this->order_id, $this->order_data, $cot_cl->order, $_POST);
+			$this->model->insertOrder($this->order_id, $this->order_data, $order_object['object']->order, $_POST);
 			// increment 'ok'
 			$this->stats['ok']++;
 		}
 		else
-		{
+		{// order did not passed
 			$error_list = array();
-			if ($cot_cl->curl_error_text != '')
-				$error_list[] = $cot_cl->curl_error_text;
-			foreach ($cot_cl->resp_errors_list as $error)
+			if ($order_object['object']->curl_error_text != '')
+				$error_list[] = $order_object['object']->curl_error_text;
+			foreach ($order_object['object']->resp_errors_list as $error)
 				$error_list[] = $error['message'];
 			$this->model->insertOrderError($this->order_id, implode('', $error_list));
 			$this->errors[] = array('id' => $this->order_id, 'message' => implode('<br /> -', $error_list));
@@ -263,10 +291,10 @@ class EnvoimoinscherOrder
 			$this->stats['errors']++;
 
 			$this->model->addPostData($this->order_id, array(
-				'delivery' => $tmp_del,
-				'quote' => $tmp_quote,
-				'parcels' => $tmp_parcels,
-				'proforma' => $tmp_proforma,
+				'delivery' => $order_object['tmp_del'],
+				'quote' => $order_object['tmp_quote'],
+				'parcels' => $order_object['tmp_parcels'],
+				'proforma' => $order_object['tmp_proforma'],
 				'emcErrorTxt' => $cookie->emc_error_txt,
 				'emcErrorSend' => $cookie->emc_error_send
 				));
@@ -289,7 +317,7 @@ class EnvoimoinscherOrder
 	{
 		$result = array('stats' => $this->stats, 'errors' => $this->errors);
 		if ($format == 'json')
-			return json_encode($result);
+			return Tools::jsonEncode($result);
 		return $result;
 	}
 

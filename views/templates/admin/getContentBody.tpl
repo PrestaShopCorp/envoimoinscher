@@ -26,7 +26,7 @@
 {if isset($missedValues) && count($missedValues)}
 	<div class="bootstrap">
 		<div class="alert alert-danger">
-		Attention : certains champs n'ont pas été renseignés et le module peut ne pas fonctionner correctement. Les champs manquants :
+		{l s='missing fields info list' mod='envoimoinscher'}
 		{foreach from=$missedValues key=m item=missed}
 			<br />- {$missed|escape:'htmlall'}
 		{/foreach}
@@ -35,20 +35,20 @@
 {/if}
 {if $EMC_config.EMC_USER != "" && $EMC_config.EMC_USER >= 3 && ($EMC_config.EMC_KEY == '' || $EMC_config.EMC_LOGIN == '' || $EMC_config.EMC_PASS == '')}
 	<div class="bootstrap">
-		<div class="alert alert-danger">Vos données de connexion ne sont pas correctes. Le module ne va pas fonctionner correctement.</div>
+		<div class="alert alert-danger">{l s='wrong login : module wont work' mod='envoimoinscher'}</div>
 	</div>
 {/if}
 {if $multiShipping == 1}
 	<div class="bootstrap">
-		<div class="alert alert-danger">La version actuelle du module est incompatible avec l'option "Livraison à plusieurs adresses". Les offres du module ne seront pas proposées sur l'écran de commande.</div>
+		<div class="alert alert-danger">{l s='module version dont allow multi shipmnt points' mod='envoimoinscher'}</div>
 	</div>
 	{/if}
 
 {if $successForm == 1}
-	<div class="conf confirm">Les données de configuration ont été mises à jour.
+	<div class="conf confirm">{l s='configuration data updated' mod='envoimoinscher'}
 		{if $lastTab == '#confSrv'}
 			<p>
-				<b>Si vous avez fini de configurer les offres et que vous souhaitez les afficher sur votre boutique, n'oubliez pas de leur appliquer le mode "En ligne"</b>
+				<b>{l s='dont forget online mod to publish offers configurations' mod='envoimoinscher'}</b>
 			</p>
 		{/if}
 	</div>
@@ -70,15 +70,25 @@
 		<div class="alert alert-warning">{l s='Warning update' mod='envoimoinscher'}</div>
 	</div>
 {/if}
-
+	<link href="{$emcBaseDir|unescape:'html'}/css/back-office.css" rel="stylesheet" type="text/css" media="all" />
+{if $local_fancybox}
+	<link href="{$emcBaseDir|unescape:'html'}/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
+	<script type="text/javascript" src="{$emcBaseDir|unescape:'html'}/js/jquery.boxfancy.js"></script>
+{/if}
 <div id="EMC_Infos">
-		<h2>EnvoiMoinsCher : configuration</h2>
-		<p>Pour commencer à paramétrer votre module, merci de compléter point par point, les différents boutons ci-dessous en commençant par le bouton "Compte marchand".</p>
-		<p><strong id="warn-online-message" {if $EMC_config.EMC_SRV_MODE === 'online'}style="color:black;"{else}style="color:orange;"{/if}>Une fois la configuration terminée,activez le mode en ligne pour que les offres de transport apparaissent au front-office.</strong></li>
-		<p>NB : N'oubliez pas de sauvegarder chaque modification. Reportez-vous à la <a href="http://www.envoimoinscher.com/api/download/doc_prestashop_configurer.pdf">documentation</a> pour plus d’informations.</p>
+	<div id="emc-infos">
+	<h2>{l s='EMC configuration section' mod='envoimoinscher'} <span class="version">{l s='EMC module version' mod='envoimoinscher'} {$module_version|escape:'htmlall'}</span></h2>
+	<p>{l s='start config module info' mod='envoimoinscher'}</p>
+	<p><strong id="warn-online-message" {if $EMC_config.EMC_SRV_MODE === 'online'}style="color:black;"{else}style="color:orange;"{/if}>{l s='once configuration done : activate online mod' mod='envoimoinscher'}</strong></li>
+	<p>{l s='dont forget save each modification' mod='envoimoinscher'} <br/>
+		{l s='A documentation is available here:' mod='envoimoinscher'}<a href="//ecommerce.envoimoinscher.com/api/download/doc_prestashop_configurer.pdf" target="_blank" class="action_module">{l s='documentation' mod='envoimoinscher'}</a><br/>	
+		{l s='A documentation is also provided about sending method:' mod='envoimoinscher'}<a href="//ecommerce.envoimoinscher.com/api/download/doc_prestashop_expedier.pdf" target="_blank" class="action_module">{l s='sending method' mod='envoimoinscher'}</a>
+	</p>
+	</div>
+	{include file="$tpl_news" tab_news=$tab_news}
 </div>
 <div id="EMC_top">
-	<div id="EMC_Globals">
+	<div id="EMC_Globals" style="float:left;">
 		<div id="EMC_state">
 			<label>{l s='State of module:' mod='envoimoinscher'}</label>
 			<div class="margin-form add-tooltip" title="{l s='Enable your module on your website' mod='envoimoinscher'}">
@@ -174,11 +184,11 @@
 					$('#cacheCleaning').hide();
 					if(ret.error != 0)
 					{
-						alert("Une erreur s'est produite pendant la suppression du cache");
+						alert("{/literal}{l s='an error occured : cache clear' mod='envoimoinscher'}{literal}");
 					}
 					else
 					{
-						alert("Le cache a été correctement supprimé");
+						alert("{/literal}{l s='cache succefuly cleared' mod='envoimoinscher'}{literal}");
 					}
 				}
 			});
@@ -197,14 +207,14 @@
 				var message = "";
 				if (ret.offers_added.length == 0 && ret.offers_updated.length == 0 && ret.offers_deleted.length == 0)
 				{
-					message = "<p>Aucune mise à jour des offres disponible.</p>";
+					message = "<p>{/literal}{l s='no offer update avaliable' mod='envoimoinscher'}{literal}</p>";
 				}
 				else
 				{
-					message = "<p style='color:green'>Mise à jour réussie</p><br/>";
+					message = "<p style='color:green'>{/literal}{l s='offer update succeed' mod='envoimoinscher'}{literal}</p><br/>";
 					if (ret.offers_added.length > 0)
 					{
-						message += "<b>" + ret.offers_added.length + " nouvelle(s) offre(s) :</b>"
+						message += "<b>" + ret.offers_added.length + " {/literal}{l s='new offers : list' mod='envoimoinscher'}{literal}</b>"
 						message += "<ul style='margin-left:20px;list-style-type:square'>";
 						for (i = 0 ; i < ret.offers_added.length ; i++)
 						{
@@ -214,7 +224,7 @@
 					}
 					if (ret.offers_updated.length > 0)
 					{
-						message += "<b>" + ret.offers_updated.length + " offre(s) mise(s) à jour :</b>"
+						message += "<b>" + ret.offers_updated.length + " {/literal}{l s='new updated offers : list' mod='envoimoinscher'}{literal}</b>"
 						//message += "<br/><b style='color:orange;'>Attention : si un transporteur que vous utilisez est mis à jour, vous devez le supprimer et le recréer via le module pour appliquer les changements de <u>description</u></b>"
 						message += "<ul style='margin-left:20px;list-style-type:square'>";
 						for (i = 0 ; i < ret.offers_updated.length ; i++)
@@ -225,7 +235,7 @@
 					}
 					if (ret.offers_deleted.length > 0)
 					{
-						message += "<b>" + ret.offers_deleted.length + " offre(s) supprimée(s) :</b>"
+						message += "<b>" + ret.offers_deleted.length + " {/literal}{l s='x offers deleted : list' mod='envoimoinscher'}{literal}</b>"
 						message += "<ul style='margin-left:20px;list-style-type:square'>";
 						for (i = 0 ; i < ret.offers_deleted.length ; i++)
 						{
@@ -238,7 +248,7 @@
 			},
 			error : function(ret)
 			{
-				$('#carriers_update_result').html("<p style='color:red'>Erreur lors de la reception de la liste des transporteurs : <br/><div style='color:red'>"+ret.responseText+"</div></p>");
+				$('#carriers_update_result').html("<p style='color:red'>{/literal}{l s='Error : cant get carriers list' mod='envoimoinscher'}{literal} <br/><div style='color:red'>"+ret.responseText+"</div></p>");
 			}
 		});
 		return false;
@@ -486,12 +496,13 @@
 		</div>
 	</fieldset>
 	<script type="text/javascript">
+		{literal}
 		$(function(){
-
 			$(".fancybox").fancybox();
 
 			var content = $("#EMC_Content").html();
 			var toAppend = '<div id="EMC_cfg_bg"></div>';
+			{/literal}
 			{if $PS_ver == "1"}
 				{if $PS_subver == "5"}
 					toAppend = '<div id="EMC_cfg_bg" class="presta_1_5"></div>';
@@ -499,6 +510,7 @@
 					toAppend = '<div id="EMC_cfg_bg" class="presta_1_6"></div>';
 				{/if}
 			{/if}
+			{literal}
 			
 			$("#content").append(toAppend);
 			$("#EMC_Content:eq(0)").remove();
@@ -509,15 +521,24 @@
 			$("#content > .warn").appendTo("#EMC_cfg_bg #EMC_Content fieldset");
 
 			$(".btnValid").click(function() {
-				$(this).parent().prev('div').find('fieldset').find('input[type=submit]').click();
+				if ($(".btnValid").hasClass('selected'))
+				{
+					$(this).parent().prev('div').find('fieldset').find('input[type=submit]').click();
+				}
 			});
 
-			$(".btnClose.selected").click(function() {
-				$(this).parent().prev('div').find('fieldset').find('input[type=submit]').click();
+			$(".btnClose").click(function() {
+				if ($(".btnClose").hasClass('selected'))
+				{
+					$(this).parent().prev('div').find('fieldset').find('input[type=submit]').click();
+				}
 			});
 
 			$(".btnPrev").click(function() {
-				$("#btnPrev").submit();
+				if ($(".btnPrev").hasClass('selected'))
+				{
+					$("#btnPrev").submit();
+				}
 			});
 
 			// Initialize tooltip
@@ -528,5 +549,6 @@
 
 			EMCTooltipHelp();
 		});
+		{/literal}
 	</script>
 {/if}

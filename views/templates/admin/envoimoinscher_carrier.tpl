@@ -23,6 +23,21 @@
  * International Registred Trademark & Property of PrestaShop SA
  *}
 
+<script type="text/javascript">
+/*
+* We need text translation for external js
+* the script next to this need some information and smarty cant give those translations
+* (*.js => not parsed by smarty)
+*/
+var carrier_translation = {
+	no_pickup_point_found_try_other_addr : "{l s='no pickup point found : try modify shipmnt address' mod='envoimoinscher'}",
+	select_pickup_point1 				 : "{l s='select pickup point 1' mod='envoimoinscher'}",
+	select_pickup_point2 				 : "{l s='select pickup point 2' mod='envoimoinscher'}",
+	select_this_pickup_point 			 : "{l s='select this pickup point' mod='envoimoinscher'}",
+	before_continue_select_pickup_point  : "{l s='before continue : select pickup point' mod='envoimoinscher'}"
+};
+</script>
+ 
 <script type="text/javascript" src="{$baseDir|escape:'htmlall'}modules/envoimoinscher/js/carrier.js"></script>
 <link type="text/css" rel="stylesheet" href="{$baseDir|escape:'htmlall'}modules/envoimoinscher/css/carrier.css" />
 <script type="text/javascript"> 
@@ -76,7 +91,7 @@
 	   var pointChecked = $('input.point'+opeChecked+idAddress+':checked').val();
        if(carrierWithPoints.indexOf(";"+opeChecked+";") !== -1 && (""+pointChecked == "undefined" || pointChecked == ""))
 	   {
-	      alert("Avant de continuer, veuillez sélectionner votre point relais");
+	      alert(carrier_translation.before_continue_select_pickup_point);
           return false;
 	   }
      } ); 

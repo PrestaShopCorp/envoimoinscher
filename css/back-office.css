@@ -21,6 +21,12 @@
 margin-bottom:50px;
 }
 
+.version{
+	font-weight:normal;
+	font-size:12px;
+	margin-left:20px
+}
+
 .title-help{
 border:1px solid #AAD;
 background-color:#CCF;
@@ -199,7 +205,7 @@ list-style-type:decimal;
 #EMC_top > #EMC_Menu {
 	display: inline-block;
 	list-style-type: none;
-	margin: 0 auto;
+	margin: 20px auto;
 }
 
 /*** Tab ***/
@@ -341,6 +347,9 @@ list-style-type:decimal;
 /** Content **/
 #EMC_Content fieldset {
 	font-size: 12px;
+}
+#EMC_Infos{
+height:200px;
 }
 #EMC_Infos a,#EMC_top a, #EMC_Content a {
 	color: #268CCD;
@@ -532,6 +541,60 @@ list-style-type:decimal;
 	color: blue;
 }
 
+#emc-infos{
+float:left;
+width:50%;
+}
+
+#emc-news{
+font-size:15px;
+padding:0 0 20px 0;
+float:right;
+width:50%;
+height:200px;
+}
+
+#emc-news h4{
+margin:0 0 0 auto;
+max-width:830px;
+height:30px;
+}
+
+#emc-news ul{
+height:170px;
+overflow-y:auto;
+list-style-type:none;
+}
+
+#emc-news li {
+margin-left:auto;
+max-width:800px;
+border: 1px solid #999;
+padding:3px 8px;
+margin-bottom:5px;
+border-radius:5px;
+box-shadow: 0 0 11px #999;
+}
+
+.emc-alert{
+background-color:#FFEEEE;
+}
+.emc-info{
+background-color:#EEEEFF;
+}
+.emc-update{
+background-color:#EEFFEE;
+}
+
+.emc-alert b{
+color:red;
+}
+.emc-info b{
+color:blue;
+}
+.emc-update b{
+color:green;
+}
 
 
 /*****************************************************************************************/
