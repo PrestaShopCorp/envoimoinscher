@@ -61,8 +61,12 @@ fieldset.gris table tr td.first, fieldset.gris table tr td.second {color: #b6b3b
 
 #order-menu{
 float:left;
-width:50%;
-height:200px;
+width:auto;
+height:auto;
+}
+
+.clearfix{
+	clear: both;
 }
 
 #emc-news{
@@ -70,7 +74,8 @@ font-size:15px;
 padding:0 0 20px 0;
 float:right;
 width:50%;
-height:200px;
+height:auto;
+display:block;
 }
 
 #emc-news h4{
@@ -114,3 +119,9 @@ color:blue;
 .emc-update b{
 color:green;
 }
+
+/* fixed size fancybox */
+/*.fancybox-skin, .fancybox-outer, .fancybox-inner, .fancybox-frame{
+width:1000px !important;
+height:760px !important;
+}*/

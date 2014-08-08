@@ -56,14 +56,17 @@
 					<td class="price">
 						{if in_array($offer.id_eo, $operators)}
 							<div class="center EMC_error">
-								{l s='Disable to %s' mod='envoimoinscher' sprintf={$nameCategory|escape:'html'}}
+								{l s='Disable to %s' mod='envoimoinscher' sprintf={$nameCategory|unescape:'html'}}
 							</div>
 						{/if}
 						<div id="field2-offer{$offer.id_es}" {if $offer.id_carrier == '' || in_array($offer.id_eo, $operators)} style="display:none;"{/if}>
 							{foreach from=$pricing key=p item=price}
 								<div class="clear">
-									<label for="off_{$p|escape:'htmlall'}_{$offer.id_es|escape:'htmlall'}">{$price|escape:'htmlall'}</label>
-									<input type="radio" name="{$offer.offerCode}_emc" id="off_{$p}_{$offer.id_es}" value="{$p}" {if (($offer.emc_type == '' || $offer.emc_type == 1) && $p == 'real') || ($offer.emc_type != '' && $offer.emc_type == 0 && $p == 'scale')}checked="checked"{/if} {if $disableServices}disabled="disabled"{/if}/>
+									<label for="off_{$p|escape:'htmlall'}_{$offer.id_es|escape:'htmlall'}">
+										{if $price == "scale"}{l s='rate' mod='envoimoinscher'}{/if}
+										{if $price == "real"}{l s='real price' mod='envoimoinscher'}{/if}
+									</label>
+									<input type="radio" name="{$offer.offerCode}_emc" id="off_{$p}_{$offer.id_es}" value="{$price}" {if (($offer.pricing_es == '' || $offer.pricing_es == 1) && $price == 'real') || ($offer.pricing_es != '' && $offer.pricing_es == 0 && $price == 'scale')}checked="checked"{/if} {if $disableServices}disabled="disabled"{/if}/>
 								</div>
 							{/foreach}
 						</div>

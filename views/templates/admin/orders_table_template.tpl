@@ -47,13 +47,13 @@
 				</td>
 				<td>{$order.firstNameShort|escape:'htmlall'}. {$order.lastname|escape:'htmlall'}</td>
 				<td>
-					<br />Collecte : {$order.dateCol|escape:'htmlall'}
-					<br />Livraison : {$order.dateDel|escape:'htmlall'}
-					<br />Commande EnvoiMoinsCher : {$order.dateCom|escape:'htmlall'}
+					<br />{l s='Pickup' mod='envoimoinscher'} : {$order.dateCol|escape:'htmlall'}
+					<br />{l s='Delivery' mod='envoimoinscher'} : {$order.dateDel|escape:'htmlall'}
+					<br />{l s='EMC order' mod='envoimoinscher'} : {$order.dateCom|escape:'htmlall'}
 				</td>
 				<td style="width:100px;">
 					{if $type == "error"}
-					<p>Erreurs : {$order.errors_eoe|escape:'htmlall'}</p>
+					<p>{l s='Errors' mod='envoimoinscher'}  : {$order.errors_eoe|escape:'htmlall'}</p>
 					{else}
 					{$order.name|escape:'htmlall'} 
 					{/if} 

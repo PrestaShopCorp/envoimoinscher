@@ -23,11 +23,11 @@
  * International Registred Trademark & Property of PrestaShop SA
  *}
 
-<h2>EnvoiMoinsCher : mise à jour</h2> 
+<h2>{l s='EnvoiMoinsCher : Update' mod='envoimoinscher'}</h2> 
   {if $error}
-    <div class="alert error">La mise à jour n'a pas été correctement executée.</div>
+    <div class="alert error">{l s='The update was not properly executed.' mod='envoimoinscher'}</div>
   {else}
-    <div class="conf">La mise à jour a été correctement executée.</div>
+    <div class="conf">{l s='The update has been properly executed.' mod='envoimoinscher'}</div>
   {/if}
-  <p>&larr; <a href="index.php?controller=AdminModules&configure=envoimoinscher&token={$token|escape:'htmlall'}&tab_module=shipping_logistics&module_name=envoimoinscher" class="action_module">retour sur la page de configuration</a></p>
+  <p>&larr; <a href="index.php?controller=AdminModules&configure=envoimoinscher&token={$token|escape:'htmlall'}&tab_module=shipping_logistics&module_name=envoimoinscher" class="action_module">{l s='Back to configuration page' mod='envoimoinscher'}</a></p>
 </form>

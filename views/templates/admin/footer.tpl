@@ -25,7 +25,7 @@
 
 <div id="allMap">
 	<div id="mapContainer" style="display:none;width:80%; height:80%; position: absolute; top:100px; paddding:10px; left:10%; z-index:11111; border:3px solid #000000; background: #FFFFFF;">
-		<p style="width:98%; text-align:right; height:auto; padding-right:2%; margin-top:1%;"><a href="#" onclick="hideMap(); return false;">fermer X</a></p>
+		<p style="width:98%; text-align:right; height:auto; padding-right:2%; margin-top:1%;"><a href="#" onclick="hideMap(); return false;">{l s='close X' mod='envoimoinscher'}</a></p>
 		<div id="map_canvas" style="width:100%; height:89%;"></div>
 	</div>
 </div>

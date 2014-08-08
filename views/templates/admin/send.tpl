@@ -89,15 +89,15 @@
 		<br />
 		{/if}
 
-		<p><b>Informations sur le destinataire</b></p>
+		<p><b>{l s='Recipient Information' mod='envoimoinscher'}</b></p>
 		<table class="table" cellspacing="0" style="width: 100%;">
 			<thead>
 				<tr>
-					<th>Nom Prénom</th>
-					<th>Adresse</th>
-					<th>Ville</th>
-					<th>E-mail</th>
-					<th>Numéro de téléphone</th>
+					<th>{l s='Name' mod='envoimoinscher'}</th>
+					<th>{l s='Address' mod='envoimoinscher'}</th>
+					<th>{l s='City' mod='envoimoinscher'}</th>
+					<th>{l s='Email' mod='envoimoinscher'}</th>
+					<th>{l s='Phone number' mod='envoimoinscher'}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -110,71 +110,68 @@
 				</tr>
 			</tbody>
 		</table>
-		{if ($isEMCCarrier && $isFound) || (!$isEMCCarrier && !$isFound && $offersNb == 0)}<p><b>></b> <a href="#" id="changeDestData" class="action_module">modifier les informations sur le destinataire</a></p>{/if}
+		{if ($isEMCCarrier && $isFound) || (!$isEMCCarrier && !$isFound && $offersNb == 0)}<p><b>></b> <a href="#" id="changeDestData" class="action_module">{l s='Change recipient information' mod='envoimoinscher'}</a></p>{/if}
 	<div style="display:none;position:relative;" id="messageSending" class="box-left">
-		<p>Votre expédition est en cours, veuillez patienter.</p>
-		<p>Si jamais votre page ne se recharge pas, ou que la commande ne s'envoie pas <u>sans que vous ne receviez une erreur</u>, voici la marche à suivre :</p>
+		<p>{l s='Your shipment is in progress, please wait.' mod='envoimoinscher'}</p>
+		<p>{l s='If your page is not charging, or the order is not shipped' mod='envoimoinscher'} <u>{l s='without you receiving an error' mod='envoimoinscher'}</u>, {l s='here are the steps to follow' mod='envoimoinscher'} :</p>
 		<ul style="margin-left:10px;">
-			<li> - Connectez vous à votre compte sur <a target="_blank" href="//www.envoimoinscher.com">www.envoimoinscher.com</a> et vérifiez que la commande n'a pas été prise en compte sur nos serveurs.</li>
-			<li> - Si votre commande a été prise en compte, surtout ne renvoyez pas votre colis, contactez le service client au 01 75 77 37 97 qui vous aidera à régulariser la situation de votre colis sur Prestashop.</li>
+			<li> {l s='Connect to your account on' mod='envoimoinscher'} <a target="_blank" href="//www.envoimoinscher.com">www.envoimoinscher.com</a> {l s='and verify that the order has not been taken into account on our servers.' mod='envoimoinscher'}</li>
+			<li> {l s='If your order has been taken into account, do not return your order, please contact customer service which will help you to regularize the status of your package on Prestashop.' mod='envoimoinscher'}</li>
 		</ul>
 	</div>
 	
 	</div> 
 	{if $isFound || (!$isEMCCarrier && !$isFound && $offersNb == 0)}
 	<div id="foundBlock" class="box-right">
-		<p><b>Informations obligatoires</b></p>
+		<p><b>{l s='Required informations' mod='envoimoinscher'}</b></p>
 		<form method="post" action="index.php?controller=AdminEnvoiMoinsCher&id_order={$orderId}&option={if !$isEMCCarrier && !$isFound}editAddress{else}command{/if}&token={$token}" id="mandatory_form">
 			<table class="table formTable" cellspacing="0" style="width: 100%;">
 				{if $isFound}
 				{if $multiParcel == 1}
 				<tr id="multiParcelRow">
-					<th><label for="multiParcel">Multi-colis</label></th>
+					<th><label for="multiParcel">{l s='Multiparcel' mod='envoimoinscher'}</label></th>
 					<td class="paddingTableTd">
 						<input type="text" name="multiParcel" id="multiParcel" value="{$parcelsLength|escape:'htmlall'}" />
-						<div id="errorMultiParcel" class="alert error" style="width:160px; margin-top:10px; display:none;"><img src="{$adminImg|escape:'htmlall'}/forbbiden.gif" alt="nok" />Le multi-colis permet d'expédier la commande
-							en plusieurs colis au lieu d'un seul : veuillez indiquer le nombre de colis à expédier pour cette
-							commande en saisissant un chiffre supérieur ou égal à 2. Si la commande doit être envoyée
-							en 1 seul colis, laissez la case vide
+						<div id="errorMultiParcel" class="alert error" style="width:160px; margin-top:10px; display:none;"><img src="{$adminImg|escape:'htmlall'}/forbbiden.gif" alt="nok" />{l s='Multiparcel error explications' mod='envoimoinscher'}
 						</div>
 					</td>
 				</tr>
 				{foreach from=$parcels key=p item=parcel}
-				<tr class="appendRow"><th><label for="parcel{$p|escape:'htmlall'}">Colis #{$p|escape:'htmlall'}</label></th>
-					<td class="paddingTableTd"><input type="text" name="parcel[]" id="parcel{$p|escape:'htmlall'}" value="{$parcel.poids|escape:'htmlall'}" onblur="javascript: modifWeight();"  /> kg</td>
+				<tr class="appendRow"><th><label for="parcel{$p|escape:'htmlall'}">{l s='Package' mod='envoimoinscher'} #{$p|escape:'htmlall'}</label></th>
+					<td class="paddingTableTd"><input type="text" name="parcel[]" id="parcel{$p|escape:'htmlall'}" value="{$parcel.poids|escape:'htmlall'}" onblur="javascript: modifWeight();"  /> {l s='kg' mod='envoimoinscher'}</td>
 				</tr>
 				{/foreach}
 				{/if}
 				<tr>
 					<th>
-						<label for="weight">Poids total de l'envoi</label>
+						<label for="weight">{l s='Total weight of the shipment' mod='envoimoinscher'}</label>
 					</th>
 					<td class="paddingTableTd">
-						<input type="text" name="weight" id="weight" value="{$weight|escape:'htmlall'}" class="input-text" /> kg
+						<input type="text" name="weight" id="weight" value="{$weight|escape:'htmlall'}" class="input-text" /> {l s='kg' mod='envoimoinscher'}
 					</td>
 				</tr>
 				<tr>
 					<th>
-						<label for="weight">Largeur totale de l'envoi</label>
+						<label for="width">{l s='Total width of the shipment' mod='envoimoinscher'}</label>
 					</th>
 					<td class="paddingTableTd">
-						<input type="text" name="width" id="width" value="{$dimensions.width_ed|intval}" class="input-text" /> cm
+						<input type="text" name="width" id="width" value="{$dimensions.width_ed|intval}" class="input-text" /> {l s='cm' mod='envoimoinscher'}
 					</td>
 				</tr>
 				<tr>
 					<th>
-						<label for="weight">Longueur totale de l'envoi</label>
+						<label for="length">{l s='Total length of the shipment' mod='envoimoinscher'}</label>
 					</th>
 					<td class="paddingTableTd">
-						<input type="text" name="length" id="length" value="{$dimensions.length_ed|intval}" class="input-text" /> cm
+						<input type="text" name="length" id="length" value="{$dimensions.length_ed|intval}" class="input-text" /> {l s='cm' mod='envoimoinscher'}
 					</td>
 				</tr>
 				<tr>
 					<th>
-						<label for="weight">Hauteur totale de l'envoi</label>
+						<label for="height">{l s='Total height of the shipment' mod='envoimoinscher'}</label>
 					</th>
 					<td class="paddingTableTd">
-						<input type="text" name="height" id="height" value="{$dimensions.height_ed|intval}" class="input-text" /> cm
+						<input type="text" name="height" id="height" value="{$dimensions.height_ed|intval}" class="input-text" /> {l s='cm' mod='envoimoinscher'}
 					</td>
 				</tr>
 					{foreach from=$offer.output key=m item=mandatory}
@@ -188,68 +185,68 @@
 						{/if}
 					{/foreach}
 				<tr><th>
-					<label for="date">Date d'enlèvement</label></th>
+					<label for="collecte">{l s='Pickup date' mod='envoimoinscher'}</label></th>
 					<td class="paddingTableTd"><input type="text" name="collecte" id="collecte" value="{$offer.collection.date|escape:'htmlall'}" class="input-text" />
-						<p class="note">format : AAAA-MM-JJ, par exemple 2000-12-26 pour le 26 décembre 2000</p>
+						<p class="note">{l s='format : AAAA-MM-JJ, e.g. 2000-12-26 for 2000 december 26th' mod='envoimoinscher'}</p>
 					</td></tr>
 					{/if}
 					<tr class="changeDest {if (!isset($deliveryInfo.phoneAlert) || !$deliveryInfo.phoneAlert) && !$showDstBlock}hidden{/if}"><th>
-						<label for="date">Le numéro de téléphone du destinataire</label></th>
+						<label for="dest_tel">{l s='Recipient phone number' mod='envoimoinscher'}</label></th>
 						<td class="paddingTableTd"><input type="text" name="dest_tel" id="dest_tel" value="{$deliveryInfo.tel|escape:'htmlall'}" class="input-text" />
-							{if isset($deliveryInfo.phoneAlert)}{$deliveryInfo.phoneAlert}<p class="note">! Votre destinataire n'a pas renseigné son numéro de téléphone. Votre numéro de téléphone a été repris.</p>{/if}
+							{if isset($deliveryInfo.phoneAlert)}{$deliveryInfo.phoneAlert}<p class="note">{l s='Your recipient has not informed his phone number. Your phone number has been taken.' mod='envoimoinscher'}</p>{/if}
 						</td>
 					</tr>
 					<tr class="changeDest {if !$showDstBlock}hidden{/if}"><th>
-						<label for="date">Le prénom du destinataire</label></th>
+						<label for="dest_fname">{l s='Recipient first name' mod='envoimoinscher'}</label></th>
 						<td class="paddingTableTd"><input type="text" name="dest_fname" id="dest_fname" value="{$deliveryInfo.prenom|escape:'htmlall'}" class="input-text" />
 						</td>
 					</tr>
 					<tr class="changeDest {if !$showDstBlock}hidden{/if}"><th>
-						<label for="date">Le nom du destinataire</label></th>
+						<label for="dest_lname">{l s='Recipient last name' mod='envoimoinscher'}</label></th>
 						<td class="paddingTableTd"><input type="text" name="dest_lname" id="dest_lname" value="{$deliveryInfo.nom|escape:'htmlall'}" class="input-text" />
 						</td>
 					</tr>
 					<tr class="changeDest {if !$showDstBlock}hidden{/if}"><th>
-						<label for="date">L'adresse du destinataire</label></th>
-						<td style="padding-left:10px;"><input type="text" name="dest_add" id="dest_add" value="{$deliveryInfo.adresse|escape:'htmlall'}" class="input-text" />
+						<label for="dest_add">{l s='Recipient address' mod='envoimoinscher'}</label></th>
+						<td class="paddingTableTd"><input type="text" name="dest_add" id="dest_add" value="{$deliveryInfo.adresse|escape:'htmlall'}" class="input-text" />
 						</td>
 					</tr>
 					<tr class="changeDest {if !$showDstBlock}hidden{/if}"><th>
-						<label for="date">Le code postal du destinataire</label></th>
+						<label for="dest_code">{l s='Recipient zip code' mod='envoimoinscher'}</label></th>
 						<td class="paddingTableTd"><input type="text" name="dest_code" id="dest_code" value="{$deliveryInfo.code_postal|escape:'htmlall'}" class="input-text" />
 						</td>
 					</tr>
 					<tr class="changeDest {if !$showDstBlock}hidden{/if}"><th>
-						<label for="date">La ville du destinataire</label></th>
+						<label for="dest_city">{l s='Recipient city' mod='envoimoinscher'}</label></th>
 						<td class="paddingTableTd"><input type="text" name="dest_city" id="dest_city" value="{$deliveryInfo.ville|escape:'htmlall'}" class="input-text" />
 						</td>
 					</tr>
 					<tr class="changeDest {if !$showDstBlock}hidden{/if}"><th>
-						<label for="date">L'e-mail du destinataire</label></th>
+						<label for="dest_email">{l s='Recipient email' mod='envoimoinscher'}</label></th>
 						<td class="paddingTableTd"><input type="text" name="dest_email" id="dest_email" value="{$deliveryInfo.email|escape:'htmlall'}" class="input-text" />
 						</td>
 					</tr> 
 					<tr class="changeDest {if !$showDstBlock}hidden{/if}"><th>
-						<label for="comp">Le nom de la société</label></th>
+						<label for="dest_company">{l s='Company name' mod='envoimoinscher'}</label></th>
 						<td class="paddingTableTd"><input type="text" name="dest_company" id="dest_company" value="{$deliveryInfo.societe|escape:'htmlall'}" class="input-text" />
 						</td>
 					</tr> 
 					{if isset($proforma) && $proforma}
-					<tr><th colspan="2"><br /><b>Informations pour la facture proforma, générée par EnvoiMoinsCher.com</b></th></tr>
+					<tr><th colspan="2"><br /><b>{l s='Information for the proforma invoice generated by EnvoiMoinsCher.com' mod='envoimoinscher'}</b></th></tr>
 					{foreach from=$proformaData key=p item=proforma}  
-					<tr><th><label for="desc_fr_{$p|escape:'htmlall'}">Description d'objet #{$p|escape:'htmlall'}</label></th>
+					<tr><th><label for="desc_fr_{$p|escape:'htmlall'}">{l s='Item description' mod='envoimoinscher'} #{$p|escape:'htmlall'}</label></th>
 						<td class="paddingTableTd">
-							<p><input type="text" name="desc_fr_{$p|escape:'htmlall'}" id="desc_fr_{$p|escape:'htmlall'}" value="{$proforma.description_fr|escape:'htmlall'}" class="input-text" /> <small>(en français)</small></p>
-							<p><input type="text" name="desc_en_{$p|escape:'htmlall'}" id="desc_en_{$p|escape:'htmlall'}" value="{$proforma.description_en|escape:'htmlall'}" class="input-text" /> <small>(en anglais)</small>
-								<a href="#" onclick="traduireDescription('{$proforma.description_fr|escape:'htmlall'}');return false;">traduire</a></p> 
+							<p><input type="text" name="desc_fr_{$p|escape:'htmlall'}" id="desc_fr_{$p|escape:'htmlall'}" value="{$proforma.description_fr|escape:'htmlall'}" class="input-text" /> <small>{l s='French' mod='envoimoinscher'}</small></p>
+							<p><input type="text" name="desc_en_{$p|escape:'htmlall'}" id="desc_en_{$p|escape:'htmlall'}" value="{$proforma.description_en|escape:'htmlall'}" class="input-text" /> <small>{l s='English' mod='envoimoinscher'}</small>
+								<a href="#" onclick="traduireDescription('{$proforma.description_fr|escape:'htmlall'}');return false;">{l s='Translate' mod='envoimoinscher'}</a></p> 
 							</td>
 						</tr>
 						{/foreach}
 						<input type="hidden" name="proformaSend" id="proformaSend" value="1" />
 						{/if}
 						{if isset($offer.insurance)}
-						<tr><th colspan="2"><br /><b>Informations pour l'assurance AXA</b></th></tr>
-						<tr class="appendRow"><th><label for="insurance">Assurer cet envoi</label></th>
+						<tr><th colspan="2"><br /><b>{l s='AXA insurance information' mod='envoimoinscher'}</b></th></tr>
+						<tr class="appendRow"><th><label for="insurance">{l s='Insure this shipment' mod='envoimoinscher'}</label></th>
 							<td class="paddingTableTd"><input type="checkbox" name="insurance" id="insurance" value="1" {if $offer.insurance || $checkAssu}checked="checked"{/if} onclick="javascript: modifInsurance(this);" />
 								{if $offer.insurance || $checkAssu}
 								<script type="text/javascript">
@@ -279,7 +276,7 @@
 						<input type="hidden" name="exp_pays" id="exp_pays" value="{$shipperInfo.country|escape:'htmlall'}" />
 						<input type="hidden" name="exp_cp" id="exp_cp" value="{$shipperInfo.postalcode|escape:'htmlall'}" />
 						<input type="hidden" name="exp_city" id="exp_city" value="{$shipperInfo.city|escape:'htmlall'}" />
-						<input type="submit" name="send" id="submitForm" value="Expédier" class="button" />
+						<input type="submit" name="send" id="submitForm" value="{l s='Send' mod='envoimoinscher'}" class="button" />
 					</td>
 				</tr>
 			</table>

@@ -61,16 +61,17 @@
 	{/if}
 	<p>{l s='list shipments, to download slips : check then clic "download"' mod='envoimoinscher'}</p>
 
-
+	<div class="clearfix"></div>
+	
 	{* include pager template *}
 	{include file="$pagerTemplate" var=$pager}
 	{* include pager template *}
 
 	<form method="post" target="_blank" action="index.php?controller=AdminEnvoiMoinsCher&option=download&token={$token|escape:'htmlall'}">
-		<p style="text-align:right"><input type="submit" class="button" id="send1" name="sendValue" value="Télécharger les bordereaux" /></a></b></p><br />
+		<p style="text-align:right"><input type="submit" class="button" id="send1" name="sendValue" value="{l s='Download shipment notes' mod='envoimoinscher'}" /></a></b></p><br />
 		{include file="$ordersTableTemplate" id="1" orders=$orders tokenOrder=$tokenOrder ordersTodo=$orders type="history"}
 		<br />
-		<p style="text-align:right"><input type="submit" class="button" id="send2" name="sendValue" value="Télécharger les bordereaux" /></a></b></p>
+		<p style="text-align:right"><input type="submit" class="button" id="send2" name="sendValue" value="{l s='Download shipment notes' mod='envoimoinscher'}" /></a></b></p>
 	</form>
 	{* include pager template *}
 	{include file="$pagerTemplate" var=$pager}

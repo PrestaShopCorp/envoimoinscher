@@ -73,7 +73,7 @@ list-style-type:decimal;
 	margin: 0;
 	padding: 0;
 	float: left;
-	width: 33.3%;
+	width: 25%;
 }
 
 #EMC_cfg_bg > #EMC_Content > .EMC_steps > li > a {
@@ -193,6 +193,11 @@ list-style-type:decimal;
 
 #EMC_Content .EMC_error {
 	color: red;
+}
+
+#EMC_Content > div > fieldset{
+	min-height:400px;
+	margin-bottom:0px;
 }
 
 /*******************************************/
@@ -543,7 +548,7 @@ height:200px;
 
 #emc-infos{
 float:left;
-width:50%;
+width:auto;
 }
 
 #emc-news{
@@ -551,7 +556,8 @@ font-size:15px;
 padding:0 0 20px 0;
 float:right;
 width:50%;
-height:200px;
+height:auto;
+display:block;
 }
 
 #emc-news h4{
@@ -870,3 +876,38 @@ color:green;
 .action_module{
 cursor:pointer;
 }
+
+.hidden{
+display:none;
+}
+
+#introduction ul{
+margin-top:0px;
+}
+
+#introduction .important,#introduction .important a{
+font-weight:bold;
+color:#268ccd;
+}
+
+#logo_intro{
+float:right;
+width:400px;
+height:110px;
+margin-left:10px;
+margin-right:-20px;
+}
+
+#logo_intro a{
+background-repeat: no-repeat;
+background-image: url('../img/logo-emc-large.png');
+display: block;
+width:400px;
+height:110px;
+}
+
+/* fixed size fancybox */
+/*.fancybox-skin, .fancybox-outer, .fancybox-inner, .fancybox-frame{
+width:1000px !important;
+height:760px !important;
+}*/

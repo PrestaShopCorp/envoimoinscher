@@ -22,7 +22,7 @@
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
-
+<div class="clearfix"></div>
 <div style="text-align:right">
 	<p>
 		<input type="submit" class="button" name="sendValueWithCheck" value="{l s='Send with check' mod='envoimoinscher'}" />
