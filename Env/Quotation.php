@@ -261,6 +261,28 @@ class EnvQuotation extends EnvWebService
 	}
 
 	/** 
+	 * Public function setting array of params for curl multi request before getting quotation
+	 * @access public
+	 * @return void
+	 */
+	public function setParamMulti($quot_info_multi)
+	{
+		$this->param_multi[] = array_merge($this->param, $quot_info_multi);
+	}
+
+	/** 
+	 * Public function which receives the quotation for curl  multi request. 
+	 * @access public
+	 * @return true if request was executed correctly, false if not
+	 */
+	public function getQuotationMulti()
+	{
+		$this->setGetParamsMulti(array());
+		$this->setOptionsMulti(array('action' => '/api/v1/cotation'));
+		return $this->doSimpleRequestMulti();
+	}
+
+	/** 
 	 * Function which gets quotation details.
 	 * @access private
 	 * @return false if server response isn't correct; true if it is
@@ -279,43 +301,83 @@ class EnvQuotation extends EnvWebService
 	}
 
 	/** 
+	 * Function which gets quotation details for curlmulti request.
+	 * @access private
+	 * @return false if server response isn't correct; true if it is
+	 */
+	private function doSimpleRequestMulti()
+	{
+		$source = parent::doRequestMulti();
+
+		/* We make sure there is an XML answer and try to parse it */
+		if ($source !== false)
+		{
+			parent::parseResponseMulti($source);
+			return (count($this->resp_errors_list) == 0);
+		}
+		return false;
+	}
+
+
+	/** 
+	 * Function load all offers for curl multi request calling getOffers() function.
+	 * @access public
+	 * @return Void
+	 */
+	public function getOffersMulti()
+	{
+		$i = 0;
+		foreach ($this->xpath as $xpath)
+		{
+			$this->getOffers(false, $xpath, $i);
+			$i++;
+		}
+	}
+
+	/** 
 	 * Function load all offers
 	 * @access public
 	 * @param bool $only_com If true, we have to get only offers in the 'order' mode.
 	 * @return Void
 	 */
-	public function getOffers($only_com = false)
+	public function getOffers($only_com = false, $multi = false, $i = 0)
 	{
 		$node_name = 'nodeName';
 		$node_value = 'nodeValue';
 
-		$offers = $this->xpath->query('/cotation/shipment/offer');
+		if ($multi)
+			$xpath = $multi;
+		else
+			$xpath = $this->xpath;
+
+		$offers = $xpath->query('/cotation/shipment/offer');
+
 		foreach ($offers as $o => $offer)
 		{
-			$offer_mode = $this->xpath->query('./mode', $offer)->item(0)->$node_value;
+			$offer_mode = $xpath->query('./mode', $offer)->item(0)->$node_value;
 			if (!$only_com || ($only_com && $offer_mode == 'COM'))
 			{
 				// Mandatory informations - you must fill it up when you want to order this offer
-				$informations = $this->xpath->query('./mandatory_informations/parameter', $offer);
+				$informations = $xpath->query('./mandatory_informations/parameter', $offer);
 				$mand_infos = array();
 				foreach ($informations as $mandatory)
 				{
-					$arr_key = $this->xpath->query('./code', $mandatory)->item(0)->$node_value;
+					$arr_key = $xpath->query('./code', $mandatory)->item(0)->$node_value;
 					$mand_infos[$arr_key] = array();
-					$mandatory_childs = $this->xpath->query('*', $mandatory);
+					$mandatory_childs = $xpath->query('*', $mandatory);
 					foreach ($mandatory_childs as $mandatory_child)
 					{
 						$mand_infos[$arr_key][$mandatory_child->$node_name] = trim($mandatory_child->$node_value);
 						if ($mandatory_child->$node_name == 'type')
 						{
-							$nodes = $this->xpath->query('*', $mandatory_child);
+							$nodes = $xpath->query('*', $mandatory_child);
 							foreach ($nodes as $node)
 							{
 								if ($node->$node_name == 'enum')
 								{
 									$mand_infos[$arr_key][$mandatory_child->$node_name] = 'enum';
 									$mand_infos[$arr_key]['array'] = array();
-									$childs = $this->xpath->query('*', $node);
+									$childs = $xpath->query('*', $node);
 									foreach ($childs as $child)
 										if (trim($child->$node_value) != '')
 											$mand_infos[$arr_key]['array'][] = $child->$node_value;
@@ -328,21 +390,21 @@ class EnvQuotation extends EnvWebService
 					unset($mand_infos[$arr_key]['#text']);
 				}
 				// options
-				$options_xpath = $this->xpath->query('./options/option', $offer);
+				$options_xpath = $xpath->query('./options/option', $offer);
 				$options = array();
 				foreach ($options_xpath as $option)
 				{
-					$code_option = $this->xpath->query('./code', $option)->item(0)->$node_value;
+					$code_option = $xpath->query('./code', $option)->item(0)->$node_value;
 					//$s = $o_key + 1;
 					$options[$code_option] = array(
-						'name' => $this->xpath->query('./name', $option)->item(0)->$node_value,
+						'name' => $xpath->query('./name', $option)->item(0)->$node_value,
 						'parameters' => array());
-					$parameters = $this->xpath->query('./parameter', $option);
+					$parameters = $xpath->query('./parameter', $option);
 					foreach ($parameters as $parameter)
 					{
-						$param_code = $this->xpath->query('./code', $parameter)->item(0);
-						$param_label = $this->xpath->query('./label', $parameter)->item(0);
-						$param_type = $this->xpath->query('./type', $parameter)->item(0);
+						$param_code = $xpath->query('./code', $parameter)->item(0);
+						$param_label = $xpath->query('./label', $parameter)->item(0);
+						$param_type = $xpath->query('./type', $parameter)->item(0);
 						$options[$code_option]['parameters'][$param_code->$node_value] = array(
 							'code' => $param_code->$node_value,
 							'label' => $param_label->$node_value,
@@ -358,7 +420,7 @@ class EnvQuotation extends EnvWebService
 				}
 
 				// characteristics generation
-				$charact_detail = $this->xpath->evaluate('./characteristics', $offer)->item(0)->childNodes;
+				$charact_detail = $xpath->evaluate('./characteristics', $offer)->item(0)->childNodes;
 				$charact_array = array();
 				foreach ($charact_detail as $c => $char)
 				{
@@ -367,50 +429,50 @@ class EnvQuotation extends EnvWebService
 				}
 
 				$alert = '';
-				$alert_node = $this->xpath->query('./alert', $offer)->item(0);
+				$alert_node = $xpath->query('./alert', $offer)->item(0);
 				if (!empty($alert_node))
 					$alert = $alert_node->$node_value;
 				else
 					$alert = '';
 
-				$this->offers[$o] = array(
+				$this->offers[$o + $i] = array(
 					'mode' => $offer_mode,
-					'url' => $this->xpath->query('./url', $offer)->item(0)->$node_value,
+					'url' => $xpath->query('./url', $offer)->item(0)->$node_value,
 					'operator' => array(
-						'code' => $this->xpath->query('./operator/code', $offer)->item(0)->$node_value,
-						'label' => $this->xpath->query('./operator/label', $offer)->item(0)->$node_value,
-						'logo' => $this->xpath->query('./operator/logo', $offer)->item(0)->$node_value),
+						'code' => $xpath->query('./operator/code', $offer)->item(0)->$node_value,
+						'label' => $xpath->query('./operator/label', $offer)->item(0)->$node_value,
+						'logo' => $xpath->query('./operator/logo', $offer)->item(0)->$node_value),
 					'service' => array(
-						'code' => $this->xpath->query('./service/code', $offer)->item(0)->$node_value,
-						'label' => $this->xpath->query('./service/label', $offer)->item(0)->$node_value),
+						'code' => $xpath->query('./service/code', $offer)->item(0)->$node_value,
+						'label' => $xpath->query('./service/label', $offer)->item(0)->$node_value),
 					'price' => array(
-						'currency' => $this->xpath->query('./price/currency', $offer)->item(0)->$node_value,
-						'tax-exclusive' => $this->xpath->query('./price/tax-exclusive', $offer)->item(0)->$node_value,
-						'tax-inclusive' => $this->xpath->query('./price/tax-inclusive', $offer)->item(0)->$node_value),
+						'currency' => $xpath->query('./price/currency', $offer)->item(0)->$node_value,
+						'tax-exclusive' => $xpath->query('./price/tax-exclusive', $offer)->item(0)->$node_value,
+						'tax-inclusive' => $xpath->query('./price/tax-inclusive', $offer)->item(0)->$node_value),
 					'collection' => array(
-						'type' => $this->xpath->query('./collection/type/code', $offer)->item(0)->$node_value,
-						'date' => $this->xpath->query('./collection/date', $offer)->item(0)->$node_value,
-						'label' => $this->xpath->query('./collection/type/label', $offer)->item(0)->$node_value),
+						'type' => $xpath->query('./collection/type/code', $offer)->item(0)->$node_value,
+						'date' => $xpath->query('./collection/date', $offer)->item(0)->$node_value,
+						'label' => $xpath->query('./collection/type/label', $offer)->item(0)->$node_value),
 					'delivery' => array(
-						'type' => $this->xpath->query('./delivery/type/code', $offer)->item(0)->$node_value,
-						'date' => $this->xpath->query('./delivery/date', $offer)->item(0)->$node_value,
-						'label' => $this->xpath->query('./delivery/type/label', $offer)->item(0)->$node_value),
+						'type' => $xpath->query('./delivery/type/code', $offer)->item(0)->$node_value,
+						'date' => $xpath->query('./delivery/date', $offer)->item(0)->$node_value,
+						'label' => $xpath->query('./delivery/type/label', $offer)->item(0)->$node_value),
 					'characteristics' => $charact_array,
 					'alert' => $alert,
 					'mandatory' => $mand_infos,
 					'options' =>$options
 				);
 				// Ajout de l'insurance si elle est retournée
-				if ($this->xpath->evaluate('boolean(./insurance)', $offer))
+				if ($xpath->evaluate('boolean(./insurance)', $offer))
 				{
-					$this->offers[$o]['insurance'] = array(
-						'currency' => $this->xpath->query('./insurance/currency', $offer)->item(0)->$node_value,
-						'tax-exclusive' => $this->xpath->query('./insurance/tax-exclusive', $offer)->item(0)->$node_value,
-						'tax-inclusive' => $this->xpath->query('./insurance/tax-inclusive', $offer)->item(0)->$node_value);
-					$this->offers[$o]['hasInsurance'] = true;
+					$this->offers[$o + $i]['insurance'] = array(
+						'currency' => $xpath->query('./insurance/currency', $offer)->item(0)->$node_value,
+						'tax-exclusive' => $xpath->query('./insurance/tax-exclusive', $offer)->item(0)->$node_value,
+						'tax-inclusive' => $xpath->query('./insurance/tax-inclusive', $offer)->item(0)->$node_value);
+					$this->offers[$o + $i]['hasInsurance'] = true;
 				}
 				else
-					$this->offers[$o]['hasInsurance'] = false;
+					$this->offers[$o + $i]['hasInsurance'] = false;
 			}
 		}
 	}

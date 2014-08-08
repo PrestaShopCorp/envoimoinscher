@@ -63,6 +63,16 @@ function doOrderRequest()
 			ordersTodo--;
 			ordersDone++;
 			$("#done").html(ordersDone);
+			if (res.id != '')
+			{
+				$('#row-'+res.id).remove();
+				// hide the send array if it is empty
+				if ($('#ORDERSTABLE1 tbody tr').length == 0)
+				{
+					$('#orderDo1').hide();
+				}
+				
+			}
 			if(ordersTodo == 0 || res.doOthers == 0)
 			{
 				showFinalMessage();

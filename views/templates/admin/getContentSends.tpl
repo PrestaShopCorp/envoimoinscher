@@ -23,6 +23,14 @@
  * International Registred Trademark & Property of PrestaShop SA
  *}
 
+ <script>
+	$(document).ready(function(){
+		$(document).delegate('.fromto','change',function(){
+			$('.fromto-'+$(this).val()).attr('selected','selected');
+		});
+	})
+ </script>
+ 
 <div class="support-message">
 	<p>{l s='Sends support message' mod='envoimoinscher'}</p>
 </div>
@@ -134,15 +142,23 @@
 					<label for="pickupDay{$smarty.section.conf.index|escape:'htmlall'}">{l s='Pickup date : D +' mod='envoimoinscher'}</label>
 					<div class="margin-form">
 						<input type="text" name="pickupDay{$smarty.section.conf.index|escape:'htmlall'}" id="pickupDay{$smarty.section.conf.index|escape:'htmlall'}" value="{$pickupConf[conf].j|escape:'htmlall'}" style="width: 30px;" /> <sup>*</sup> {l s='for orders past between' mod='envoimoinscher'} 
-						<select name="pickupFrom{$smarty.section.conf.index|intval}" style="width:70px;">
-							{section name=hor start=0 loop=25 step=1}
-								<option value="{$smarty.section.hor.index|escape:'htmlall'}" {if Tools::getValue('pickupFrom'|cat:$smarty.section.conf.index, $pickupConf[conf].from) == $smarty.section.hor.index}selected="selected"{/if}>{$smarty.section.hor.index|escape:'htmlall'}h00</option>
-							{/section}
-						</select> <sup>*</sup> {l s='and' mod='envoimoinscher'} 
-						<select name="pickupTo{$smarty.section.conf.index|escape:'htmlall'}" style="width:70px;">
-							{section name=hor start=0 loop=25 step=1}
-								<option value="{$smarty.section.hor.index}" {if Tools::getValue('pickupTo'|cat:$smarty.section.conf.index, $pickupConf[conf].to) == $smarty.section.hor.index}selected="selected"{/if}>{$smarty.section.hor.index}h00</option>
-							{/section}
+						<select name="pickupFrom{$smarty.section.conf.index|intval}" class="fromto" style="width:70px;">
+							{if $smarty.section.conf.index == 0}
+								<option value="0" selected="selected">0:00</option>
+							{else}
+								{section name=hor start=0 loop=25 step=1}
+									<option value="{$smarty.section.hor.index|escape:'htmlall'}" class="fromto-{$smarty.section.hor.index}" {if Tools::getValue('pickupFrom'|cat:$smarty.section.conf.index, $pickupConf[conf].from) == $smarty.section.hor.index}selected="selected"{/if}>{$smarty.section.hor.index|escape:'htmlall'}h00</option>
+								{/section}
+							{/if}
+						</select> <sup>*</sup> {l s='and' mod='envoimoinscher'}
+						<select name="pickupTo{$smarty.section.conf.index|escape:'htmlall'}" class="fromto" style="width:70px;">							
+							{if $smarty.section.conf.index == 1}
+								<option value="24" selected="selected">24:00</option>
+							{else}
+								{section name=hor start=0 loop=25 step=1}
+									<option value="{$smarty.section.hor.index}" class="from fromto-{$smarty.section.hor.index}" {if Tools::getValue('pickupTo'|cat:$smarty.section.conf.index, $pickupConf[conf].to) == $smarty.section.hor.index}selected="selected"{/if}>{$smarty.section.hor.index}h00</option>
+								{/section}
+							{/if}
 						</select> <sup>*</sup>
 						{if $smarty.section.conf.index == 1}
 							<p class="preference_description">{l s='Specify how many days after the order is taken by the buyer, the pickup be programmed.' mod='envoimoinscher'}</p>
@@ -180,118 +196,4 @@
 	<div class="margin-form">
 		<input type="submit" name="btnSends" value="{l s='Send' mod='envoimoinscher'}" class="button" />
 	</div>
-	{*
-	TODO : A déplacer
-	<fieldset>
-		<!-- Mode of sending mass -->
-		<label for="EMC_mass">{l s='Mode of sending mass:' mod='envoimoinscher'}</label>
-		<div class="margin-form">
-			<select name="EMC_mass" id="EMC_mass">
-				<option value="">-- {l s='Please choose' mod='envoimoinscher'} --</option>
-				<option value="1" {if $withMass == $EMC_config.EMC_MASS}selected="selected"{/if}>{l s='Check with each shipment' mod='envoimoinscher'}</option>
-				<option value="0" {if $withoutMass == $EMC_config.EMC_MASS}selected="selected"{/if}>{l s='Without verification of shipments' mod='envoimoinscher'}</option>
-			</select> <sup>*</sup>
-			<p class="preference_description">
-				{l s='When you send multiple commands at once, you can choose to check and confirm the information of each item before triggers.' mod='envoimoinscher'}
-			</p>
-		</div>
-		<div class="clear both"></div>
-		<!-- Submit -->
-		<div class="margin-form">
-			<input type="submit" name="btnSends" id="btnSends" class="button" value="{l s='Send' mod='envoimoinscher'}" />
-		</div>
-	</fieldset>
-	<fieldset id="EMC_advanced">
-		<legend>{l s='Advanced parameters' mod='envoimoinscher'}</legend>
-		<p>
-			{l s='Select shipping offers you want to offer your rates and the type of store (see instructions in the third configuration step above).' mod='envoimoinscher'}<br /><br />
-			<a href="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall'}&option=tests" class="action_module" target="_blank">{l s='Help choosing offers' mod='envoimoinscher'}</a><br /><br />
-			<a href="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall'}&option=cleanCache" class="action_module" target="_blank">{l s='Purge the cache' mod='envoimoinscher'}</a><br /><br />
-		</p>
-		<fieldset>
-			<legend>{l s='Advanced carriers' mod='envoimoinscher'}</legend>
-			<p>
-				{l s='The carriers listed below reflect the specific weight and dimensions of your package to calculate the cost of transport.' mod='envoimoinscher'}<br /> 
-				{l s='This is why we advise you to customize the dimensions of your package.' mod='envoimoinscher'}
-				<br /><br />
-				<strong>{l s='Then you get a more accurate billing and no surprises.' mod='envoimoinscher'}</strong>
-				<br /><br />
-			</p>
-			<ul>
-				<li>{l s='Real Price: Price returned by Envoimoinscher, you have nothing more to do.' mod='envoimoinscher'}</li>
-				<li>{l s='Package: Shipping you set yourself before setting your weight ranges or prices in the Transport tab).' mod='envoimoinscher'}</li>
-				<li>{l s='Remember that you can offer shipping from the amount of your choice in the Transport tab> Transport Prestashop part handling.' mod='envoimoinscher'}</li>
-			</ul>
-			<p>{l s='For more details, view the documentation' mod='envoimoinscher'}</p>
-			{if isset($families) && sizeof(families)}
-				{foreach from=$families key=f item=family}
-					{if $f == 3}
-						<fieldset>
-							<legend>{$family|escape:'htmlall'}</legend>
-							{include file="$familTableTpl" offers=$offersExpress disableServices=$disableServices}
-						</fieldset>
-					{/if}
-				{/foreach}
-			{/if}
-		</fieldset>
-		<fieldset>
-			<legend>{l s='Customizing dimencions to send' mod='envoimoinscher'}</legend>
-			<p>
-				{l s='On this page, you can customize the maximum size of your shipments by weight ranges. We recommend that you perform this customization work because the dimensions are one of the key criteria for the award of the tender of delivery. Indicate and the most common sizes for the most realistic prices.' mod='envoimoinscher'}
-				<br /><br />
-				{l s='Without customization, it is the default dimensions, developed by Envoimoinscher, will be displayed.' mod='envoimoinscher'}
-			</p>
-			<table class="table offersList">
-				<thead>
-					<tr>
-						<th class="center">
-							 #
-						</th>
-						<th class="center">
-							{l s='Weight to' mod='envoimoinscher'}
-						</th>
-						<th class="center">
-							{l s='Length max' mod='envoimoinscher'}
-						</th>
-						<th class="center">
-							{l s='Width max' mod='envoimoinscher'}
-						</th>
-						<th class="center">
-							{l s='Height max' mod='envoimoinscher'}
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					{if isset($dims) && $dims && sizeof($dims)}
-						{foreach from=$dims key=d item=dim}
-							<tr>
-								<td class="center">
-									<span class="big">{$d+1|intval}</span>
-								</td>
-								<td class="center">
-									<input type="text" name="weight{$d+1|intval}" id="weight{$d+1|intval}" value="{$dim.weight_ed|intval}" class="smallInput" /> <span>kg</span>
-								</td>
-								<td class="center">
-									<input type="text" name="length{$d+1|intval}" id="length{$d+1|intval}" value="{$dim.length_ed|intval}" class="smallInput" /> <span>cm</span>
-								</td>
-								<td class="center">
-									<input type="text" name="width{$d+1|intval}" id="width{$d+1|intval}" value="{$dim.width_ed|intval}" class="smallInput" /> <span>cm</span>
-								</td>
-								<td class="center">
-									<input type="text" name="height{$d+1|intval}" id="height{$d+1|intval}" value="{$dim.height_ed|intval}" class="smallInput" /> <span>cm</span>
-									<input type="hidden" name="id{$d+1|intval}" id="id{$d+1|intval}" value="{$dim.id_ed|intval}" />
-								</td>
-							</tr>
-						{/foreach}
-					{/if}
-					<input type="hidden" name="countDims" id="countDims" value="{sizeof($dims)|intval}" />
-				</tbody>
-			</table>
-		</fieldset>
-		<div class="margin-form">
-			<input type="submit" name="btnAdvanced" id="btnAdvanced" class="button" value="{l s='Send' mod='envoimoinscher'}">
-		</div>
-		<div class="clear both"></div>
-	</fieldset>
-	*}
 </form>

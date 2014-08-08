@@ -40,12 +40,12 @@
 <div id="LIST_TRACKING" class="table_block">
   <table class="detail_step_by_step std">
     <thead>
-      <tr><th>Suivi transporteur</th></tr>
+      <tr><th>{l s='Carrier tracking' mod='envoimoinscher'}</th></tr>
     </thead>
     <tbody>
     {if $isAdmin}
-     <tr><td><b>Numéro de la commande :</b> {$order.id_order|escape:'htmlall'}</td></tr>
-     <tr><td><b>Destinataire :</b> {$order.firstname|escape:'htmlall'} {$order.lastname|escape:'htmlall'}</td></tr>
+     <tr><td><b>{l s='Order number' mod='envoimoinscher'} :</b> {$order.id_order|escape:'htmlall'}</td></tr>
+     <tr><td><b>{l s='Recipient' mod='envoimoinscher'} :</b> {$order.firstname|escape:'htmlall'} {$order.lastname|escape:'htmlall'}</td></tr>
     {/if}
     {foreach from=$rows key=r item=row}
   <tr class="{if $r%2 == 0}item{else}alternate_item{/if}" ><td><b>{$row.date}</b>, {$row.localisation_et}<br />
@@ -58,10 +58,10 @@
   {/if}
 {else}
   {if $isAdmin}
-    <p><b>Suivi transporteur</b></p>
-    <p><b>Numéro de la commande :</b> {$order.id_order|escape:'htmlall'}</p>
-    <p><b>Destinataire :</b> {$order.firstname|escape:'htmlall'} {$order.lastname|escape:'htmlall'}</p>
-    <p>Il n'y a pas d'informations de suivi pour cette commande. Veuillez réessayer plus tard ou contacter le service client d'EnvoiMoinsCher</p>
+    <p><b>{l s='Carrier tracking' mod='envoimoinscher'}</b></p>
+    <p><b>{l s='Order number' mod='envoimoinscher'} :</b> {$order.id_order|escape:'htmlall'}</p>
+    <p><b>{l s='Recipient' mod='envoimoinscher'} :</b> {$order.firstname|escape:'htmlall'} {$order.lastname|escape:'htmlall'}</p>
+    <p>{l s='There is no tracking information for this order. Please try again later or contact Envoimoinscher customer service.' mod='envoimoinscher'}</p>
   {/if}
 {/if}
 
@@ -69,7 +69,7 @@
 <div id="LIST_POINT" class="table_block">
   <table class="detail_step_by_step std">
     <thead>
-      <tr><th colspan="2">Point relais sélectionné</th></tr>
+      <tr><th colspan="2">{l s='Selected parcel point' mod='envoimoinscher'}</th></tr>
     </thead>
     <tbody>
      <tr class="item"><td>{$point.name|escape:'htmlall'}<br />
