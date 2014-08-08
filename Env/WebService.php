@@ -128,13 +128,6 @@ class EnvWebService
 	 */
 	protected $param;
 
-	/**
-	 * Parameters array used by http_query_build for curl multi request.
-	 * @access protected
-	 * @var array
-	 */
-	protected $param_multi = array();
-
 	/** 
 	 * Platform used
 	 * @access protected
@@ -154,7 +147,7 @@ class EnvWebService
 	 * @access protected
 	 * @var string
 	 */
-	protected $module_version = '1.1.4';
+	protected $module_version = '1.1.3';
 
 	/** 
 	 * Class constructor.
@@ -216,94 +209,6 @@ class EnvWebService
 		return $result;
 	}
 
-
-	/** 
-	* Function which executes api request with curl multi.
-	*
-	* If an error occurs, we close curl call and put error details in $this->errorText variable.
-	* We distinguish two situations with 404 code returned in the response : <br>
-	* &nbsp;&nbsp;1) The API sets 404 code for valid request which doesn't contain any result. The type of response is application/xml.<br>
-	* &nbsp;&nbsp;2) The server sets 404 code too. It does it for resources which don't exist (like every 404 web page).
-	* &nbsp;&nbsp;In this case the responses' type is text/html.<br>
-	*
-	* If the response returns 404 server code, we cancel the operation by setting $result to false,
-	* $resp_error to true and by adding an error message to $resp_errors_list (with http_file_not_found value). 
-	*
-	* In the case of 404 API error code, we don't break the operation. We show error messages in setResponseError().
-	* @access public
-	* @return String
-	*/
-	public function doRequestMulti()
-	{
-		$data = array();
-		$ch = array();
-		$mh = curl_multi_init();
-		$i = 0;
-
-		foreach ($this->options as $u)
-		{
-				$ch[$i] = curl_init();
-				curl_setopt($ch[$i], CURLOPT_SSL_VERIFYPEER, $u[CURLOPT_SSL_VERIFYPEER]);
-				curl_setopt($ch[$i], CURLOPT_RETURNTRANSFER, $u[CURLOPT_RETURNTRANSFER]);
-				curl_setopt($ch[$i], CURLOPT_URL, $u[CURLOPT_URL]);
-				curl_setopt($ch[$i], CURLOPT_HTTPHEADER, $u[CURLOPT_HTTPHEADER]);
-				curl_setopt($ch[$i], CURLOPT_CAINFO, $u[CURLOPT_CAINFO]);
-				curl_setopt($ch[$i], CURLOPT_SSL_VERIFYPEER, $u[CURLOPT_SSL_VERIFYPEER]);
-
-				curl_multi_add_handle($mh, $ch[$i]);
-				$i++;
-		}
-
-		$running = null;
-		do {
-				curl_multi_exec($mh, $running);
-				curl_multi_select($mh);
-		} while ($running > 0);
-		/*
-		while ($active && $mrc == CURLM_OK) {
-			if (curl_multi_select($mh) != -1) {
-				do {
-            $mrc = curl_multi_exec($mh, $active);
-        } while ($mrc == CURLM_CALL_MULTI_PERFORM);
-			}
-		}
-		*/
-		foreach ($ch as $k => $c)
-		{
-				$data[$k] = curl_multi_getcontent($c);
-				curl_multi_remove_handle($mh, $c);
-				file_put_contents($_SERVER['DOCUMENT_ROOT'].'/return.xml', $data[$k]);
-		}
-
-		foreach ($ch as $k => $c)
-		{
-			$curl_info = curl_getinfo($c);
-			$content_type = explode(';', $curl_info['content_type']);
-			if (curl_errno($c) > 0)
-			{
-				$this->curl_error = true;
-				$this->curl_error_text = curl_error($c);
-				curl_multi_close($mh);
-				return false;
-			}
-			elseif (trim($content_type[0]) == 'text/html' && $curl_info['http_code'] == '404')
-			{
-				$data[$k] = false;
-				$this->resp_error = true;
-				$i = 0;
-				if ($this->construct_list)
-					$i = count($this->resp_errors_list);
-				$this->resp_errors_list[$i] = array('code' => 'http_file_not_found',
-													'url' => $curl_info['url'],
-													'message' => 'Votre requête n\'a pas été correctement envoyée. Veuillez vous rassurer qu\'elle
-													 questionne le bon serveur (https et non pas http). Si le problème persiste, contactez notre équipe de développement');
-			}
-		}
-		curl_multi_close($mh);
-
-		return $data;
-	}
-
 	/** 
 	 * Request options setter. If prod environment, sets Verisign's certificate.
 	 * @access public
@@ -322,29 +227,6 @@ class EnvWebService
 				'Authorization: '.$this->encode($this->auth['user'].':'.$this->auth['pass']).'',
 				'access_key : '.$this->auth['key'].''),
 			CURLOPT_CAINFO => dirname(__FILE__).'/../ca/ca-bundle.crt');
-	}
-	/** 
-	 * Request options setter for curl multi request. If prod environment, sets Verisign's certificate.
-	 * @access public
-	 * @param Array $options The request options.
-	 * @return Void
-	 */
-	public function setOptionsMulti($options)
-	{
-		$this->setSSLProtection();
-		foreach ($this->get_params as $param)
-		{
-			$this->options[] = array(
-				CURLOPT_SSL_VERIFYPEER => $this->ssl_check['peer'],
-				CURLOPT_RETURNTRANSFER => 1,
-				CURLOPT_SSL_VERIFYHOST => $this->ssl_check['host'],
-				CURLOPT_URL => $this->server.$options['action'].$param,
-				CURLOPT_HTTPHEADER => array(
-					'Authorization: '.$this->encode($this->auth['user'].':'.$this->auth['pass']).'',
-					'access_key : '.$this->auth['key'].''),
-				CURLOPT_CAINFO => dirname(__FILE__).'/../ca/ca-bundle.crt');
-
-		}
 	}
 
 	/** 
@@ -387,19 +269,6 @@ class EnvWebService
 		$this->param['module_version'] = $this->module_version;
 		$this->get_params = '?'.http_build_query($this->param);
 	}
-	/** 
-	 * Function sets the get params passed into the request for curl multi request. 
-	 * @access public
-	 * @return Void
-	 */
-	public function setGetParamsMulti()
-	{
-		$this->param['platform'] = $this->platform;
-		$this->param['platform_version'] = $this->platform_version;
-		$this->param['module_version'] = $this->module_version;
-		foreach ($this->param_multi as $param)
-			$this->get_params[] = '?'.http_build_query($param);
-	}
 
 	/** 
 	 * Function parses api server response. 
@@ -417,33 +286,6 @@ class EnvWebService
 		$this->xpath = new DOMXPath($dom_cl);
 		if ($this->hasErrors())
 			$this->setResponseErrors();
-	}
-	/** 
-	 * Function parses api server response for curl multi request. 
-	 * 
-	 * First, it checks if the parsed response doesn't contain <error /> tag. If not, it does nothing.
-	 * Otherwise, it makes $resp_error parameter to true, parses the reponse and sets error messages to $resp_errors_list array.
-	 * @access public
-	 * @param String $document The response returned by API. For use it like a XPath object, we have to parse it with PHPs' DOMDocument class.
-	 * @return Void
-	 */
-	public function parseResponseMulti($documents)
-	{
-		$i = 0;
-
-		$this->xpath = array();
-		
-		foreach ($documents as $document)
-		{
-			$dom_cl = new DOMDocument();
-			$dom_cl->loadXML($document);
-			$this->xpath[$i] = new DOMXPath($dom_cl);
-
-			if ($this->hasErrors($this->xpath[$i]))
-				$this->setResponseErrors($this->xpath[$i]);
-
-			$i++;
-		}
 	}
 
 	/** 
@@ -496,13 +338,11 @@ class EnvWebService
 	/** 
 	 * Function detects if xml document has error tag.
 	 * @access private
-	 * @param object xml document (if curl multi request)
 	 * @return boolean true if xml document has error tag, false if it hasn't.
 	 */
-	private function hasErrors($xpath = false)
+	private function hasErrors()
 	{
-		$xpath = $xpath ? $xpath : $this->xpath;
-		if ((int)$xpath->evaluate('count(/error)') > 0)
+		if ((int)$this->xpath->evaluate('count(/error)') > 0)
 		{
 			$this->resp_error = true;
 			return true;
@@ -515,15 +355,13 @@ class EnvWebService
 	 * @access private
 	 * @return boolean true if xml document has error tag, false if it hasn't.
 	 */
-	private function setResponseErrors($xpath = false)
+	private function setResponseErrors()
 	{
-		$xpath = $xpath ? $xpath : $this->xpath;
-		$errors = $xpath->evaluate('/error');
+		$errors = $this->xpath->evaluate('/error');
 		foreach ($errors as $e => $error)
 		{
-			$this->resp_errors_list[$e] = array('code' => $xpath->evaluate('code', $error)->item(0)->nodeValue
-				, 'message' => $xpath->evaluate('message', $error)->item(0)->nodeValue);
-
+			$this->resp_errors_list[$e] = array('code' => $this->xpath->evaluate('code', $error)->item(0)->nodeValue
+				, 'message' => $this->xpath->evaluate('message', $error)->item(0)->nodeValue);
 		}
 	}
 

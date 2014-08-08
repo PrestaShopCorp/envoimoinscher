@@ -26,18 +26,18 @@
 <div id="tableContent">
     {if isset($modifPrice) && $modifPrice == "1"}
     <div class="alert" style="width:440px;">
-    {l s='Following your modifications, the price has been updated. To trigger the dispatch with the new price, press a second time on the Send button.' mod='envoimoinscher'}
+    Suite à votre modification des caractéristiques de l'envoi, le prix de l'offre a été mise à jour. Pour déclencher l'envoi avec ce nouveau tarif, appuyer une seconde fois sur le bouton "Expédier"
     </div>
     {/if}
     <table class="table" cellspacing="0" style="width: 100%">
       <thead>
         <tr>
-		<th>{l s='Carrier' mod='envoimoinscher'}</th>
-        <th>{l s='Service' mod='envoimoinscher'}</th>
-        <th>{l s='Tax-free price' mod='envoimoinscher'}</th>
-        <th>{l s='Tax-included price' mod='envoimoinscher'}</th>
-        <th>{l s='Pickup date' mod='envoimoinscher'}</th>
-        <th>{l s='Delivery date' mod='envoimoinscher'}</th>
+          <th>Transporteur</th>
+          <th>Service</th>
+          <th>Prix HT</th>
+          <th>Prix TTC</th>
+          <th>Date de collecte</th>
+          <th>Date de livraison</th>
         </tr>
       </thead>
       <tbody>

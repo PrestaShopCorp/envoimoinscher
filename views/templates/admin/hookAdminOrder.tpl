@@ -26,8 +26,8 @@
 {if $multiSize > 1}
 	<div style="margin:15px 0;">
 		<fieldset style="width: 400px;">
-			<legend><img src="../img/admin/delivery.gif" alt="Point relais">{l s='Multiparcel' mod='envoimoinscher'}</legend>
-			<div style="float:left;">{l s='Multiparcel' mod='envoimoinscher'} : <b>{$multiSize|escape:'htmlall'} {l s='parcel' mod='envoimoinscher'}</b> (
+			<legend><img src="../img/admin/delivery.gif" alt="Point relais">Multi colis</legend>
+			<div style="float:left;">Multi-colis : <b>{$multiSize|escape:'htmlall'} colis</b> (
 				{foreach from=$multiParcels key=p item=parcel name=parcels}
 					{$parcel.weight_eop} kg {if !$smarty.foreach.parcels.last},{/if}
 				{/foreach} ).
@@ -39,7 +39,7 @@
 {if isset($point)}
 <div style="margin:15px 0;">
 	<fieldset style="width: 400px;">
-		<legend><img src="../img/admin/delivery.gif" alt="Point relais">{l s='Arrival parcel point' mod='envoimoinscher'}</legend>
+		<legend><img src="../img/admin/delivery.gif" alt="Point relais">Point relais d'arrivée</legend>
 		<div style="width:200px; float:left;">
 			{$point.name|escape:'htmlall'}<br />
 			{$point.address|escape:'htmlall'}<br />
@@ -47,7 +47,7 @@
 		</div>
 		<div style="float:left;">
 			{foreach from=$schedule key=d item=day}
-			{$day|unescape:'html'}<br />
+			{$day|escape:'htmlall'}<br />
 			{/foreach}
 		</div>
 	</legend>

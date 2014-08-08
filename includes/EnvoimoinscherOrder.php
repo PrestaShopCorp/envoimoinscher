@@ -107,8 +107,7 @@ class EnvoimoinscherOrder
 			'code_contenu' => $this->order_data['config']['EMC_NATURE'],
 			'module'       => $this->prestashop_config['wsName'],
 			'version'      => $this->prestashop_config['version'],
-			'type_emballage.emballage' => Configuration::get('EMC_WRAPPING'),
-			//'partnership'  => 'prestashop'
+			'type_emballage.emballage' => Configuration::get('EMC_WRAPPING')
 		);
 		$cot_cl->setEnv(Tools::strtolower($this->order_data['config']['EMC_ENV']));
 
@@ -118,7 +117,6 @@ class EnvoimoinscherOrder
 		$cot_cl->setPerson(
 			'expediteur',
 			array(
-				
 				'pays'        => 'FR',
 				'code_postal' => $this->order_data['config']['EMC_POSTALCODE'],
 				'ville'       => $this->order_data['config']['EMC_CITY'],
@@ -142,7 +140,7 @@ class EnvoimoinscherOrder
 			'ville'       => $this->order_data['delivery']['ville'],
 			'type'        => $dest_type,
 			'adresse'     => $this->order_data['delivery']['adresse'],
-			'civilite' 	  => $this->order_data['delivery']['civilite'] == 'M.' ? 'M.' : 'Mme',
+			'civilite'    => 'M',
 			'prenom'      => $this->order_data['delivery']['prenom'],
 			'nom'         => $this->order_data['delivery']['nom'],
 			'email'       => $this->order_data['delivery']['email'],
@@ -158,7 +156,6 @@ class EnvoimoinscherOrder
 				unset($_POST[$field]);
 			}
 		}
-
 		$cot_cl->setPerson('destinataire', $dest_array);
 		$order_object['tmp_del'] = $dest_array;
 
@@ -186,7 +183,7 @@ class EnvoimoinscherOrder
 
 		// set tracking key
 		$shop_domain = Tools::getShopDomain();
-		$tracking_key = sha1($this->order_id.$helper->getValueToToken($quot_info).Tools::getRemoteAddr().time());
+		$tracking_key = sha1($this->order_id.$helper->getValueToToken($quot_info).$_SERVER['REMOTE_ADDR'].time());
 		$url_params = '?key='.$tracking_key.'&order='.$this->order_id;
 		$quot_info['url_tracking'] = 'http://'.$shop_domain.'/'.__PS_BASE_URI__.'modules/envoimoinscher/tracking/tracking.php'.$url_params;
 

@@ -5,9 +5,3 @@ label {margin-right:10px;}
 .action_module {color: #268CCD; text-decoration:underline;}
 .action_module:hover {color: #268CCD; text-decoration:underline;}
 .configForm fieldset {margin-bottom:20px;}
-
-/* fixed size fancybox */
-.fancybox-skin, .fancybox-outer, .fancybox-inner, .fancybox-frame{
-width:1000px !important;
-height:760px !important;
-}

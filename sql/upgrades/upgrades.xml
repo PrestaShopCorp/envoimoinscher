@@ -1,16 +1,3 @@
 <?xml version="1.0"?>
 <upgrades>
-  <upgrade>
-    <id>1</id>
-    <from>3.1.2</from>
-    <to>3.1.3</to>
-    <date>2014-08-06</date>
-    <description><![CDATA[
-      <ul>
-        <li>- déssolidarisation des variables emc_services_id_es et emc_type de la table carrier </li>
-      </ul>
-    ]]></description>
-    <file>upgrade3.1.2-3.1.3.sql</file>
-    <classes></classes>
-  </upgrade>
 </upgrades>

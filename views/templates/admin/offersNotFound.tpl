@@ -25,24 +25,24 @@
 
 <div id="allOffersTable">
 {if isset($isajax) && $isajax == "1" && !$isEMCCarrier}
-  <div class="alert error" style="width:400px;">{l s='Carrier not available anymore. You can select a new one (inform your customer about the change) or ' mod='envoimoinscher'}
-  <a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$orderid|escape:'htmlall'}&option=send&token={$token|escape:'htmlall'}" class="action_module">{l s='cancel this weight change' mod='envoimoinscher'}</a>.
+  <div class="alert error" style="width:400px;">L'offre choisie n'est plus disponible. Vous pouvez en sélectionner une nouvelle (prévenez votre client du changement de l'offre) ou 
+  <a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$orderid|escape:'htmlall'}&option=send&token={$token|escape:'htmlall'}" class="action_module">annuler ce changement du poids</a>.
   </div>
 {elseif isset($modifPrice) && $modifPrice == "1"}
-<div class="alert error" style="width:400px;">{l s='No carrier found for new caracteristics of the dispatch.' mod='envoimoinscher'}
+<div class="alert error" style="width:400px;">Aucune offre trouvée avec les nouvelles caractéristiques définies sur l'envoi.
 </div>
 {/if}
 {if $offersNb > 0}
   <table class="table" cellspacing="0" style="width:870px;">
     <thead>
       <tr>
-        <th>{l s='Carrier' mod='envoimoinscher'}</th>
-        <th>{l s='Service' mod='envoimoinscher'}</th>
-        <th>{l s='Tax-free price' mod='envoimoinscher'}</th>
-        <th>{l s='Tax-included price' mod='envoimoinscher'}</th>
-        <th>{l s='Customer price' mod='envoimoinscher'}</th>
-        <th>{l s='Pickup date' mod='envoimoinscher'}</th>
-        <th>{l s='Delivery date' mod='envoimoinscher'}</th>
+        <th>Transporteur</th>
+        <th>Service</th>
+        <th>Prix HT</th>
+        <th>Prix TTC</th>
+        <th>Prix facturé<br />au client TTC</th>
+        <th>Date de collecte</th>
+        <th>Date de livraison</th>
         <th></th>
       </tr>
     </thead>
@@ -57,7 +57,7 @@
         <td>{$orderInfo.total_shipping|escape:'htmlall'}&nbsp;€ </td>
         <td>{date('d-m-Y', strtotime($offer.collection.date))|escape:'htmlall'}</td>
         <td>{date('d-m-Y', strtotime($offer.delivery.date))|escape:'htmlall'}</td>
-        <td><a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$orderId|escape:'htmlall'}&option=replace&code={$offer.operator.code|escape:'htmlall'}_{$offer.service.code|escape:'htmlall'}&token={$token|escape:'htmlall'}" style="font-size:10px;" class="action_module">{l s='Replace with this offer' mod='envoimoinscher'}</a></td>
+        <td><a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$orderId|escape:'htmlall'}&option=replace&code={$offer.operator.code|escape:'htmlall'}_{$offer.service.code|escape:'htmlall'}&token={$token|escape:'htmlall'}" style="font-size:10px;" class="action_module">remplacer par cette offre</a></td>
       </tr>
         {/if}
       {/foreach}
@@ -65,6 +65,6 @@
   </table>
 {/if}
 {if isset($isajax)}
-<a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$orderid|escape:'htmlall'}&option=send&token={$token|escape:'htmlall'}" class="action_module">{l s='Cancel change of shipment characteristics' mod='envoimoinscher'}</a>
+<a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$orderid|escape:'htmlall'}&option=send&token={$token|escape:'htmlall'}" class="action_module">annuler le changement sur les caractéristiques de l'envoi</a>
 {/if}
 </div>

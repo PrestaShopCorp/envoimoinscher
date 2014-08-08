@@ -165,36 +165,8 @@ class EnvoimoinscherHelper {
 		'EMC_PICKUP', 'EMC_MODE', 'EMC_ORDER', 'EMC_RELAIS_SOGP', 'EMC_RELAIS_MONR',
 		'EMC_DISPO_HDE', 'EMC_DISPO_HLE', 'EMC_MSG', 'EMC_ANN', 'EMC_ENVO', 'EMC_CMD',
 		'EMC_LIV', 'EMC_USER', 'EMC_WEIGHTMIN', 'EMC_DELIVERY_LABEL', 'EMC_AVERAGE_WEIGHT',
-		'EMC_CONTENT_AS_DESC', 'EMC_SERVICES', 'EMC_NO_FREESHIP', 'EMC_MULTIPARCEL', 
-		'EMC_TRACK_MODE', 'EMC_ASSU', 'EMC_INDI', 'EMC_LABEL_DELIVERY_DATE', 'EMC_LAST_CARRIER_UPDATE',
-		'EMC_MASS', 'EMC_PICKUP_F1', 'EMC_PICKUP_F2', 'EMC_PICKUP_J1', 'EMC_PICKUP_J2',
-		'EMC_PICKUP_T1', 'EMC_PICKUP_T2', 'EMC_PP_CHRP_CHRONORELAIS', 'EMC_PP_MONR_CPOURTOI', 
-		'EMC_PP_MONR_CPOURTOIEUROPE', 'EMC_PP_SOGP_RELAISCOLIS', 'EMC_SRV_MODE', 'EMC_WRAPPING');
+		'EMC_CONTENT_AS_DESC', 'EMC_SERVICES', 'EMC_NO_FREESHIP', 'EMC_MULTIPARCEL', 'EMC_TRACK_MODE');
 
-
-	/**
-	 * SQL tables names of the module
-	 * @var array
-	 * @access protected
-	 */
-	protected $tables_names = array(
-					'emc_categories',
-					'emc_dimensions',
-					'emc_documents',
-					'emc_operators',
-					'emc_operators_categories',
-					'emc_orders',
-					'emc_orders_errors',
-					'emc_orders_parcels',
-					'emc_orders_plannings',
-					'emc_orders_post',
-					'emc_orders_tmp',
-					'emc_points',
-					'emc_services',
-					'emc_tracking',
-					'emc_api_pricing'
-	);
-	
 	/**
 	* Days labels.
 	* @var array
@@ -419,11 +391,7 @@ class EnvoimoinscherHelper {
 	{
 		return $this->config_keys;
 	}
-	
-	public function getTablesNames()
-	{
-		return $this->tables_names;
-	}
+
 
 	/**
 	* Utilitary method to get disponibilites for collection.
@@ -512,7 +480,7 @@ class EnvoimoinscherHelper {
 	public static function getPricingCode($cart)
 	{
 		$code = $cart->id;
-		//$time = time() / 3600;
+		$time = time() / 3600;
 		$delivery_address = new Address($cart->id_address_delivery);
 		$code .= $delivery_address->company;
 		$code .= $delivery_address->address1;
@@ -523,8 +491,8 @@ class EnvoimoinscherHelper {
 		$code .= Configuration::get('EMC_ADDRESS');
 		$code .= Configuration::get('EMC_POSTALCODE');
 		$code .= Configuration::get('EMC_CITY');
-		$code .= date('Y-m');
-
+		$code .= date('Y-m-d');
+		$code .= (int)$time;
 		foreach ($cart->getProducts() as $product)
 			$code .= $product['id_product_attribute'].';'.$product['id_product'].';'.$product['cart_quantity'].';'.$product['weight'].'!';
 		return sha1($code);

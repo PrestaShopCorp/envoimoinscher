@@ -35,12 +35,14 @@ require_once(_PS_MODULE_DIR_.'/envoimoinscher/envoimoinscher.php');
 
 $emc = new Envoimoinscher();
 $cookie = $emc->getContext()->cookie;
+
 /* init error data */
 
-$ip_address = $emc->l('Unknown address');
-if (preg_match('/^([A-Za-z0-9.]+)$/', Tools::getRemoteAddr()))
-	$ip_address = Tools::getRemoteAddr();
-$error_msg = sprintf($emc->l('Error during the insertion of tracking information for order %1$s. Order not found. Caller IP address : %2$s'), (int)Tools::getValue('order'), $ip_address);
+$ip_address = 'adresse inconnue ou incorrecte';
+if (preg_match('/^([A-Za-z0-9.]+)$/', $_SERVER['REMOTE_ADDR']))
+	$ip_address = $_SERVER['REMOTE_ADDR'];
+$error_msg  = 'Une erreur pendant l\'insertion des informations du tracking pour la commande ';
+$error_msg .= (int)Tools::getValue('order').'. La commande n\'a pas été retrouvée. L\'adresse IP de l\'appel : '.$_SERVER['REMOTE_ADDR'].'';
 /* check order in the database */
 $order_id = (int)Tools::getValue('order');
 if (ctype_alnum(Tools::getValue('key')) && $order_id > 0)
@@ -68,7 +70,7 @@ if (ctype_alnum(Tools::getValue('key')) && $order_id > 0)
 			break;
 			case 'ANN':
 				$message = new Message();
-				$texte = $emc->l('EnvoiMoinsCher : Dispatch cancelled');
+				$texte = 'EnvoiMoinsCher : envoi annulé';
 				$message->message = htmlentities($texte, ENT_COMPAT, 'UTF-8');
 				$message->id_order = $order_id;
 				$message->private = 1;
@@ -93,7 +95,7 @@ if (ctype_alnum(Tools::getValue('key')) && $order_id > 0)
 		if ($text_tracking == '')
 		{
 			$cmd_row = Db::getInstance()->ExecuteS('SELECT * FROM '._DB_PREFIX_.'order_state_lang
-				 WHERE id_order_state = '.$new_order_atate.' AND id_lang = '.$emc->language->id);
+				 WHERE id_order_state = '.$new_order_atate.' AND id_lang = (SELECT id_lang FROM '._DB_PREFIX_.'lang WHERE iso_code = "FR") ');
 			$text_tracking = 'Etat de votre commande : '.$cmd_row[0]['name'];
 		}
 		$date_get = date('Y-m-d H:i:s', strtotime(Tools::getValue('date')));
@@ -109,11 +111,19 @@ if (ctype_alnum(Tools::getValue('key')) && $order_id > 0)
 	else
 	{
 		/* log incorrect values */
-		Logger::addLog('[ENVOIMOINSCHER]['.time().'] '.$error_msg, 4, 1);
+		Db::getInstance()->Execute('INSERT INTO '._DB_PREFIX_.'log
+			 (severity, error_code, message, date_add, date_upd)
+			 VALUES
+			 (4, 1, "'.$error_msg.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'")
+			 ');
 	}
 }
 else
 {
 	/* log incorrect values */
-	Logger::addLog('[ENVOIMOINSCHER]['.time().'] '.$error_msg, 4, 1);
+	Db::getInstance()->Execute('INSERT INTO '._DB_PREFIX_.'log
+		 (severity, error_code, message, date_add, date_upd)
+		 VALUES
+		 (4, 1, "'.$error_msg.'", "'.date('Y-m-d H:i:s').'", "'.date('Y-m-d H:i:s').'")
+		 ');
 }

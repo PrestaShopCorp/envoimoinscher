@@ -33,7 +33,7 @@
 	</div>
 	</div>
 {/if}
-{if $EMC_config.EMC_USER != "" && $EMC_config.EMC_USER >= 2 && ($EMC_config.EMC_KEY == '' || $EMC_config.EMC_LOGIN == '' || $EMC_config.EMC_PASS == '')}
+{if $EMC_config.EMC_USER != "" && $EMC_config.EMC_USER >= 3 && ($EMC_config.EMC_KEY == '' || $EMC_config.EMC_LOGIN == '' || $EMC_config.EMC_PASS == '')}
 	<div class="bootstrap">
 		<div class="alert alert-danger">{l s='wrong login : module wont work' mod='envoimoinscher'}</div>
 	</div>
@@ -75,9 +75,6 @@
 	<link href="{$emcBaseDir|unescape:'html'}/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
 	<script type="text/javascript" src="{$emcBaseDir|unescape:'html'}/js/jquery.boxfancy.js"></script>
 {/if}
-{*<div id="EMC_Intro">
-	{$introduction|unescape:'html'}
-</div>*}
 <div id="EMC_Infos">
 	<div id="emc-infos">
 	<h2>{l s='EMC configuration section' mod='envoimoinscher'} <span class="version">{l s='EMC module version' mod='envoimoinscher'} {$module_version|escape:'htmlall'}</span></h2>
@@ -119,35 +116,35 @@
 		</div>
 	</div>
 	<ul id="EMC_Menu">
-		<li class="merchant{if $default_tab === 'merchant'} active{/if}">
+		<li class="merchant{if Tools::getValue('EMC_tabs') === 'merchant' OR  (Tools::getValue('EMC_tabs') === false AND $EMC_config.EMC_USER >= 3)} active{/if}">
 			<a href="#EMC_tab" data-tab="merchant">
 			</a>
 			<div>
 				{l s='Merchant account' mod='envoimoinscher'}
 			</div>
 		</li>
-		<li class="sends{if $default_tab === 'sends'} active{/if}">
+		<li class="sends{if Tools::getValue('EMC_tabs') === 'sends'} active{/if}">
 			<a href="#EMC_tab" data-tab="sends">
 			</a>
 			<div>
 				{l s='Sends description' mod='envoimoinscher'}
 			</div>
 		</li>
-		<li class="settings{if $default_tab === 'settings'} active{/if}">
+		<li class="settings{if Tools::getValue('EMC_tabs') === 'settings'} active{/if}">
 			<a href="#EMC_tab" data-tab="settings">
 			</a>
 			<div>
 				{l s='Settings' mod='envoimoinscher'}
 			</div>
 		</li>
-		<li class="simple_carriers{if $default_tab === 'simple_carriers'} active{/if}">
+		<li class="simple_carriers{if Tools::getValue('EMC_tabs') === 'simple_carriers'} active{/if}">
 			<a href="#EMC_tab" data-tab="simple_carriers">
 			</a>
 			<div>
 				{l s='Simple carriers' mod='envoimoinscher'}
 			</div>
 		</li>
-		<li class="advanced_carriers{if $default_tab === 'advanced_carriers'} active{/if}">
+		<li class="advanced_carriers{if Tools::getValue('EMC_tabs') === 'advanced_carriers'} active{/if}">
 			<a href="#EMC_tab" data-tab="advanced_carriers">
 			</a>
 			<div>
@@ -161,7 +158,7 @@
 				{l s='Simulator' mod='envoimoinscher'}
 			</div>
 		</li>
-		<li class="help{if $default_tab === 'help'} active{/if}">
+		<li class="help{if Tools::getValue('EMC_tabs') === 'help'} active{/if}">
 			<a href="#EMC_tab" data-tab="help">
 			</a>
 			<div>
@@ -313,7 +310,7 @@
 			var currentValueInput = null;
 			var envUrl = "{/literal}{$envUrl}{literal}";
 			$(function(){
-				EMCGetContentAjax('{/literal}{$default_tab}{literal}');
+				EMCGetContentAjax('{/literal}{Tools::getValue('EMC_tabs', 'merchant')}{literal}');
 				$("#EMC_Menu > li").click(function(){
 					// cas special de simulation
 					if ($(this).hasClass('simulator')){
@@ -374,16 +371,13 @@
 						});
 
 						$(".fancybox").fancybox({
-							'width'			: 1000,
-							'height'		: 760,
-							'autoDimensions': false,
-							'autoScale'		: false
+							'transitionIn'	:	'elastic',
+							'transitionOut'	:	'elastic',
+							'width'		:	1000, 
+							'height'		:	900
 						});
 						EMC_load = false;
 						EMCTooltipHelp();
-					},
-					error : function(msg){
-						console.log("Error : " + msg);
 					}
 				});
 			}
@@ -468,26 +462,20 @@
 	<fieldset id="EMC_Content" style="display: none;">
 		<ul class="EMC_steps">
 			<li>
-				<a{if $EMC_config.EMC_USER >= -1 || empty($EMC_config.EMC_USER) || $EMC_config.EMC_USER == ""} class="selected{if $EMC_config.EMC_USER > 0} old{/if}"{/if}>
+				<a{if $EMC_config.EMC_USER >= 0 || empty($EMC_config.EMC_USER) || $EMC_config.EMC_USER == ""} class="selected{if $EMC_config.EMC_USER > 0} old{/if}"{/if}>
 					<label for="" class="stepNumber">1</label>
-					<span class="stepDesc">{l s='Introduction' mod='envoimoinscher'}</span>
-				</a>
-			</li>
-			<li>
-				<a{if $EMC_config.EMC_USER >= 0} class="selected{if $EMC_config.EMC_USER > 1} old{/if}"{/if}>
-					<label for="" class="stepNumber">2</label>
 					<span class="stepDesc">{l s='Merchant account' mod='envoimoinscher'}</span>
 				</a>
 			</li>
 			<li>
-				<a{if $EMC_config.EMC_USER >= 1} class="selected{if $EMC_config.EMC_USER > 2} old{/if}"{/if}>
-					<label for="" class="stepNumber">3</label>
+				<a{if $EMC_config.EMC_USER >= 1} class="selected{if $EMC_config.EMC_USER > 1} old{/if}"{/if}>
+					<label for="" class="stepNumber">2</label>
 					<span class="stepDesc">{l s='Sends description' mod='envoimoinscher'}</span>
 				</a>
 			</li>
 			<li>
 				<a{if $EMC_config.EMC_USER >= 2} class="selected"{/if}>
-					<label for="" class="stepNumber">4</label>
+					<label for="" class="stepNumber">3</label>
 					<span class="stepDesc">{l s='Carriers choice' mod='envoimoinscher'}</span>
 				</a>
 			</li>
@@ -498,23 +486,19 @@
 			</fieldset>
 		</div>
 		<div class="actionBar">
-			{if $EMC_config.EMC_USER == -1}
-				<a class="btnValid selected">{l s='I have an account' mod='envoimoinscher'}</a>
-			{else}
-				<a class="btnPrev{if $EMC_config.EMC_USER >= 0} selected{/if}">{l s='Previous' mod='envoimoinscher'}</a>
-				<a class="btnValid {if $EMC_config.EMC_USER > -1 && $EMC_config.EMC_USER < 2} selected{/if}">{l s='Next' mod='envoimoinscher'}</a>
-				<a class="btnClose{if $EMC_config.EMC_USER == 2} selected{/if}">{l s='End' mod='envoimoinscher'}</a>
-				<form method="POST" style="display: none;" id="btnPrev">
-					<input type="hidden" name="previous" value="{$EMC_config.EMC_USER|escape:'htmlall'}" />
-					<input type="submit">
-				</form>
-			{/if}
+			<a class="btnPrev{if $EMC_config.EMC_USER >= 1} selected{/if}">{l s='Previous' mod='envoimoinscher'}</a>
+			<a class="btnValid {if $EMC_config.EMC_USER < 2} selected{/if}">{l s='Next' mod='envoimoinscher'}</a>
+			<a class="btnClose{if $EMC_config.EMC_USER == 2} selected{/if}">{l s='End' mod='envoimoinscher'}</a>
+			<form method="POST" style="display: none;" id="btnPrev">
+				<input type="hidden" name="previous" value="{$EMC_config.EMC_USER|escape:'htmlall'}" />
+				<input type="submit">
+			</form>
 		</div>
 	</fieldset>
 	<script type="text/javascript">
 		{literal}
 		$(function(){
-			//$(".fancybox").fancybox();
+			$(".fancybox").fancybox();
 
 			var content = $("#EMC_Content").html();
 			var toAppend = '<div id="EMC_cfg_bg"></div>';

@@ -86,16 +86,13 @@ var carrier_translation = {
     $('#noCarrierWarning').hide();
     $('#carrierTable').show();
     // don't pass to next screen when parcel point is not choosen - one page checkout mode
-     jQuery("#HOOK_PAYMENT, [name='processCarrier']").click(function() { 
+     jQuery('#HOOK_PAYMENT').click(function() { 
 	   var opeChecked = $('input[name="delivery_option['+idAddress+']"]:checked').val().replace(",", "");
 	   var pointChecked = $('input.point'+opeChecked+idAddress+':checked').val();
        if(carrierWithPoints.indexOf(";"+opeChecked+";") !== -1 && (""+pointChecked == "undefined" || pointChecked == ""))
 	   {
-	      if(lookForPoints($('input[name="delivery_option['+idAddress+']"]:checked')) == 'shown')
-				{
-					alert(carrier_translation.before_continue_select_pickup_point);
-				}
-				return false;
+	      alert(carrier_translation.before_continue_select_pickup_point);
+          return false;
 	   }
      } ); 
   }); 

@@ -209,11 +209,8 @@ function lookForPoints(ref)
       '</div><div id="points'+value+idAddress+'" class="pointsUl" style="display:none; padding:5px;min-width:300px;">'+
       '</div>');
     selectPoint(value,  ref , 'MONR', idAddress);
-		alert(carrier_translation.before_continue_select_pickup_point);
+    alert(carrier_translation.before_continue_select_pickup_point);
   }
-	else{
-		return 'shown';
-	}
 }
 
 /**

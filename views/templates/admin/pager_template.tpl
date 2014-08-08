@@ -24,7 +24,7 @@
  *}
 
 <p style="text-align:center;">
-	<span>{l s='Pagination' mod='envoimoinscher'} :</span>
+	<span>Pagination :</span>
 	<a href="index.php?controller=AdminEnvoiMoinsCher&option=history&token={$token|escape:'htmlall'}&p=1"><img src="../img/admin/list-prev2.gif" /></a>
 
 	{foreach from=$pager.before key=p item=page}

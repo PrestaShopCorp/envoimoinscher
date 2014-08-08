@@ -89,8 +89,8 @@
       <tr>
         <th style="width:100px;">{l s='Offer' mod='envoimoinscher'}</th>
         <th style="width:100px;">{l s='Carrier' mod='envoimoinscher'}</th>
-        <th style="width:100px;">{l s='Price ET' mod='envoimoinscher'}</th>
-        <th style="width:100px;">{l s='Price ATI' mod='envoimoinscher'}</th>
+        <th style="width:100px;">{l s='Price ET €' mod='envoimoinscher'}</th>
+        <th style="width:100px;">{l s='Price ATI €' mod='envoimoinscher'}</th>
         <th>{l s='Description' mod='envoimoinscher'}</th>
       </tr> 
     {foreach from=$offers key=o item=offer}
