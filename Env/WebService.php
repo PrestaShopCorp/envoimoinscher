@@ -27,7 +27,7 @@
 define('ENV_TEST', 'test');
 define('ENV_PRODUCTION', 'prod');
 
-class EnvWebService
+class Env_WebService
 {
 
 	/** 
@@ -319,7 +319,7 @@ class EnvWebService
 			CURLOPT_SSL_VERIFYHOST => $this->ssl_check['host'],
 			CURLOPT_URL => $this->server.$options['action'].$this->get_params,
 			CURLOPT_HTTPHEADER => array(
-				'Authorization: '.$this->encode($this->auth['user'].':'.$this->auth['pass']).'',
+				'Authorization: '.base64_encode($this->auth['user'].':'.$this->auth['pass']).'',
 				'access_key : '.$this->auth['key'].''),
 			CURLOPT_CAINFO => dirname(__FILE__).'/../ca/ca-bundle.crt');
 	}
@@ -340,7 +340,7 @@ class EnvWebService
 				CURLOPT_SSL_VERIFYHOST => $this->ssl_check['host'],
 				CURLOPT_URL => $this->server.$options['action'].$param,
 				CURLOPT_HTTPHEADER => array(
-					'Authorization: '.$this->encode($this->auth['user'].':'.$this->auth['pass']).'',
+					'Authorization: '.base64_encode($this->auth['user'].':'.$this->auth['pass']).'',
 					'access_key : '.$this->auth['key'].''),
 				CURLOPT_CAINFO => dirname(__FILE__).'/../ca/ca-bundle.crt');
 
@@ -430,9 +430,8 @@ class EnvWebService
 	public function parseResponseMulti($documents)
 	{
 		$i = 0;
-
 		$this->xpath = array();
-		
+
 		foreach ($documents as $document)
 		{
 			$dom_cl = new DOMDocument();
@@ -448,12 +447,13 @@ class EnvWebService
 
 	/** 
 	 * Function do an encode 64 bits on a string
+	 * actually not used
 	 * 
 	 * @access protected
 	 * @param String $string The string to encode
 	 * @return String : encoded string
 	 */
-	protected function encode($string)
+	/*protected function encode($string)
 	{
 		$bytes_encoding = array(
 			'000000' => 'A', '000001' => 'B',	'000010' => 'C', '000011' => 'D',	'000100' => 'E', '000101' => 'F',	'000110' => 'G', '000111' => 'H',
@@ -491,7 +491,7 @@ class EnvWebService
 		elseif ($count == 2)
 			$result .= $bytes_encoding[$buff.'0000'].'==';
 		return $result;
-	}
+	}*/
 
 	/** 
 	 * Function detects if xml document has error tag.

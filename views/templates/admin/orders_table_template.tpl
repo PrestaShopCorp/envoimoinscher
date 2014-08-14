@@ -23,7 +23,87 @@
  * International Registred Trademark & Property of PrestaShop SA
  *}
 
-	<table id="ORDERSTABLE{$id|escape:'htmlall'}" class="table" cellspacing="0" cellpadding="0" style="width:100%;">
+	<div class="table-responsive clearfix">
+		<table class="table order" id="ORDERSTABLE{$id|escape:'htmlall'}" cellspacing="0" cellpadding="0">
+			<thead>
+				<tr>
+					<th class="fixed-width-xs"></th>
+					<th class="fixed-width-xs text-center"><span class="title_box active text-center">{l s='ID' mod='envoimoinscher'}</span></th>
+					<th><span class="title_box">{l s='recipient' mod='envoimoinscher'}</span></th>
+					<th class="text-center"><span class="title_box">{l s='Pickup' mod='envoimoinscher'}</span></th>
+					<th class="text-center"><span class="title_box">{l s='Delivery' mod='envoimoinscher'}</span></th>
+					<th class="text-center"><span class="title_box">{l s='Command' mod='envoimoinscher'}</span></th>
+					<th><span class="title_box">{l s='status' mod='envoimoinscher'}</span></th>
+					<th class="text-right"><span class="title_box text-right">{l s='Real price (TTC)' mod='envoimoinscher'}</span></th>
+					<th class="text-right"><span class="title_box text-right">{l s='Client price (TTC)' mod='envoimoinscher'}</span></th>
+					<th class="text-right"><span class="title_box text-right">{l s='Total(TTC)' mod='envoimoinscher'}</span></th>
+					<th><span class="title_box">{l s='EMC reference' mod='envoimoinscher'}</span></th>
+					<th><span class="title_box">{l s='carrier (offer)' mod='envoimoinscher'}</span></th>
+					<th class="text-center"><span class="title_box text-center">{l s='Record' mod='envoimoinscher'}</span></th>
+					<th class="text-center"><span class="title_box text-center">{l s='Action' mod='envoimoinscher'}</span></th>
+				</tr>
+			</thead>
+			<tbody>
+			{foreach from=$orders key=o item=order}
+				<tr id="row-{$order.idOrder|escape:'htmlall'}">
+					<td class="text-center">
+						<span id="checkbox-{$order.idOrder}" {if $order.generated_ed == "0"}style="display:none;"{/if}><input type="checkbox" checked="checked" name="orders[]" id="order-{$order.idOrder}" value="{$order.idOrder}" /></span>
+					</td>
+					<td class="text-center">{$order.idOrder|escape:'htmlall'}</td>
+					<td>{$order.firstNameShort|escape:'htmlall'}. {$order.lastname|escape:'htmlall'}</td>
+					<td>{$order.dateCol|escape:'htmlall'}</td>
+					<td>{$order.dateDel|escape:'htmlall'}</td>
+					<td>{$order.dateCom|escape:'htmlall'}</td>
+					<td>
+						{if $type == "error"}
+						<p>{l s='Errors' mod='envoimoinscher'}  : {$order.errors_eoe|escape:'htmlall'}</p>
+						{else}
+						{$order.name|escape:'htmlall'} 
+						{/if} 
+					</td> 
+					<td class="text-right">{$order.priceRound|escape:'htmlall'}</td>
+					<td class="text-right">{$order.total_shipping|escape:'htmlall'}&nbsp;{$order.sign|escape:'htmlall'}</td>
+					<td class="text-right">{$order.total_paid|escape:'htmlall'}&nbsp;{$order.sign|escape:'htmlall'}</td>
+					<td>{$order.ref_emc_eor|escape:'htmlall'}</td>
+					<td>{if isset($order.carrierName)}{$order.carrierName}{/if}</td>
+					<td class="text-center"><a target="_blank" href="index.php?controller=AdminOrders&id_order={$order.idOrder|escape:'htmlall'}&vieworder&token={$tokenOrder|escape:'htmlall'}" class="btn btn-default action_module"><i class="icon-file-text"></i> {l s='Display' mod='envoimoinscher'}</a></td>
+					<td class="text-center">
+						{if $order.date_order_eor != ''} 
+						{if $order.generated_ed == "0"}
+						<span id="labelgen{$order.idOrder|escape:'html'}">
+						{if $order.parcels_eor > 1}
+							{l s='slips currenttly generating' mod='envoimoinscher'}
+						{else}
+							{l s='slip currenttly generating' mod='envoimoinscher'}
+						{/if}
+						</span>
+						{/if}  
+						<span id="label{$order.idOrder}" {if $order.generated_ed == "0"}style="display:none;"{/if}>
+							<a href="{if $order.parcels_eor > 1}index.php?controller=AdminEnvoiMoinsCher&option=download&token={$token}&order={$order.idOrder}{else}{$order.link_ed}{/if}" class="action_module btn btn-default" target="_blank">
+							{if $order.parcels_eor > 1}
+								{l s='download slips' mod='envoimoinscher'}
+							{else}
+								{l s='download slip' mod='envoimoinscher'}
+							{/if}
+							</a> 
+							<br /><br />
+							<a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$order.idOrder|escape:'htmlall'}&option=tracking&token={$token|escape:'htmlall'}" class="action_module openTrackPopup btn btn-default" target="_blank">
+								{l s='track shipment' mod='envoimoinscher'}
+							</a> 
+						</span>
+						{else}
+						<a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$order.idOrder|escape:'htmlall'}&option=send&token={$token|escape:'htmlall'}" class="action_module btn btn-default">
+							<i class="icon-truck"></i> {l s='ship' mod='envoimoinscher'}
+						</a>
+						{/if}
+					</td>
+				</tr>
+			{/foreach}
+			</tbody>
+		</table>
+	</div>
+	
+	{*<table id="ORDERSTABLE{$id|escape:'htmlall'}" class="table" cellspacing="0" cellpadding="0" style="width:100%;">
 		<thead>
 			<tr class="small">
 				<th><input type="checkbox" name="selectAll{$id|escape:'htmlall'}" id="selectOrDeselectAll{$id|escape:'htmlall'}" class="deselectAll" checked="checked" value="{$id|escape:'htmlall'}" /></th>
@@ -76,7 +156,7 @@
 					</span>
 					{/if}  
 					<span id="label{$order.idOrder}" {if $order.generated_ed == "0"}style="display:none;"{/if}>
-						<a href="{if $order.parcels_eor > 1}index.php?controller=AdminEnvoiMoinsCher&option=download&token={$token}&order={$order.idOrder}{else}{$order.link_ed}{/if}" class="action_module" target="_blank">
+						<a href="{if $order.parcels_eor > 1}index.php?controller=AdminEnvoiMoinsCher&option=download&token={$token}&order={$order.idOrder}{else}{$order.link_ed}{/if}" class="action_module btn btn-default" target="_blank">
 						{if $order.parcels_eor > 1}
 							{l s='download slips' mod='envoimoinscher'}
 						{else}
@@ -84,17 +164,17 @@
 						{/if}
 						</a> 
 						<br /><br />
-						<a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$order.idOrder|escape:'htmlall'}&option=tracking&token={$token|escape:'htmlall'}" class="action_module openTrackPopup" target="_blank">
+						<a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$order.idOrder|escape:'htmlall'}&option=tracking&token={$token|escape:'htmlall'}" class="action_module openTrackPopup btn btn-default" target="_blank">
 						{l s='track shipment' mod='envoimoinscher'}
 						</a> 
 					</span>
 					{else}
-					<a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$order.idOrder|escape:'htmlall'}&option=send&token={$token|escape:'htmlall'}" class="action_module">
+					<a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$order.idOrder|escape:'htmlall'}&option=send&token={$token|escape:'htmlall'}" class="action_module icon-truck btn btn-default">
 						{l s='ship' mod='envoimoinscher'}
 					</a>
 					{/if}
 				</td>
 			</tr>
-			{/foreach}
+			{/foreach}*}
 		</tbody>
 	</table>

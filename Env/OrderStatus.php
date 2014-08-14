@@ -24,7 +24,7 @@
  * International Registred Trademark & Property of PrestaShop SA
  */
 
-class EnvOrderStatus extends EnvWebService
+class Env_OrderStatus extends Env_WebService
 {
 
 	/** 
@@ -64,8 +64,6 @@ class EnvOrderStatus extends EnvWebService
 	 */
 	private function doStatusRequest()
 	{
-		$node_value = 'nodeValue';
-
 		$source = parent::doRequest();
 
 		/* We make sure there is an XML answer and try to parse it */
@@ -78,14 +76,19 @@ class EnvOrderStatus extends EnvWebService
 				$labels = array();
 				$order_labels = $this->xpath->evaluate('/order/labels');
 				foreach ($order_labels as $label_index => $label)
-					$labels[$label_index] = $label->$node_value;
+					$labels[$label_index] = $label->nodeValue;
+				$documents = array();
+				$order_documents = $this->xpath->evaluate('/order/documents');
+				foreach ($order_documents as $docs)
+					$documents[$docs->nodeName] = $docs->nodeValue;
 				$this->order_info = array(
-					'emcRef' => $this->xpath->evaluate('/order/emc_reference')->item(0)->$node_value,
-					'state' => $this->xpath->evaluate('/order/state')->item(0)->$node_value,
-					'opeRef' => $this->xpath->evaluate('/order/carrier_reference')->item(0)->$node_value,
-					'labelAvailable' => (bool)$this->xpath->evaluate('/order/label_available')->item(0)->$node_value,
-					'labelUrl' => $this->xpath->evaluate('/order/label_url')->item(0)->$node_value,
-					'labels' => $labels);
+					'emcRef' => $this->xpath->evaluate('/order/emc_reference')->item(0)->nodeValue,
+					'state' => $this->xpath->evaluate('/order/state')->item(0)->nodeValue,
+					'opeRef' => $this->xpath->evaluate('/order/carrier_reference')->item(0)->nodeValue,
+					'labelAvailable' => (bool)$this->xpath->evaluate('/order/label_available')->item(0)->nodeValue,
+					'labelUrl' => $this->xpath->evaluate('/order/label_url')->item(0)->nodeValue,
+					'labels' => $labels,
+					'documents' => $documents);
 			}
 		}
 	}

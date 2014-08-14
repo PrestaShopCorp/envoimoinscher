@@ -24,7 +24,7 @@
  * International Registred Trademark & Property of PrestaShop SA
  */
 
-class EnvNews extends EnvWebService
+class Env_News extends Env_WebService
 {
 	/** 
 	 * Public variable represents news array. 

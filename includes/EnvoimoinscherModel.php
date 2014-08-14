@@ -89,7 +89,7 @@ class EnvoimoinscherModel
 		$key = Configuration::get('EMC_KEY');
 		$env = Configuration::get('EMC_ENV');
 
-		$lib = new EnvNews(array('user' => $login, 'pass' => $pass, 'key' => $key));
+		$lib = new Env_News(array('user' => $login, 'pass' => $pass, 'key' => $key));
 		$lib->setEnv(Tools::strtolower($env));
 		$lib->loadNews($platform, $version);
 
@@ -129,7 +129,7 @@ class EnvoimoinscherModel
 		$to = array('pays' => 'FR','code_postal' => '75002','ville' => 'Paris','type' => 'particulier','adresse' => '');
 		$date = new DateTime();
 		$quot_info = array('collecte' => $date->format('Y-m-d'),'delai' => 'aucun','valeur' => '10','code_contenu' => 10120,'operateur' => 'POFR');
-		$lib = new EnvQuotation(array('user' => $login, 'pass' => $pass, 'key' => $key));
+		$lib = new Env_Quotation(array('user' => $login, 'pass' => $pass, 'key' => $key));
 		$lib->setPlatformParams($platform, _PS_VERSION_, $version);
 		$lib->setPerson('expediteur', $from);
 		$lib->setPerson('destinataire', $to);
@@ -245,14 +245,51 @@ class EnvoimoinscherModel
 	}
 
 	/**
+	* Gets the number of EnvoiMoinsCher orders and other orders which haven't been send yet.
+	* @access public
+	* @return int Orders count.
+	*/
+	public function getEligibleOrdersCount()
+	{
+		$sql = 'SELECT *
+			 FROM '._DB_PREFIX_.'orders o
+			 JOIN '._DB_PREFIX_.'order_carrier oc
+				 ON oc.id_order = o.id_order
+			 LEFT JOIN '._DB_PREFIX_.'emc_orders eo
+				 ON eo.'._DB_PREFIX_.'orders_id_order = o.id_order
+			 JOIN '._DB_PREFIX_.'carrier c
+				 ON c.id_carrier = oc.id_carrier
+			 LEFT JOIN '._DB_PREFIX_.'emc_orders_errors er
+				 ON er.'._DB_PREFIX_.'orders_id_order = o.id_order
+			 WHERE (c.external_module_name = "envoimoinscher" OR o.delivery_number = 0)
+				 AND eo.ref_emc_eor IS NULL
+			 GROUP BY o.id_order
+			 ORDER BY o.id_order DESC';
+
+		$orders = $this->db->ExecuteS($sql);
+		//we sort orders by EMC/other carriers
+		$final = array('emc' => 0, 'others' => 0, 'errors' => 0);
+		foreach ($orders as $order)
+		{
+			$key = 'others';
+			if ($order['errors_eoe'] != '')
+				$key = 'errors';
+			elseif ($order['external_module_name'] == 'envoimoinscher')
+				$key = 'emc';
+			$final[$key]++;
+		}
+		return $final;
+	}
+
+	/**
 	* Gets all EnvoiMoinsCher orders and other orders which haven't been send yet.
 	* @access public
 	* @param array $params Query parameters.
 	* @return array Orders list.
 	*/
-	public function getEligibleOrders($params)
+	public function getEligibleOrders($params, $limits = array())
 	{
-		$sql = 'SELECT *, oc.id_carrier AS carrierId,
+		$base_sql = 'SELECT *, oc.id_carrier AS carrierId,
 				 c.name AS carrierName, cur.sign,
 				 o.id_order AS idOrder, SUBSTRING(a.firstname, 1, 1) AS firstNameShort,
 				 DATE_FORMAT(eo.date_del_eor, \'%d-%m-%Y\') AS dateDel,
@@ -289,23 +326,25 @@ class EnvoimoinscherModel
 				 ON d.'._DB_PREFIX_.'orders_id_order = o.id_order AND type_ed = "label"
 			 LEFT JOIN '._DB_PREFIX_.'emc_orders_errors er
 				 ON er.'._DB_PREFIX_.'orders_id_order = o.id_order
-				 WHERE (c.external_module_name = "envoimoinscher" OR o.delivery_number = 0)
-				 AND eo.ref_emc_eor IS NULL
-			 GROUP BY o.id_order
-			 ORDER BY o.id_order DESC';
+			 WHERE eo.ref_emc_eor IS NULL';
 
-		$orders = $this->db->ExecuteS($sql);
-		//we sort orders by EMC/other carriers
-		$final = array('emc' => array(), 'others' => array(), 'errors' => array());
-		foreach ($orders as $order)
-		{
-			$key = 'others';
-			if ($order['errors_eoe'] != '')
-				$key = 'errors';
-			elseif ($order['external_module_name'] == 'envoimoinscher')
-				$key = 'emc';
-			$final[$key][] = $order;
-		}
+		$final = array();
+
+		$sql = $base_sql.' AND errors_eoe != ""
+			 GROUP BY o.id_order
+			 ORDER BY o.id_order DESC '.$limits['errors'];
+		$final['errors'] = $this->db->ExecuteS($sql);
+
+		$sql = $base_sql.' AND c.external_module_name = "envoimoinscher" AND (errors_eoe = "" OR errors_eoe is NULL)
+			 GROUP BY o.id_order
+			 ORDER BY o.id_order DESC '.$limits['emc'];
+		$final['emc'] = $this->db->ExecuteS($sql);
+
+		$sql = $base_sql.' AND c.external_module_name != "envoimoinscher" AND o.delivery_number = 0 AND (errors_eoe = "" OR errors_eoe is NULL)
+			 GROUP BY o.id_order
+			 ORDER BY o.id_order DESC '.$limits['others'];
+		$final['others'] = $this->db->ExecuteS($sql);
+
 		return $final;
 	}
 
@@ -739,7 +778,7 @@ class EnvoimoinscherModel
 		$car_class = new CarrierCore;
 		$service = $this->getServiceByCode($parts[1], $parts[0]);
 		$data = array('active' => 0, 'deleted' => (int)$car_class->deleted);
-	//	$this->db->autoExecute(_DB_PREFIX_.'carrier', $data, 'UPDATE', 'emc_services_id_es = '.(int)$service[0]['id_es'].'');
+		$this->db->autoExecute(_DB_PREFIX_.'carrier', $data, 'UPDATE', 'emc_services_id_es = '.(int)$service[0]['id_es'].'');
 		$r = $this->db->Execute('DELETE FROM '._DB_PREFIX_.'emc_services WHERE id_es = '.(int)$service[0]['id_es']);
 		//if no more service attached to this operator, delete it too
 		$r2 = true;
@@ -842,7 +881,7 @@ class EnvoimoinscherModel
 					'link_ed'                        => pSQL($label),
 					'type_ed'                        => 'label',
 					'generated_ed'                   => 0,
-					''._DB_PREFIX_.'cart_id_cart'    => (int)($data['order'][0]['id_cart'])
+					''._DB_PREFIX_.'cart_id_cart'    => (int)$data['order'][0]['id_cart']
 				),
 				'REPLACE'
 			);
@@ -856,7 +895,7 @@ class EnvoimoinscherModel
 					'link_ed'                        => pSQL($emc_order['proforma']),
 					'type_ed'                        => 'proforma',
 					'generated_ed'                   => 1,
-					''._DB_PREFIX_.'cart_id_cart'    => (int)($data['order'][0]['id_cart'])
+					''._DB_PREFIX_.'cart_id_cart'    => (int)$data['order'][0]['id_cart']
 				),
 				'REPLACE');
 		}
@@ -884,7 +923,7 @@ class EnvoimoinscherModel
 					'point_ep' => pSQL($post['retrait_pointrelais'])
 				),
 				'UPDATE',
-				_DB_PREFIX_.'orders_id_order = '.(int)($order_id)
+				_DB_PREFIX_.'orders_id_order = '.(int)$order_id
 			);
 		}
 		$this->db->execute('DELETE FROM '._DB_PREFIX_.'emc_orders_errors WHERE '._DB_PREFIX_.'orders_id_order = '.(int)$order_id.'');
@@ -928,7 +967,7 @@ class EnvoimoinscherModel
 		{
 			require_once(_PS_MODULE_DIR_.$this->module_name.'/Env/WebService.php');
 			require_once(_PS_MODULE_DIR_.$this->module_name.'/Env/ContentCategory.php');
-			$content_cl = new EnvContentCategory(array('user' => $config['EMC_LOGIN'], 'pass' => $config['EMC_PASS'], 'key' => $config['EMC_KEY']));
+			$content_cl = new Env_ContentCategory(array('user' => $config['EMC_LOGIN'], 'pass' => $config['EMC_PASS'], 'key' => $config['EMC_KEY']));
 			$emc = new Envoimoinscher();
 			$content_cl->setPlatformParams($emc->ws_name, _PS_VERSION_, $emc->version);
 			$content_cl->setParam(array('module' => $config['wsName'], 'version' => $config['localVersion']));
@@ -1159,7 +1198,7 @@ class EnvoimoinscherModel
 			require_once(_PS_MODULE_DIR_.'envoimoinscher/includes/EnvoimoinscherHelper.php');
 			$helper = new EnvoimoinscherHelper;
 			$config = $helper->configArray($this->getConfigData());
-			$poi_cl = new EnvParcelPoint(array('user' => $config['EMC_LOGIN'], 'pass' =>
+			$poi_cl = new Env_ParcelPoint(array('user' => $config['EMC_LOGIN'], 'pass' =>
 				$config['EMC_PASS'], 'key' => $config['EMC_KEY'])
 			);
 			$emc = new Envoimoinscher();
@@ -1296,17 +1335,15 @@ class EnvoimoinscherModel
 		return $this->offers_order;
 	}
 
-	//TODO Translation
 	public function getOffersFamilies()
 	{
 		$emc = new Envoimoinscher();
 		return array(
-			self::FAM_ECONOMIQUE   			=> $emc->l('Economic offers'),
-			self::FAM_EXPRESSISTE 			=> $emc->l('Express offers'),
+			self::FAM_ECONOMIQUE   	=> $emc->l('Economic offers'),
+			self::FAM_EXPRESSISTE 	=> $emc->l('Express offers'),
 		);
 	}
-	
-	//TODO Translation
+
 	public function getTrackingModes()
 	{
 		$emc = new Envoimoinscher();
@@ -1334,7 +1371,7 @@ class EnvoimoinscherModel
 			$tax = $this->db->getRow('SELECT * FROM `'._DB_PREFIX_.'tax` WHERE `rate` = "19.6"');
 			$data['id_tax_rules_group'] = (int)$tax['id_tax'];
 		}
-	
+
 		//Set Carrier
 		$carrier = new Carrier((int)$service['id_carrier']);
 
@@ -1359,11 +1396,10 @@ class EnvoimoinscherModel
 		//Get carrier id and ref
 		$carrier_id = (int)$carrier->id;
 		$row = Db::getInstance()->executes('SELECT * FROM '._DB_PREFIX_.'carrier WHERE deleted = 0 AND id_carrier = '.$carrier_id);
-		
+
 		DB::getInstance()->Execute('UPDATE '._DB_PREFIX_.'emc_services
 			 SET id_carrier = '.$carrier_id.', ref_carrier = '.$row[0]['id_reference'].', pricing_es = '.$data['pricing_es'].'
 			 WHERE id_es = '.$data['id_es'].'');
-
 
 		if ((int)$service['id_carrier'] === 0)
 		{
@@ -1384,7 +1420,6 @@ class EnvoimoinscherModel
 			DB::getInstance()->autoExecute(_DB_PREFIX_.'carrier_group', $datas, 'INSERT IGNORE');
 		}
 
-		
 		// Add price range if there is not one
 		$ranges_price = RangePrice::getRanges((int)$carrier_id);
 		if (count($ranges_price) === 0)

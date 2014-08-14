@@ -51,6 +51,8 @@ class Pager {
 	public function setPages()
 	{
 		return array(
+			'url' => $this->getUrl(),
+			'tag' => $this->getTag(),
 			'last' => $this->setLastPage(),
 			'after' => $this->getAfter(),
 			'before' => $this->getBefore(),
@@ -60,6 +62,40 @@ class Pager {
 		);
 	}
 
+	/**
+	 * Gets tag used in url.
+	 * @access private
+	 * @return string of tag.
+	 */
+	private function getTag()
+	{
+		if (isset($this->options['tag']))
+		{
+			return $this->options['tag'];
+		}
+		else
+		{
+			return 'p';
+		}
+	}
+
+	/**
+	 * Gets page's url.
+	 * @access private
+	 * @return string of url.
+	 */
+	private function getUrl()
+	{
+		if (isset($this->options['url']))
+		{
+			return $this->options['url'];
+		}
+		else
+		{
+			return '?pager';
+		}
+	}
+	
 	/**
 	 * Gets number of pages before the actual page.
 	 * @access private

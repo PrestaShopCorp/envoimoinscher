@@ -165,10 +165,10 @@ class EnvoimoinscherHelper {
 		'EMC_PICKUP', 'EMC_MODE', 'EMC_ORDER', 'EMC_RELAIS_SOGP', 'EMC_RELAIS_MONR',
 		'EMC_DISPO_HDE', 'EMC_DISPO_HLE', 'EMC_MSG', 'EMC_ANN', 'EMC_ENVO', 'EMC_CMD',
 		'EMC_LIV', 'EMC_USER', 'EMC_WEIGHTMIN', 'EMC_DELIVERY_LABEL', 'EMC_AVERAGE_WEIGHT',
-		'EMC_CONTENT_AS_DESC', 'EMC_SERVICES', 'EMC_NO_FREESHIP', 'EMC_MULTIPARCEL', 
+		'EMC_CONTENT_AS_DESC', 'EMC_SERVICES', 'EMC_NO_FREESHIP', 'EMC_MULTIPARCEL',
 		'EMC_TRACK_MODE', 'EMC_ASSU', 'EMC_INDI', 'EMC_LABEL_DELIVERY_DATE', 'EMC_LAST_CARRIER_UPDATE',
 		'EMC_MASS', 'EMC_PICKUP_F1', 'EMC_PICKUP_F2', 'EMC_PICKUP_J1', 'EMC_PICKUP_J2',
-		'EMC_PICKUP_T1', 'EMC_PICKUP_T2', 'EMC_PP_CHRP_CHRONORELAIS', 'EMC_PP_MONR_CPOURTOI', 
+		'EMC_PICKUP_T1', 'EMC_PICKUP_T2', 'EMC_PP_CHRP_CHRONORELAIS', 'EMC_PP_MONR_CPOURTOI',
 		'EMC_PP_MONR_CPOURTOIEUROPE', 'EMC_PP_SOGP_RELAISCOLIS', 'EMC_SRV_MODE', 'EMC_WRAPPING');
 
 
@@ -194,7 +194,7 @@ class EnvoimoinscherHelper {
 					'emc_tracking',
 					'emc_api_pricing'
 	);
-	
+
 	/**
 	* Days labels.
 	* @var array
@@ -411,7 +411,7 @@ class EnvoimoinscherHelper {
 	{
 		require_once(_PS_MODULE_DIR_.'/envoimoinscher/Env/WebService.php');
 		require_once(_PS_MODULE_DIR_.'/envoimoinscher/Env/Quotation.php');
-		$cot_cl = new EnvQuotation(array());
+		$cot_cl = new Env_Quotation(array());
 		return $cot_cl->getReasons($this->proforma);
 	}
 
@@ -419,7 +419,7 @@ class EnvoimoinscherHelper {
 	{
 		return $this->config_keys;
 	}
-	
+
 	public function getTablesNames()
 	{
 		return $this->tables_names;
@@ -555,9 +555,9 @@ class EnvoimoinscherHelper {
 					$this->fields[$key][$k] = $v;
 	}
 
-	/** 
+	/**
 	 * Function do an encode 64 bits on a string
-	 * 
+	 *
 	 * @access public
 	 * @param String $string The string to encode
 	 * @return String : encoded string

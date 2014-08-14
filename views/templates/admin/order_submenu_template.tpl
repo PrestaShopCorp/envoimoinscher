@@ -23,14 +23,14 @@
  * International Registred Trademark & Property of PrestaShop SA
  *}
  
-<div id="order-menu">
-	<div class="path_bar showBar">
-		<a href="index.php?controller=AdminEnvoiMoinsCher&token={$token}" class="action_module" {if $actual != "history"}style="color: #000;"{/if}>
+<div id="order-menu" class="bootstrap">
+	<div>
+		<a href="index.php?controller=AdminEnvoiMoinsCher&token={$token}" class="action_module btn btn-{if $actual != 'history'}primary{else}default{/if}">
 			{l s='mass shipping' mod='envoimoinscher'}
 		</a> | 
-		<a href="index.php?controller=AdminEnvoiMoinsCher&option=history&token={$token}" class="action_module" {if $actual == "history"}style="color: #000;"{/if}>
+		<a href="index.php?controller=AdminEnvoiMoinsCher&option=history&token={$token}" class="action_module btn btn-{if $actual == 'history'}primary{else}default{/if}">
 			{l s='history items processed' mod='envoimoinscher'}
 		</a>
 	</div>
-</div>
 {include file="$tpl_news" tab_news=$tab_news}
+</div>

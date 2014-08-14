@@ -24,7 +24,7 @@
  * International Registred Trademark & Property of PrestaShop SA
  */
 
-class EnvListPoints extends EnvWebService {
+class Env_ListPoints extends Env_WebService {
 
 	/** 
 	 * Contains Points informations.

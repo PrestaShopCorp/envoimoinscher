@@ -91,7 +91,7 @@ class EnvoimoinscherOrder
 		////////////////////////////////////////////////
 		////// generation of the quotation object //////
 		////////////////////////////////////////////////
-		$cot_cl = new EnvQuotation(
+		$cot_cl = new Env_Quotation(
 			array(
 				'user' => $this->order_data['config']['EMC_LOGIN'],
 				'pass' => $this->order_data['config']['EMC_PASS'],
@@ -108,7 +108,7 @@ class EnvoimoinscherOrder
 			'module'       => $this->prestashop_config['wsName'],
 			'version'      => $this->prestashop_config['version'],
 			'type_emballage.emballage' => Configuration::get('EMC_WRAPPING'),
-			//'partnership'  => 'prestashop'
+			'partnership'  => 'prestashop'
 		);
 		$cot_cl->setEnv(Tools::strtolower($this->order_data['config']['EMC_ENV']));
 
@@ -118,7 +118,6 @@ class EnvoimoinscherOrder
 		$cot_cl->setPerson(
 			'expediteur',
 			array(
-				
 				'pays'        => 'FR',
 				'code_postal' => $this->order_data['config']['EMC_POSTALCODE'],
 				'ville'       => $this->order_data['config']['EMC_CITY'],

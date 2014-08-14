@@ -38,7 +38,7 @@
 	<fieldset id="EMC_Sends">
 		<legend>{l s='Your sends' mod='envoimoinscher'}</legend>
 		<!-- Type of send -->
-		<label for="EMC_type">{l s='Type of send:' mod='envoimoinscher'}</label>
+		<label for="EMC_type">{l s='Type of send:' mod='envoimoinscher'} <sup class="emc-required">*</sup></label>
 		<div class="margin-form add-tooltip" title="{l s='- A fold is usually a shell whose weight does not exceed 3kg. <br />- Typically a package is a cardboard box or timber whose weight does not exceed 70 kg. But to express tenders, the package must be less than 30 kg.<br /> - The compact is therefore an object dimensions make it difficult standard packaging: furniture, objects of home or office, appliances, etc.. It requires several packages for example, but the characteristics of the command does not correspond to this type of shipment, no EMC offers will be displayed on your shop.' mod='envoimoinscher'}">
 			<select name="EMC_type" id="EMC_type">
 				<option value="">-- {l s='Please choose' mod='envoimoinscher'} --</option>
@@ -47,11 +47,11 @@
 						<option value="{$v}"{if Tools::getValue('EMC_type', $EMC_config.EMC_TYPE) == $v}selected="selected"{/if}>&nbsp;{$v}&nbsp;</option>
 					{/foreach}
 				{/if}
-			</select> <sup>*</sup>
+			</select>
 		</div>
 		<div class="clear both"></div>
 		<!-- Nature of send -->
-		<label for="EMC_nature">{l s='Nature of send:' mod='envoimoinscher'}</label>
+		<label for="EMC_nature">{l s='Nature of send:' mod='envoimoinscher'} <sup class="emc-required">*</sup></label>
 		<div class="margin-form add-tooltip" title="{l s='You must specify the contents of your shipments. This information is transmitted to the carriers choose the most accurate among labels available language from the dropdown list. If you check the apply for the package description box, you use the language selected as the description of the contents of all your mail (this will be the information to be forwarded to (x) the carrier (s)). This data will be displayed on the shipping page on which you can trigger the order to send a parcel. It may be amended before validation of the page. Do not check the box if you want to resume direct name of products shipped (name that is saved in your product catalog)' mod='envoimoinscher'}">
 			<select name="EMC_nature" id="EMC_nature">
 				<option value="">-- {l s='Choose' mod='envoimoinscher'} --</option>
@@ -60,7 +60,7 @@
 						<option value="{$nature.id}" {if Tools::getValue('EMC_nature', $EMC_config.EMC_NATURE) == $nature.id}selected="selected"{/if}>&nbsp;{$nature.name}&nbsp;</option>
 					{/foreach}
 				{/if}
-			</select> <sup>*</sup>
+			</select>
 		</div>
 		<div class="clear both"></div>
 		<div class="margin-form">
@@ -73,7 +73,7 @@
 		</div>
 		<div class="clear both"></div>
 		<!-- Wrapping type -->
-		<label for="EMC_wrapping">{l s='Wrapping type:' mod='envoimoinscher'}</label>
+		<label for="EMC_wrapping">{l s='Wrapping type:' mod='envoimoinscher'} <sup class="emc-required">*</sup></label>
 		<div class="margin-form add-tooltip" title="{l s='You must specify the wrapping of your parcels' mod='envoimoinscher'}">
 {if $shipWrappingAvailable}
                 <select name="EMC_wrapping" id="EMC_wrapping">
@@ -85,7 +85,6 @@
 								<p>{l s='No wrapping available' mod='envoimoinscher'}</p>
 								<input type="hidden" name="shipWrapping" id="shipWrapping" value=""></input>
 {/if}
-			<sup>*</sup>
 		</div>
 		<div class="clear both"></div>
 		{if isset($all) && $all === true}
@@ -119,7 +118,7 @@
 			<!-- Default Weight -->
 			<label for="EMC_default_weight">{l s='Default weight:' mod='envoimoinscher'}</label>
 			<div class="margin-form">
-				<input type="text" name="EMC_default_weight" id="EMC_default_weight" value="{Tools::getValue('EMC_default_weight', $EMC_config.EMC_AVERAGE_WEIGHT)|escape:'htmlall'}" /> {l s='kg' mod='envoimoinscher'}
+				<input type="text" name="EMC_default_weight" id="EMC_default_weight" value="{Tools::getValue('EMC_default_weight', $EMC_config.EMC_AVERAGE_WEIGHT)|escape:'htmlall'}" />
 				<p class="preference_description">
 					{l s='You can specify the weight that will be applied by default on your product catalog with the "Weight (package)" is not specified on the individual product sheets.' mod='envoimoinscher'}
 				</p>
@@ -139,9 +138,9 @@
 			<legend>{l s='Pickups' mod='envoimoinscher'}</legend>
 			{if isset($pickupConf)}
 				{section name=conf loop=$pickupConf}
-					<label for="pickupDay{$smarty.section.conf.index|escape:'htmlall'}">{l s='Pickup date : D +' mod='envoimoinscher'}</label>
+					<label for="pickupDay{$smarty.section.conf.index|escape:'htmlall'}">{l s='Pickup date : D +' mod='envoimoinscher'} <sup class="emc-required">*</sup></label>
 					<div class="margin-form">
-						<input type="text" name="pickupDay{$smarty.section.conf.index|escape:'htmlall'}" id="pickupDay{$smarty.section.conf.index|escape:'htmlall'}" value="{$pickupConf[conf].j|escape:'htmlall'}" style="width: 30px;" /> <sup>*</sup> {l s='for orders past between' mod='envoimoinscher'} 
+						<input type="text" name="pickupDay{$smarty.section.conf.index|escape:'htmlall'}" id="pickupDay{$smarty.section.conf.index|escape:'htmlall'}" value="{$pickupConf[conf].j|escape:'htmlall'}" style="width: 30px;" /> {l s='for orders past between' mod='envoimoinscher'} 
 						<select name="pickupFrom{$smarty.section.conf.index|intval}" class="fromto" style="width:70px;">
 							{if $smarty.section.conf.index == 0}
 								<option value="0" selected="selected">0:00</option>
@@ -150,7 +149,7 @@
 									<option value="{$smarty.section.hor.index|escape:'htmlall'}" class="fromto-{$smarty.section.hor.index}" {if Tools::getValue('pickupFrom'|cat:$smarty.section.conf.index, $pickupConf[conf].from) == $smarty.section.hor.index}selected="selected"{/if}>{$smarty.section.hor.index|escape:'htmlall'}h00</option>
 								{/section}
 							{/if}
-						</select> <sup>*</sup> {l s='and' mod='envoimoinscher'}
+						</select> {l s='and' mod='envoimoinscher'}
 						<select name="pickupTo{$smarty.section.conf.index|escape:'htmlall'}" class="fromto" style="width:70px;">							
 							{if $smarty.section.conf.index == 1}
 								<option value="24" selected="selected">24:00</option>
@@ -159,7 +158,7 @@
 									<option value="{$smarty.section.hor.index}" class="from fromto-{$smarty.section.hor.index}" {if Tools::getValue('pickupTo'|cat:$smarty.section.conf.index, $pickupConf[conf].to) == $smarty.section.hor.index}selected="selected"{/if}>{$smarty.section.hor.index}h00</option>
 								{/section}
 							{/if}
-						</select> <sup>*</sup>
+						</select>
 						{if $smarty.section.conf.index == 1}
 							<p class="preference_description">{l s='Specify how many days after the order is taken by the buyer, the pickup be programmed.' mod='envoimoinscher'}</p>
 						{/if}
@@ -194,6 +193,6 @@
 	{/if}
 	<br />
 	<div class="margin-form">
-		<input type="submit" name="btnSends" value="{l s='Send' mod='envoimoinscher'}" class="button" />
+		<input type="submit" name="btnSends" value="{l s='Send' mod='envoimoinscher'}" class="btn btn-default" />
 	</div>
 </form>

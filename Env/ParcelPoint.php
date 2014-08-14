@@ -24,7 +24,7 @@
  * International Registred Trademark & Property of PrestaShop SA
  */
 
-class EnvParcelPoint extends EnvWebService
+class Env_ParcelPoint extends Env_WebService
 {
 
 	/** 
@@ -98,9 +98,6 @@ class EnvParcelPoint extends EnvWebService
 	 */
 	private function doSimpleRequest($type)
 	{
-		$node_name = 'nodeName';
-		$node_value = 'nodeValue';
-
 		$source = parent::doRequest();
 
 		/* We make sure there is an XML answer and try to parse it */
@@ -110,22 +107,22 @@ class EnvParcelPoint extends EnvWebService
 
 			$point = $this->xpath->query('/'.$type)->item(0);
 			$point_detail = array(
-				'code' => $this->xpath->query('./code', $point)->item(0)->$node_value,
-				'name' =>  $this->xpath->query('./name', $point)->item(0)->$node_value,
-				'address' =>  $this->xpath->query('./address', $point)->item(0)->$node_value,
-				'city' =>  $this->xpath->query('./city', $point)->item(0)->$node_value,
-				'zipcode' =>  $this->xpath->query('./zipcode', $point)->item(0)->$node_value,
-				'country' =>  $this->xpath->query('./country', $point)->item(0)->$node_value,
-				'phone' =>  $this->xpath->query('./phone', $point)->item(0)->$node_value,
-				'description' => $this->xpath->query('./description', $point)->item(0)->$node_value);
+				'code' => $this->xpath->query('./code', $point)->item(0)->nodeValue,
+				'name' =>  $this->xpath->query('./name', $point)->item(0)->nodeValue,
+				'address' =>  $this->xpath->query('./address', $point)->item(0)->nodeValue,
+				'city' =>  $this->xpath->query('./city', $point)->item(0)->nodeValue,
+				'zipcode' =>  $this->xpath->query('./zipcode', $point)->item(0)->nodeValue,
+				'country' =>  $this->xpath->query('./country', $point)->item(0)->nodeValue,
+				'phone' =>  $this->xpath->query('./phone', $point)->item(0)->nodeValue,
+				'description' => $this->xpath->query('./description', $point)->item(0)->nodeValue);
 
 			/* We get open and close informations  */
 			$schedule = array();
 			foreach ($this->xpath->query('./schedule/day', $point) as $d => $day_node)
 				$childs = $this->xpath->query('*', $day_node);
 				foreach ($childs as $child_node)
-					if ($child_node->$node_name != '#text')
-						$schedule[$d][$child_node->$node_name] = $child_node->$node_value;
+					if ($child_node->nodeName != '#text')
+						$schedule[$d][$child_node->nodeName] = $child_node->nodeValue;
 			$point_detail['schedule'] = $schedule;
 
 			/* We store the data in the right array (defined by $type) */

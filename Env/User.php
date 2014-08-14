@@ -24,7 +24,7 @@
  * International Registred Trademark & Property of PrestaShop SA
  */
 
-class EnvUser extends EnvWebService
+class Env_User extends Env_WebService
 {
 
 	/**
@@ -68,8 +68,6 @@ class EnvUser extends EnvWebService
 	 */
 	private function setEmailConfiguration()
 	{
-		$node_name = 'nodeName';
-		$node_value = 'nodeValue';
 		$source = parent::doRequest();
 		if ($source !== false)
 		{
@@ -77,7 +75,7 @@ class EnvUser extends EnvWebService
 			foreach ($this->xpath->evaluate('/user/mails')->item(0)->childNodes as $config_line)
 			{
 				if (!($config_line instanceof DOMText))
-					$this->user_configuration['emails'][$config_line->$node_name] = $config_line->$node_value;
+					$this->user_configuration['emails'][$config_line->nodeName] = $config_line->nodeValue;
 			}
 		}
 	}

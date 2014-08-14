@@ -24,7 +24,7 @@
  * International Registred Trademark & Property of PrestaShop SA
  */
 
-class EnvContentCategory extends EnvWebService
+class Env_ContentCategory extends Env_WebService
 {
 
 	/** 

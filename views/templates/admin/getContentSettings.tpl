@@ -51,7 +51,7 @@
 			{l s='Status' mod='envoimoinscher'}
 		</legend>
 		<!-- CMD -->
-		<label for="EMC_cmd">{l s='State of the order placed:' mod='envoimoinscher'}</label>
+		<label for="EMC_cmd">{l s='State of the order placed:' mod='envoimoinscher'} <sup class="emc-required">*</sup></label>
 		<div class="margin-form add-tooltip" title="{l s='Choose the status that the command should display (both on your back office and your e-commerce site) when you trigger an order to shipment from EMC (when you placed the order for delivery). We recommend that you \'Preparation in progress\' ..' mod='envoimoinscher'}">
 			<select name="EMC_cmd" id="EMC_cmd">
 				<option value="">-- {l s='Please choose' mod='envoimoinscher'} --</option>
@@ -60,11 +60,11 @@
 							<option value="{$state.id_order_state}" {if $EMC_config.EMC_CMD == $state.id_order_state}selected="selected"{/if}>{$state.name}</option>
 						{/foreach}
 					{/if}
-			</select> <sup>*</sup>
+			</select>
 		</div>
 		<div class="clear both"></div>
 		<!-- Send -->
-		<label for="EMC_envo">{l s='State of the order sent:' mod='envoimoinscher'}</label>
+		<label for="EMC_envo">{l s='State of the order sent:' mod='envoimoinscher'} <sup class="emc-required">*</sup></label>
 		<div class="margin-form add-tooltip" title="{l s='Choose the status that the command should display (both on your back office and your e-commerce site) when the package has been removed. We recommend \'Out for Delivery\'.' mod='envoimoinscher'}">
 			<select name="EMC_envo" id="EMC_envo">
 				<option value="">-- {l s='Please choose' mod='envoimoinscher'} --</option>
@@ -73,11 +73,11 @@
 							<option value="{$state.id_order_state}" {if $EMC_config.EMC_ENVO == $state.id_order_state}selected="selected"{/if}>{$state.name}</option>
 						{/foreach}
 					{/if}
-			</select> <sup>*</sup>
+			</select>
 		</div>
 		<div class="clear both"></div>
 		<!-- Delivery -->
-		<label for="EMC_liv">{l s='State of the order delivered:' mod='envoimoinscher'}</label>
+		<label for="EMC_liv">{l s='State of the order delivered:' mod='envoimoinscher'} <sup class="emc-required">*</sup></label>
 		<div class="margin-form add-tooltip" title="{l s='Choose the status that the command should display (both on your back office and your e-commerce site) when the consignment has been delivered. We recommend \'Delivered\'.' mod='envoimoinscher'}">
 			<select name="EMC_liv" id="EMC_liv">
 				<option value="">-- {l s='Please choose' mod='envoimoinscher'} --</option>
@@ -86,11 +86,11 @@
 							<option value="{$state.id_order_state}" {if $EMC_config.EMC_LIV == $state.id_order_state}selected="selected"{/if}>{$state.name}</option>
 						{/foreach}
 					{/if}
-			</select> <sup>*</sup>
+			</select>
 		</div>
 		<div class="clear both"></div>
 		<!-- Cancel -->
-		<label for="EMC_ann">{l s='State of the order canceled:' mod='envoimoinscher'}</label>
+		<label for="EMC_ann">{l s='State of the order canceled:' mod='envoimoinscher'} <sup class="emc-required">*</sup></label>
 		<div class="margin-form add-tooltip" title="{l s='Choose the status that the command should display (both on your back office and your e-commerce site) when sending order was canceled. We recommend \'Cancelled\'.' mod='envoimoinscher'}">
 			<select name="EMC_ann" id="EMC_ann">
 				<option value="">-- {l s='Please choose' mod='envoimoinscher'} --</option>
@@ -99,7 +99,7 @@
 							<option value="{$state.id_order_state}" {if $EMC_config.EMC_ANN == $state.id_order_state}selected="selected"{/if}>{$state.name}</option>
 						{/foreach}
 					{/if}
-			</select> <sup>*</sup>
+			</select>
 		</div>
 		<div class="clear both"></div>
 	</fieldset>
@@ -126,6 +126,6 @@
 	</fieldset>
 	<br />
 	<div class="margin-form">
-		<input type="submit" name="btnSettings" id="btnSettings" class="button" value="{l s='Send' mod='envoimoinscher'}">
+		<input type="submit" name="btnSettings" id="btnSettings" class="btn btn-default" value="{l s='Send' mod='envoimoinscher'}">
 	</div>
 </form>

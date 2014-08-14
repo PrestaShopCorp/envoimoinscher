@@ -57,63 +57,84 @@
 		<link href="{$emcBaseDir|unescape:'html'}/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
 		<script type="text/javascript" src="{$emcBaseDir|unescape:'html'}/js/jquery.boxfancy.js"></script>
 	{/if}
-
-	{include file="$submenuTemplate" var=$actual}
-
-	{if $ordersTodo > 0 || $massOrderPassed == 1}
-	<fieldset style="margin:20px 0;">
-		<div id="okResult" class="conf" style="display:none;"><span></span></div>
-		<div id="errorResult" class="error" style="display:none;"><span></span></div>
-		{include file="$massTemplate" all=$ordersTodo done=0 token=$token}
-	</fieldset>
-	{elseif $normalOrderPassed == 1}
-	<div>
-		{l s='order delivery successfully send' mod='envoimoinscher'}
-	</div>
-	{/if}
-
-	{if $showEmcTable}
-	<h2>{l s='EMC carrier order selected' mod='envoimoinscher'}</h2>
-	<p>{l s='list EMC carrier orders pending help' mod='envoimoinscher'}</p>
 	
-	<form id="orderDo1" method="post" action="index.php?controller=AdminEnvoiMoinsCher&option=initOrder&token={$token|escape:'htmlall'}"><div>
-		<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendTop"}</div>
-		{include file="$ordersTableTemplate" id="1" orders=$ordersEmc tokenOrder=$tokenOrder type="with"}
-		<input type="hidden" name="type" value="withEmc" />
-		<input type="hidden" name="typeDb" value="1" />
-		<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendBottom"}</div>
-	</div></form>
-	<br /><br />
-	{else}
-	<p>{l s='no EMC order to ship' mod='envoimoinscher'}</p> 
+	{if $local_bootstrap}
+		<link href="{$emcBaseDir|unescape:'html'}/css/back-office-15.css" rel="stylesheet" type="text/css" media="all" />
 	{/if}
 
-	{if $showOthersTable}
-	<h2>{l s='order without EMC carrier' mod='envoimoinscher'}</h2>
-	<p>{l s='list no EMC carrier orders pending help' mod='envoimoinscher'}</p>
-	<form id="orderDo2" method="post" action="index.php?controller=AdminEnvoiMoinsCher&option=initOrder&token={$token|escape:'htmlall'}"><div>
-		<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendTop"}</div>
-		{include file="$ordersTableTemplate" id="2" orders=$ordersOthers tokenOrder=$tokenOrder type="without"}
-		<input type="hidden" name="type" value="withoutEmc" />
-		<input type="hidden" name="typeDb" value="2" />
-		<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendBottom"}</div>
-	</div></form>
-	<br /><br />
-	{/if}
+	<div class="bootstrap">
+		{include file="$submenuTemplate" var=$actual}
 
-	{if $showErrorsTable}
-	<br /><br />
-	<h2 id="errorsTable">{l s='invalid or uncomplete order' mod='envoimoinscher'}</h2>
-	<p>{l s='list orders where :' mod='envoimoinscher'}
-		<br />{l s='list order list 1' mod='envoimoinscher'}
-		<br />{l s='list order list 2' mod='envoimoinscher'}
-		<br /><br />{l s='list order help' mod='envoimoinscher'}
-	</p>
-	<form id="orderDo3" method="post" action="index.php?controller=AdminEnvoiMoinsCher&option=initOrder&token={$token|escape:'htmlall'}"><div>
-		<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendTop"}</div>
-		{include file="$ordersTableTemplate" id="3" orders=$ordersErrors tokenOrder=$tokenOrder type="error"}
-		<input type="hidden" name="type" value="errors" />
-		<input type="hidden" name="typeDb" value="3" />
-		<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendBottom"}</div>
-	</div></form>
-	{/if}
+		{if $ordersTodo > 0 || $massOrderPassed == 1}
+		<div class="panel">
+			<div id="okResult" class="conf" style="display:none;"><span></span></div>
+			<div id="errorResult" class="error" style="display:none;"><span></span></div>
+			{include file="$massTemplate" all=$ordersTodo done=0 token=$token}
+		</div>
+		{elseif $normalOrderPassed == 1}
+		<div style="float:left;">
+			{l s='order delivery successfully send' mod='envoimoinscher'}
+		</div>
+		{/if}
+
+		<div class="panel">
+		{if $showEmcTable}
+			<h2>{l s='EMC carrier order selected' mod='envoimoinscher'}</h2>
+			<p>{l s='list EMC carrier orders pending help' mod='envoimoinscher'}</p>
+			<form id="orderDo1" method="post" action="index.php?controller=AdminEnvoiMoinsCher&option=initOrder&token={$token|escape:'htmlall'}">
+				<div>
+					<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendTop"}</div>
+					{include file="$ordersTableTemplate" id="1" orders=$ordersEmc tokenOrder=$tokenOrder type="with"}
+					<input type="hidden" name="type" value="withEmc" />
+					<input type="hidden" name="typeDb" value="1" />
+					<!--<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendBottom"}</div>-->
+				</div>
+			</form>
+			<br />
+			{include file="$pagerTemplate" pager=$pager_emc}
+			<br />
+		{else}
+			<h2>{l s='EMC carrier order selected' mod='envoimoinscher'}</h2>
+			<p>{l s='no EMC order to ship' mod='envoimoinscher'}</p> 
+		{/if}
+		</div>
+
+		{if $showOthersTable}
+		<div class="panel">
+			<h2>{l s='order without EMC carrier' mod='envoimoinscher'}</h2>
+			<p>{l s='list no EMC carrier orders pending help' mod='envoimoinscher'}</p>
+			<form id="orderDo2" method="post" action="index.php?controller=AdminEnvoiMoinsCher&option=initOrder&token={$token|escape:'htmlall'}"><div>
+				<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendTop"}</div>
+				{include file="$ordersTableTemplate" id="2" orders=$ordersOthers tokenOrder=$tokenOrder type="without"}
+				<input type="hidden" name="type" value="withoutEmc" />
+				<input type="hidden" name="typeDb" value="2" />
+				<!--<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendBottom"}</div>-->
+			</div></form>
+			<br />
+			{include file="$pagerTemplate" pager=$pager_others}
+			<br />
+		</div>
+		{/if}
+
+		{if $showErrorsTable}
+		<div class="panel">
+			<h2 id="errorsTable">{l s='invalid or uncomplete order' mod='envoimoinscher'}</h2>
+			<p>{l s='list orders where :' mod='envoimoinscher'}
+				<br />{l s='list order list 1' mod='envoimoinscher'}
+				<br />{l s='list order list 2' mod='envoimoinscher'}
+				<br /><br />{l s='list order help' mod='envoimoinscher'}
+			</p>
+			<form id="orderDo3" method="post" action="index.php?controller=AdminEnvoiMoinsCher&option=initOrder&token={$token|escape:'htmlall'}"><div>
+				<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendTop"}</div>
+				{include file="$ordersTableTemplate" id="3" orders=$ordersErrors tokenOrder=$tokenOrder type="error"}
+				<input type="hidden" name="type" value="errors" />
+				<input type="hidden" name="typeDb" value="3" />
+				<!--<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendBottom"}</div>-->
+			</div></form>
+			<br />
+			{include file="$pagerTemplate" pager=$pager_error}
+			<br />
+		</div>
+		{/if}
+	
+	</div>

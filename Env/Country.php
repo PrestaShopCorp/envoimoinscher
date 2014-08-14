@@ -24,7 +24,7 @@
  * International Registred Trademark & Property of PrestaShop SA
  */
 
-class EnvCountry extends EnvWebService {
+class Env_Country extends Env_WebService {
 
 	/** 
 	 * Protected array with countries relations by ISO codes.

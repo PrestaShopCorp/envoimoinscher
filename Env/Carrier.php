@@ -24,7 +24,7 @@
  * International Registred Trademark & Property of PrestaShop SA
  */
 
-class EnvCarrier extends EnvWebService {
+class Env_Carrier extends Env_WebService {
 
 	/** 
 	 * Contains carriers array.

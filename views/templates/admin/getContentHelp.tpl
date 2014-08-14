@@ -29,7 +29,7 @@
 	</legend>
 	<div id="help-update">
 		<h2 class="title-help">{l s='Upgrade' mod='envoimoinscher'}</h2>
-	<li class="main-question"><h3>{l s='SQL update' mod='envoimoinscher'}</h3></li>
+	<li class="main-question"><h2>{l s='SQL update' mod='envoimoinscher'}</h2></li>
 	<table class="table upgradeList">
 		<thead>
 			<tr>
@@ -76,7 +76,7 @@
 			{/if}
 		</tbody>
 	</table>
-	<li class="main-question"><h3>{l s='Carriers update' mod='envoimoinscher'}</h3></li>
+	<li class="main-question"><h2>{l s='Carriers update' mod='envoimoinscher'}</h2></li>
 	<p>{l s='Update all the carriers:' mod='envoimoinscher'}<a id="loadAllCarriers" onclick="loadAllCarriers();" class="action_module" rel="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall'}&option=loadAllCarriers">{l s='Update carriers' mod='envoimoinscher'}</a></p>
 	<div id="carriers_update_result"></div>
 	</div>
@@ -84,15 +84,15 @@
 	<div id="help-question">
 		<h2 class="title-help">{l s='Common questions' mod='envoimoinscher'}</h2>
 	
-	<li class="main-question"><h3>{l s='Where can i find help with the configuration?' mod='envoimoinscher'}</h3></li>
+	<li class="main-question"><h2>{l s='Where can i find help with the configuration?' mod='envoimoinscher'}</h2></li>
 	{l s='A documentation is available here:' mod='envoimoinscher'}<a href="http://ecommerce.envoimoinscher.com/api/download/doc_prestashop_configurer.pdf" target="_blank" class="action_module">{l s='documentation' mod='envoimoinscher'}</a><br/>	
 	{l s='A documentation is also provided about sending method:' mod='envoimoinscher'}<a href="http://ecommerce.envoimoinscher.com/api/download/doc_prestashop_expedier.pdf" target="_blank" class="action_module">{l s='sending method' mod='envoimoinscher'}</a><br/>
 	{l s='Contact customer service for help' mod='envoimoinscher'}
 	
-	<li class="main-question"><h3>{l s='Can i test my module?' mod='envoimoinscher'}</h3></li>
+	<li class="main-question"><h2>{l s='Can i test my module?' mod='envoimoinscher'}</h2></li>
 	{l s='A simulation page is available here:' mod='envoimoinscher'}<a href="{$link->getAdminLink('AdminEnvoiMoinsCher')}&option=tests" class="action_module" target="_blank">{l s='Help for choose offers link' mod='envoimoinscher'}</a>
 	
-	<li class="main-question"><h3>{l s='Why is there no offer?' mod='envoimoinscher'}</h3></li>
+	<li class="main-question"><h2>{l s='Why is there no offer?' mod='envoimoinscher'}</h2></li>
 	{l s='If no offers, ask yourself these questions:' mod='envoimoinscher'}
 	<ul class="sub-questions">
 			<li><b>{l s='Is the module online?' mod='envoimoinscher'}</b> {l s='If not, set your module online' mod='envoimoinscher'}</li>
@@ -105,7 +105,7 @@
 	{l s='Check your logs and contact the technical service' mod='envoimoinscher'}<br/>
 	{l s='Access to your logs:' mod='envoimoinscher'}<a href="{$link->getAdminLink('AdminLogs')|escape:'htmlall'}" target="_blank" class="action_module">logs</a>
 	
-	<li class="main-question"><h3>{l s='Why do my prices are wrong?' mod='envoimoinscher'}</h3></li>
+	<li class="main-question"><h2>{l s='Why do my prices are wrong?' mod='envoimoinscher'}</h2></li>
 	{l s='If your prices are wrong, ask yourself these questions.' mod='envoimoinscher'}<br/>
 	{l s='If you are using the real price:' mod='envoimoinscher'}
 	<ul class="sub-questions">
@@ -118,7 +118,7 @@
 	</ul>
 	{l s='If prices are still incorrect, contact the technical service' mod='envoimoinscher'}
 
-	<li class="main-question"><h3>{l s='Why do the parcel points aren\'t here?' mod='envoimoinscher'}</h3></li>
+	<li class="main-question"><h2>{l s='Why do the parcel points aren\'t here?' mod='envoimoinscher'}</h2></li>
 	{l s='If the parcel points aren\'t here, ask yourself these questions:' mod='envoimoinscher'}
 	<ul class="sub-questions">
 		<li><b>{l s='Am i using a custom theme?' mod='envoimoinscher'}</b> {l s='A custom theme can be a problem' mod='envoimoinscher'}</li>
@@ -127,7 +127,7 @@
 	</ul>
 	{l s='Parcel points are still not here? contact the technical service' mod='envoimoinscher'}
 	
-	<li class="main-question"><h3>{l s='Why is my shipment label not available?' mod='envoimoinscher'}</h3></li>
+	<li class="main-question"><h2>{l s='Why is my shipment label not available?' mod='envoimoinscher'}</h2></li>
 	{l s='If the shipment label can\t be loaded, ask yourself these questions:' mod='envoimoinscher'}
 	<ul class="sub-questions">
 		<li><b>{l s='Did i wait long enough?' mod='envoimoinscher'}</b> {l s='The shipment label can take time to generate' mod='envoimoinscher'}</li>
@@ -135,7 +135,7 @@
 	</ul>
 	{l s='If the shipment label is still not available, contact the technical service' mod='envoimoinscher'}
 	
-	<li class="main-question"><h3>{l s='Another question?' mod='envoimoinscher'}</h3></li>
+	<li class="main-question"><h2>{l s='Another question?' mod='envoimoinscher'}</h2></li>
 	<p>
 		{l s='For any other question, we are available:' mod='envoimoinscher'}
 		<div class="borderBlock">

@@ -25,14 +25,14 @@
 
 <p style="text-align:center;">
 	<span>{l s='Pagination' mod='envoimoinscher'} :</span>
-	<a href="index.php?controller=AdminEnvoiMoinsCher&option=history&token={$token|escape:'htmlall'}&p=1"><img src="../img/admin/list-prev2.gif" /></a>
+	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}=1"><img style="vertical-align:middle;" src="../img/admin/list-prev2.gif" /></a>
 
 	{foreach from=$pager.before key=p item=page}
-	<a href="index.php?controller=AdminEnvoiMoinsCher&option=history&token={$token|escape:'htmlall'}&p={$page|escape:'htmlall'}" class="action_module" style="margin-right:5px;">{$page}</a>
+	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$page|escape:'htmlall'}" class="action_module" style="margin-right:5px;">{$page}</a>
 	{/foreach}
 	<span style="font-weight:bold; margin-right:5px;">{$pager.actual|escape:'htmlall'}</span>
 	{foreach from=$pager.after key=p item=page}
-	<a href="index.php?controller=AdminEnvoiMoinsCher&option=history&token={$token|escape:'htmlall'}&p={$page|escape:'htmlall'}" class="action_module" style="margin-right:5px;">{$p}</a>
+	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$page|escape:'htmlall'}" class="action_module" style="margin-right:5px;">{$p}</a>
 	{/foreach}
-	<a href="index.php?controller=AdminEnvoiMoinsCher&option=history&token={$token|escape:'htmlall'}&p={$pager.last|escape:'htmlall'}"><img src="../img/admin/list-next2.gif" /></a>
+	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$pager.last|escape:'htmlall'}"><img style="vertical-align:middle;"  src="../img/admin/list-next2.gif" /></a>
 </p>

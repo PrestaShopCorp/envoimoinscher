@@ -23,10 +23,10 @@
  * International Registred Trademark & Property of PrestaShop SA
  *}
 <div class="clearfix"></div>
-<div style="text-align:right">
+<div style="text-align:right" class="bootstrap">
 	<p>
-		<input type="submit" class="button" name="sendValueWithCheck" value="{l s='Send with check' mod='envoimoinscher'}" />
+		<input type="submit" class="btn btn-default" name="sendValueWithCheck" value="{l s='Send with check' mod='envoimoinscher'}" />
 		&nbsp;
-		<input type="submit" class="button" name="sendValueWithoutCheck" value="{l s='Send without check' mod='envoimoinscher'}" />
+		<input type="submit" class="btn btn-default" name="sendValueWithoutCheck" value="{l s='Send without check' mod='envoimoinscher'}" />
 	</p>
 </div>

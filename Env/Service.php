@@ -24,7 +24,7 @@
  * International Registred Trademark & Property of PrestaShop SA
  */
 
-class EnvService extends EnvCarrier {
+class Env_Service extends Env_Carrier {
 
 	/**
 	 * Function loads services of all carriers.
@@ -107,7 +107,6 @@ class EnvService extends EnvCarrier {
 	 */
 	private function parseServicesNode($c)
 	{
-		$node_name = 'nodeName';
 		$result = array();
 		$services = $this->xpath->query('/operators/operator['.$c.']/services/service');
 		foreach ($services as $service)
@@ -142,10 +141,10 @@ class EnvService extends EnvCarrier {
 				{
 					$api_node = $api_nodes->item($i);
 					$api_node_childs = $this->xpath->evaluate('*', $api_node);
-					$api_options[$api_node->$node_name] = array();
+					$api_options[$api_node->nodeName] = array();
 					for ($a = 1; $a < $api_node_childs->length; $a++)
 					{
-						$api_options[$api_node->$node_name][$api_node_childs->item($a)->$node_name] = $api_node_childs->item($a)->nodeValue;
+						$api_options[$api_node->nodeName][$api_node_childs->item($a)->nodeName] = $api_node_childs->item($a)->nodeValue;
 						$a++;
 					}
 				}

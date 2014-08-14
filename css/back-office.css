@@ -36,6 +36,7 @@ width:98.5%;
 margin:0 0 25px 0;
 }
 .main-question{
+list-style-type:none;
 margin:30px 0px 13px 30px;
 }
 .main-question h3{
@@ -203,32 +204,36 @@ list-style-type:decimal;
 /*******************************************/
 
 #EMC_top {
-	margin: 15px 0px;
+margin: 15px 0px;
 }
 
 /** MENU **/
 #EMC_top > #EMC_Menu {
-	display: inline-block;
-	list-style-type: none;
 	margin: 20px auto;
 }
 
+#EMC_Menu > ul{
+	display: inline-block;
+	list-style-type: none;
+	padding-left:10px;
+}
 /*** Tab ***/
-#EMC_top > #EMC_Menu > li {
+#EMC_Menu > ul > li {
 	display: inline-block;
 	width: 120px;
 	margin: 0px 10px;
 	height: 120px;
 	text-align: center;
-	border: 1px solid #777;
+	border: 1px solid #A0A0A0;
 	border-radius: 5px;
-	background: #ECECEC;
-	box-shadow: 0px 0px 11px #999;
+	background: #F4F6FA;
+	/*box-shadow: 0px 0px 11px #999;*/
 	cursor: pointer;
 	position: relative;
 }
 
-#EMC_top > #EMC_Menu > li > a {
+
+#EMC_Menu > ul > li > a {
 	background-repeat: no-repeat;
 	background-image: url('../img/menu-sprite.png');
 	display: block;
@@ -237,7 +242,7 @@ list-style-type:decimal;
 	margin: 15px auto;
 }
 
-#EMC_top > #EMC_Menu > li > a + div {
+#EMC_Menu > ul > li > a + div {
 	position: absolute;
 	bottom: 10px;
 	width: 100%;
@@ -245,70 +250,76 @@ list-style-type:decimal;
 }
 
 /**** Merchant ****/
-#EMC_top > #EMC_Menu > li.merchant > a {
+#EMC_Menu > ul > li.merchant > a {
 	background-position: -144px -48px;
 }
 
-#EMC_top > #EMC_Menu > li.merchant:hover > a,
-#EMC_top > #EMC_Menu > li.merchant.active > a {
+#EMC_Menu > ul > li.merchant:hover > a,
+#EMC_Menu > ul > li.merchant.active > a {
 	background-position: -144px 0px;
 }
 
 /**** Settings ****/
-#EMC_top > #EMC_Menu > li.settings > a {
+#EMC_Menu > ul > li.settings > a {
 	background-position: -48px -48px;
 }
 
-#EMC_top > #EMC_Menu > li.settings:hover > a,
-#EMC_top > #EMC_Menu > li.settings.active > a {
+#EMC_Menu > ul > li.settings:hover > a,
+#EMC_Menu > ul > li.settings.active > a {
 	background-position: -48px 0px;
 }
 
 /**** Carriers Simple & Advanced ****/
-#EMC_top > #EMC_Menu > li.simulator > a,
-#EMC_top > #EMC_Menu > li.simple_carriers > a,
-#EMC_top > #EMC_Menu > li.advanced_carriers > a {
+#EMC_Menu > ul > li.simulator > a,
+#EMC_Menu > ul > li.simple_carriers > a,
+#EMC_Menu > ul > li.advanced_carriers > a {
 	background-position: 0px -48px;
 }
 
-#EMC_top > #EMC_Menu > li.simulator:hover > a,
-#EMC_top > #EMC_Menu > li.simple_carriers:hover > a,
-#EMC_top > #EMC_Menu > li.advanced_carriers:hover > a,
-#EMC_top > #EMC_Menu > li.simulator.active > a,
-#EMC_top > #EMC_Menu > li.simple_carriers.active > a,
-#EMC_top > #EMC_Menu > li.advanced_carriers.active > a {
+#EMC_Menu > ul > li.simulator:hover > a,
+#EMC_Menu > ul > li.simple_carriers:hover > a,
+#EMC_Menu > ul > li.advanced_carriers:hover > a,
+#EMC_Menu > ul > li.simulator.active > a,
+#EMC_Menu > ul > li.simple_carriers.active > a,
+#EMC_Menu > ul > li.advanced_carriers.active > a {
 	background-position: 0px 0px;
 }
 
 /**** Sends ****/
-#EMC_top > #EMC_Menu > li.sends > a {
+#EMC_Menu > ul > li.sends > a {
 	background-position: -96px -48px;
 }
 
-#EMC_top > #EMC_Menu > li.sends:hover > a,
-#EMC_top > #EMC_Menu > li.sends.active > a {
+#EMC_Menu > ul > li.sends:hover > a,
+#EMC_Menu > ul > li.sends.active > a {
 	background-position: -96px 0px;
 }
 
 /**** Settings ****/
-#EMC_top > #EMC_Menu > li.simulator > a {
+#EMC_Menu > ul > li.simulator > a {
 	background-position: -237px -47px;
 }
-#EMC_top > #EMC_Menu > li.simulator:hover > a {
+#EMC_Menu > ul > li.simulator:hover > a {
 	background-position: -237px 0px;
 }
 
-#EMC_top > #EMC_Menu > li.help > a {
+#EMC_Menu > ul > li.help > a {
 	background-position: -191px -48px;
 }
 
-#EMC_top > #EMC_Menu > li.help:hover > a,
-#EMC_top > #EMC_Menu > li.help.active > a {
+#EMC_Menu > ul > li.help:hover > a,
+#EMC_Menu > ul > li.help.active > a {
 	background-position: -191px 0px;
 }
 
 /** Fast configuration **/
+#EMC_top{
+	margin-top: 20px;
+}
 #EMC_top > #EMC_Globals {
+	float:left;
+	width:330px;
+	margin-right:15px;
 	display: inline-block;
 	vertical-align: top;
 	text-align: left;
@@ -325,7 +336,7 @@ list-style-type:decimal;
 	width: auto;
 }
 
-#EMC_top > #EMC_Globals > div label + img {
+#EMC_top > #EMC_Globals > div + img {
 	margin-bottom: 5px;
 }
 
@@ -334,6 +345,8 @@ list-style-type:decimal;
 	display: inline-block;
 	padding: 0;
 	margin: 0;
+	vertical-align:middle;
+	float:right;
 }
 
 #EMC_top > #EMC_Globals .margin-form > input[type=radio] {
@@ -354,8 +367,9 @@ list-style-type:decimal;
 	font-size: 12px;
 }
 #EMC_Infos{
-height:200px;
+min-height:160px;
 }
+
 #EMC_Infos a,#EMC_top a, #EMC_Content a {
 	color: #268CCD;
 	text-decoration:underline;
@@ -386,6 +400,8 @@ height:200px;
 	width: 16px;
 	background: url('../img/tooltip.png') center center no-repeat;
 	cursor: help;
+	opacity:1;
+	z-index:1;
 }
 
 #EMC_Content .margin-form > label {
@@ -547,8 +563,8 @@ height:200px;
 }
 
 #emc-infos{
+width:50%;
 float:left;
-width:auto;
 }
 
 #emc-news{
@@ -911,3 +927,58 @@ height:110px;
 width:1000px !important;
 height:760px !important;
 }*/
+
+.prestashop-switch > .radioCheck{
+text-shadow:0 0 white !important;
+}
+.prestashop-switch > .module_online{
+padding-left:10px !important;
+padding-right:10px !important;
+}
+.prestashop-switch > .module_offline{
+padding-left:15px !important;
+}
+.prestashop-switch > .api_test{
+padding-left:30px !important;
+}
+.prestashop-switch > .api_prod{
+padding-left:5px !important;
+padding-right:20px !important;
+}
+
+.prestashop-switch > .cover
+{
+	position: absolute;
+	display: block;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	z-index: 3;
+}
+
+.over-config{
+height:26px;
+margin-bottom:5px;
+}
+.over-config > label{
+margin-top:3px;
+}
+#cleanCache{
+color:#555555 !important;
+text-decoration:none !important;
+width:160px;
+}
+#cleanCache:hover{
+color:white !important;
+}
+
+.EMC_switch{
+float:right;
+width:50px;
+}
+
+.emc-required{
+color:red;
+}
+

@@ -40,7 +40,9 @@ $cookie = $emc->getContext()->cookie;
 $ip_address = $emc->l('Unknown address');
 if (preg_match('/^([A-Za-z0-9.]+)$/', Tools::getRemoteAddr()))
 	$ip_address = Tools::getRemoteAddr();
-$error_msg = sprintf($emc->l('Error during the insertion of tracking information for order %1$s. Order not found. Caller IP address : %2$s'), (int)Tools::getValue('order'), $ip_address);
+$error_msg = sprintf($emc->l('Error during the insertion of tracking information for order %1$s. Order not found. Caller IP address : %2$s'),
+		(int)Tools::getValue('order'),
+		$ip_address);
 /* check order in the database */
 $order_id = (int)Tools::getValue('order');
 if (ctype_alnum(Tools::getValue('key')) && $order_id > 0)

@@ -30,27 +30,24 @@
 	<fieldset>
 		<legend>{l s='API account' mod='envoimoinscher'}</legend>
 		<label for="EMC_login">
-			{l s='Login:' mod='envoimoinscher'}
+			{l s='Login:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 		</label>
 		<div class="margin-form add-tooltip" title="{l s='Login of your account EnvoiMoinsCher.com' mod='envoimoinscher'}">
 			<input type="text" id="EMC_login" name="EMC_login" value="{Tools::getValue('EMC_login', $EMC_config.EMC_LOGIN)|escape:'htmlall'}"/>
-			<sup>*</sup>
 		</div>
 		<div class="clear both"></div>
 		<label for="EMC_pass">
-			{l s='Password:' mod='envoimoinscher'}
+			{l s='Password:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 		</label>
 		<div class="margin-form add-tooltip" title="{l s='Password to your account EnvoiMoinsCher.com' mod='envoimoinscher'}">
 			<input type="password" id="EMC_pass" name="EMC_pass" value="{Tools::getValue('EMC_pass', $EMC_config.EMC_PASS)|escape:'htmlall'}"/>
-			<sup>*</sup>
 		</div>
 		<div class="clear both"></div>
 		<label for="EMC_api">
-			{l s='API key:' mod='envoimoinscher'}
+			{l s='API key:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 		</label>
 		<div class="margin-form add-tooltip" title="{l s='Key you received by email from Envoimoinscher. Com. Just copy it into the provided field. Warning, this key must match the work environment chosen: testing, or production' mod='envoimoinscher'}">
 			<input type="text" id="EMC_api" name="EMC_api" value="{Tools::getValue('EMC_api', $EMC_config.EMC_KEY)|escape:'htmlall'}"/>
-			<sup>*</sup>
 		</div>
 		<div class="clear both"></div>
 		<div class="margin-form">
@@ -64,7 +61,7 @@
 		<legend>{l s='Pickup address' mod='envoimoinscher'}</legend>
 		<!-- Gender -->
 		<label for="EMC_login">
-			{l s='Gender:' mod='envoimoinscher'}
+			{l s='Gender:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 		</label>
 		<div class="margin-form add-tooltip" title="{l s='Title of the person sending the commands: choose M, Mrs. or Miss' mod='envoimoinscher'}">
 			{if isset($genders) && sizeof($genders)}
@@ -73,25 +70,22 @@
 					<label for="Gender_{$gender|escape:'htmlall'}">{l s=$gender mod='envoimoinscher'}</label>
 				{/foreach}
 			{/if}
-			<sup>*</sup>
 		</div>
 		<div class="clear both"></div>
 		<!-- First name -->
 		<label for="EMC_exp_firstname">
-			{l s='First name of the sender:' mod='envoimoinscher'}
+			{l s='First name of the sender:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 		</label>
 		<div class="margin-form add-tooltip" title="{l s='Firstname of the person sending' mod='envoimoinscher'}">
 			<input type="text" id="EMC_exp_firstname" name="EMC_exp_firstname" value="{Tools::getValue('EMC_exp_firstname', $EMC_config.EMC_FNAME)|escape:'htmlall'}" />
-			<sup>*</sup>
 		</div>
 		<div class="clear both"></div>
 		<!-- Last name -->
 		<label for="EMC_exp_lastname">
-			{l s='Last name of the sender:' mod='envoimoinscher'}
+			{l s='Last name of the sender:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 		</label>
 		<div class="margin-form add-tooltip" title="{l s='Name of the person sending' mod='envoimoinscher'}">
 			<input type="text" id="EMC_exp_lastname" name="EMC_exp_lastname" value="{Tools::getValue('EMC_exp_lastname', $EMC_config.EMC_LNAME)|escape:'htmlall'}" />
-			<sup>*</sup>
 		</div>
 		<div class="clear both"></div>
 		<!-- Company -->
@@ -104,47 +98,42 @@
 		<div class="clear both"></div>
 		<!-- Address -->
 		<label for="EMC_exp_address">
-			{l s='Address:' mod='envoimoinscher'}
+			{l s='Address:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 		</label>
 		<div class="margin-form add-tooltip" title="{l s='The address from which depart packages' mod='envoimoinscher'}">
 			<textarea id="EMC_exp_address" name="EMC_exp_address">{$EMC_config.EMC_ADDRESS|escape:'htmlall'}</textarea>
-			<sup>*</sup>
 		</div>
 		<div class="clear both"></div>
 		<!-- Post code -->
 		<label for="EMC_exp_postcode">
-			{l s='Post code:' mod='envoimoinscher'}
+			{l s='Post code:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 		</label>
 		<div class="margin-form add-tooltip" title="{l s='Postal code of the address where the package depart' mod='envoimoinscher'}">
 			<input type="text" id="EMC_exp_postcode" name="EMC_exp_postcode" value="{Tools::getValue('EMC_exp_postcode', $EMC_config.EMC_POSTALCODE)|escape:'htmlall'}" />
-			<sup>*</sup>
 		</div>
 		<div class="clear both"></div>
 		<!-- Town -->
 		<label for="EMC_exp_town">
-			{l s='Town:' mod='envoimoinscher'}
+			{l s='Town:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 		</label>
 		<div class="margin-form add-tooltip" title="{l s='City of the address where the package depart.' mod='envoimoinscher'}">
 			<input type="text" id="EMC_exp_town" name="EMC_exp_town" value="{Tools::getValue('EMC_exp_town', $EMC_config.EMC_CITY)|escape:'htmlall'}" />
-			<sup>*</sup>
 		</div>
 		<div class="clear both"></div>
 		<!-- Phone -->
 		<label for="EMC_exp_phone">
-			{l s='Phone:' mod='envoimoinscher'}
+			{l s='Phone:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 		</label>
 		<div class="margin-form add-tooltip" title="{l s='Phone number of the sender (it is possible that the driver will contact you for your pickups).' mod='envoimoinscher'}">
 			<input type="text" id="EMC_exp_phone" name="EMC_exp_phone" value="{Tools::getValue('EMC_exp_phone', $EMC_config.EMC_TEL)|escape:'htmlall'}" />
-			<sup>*</sup>
 		</div>
 		<div class="clear both"></div>
 		<!-- Email -->
 		<label for="EMC_exp_email">
-			{l s='Email:' mod='envoimoinscher'}
+			{l s='Email:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 		</label>
 		<div class="margin-form add-tooltip" title="{l s='Email address of the sender (Where carriers can contact you any time to the pickups)' mod='envoimoinscher'}">
 			<input type="text" id="EMC_exp_email" name="EMC_exp_email" value="{Tools::getValue('EMC_exp_email', $EMC_config.EMC_MAIL)|escape:'htmlall'}" />
-			<sup>*</sup>
 		</div>
 		<div class="clear both"></div>
 		<!-- More informations -->
@@ -162,7 +151,7 @@
 		<div class="clear both"></div>
 		<!-- Start time to pick up availability -->
 		<label for="EMC_exp_start_pickup">
-			{l s='Start time to pick up availability:' mod='envoimoinscher'}
+			{l s='Start time to pick up availability:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 		</label>
 		<div class="margin-form add-tooltip" title="{l s='Time from which you are available for pick packages. Choose a time from the drop-down list (pickups by carriers generally begin at 12:00).' mod='envoimoinscher'}">
 			<select name="EMC_exp_start_pickup" id="EMC_exp_start_pickup">
@@ -170,12 +159,11 @@
 					<option value="{$dispo}" {if Tools::getValue('EMC_exp_start_pickup', $EMC_config.EMC_DISPO_HDE) == $dispo}selected="selected"{/if}>{$dispo}</option>
 				{/foreach}
 			</select>
-			<sup>*</sup>
 		</div>
 		<div class="clear both"></div>
 		<!-- End time to pick up availability -->
 		<label for="EMC_exp_end_pickup">
-			{l s='End time to pick up availability:' mod='envoimoinscher'}
+			{l s='End time to pick up availability:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 		</label>
 		<div class="margin-form add-tooltip" title="{l s='Time from which you are not available for pick packages. Choose a time from the drop-down list (pickups by carriers generally begin at 17:00).' mod='envoimoinscher'}">
 			<select name="EMC_exp_end_pickup" id="EMC_exp_end_pickup">
@@ -183,7 +171,6 @@
 				<option value="{$dispo}" {if Tools::getValue('EMC_exp_end_pickup', $EMC_config.EMC_DISPO_HLE) == $dispo}selected="selected"{/if}>{$dispo}</option>
 				{/foreach}
 			</select>
-			<sup>*</sup>
 		</div>
 		<div class="clear both"></div>
 		{*
@@ -216,6 +203,6 @@
 	</fieldset>
 	<br />
 	<div class="margin-form">
-		<input type="submit" name="btnMerchant" value="{l s='Send' mod='envoimoinscher'}" class="button" />
+		<input type="submit" name="btnMerchant" value="{l s='Send' mod='envoimoinscher'}" class="btn btn-default" />
 	</div>
 </form>

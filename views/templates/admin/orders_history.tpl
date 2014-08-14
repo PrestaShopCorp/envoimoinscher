@@ -27,6 +27,9 @@
 		<link href="{$emcBaseDir|unescape:'html'}/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
 		<script type="text/javascript" src="{$emcBaseDir|unescape:'html'}/js/jquery.boxfancy.js"></script>
 	{/if}
+	{if $local_bootstrap}
+		<link href="{$emcBaseDir|unescape:'html'}/css/back-office-15.css" rel="stylesheet" type="text/css" media="all" />
+	{/if}
 	{literal}
 	<style type="text/css">
 	.table tr td {padding: 2px; color: #000000;}
@@ -53,26 +56,21 @@
 	<script type="text/javascript" src="{$baseDir|escape:'htmlall'}modules/envoimoinscher/js/orders.js"></script>
 	<link type="text/css" rel="stylesheet" href="{$baseDir|escape:'htmlall'}modules/envoimoinscher/css/backend_styles.css" />
 
-	{include file="$submenuTemplate" var=$actual}
+	<div class="bootstrap">
+		{include file="$submenuTemplate" var=$actual}
 
+		{if $errorLabels == 1}
+		<div class="conf">{l s='please select slips to download' mod='envoimoinscher'}</div>
+		{/if}
 
-	{if $errorLabels == 1}
-	<div class="conf">{l s='please select slips to download' mod='envoimoinscher'}</div>
-	{/if}
-	<p>{l s='list shipments, to download slips : check then clic "download"' mod='envoimoinscher'}</p>
+		<div class="clearfix"></div>
 
-	<div class="clearfix"></div>
-	
-	{* include pager template *}
-	{include file="$pagerTemplate" var=$pager}
-	{* include pager template *}
-
-	<form method="post" target="_blank" action="index.php?controller=AdminEnvoiMoinsCher&option=download&token={$token|escape:'htmlall'}">
-		<p style="text-align:right"><input type="submit" class="button" id="send1" name="sendValue" value="{l s='Download shipment notes' mod='envoimoinscher'}" /></a></b></p><br />
-		{include file="$ordersTableTemplate" id="1" orders=$orders tokenOrder=$tokenOrder ordersTodo=$orders type="history"}
-		<br />
-		<p style="text-align:right"><input type="submit" class="button" id="send2" name="sendValue" value="{l s='Download shipment notes' mod='envoimoinscher'}" /></a></b></p>
-	</form>
-	{* include pager template *}
-	{include file="$pagerTemplate" var=$pager}
-	{* include pager template *}
+		<div class="panel">
+			<p>{l s='list shipments, to download slips : check then clic "download"' mod='envoimoinscher'}</p>
+			<form method="post" target="_blank" action="index.php?controller=AdminEnvoiMoinsCher&option=download&token={$token|escape:'htmlall'}">
+				<p style="text-align:right"><input type="submit" class="btn btn-default" id="send1" name="sendValue" value="{l s='Download shipment notes' mod='envoimoinscher'}" /></p>
+				{include file="$ordersTableTemplate" id="1" orders=$orders tokenOrder=$tokenOrder ordersTodo=$orders type="history"}
+			</form>
+			{include file="$pagerTemplate" var=$pager}
+		</div>
+	</div>

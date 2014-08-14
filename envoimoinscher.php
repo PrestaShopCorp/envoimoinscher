@@ -126,9 +126,9 @@ class Envoimoinscher extends CarrierModule
 		);
 		$this->name = 'envoimoinscher';
 		$this->tab = 'shipping_logistics';
-		$this->version = '3.1.3';
+		$this->version = '3.1.4';
 		$this->author = 'EnvoiMoinsCher';
-		$this->local_version = '3.1.3';
+		$this->local_version = '3.1.4';
 		parent::__construct();
 		$this->page = basename(__FILE__, '.php');
 		$this->displayName = 'EnvoiMoinsCher';
@@ -234,8 +234,6 @@ class Envoimoinscher extends CarrierModule
 		$tab = new Tab();
 		$tab->class_name = 'AdminEnvoiMoinsCher';
 		$tab->id_parent = (int)Tab::getIdFromClassName('AdminParentShipping');
-		if ($tab->id_parent == 0)
-			$tab->id_parent = 3;
 		$tab->module = 'envoimoinscher';
 		$tab->name[(int)Configuration::get('PS_LANG_DEFAULT')] = 'EnvoiMoinsCher';
 		if ($tab->add() === false)
@@ -277,7 +275,7 @@ class Envoimoinscher extends CarrierModule
 				}
 			}
 		}
-		
+
 		// remove emc carriers
 		$remove_emc_carriers = 'UPDATE `'._DB_PREFIX_.'carrier` set deleted = 1 where external_module_name = "'.$this->name.'"';
 
@@ -309,12 +307,12 @@ class Envoimoinscher extends CarrierModule
 		foreach ($helper->getTablesNames() as $table)
 			$tables[] = '`'._DB_PREFIX_.$table.'`';
 		$remove_tables = 'DROP TABLE IF EXISTS '.implode(',', $tables);
-		
+
 		$keys = array();
 		foreach ($helper->getConfigKeys() as $key)
 			$keys[] = '"'.$key.'"';
-		$remove_configs = 'DELETE FROM '._DB_PREFIX_.'configuration WHERE name IN('.implode(',', $keys).')'; 
-		
+		$remove_configs = 'DELETE FROM '._DB_PREFIX_.'configuration WHERE name IN('.implode(',', $keys).')';
+
 		return DB::getInstance()->execute($remove_tables) && DB::getInstance()->execute($remove_configs);
 	}
 
@@ -338,6 +336,11 @@ class Envoimoinscher extends CarrierModule
 	public function useLocalFancybox()
 	{
 		return _PS_VERSION_ < '1.5.3';
+	}
+
+	public function useLocalBootstrap()
+	{
+		return _PS_VERSION_ < '1.6.0';
 	}
 
 	/**
@@ -400,14 +403,15 @@ class Envoimoinscher extends CarrierModule
 			}
 		}
 
-		$emc_user = isset($config['EMC_USER'])?(int)$config['EMC_USER']:-1;
-		
+		$emc_user = isset($config['EMC_USER'])?(int)$config['EMC_USER']: - 1;
+
 		$datas = array(
+			'local_bootstrap'=> $this->useLocalBootstrap(),
 			'introduction'	=> $this->getContentIntroduction(),
 			'missedValues' 	=> ($emc_user > 2 ? $this->makeMissedList($obligatory, $config) : array()),
 			'EMC_config'   	=> $config,
 			'link'         	=> new Link(),
-			'envUrl'       	=> (!empty($config['EMC_ENV']) ? $this->environments[$config['EMC_ENV']]['link'] : null)
+			'envUrl'       	=> (!empty($config['EMC_ENV']) ? $this->environments[Tools::strtoupper($config['EMC_ENV'])]['link'] : null)
 		);
 
 		if ($emc_user <= 2)
@@ -448,7 +452,7 @@ class Envoimoinscher extends CarrierModule
 	}
 
 	private function getContentBody()
-	{		
+	{
 		$smarty = $this->getContext()->smarty;
 		$cookie = $this->getContext()->cookie;
 
@@ -461,7 +465,7 @@ class Envoimoinscher extends CarrierModule
 		// on verifie si les offres ont ete mises a jour recement
 		$last_update = Configuration::get('EMC_LAST_CARRIER_UPDATE');
 		$send_offers_update_warning = true;
-		
+
 		if ($last_update != '')
 		{
 			$date_limit = time() - (60 * 60 * 24 * 30);
@@ -469,7 +473,7 @@ class Envoimoinscher extends CarrierModule
 			$send_offers_update_warning = $date_update < $date_limit;
 		}
 		$datas = array(
-			'default_tab'	 => count($this->getUpgrades())>0?'help':(Tools::isSubmit('EMC_tabs')?Tools::getValue('EMC_tabs'):'merchant'),
+			'default_tab'	 => count($this->getUpgrades()) > 0?'help':(Tools::isSubmit('EMC_tabs')?Tools::getValue('EMC_tabs'):'merchant'),
 			'tab_news'       => $this->model->getApiNews($this->ws_name, $this->version),
 			'tpl_news'       => _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/news.tpl',
 			'local_fancybox' => $this->useLocalFancybox(),
@@ -518,7 +522,7 @@ class Envoimoinscher extends CarrierModule
 		$smarty->assign($datas);
 		return $this->display(__FILE__, '/views/templates/admin/getContentIntroduction.tpl');
 	}
-	
+
 	/**
 	 * Get ajax settings content
 	 * @return template Smarty Template
@@ -555,7 +559,7 @@ class Envoimoinscher extends CarrierModule
 		$helper = new EnvoimoinscherHelper();
 
 		$config = $helper->configArray($this->model->getConfigData());
-		
+
 		$datas = array(
 			// Configuration
 			'EMC_config'      => $config,
@@ -702,7 +706,7 @@ class Envoimoinscher extends CarrierModule
 		require_once dirname(__FILE__).'/Env/WebService.php';
 		require_once dirname(__FILE__).'/Env/User.php';
 
-		$user_class = new EnvUser(array('user' => $config['EMC_LOGIN'], 'pass' => $config['EMC_PASS'], 'key' => $config['EMC_KEY']));
+		$user_class = new Env_User(array('user' => $config['EMC_LOGIN'], 'pass' => $config['EMC_PASS'], 'key' => $config['EMC_KEY']));
 		$user_class->setPlatformParams($this->ws_name, _PS_VERSION_, $this->version);
 		$user_class->setEnv(Tools::strtolower($config['EMC_ENV']));
 		$user_class->getEmailConfiguration();
@@ -991,13 +995,79 @@ class Envoimoinscher extends CarrierModule
 		$helper = new EnvoimoinscherHelper;
 		$config = $helper->configArray($this->model->getConfigData());
 
+		// init pagers
+		require_once('lib/Pager.php');
+
+		// get orders
+		$orders_count = $this->model->getEligibleOrdersCount();
+
+		$page_emc = 1;
+		if (Tools::isSubmit('pe'))
+			$page_emc = (int)Tools::getValue('pe');
+		$page_others = 1;
+		if (Tools::isSubmit('po'))
+			$page_others = (int)Tools::getValue('po');
+		$page_error = 1;
+		if (Tools::isSubmit('pr'))
+			$page_error = (int)Tools::getValue('pr');
+
+		$per_page = 20;
+		$limits = array();
+
+		$pager_emc = new Pager(array(
+			'url' => 'index.php?controller=AdminEnvoiMoinsCher&po='.$page_others.'&pr='.$page_error,
+			'tag' => 'pe',
+			'before' => 5,
+			'after' => 5,
+			'all' => $orders_count['emc'],
+			'page' => $page_emc,
+			'perPage' => $per_page
+		));
+		$start = ($page_emc - 1) * $per_page;
+		$limits['emc'] = 'LIMIT '.$start.','.$per_page;
+		$smarty->assign('pager_emc', $pager_emc->setPages());
+
+		$pager_others = new Pager(array(
+			'url' => 'index.php?controller=AdminEnvoiMoinsCher&pe='.$page_emc.'&pr='.$page_error,
+			'tag' => 'po',
+			'before' => 5,
+			'after' => 5,
+			'all' => $orders_count['others'],
+			'page' => $page_others,
+			'perPage' => $per_page
+		));
+		$start = ($page_others - 1) * $per_page;
+		$limits['others'] = 'LIMIT '.$start.','.$per_page;
+		$smarty->assign('pager_others', $pager_others->setPages());
+
+		$pager_error = new Pager(array(
+			'url' => 'index.php?controller=AdminEnvoiMoinsCher&pe='.$page_emc.'&po='.$page_others,
+			'tag' => 'pr',
+			'before' => 5,
+			'after' => 5,
+			'all' => $orders_count['errors'],
+			'page' => $page_error,
+			'perPage' => $per_page
+		));
+		$start = ($page_error - 1) * $per_page;
+		$limits['errors'] = 'LIMIT '.$start.','.$per_page;
+		$smarty->assign('pager_error', $pager_error->setPages());
+
+		$orders = $this->model->getEligibleOrders(array('lang' => $cookie->id_lang), $limits);
+		/*echo '<br/>';
+		echo '<br/>';
+		echo '<br/>';
+		echo '<br/>';
+		echo '<br/>';
+		var_dump($orders);*/
+
 		// all orders to send
-		$orders = $this->model->getEligibleOrders(array('lang' => $cookie->id_lang));
 		$planning = $this->model->getLastPlanning();
 		$orders_to_send = unserialize($planning['orders_eopl']);
 		$smarty->assign('tab_news', $this->model->getApiNews($this->ws_name, $this->version));
 		$smarty->assign('tpl_news', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/news.tpl');
 		$smarty->assign('local_fancybox', $this->useLocalFancybox());
+		$smarty->assign('local_bootstrap', $this->useLocalBootstrap());
 		$smarty->assign('emcBaseDir', _MODULE_DIR_.'/envoimoinscher/');
 		$smarty->assign('tokenOrder', Tools::getAdminToken('AdminOrders'.(int)Tab::getIdFromClassName('AdminOrders').(int)$cookie->id_employee));
 		$smarty->assign('token', Tools::getValue('token'));
@@ -1048,6 +1118,7 @@ class Envoimoinscher extends CarrierModule
 			$orders = Tools::getValue('orders'); // Get orders
 
 			$emc_order->constructOrdersLists($orders, Tools::getValue('typeDb'));
+
 			// redirect to first order to do
 			if ($config['EMC_MASS'] == EnvoimoinscherModel::WITH_CHECK || Tools::getValue('type') != 'withEmc')
 				Tools::redirectAdmin($admin_link_base.'&option=send&id_order='.(int)$orders[0].'');
@@ -1067,15 +1138,19 @@ class Envoimoinscher extends CarrierModule
 			if ($id_order > 0)
 			{
 				$data = $this->model->prepareOrderInfo($emc_order->getOrderId(), $config);
+				/* Not needed anymore
 				if ($data['order'][0]['shipping_number'] != '')
-					$result['result'] = 0;
-				else
 				{
+					$result['result'] = 0;
+					$result['shipping_number'] = $data['order'][0]['shipping_number'];
+				}
+				else
+				{*/
 					$emc_order->setOrderData($data);
 					$emc_order->setPrestashopConfig($this->getModuleConfig());
 					$emc_order->setOfferData($this->getOfferToSendPage($data, $helper));
 					$result['result'] = (int)$emc_order->doOrder();
-				}
+				//}
 				if (!$emc_order->doOtherOrders())
 					$result['doOthers'] = 0;
 			}
@@ -1141,6 +1216,8 @@ class Envoimoinscher extends CarrierModule
 			$page = (int)Tools::getValue('p');
 		require_once('lib/Pager.php');
 		$pager = new Pager(array(
+			'url' => 'index.php?controller=AdminEnvoiMoinsCher&option=history',
+			'tag' => 'p_test',
 			'before' => 5,
 			'after' => 5,
 			'all' => $all_pages,
@@ -1156,6 +1233,7 @@ class Envoimoinscher extends CarrierModule
 		$smarty->assign('tab_news', $this->model->getApiNews($this->ws_name, $this->version));
 		$smarty->assign('tpl_news', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/news.tpl');
 		$smarty->assign('local_fancybox', $this->useLocalFancybox());
+		$smarty->assign('local_bootstrap', $this->useLocalBootstrap());
 		$smarty->assign('emcBaseDir', _MODULE_DIR_.'/envoimoinscher/');
 		$smarty->assign('token', Tools::getValue('token'));
 		$smarty->assign('orders', $orders);
@@ -1460,11 +1538,11 @@ class Envoimoinscher extends CarrierModule
 				$carrier = array('id_carrier' => (int)$lang_data['id_carrier'], 'id_group' => 0);
 				Db::getInstance()->autoExecute(_DB_PREFIX_.'carrier_group', $carrier, 'INSERT');
 				$rows[0]['id_carrier'] = $lang_data['id_carrier'];
-				
+
 				DB::getInstance()->Execute('UPDATE '._DB_PREFIX_.'emc_services
 				SET id_carrier = '.(int)$lang_data['id_carrier'].'
-				WHERE id_es = '.(int)($rows[0]['id_es']).'');
-				
+				WHERE id_es = '.(int)$rows[0]['id_es'].'');
+
 			}
 			// update carrier for this order
 			Db::getInstance()->autoExecute(_DB_PREFIX_.'orders', array('id_carrier' => (int)$rows[0]['id_carrier']), 'UPDATE', 'id_order = '.(int)$order_id);
@@ -1508,7 +1586,7 @@ class Envoimoinscher extends CarrierModule
 		require_once('Env/Quotation.php');
 		$offers_orders = $this->model->getOffersOrder();
 		// EnvoiMoinsCher library
-		$cot_cl = new EnvQuotation(
+		$cot_cl = new Env_Quotation(
 			array(
 				'user' => $data['config']['EMC_LOGIN'],
 				'pass' => $data['config']['EMC_PASS'],
@@ -1770,7 +1848,7 @@ class Envoimoinscher extends CarrierModule
 
 			$date_eap_timestamp = strtotime($price_row['date_eap']);
 
-			$query = 'SELECT `date_upd` FROM `'._DB_PREFIX_.'configuration` WHERE `name` = '.(float)Configuration::get('PS_SHIPPING_HANDLING');
+			$query = 'SELECT `date_upd` FROM `'._DB_PREFIX_.'configuration` WHERE `name` = "PS_SHIPPING_HANDLING" ';
 			$date_upd_cfg_timestamp = strtotime(DB::getInstance()->getValue($query));
 
 			$update = $date_eap_timestamp < $date_upd_cfg_timestamp || $date_upd_cfg_timestamp === false;
@@ -1823,7 +1901,7 @@ class Envoimoinscher extends CarrierModule
 			}
 			else if (count($offers) === 0)
 			{
-				$error_message = sprintf($this->l('No offers found for the address %1$s %2$s, %3$s %4$s %5$s, the cart weighs %6$s kg'), 
+				$error_message = sprintf($this->l('No offers found for the address %1$s %2$s, %3$s %4$s %5$s, the cart weighs %6$s kg'),
 					$cookie->customer_firstname,
 					$cookie->customer_lastname,
 					$cart_data['address']['street'],
@@ -1852,8 +1930,6 @@ class Envoimoinscher extends CarrierModule
 
 	public function getPackageShippingCost($r, $s, $products = null)
 	{
-		if (isset($s) || isset($products)) return $this->getOrderShippingCost($r, 322);
-
 		return $this->getOrderShippingCost($r, 322);
 	}
 
@@ -1937,7 +2013,7 @@ class Envoimoinscher extends CarrierModule
 		$pass = Configuration::get('EMC_PASS');
 		$key = Configuration::get('EMC_KEY');
 		$env = Configuration::get('EMC_ENV');
-		$lib = new EnvCarriersList(array('user' => $login, 'pass' => $pass, 'key' => $key));
+		$lib = new Env_CarriersList(array('user' => $login, 'pass' => $pass, 'key' => $key));
 		$lib->setPlatformParams($this->ws_name, _PS_VERSION_, $this->version);
 		$lib->setEnv(Tools::strtolower($env));
 		$lib->loadCarriersList($this->ws_name, $this->version);
@@ -2113,7 +2189,7 @@ class Envoimoinscher extends CarrierModule
 		// Requête delete services
 		if (count($srv_to_delete) > 0)
 		{
-			$sql = 'DELETE FROM '._DB_PREFIX_.'carrier WHERE ';
+			$sql = 'UPDATE '._DB_PREFIX_.'carrier SET deleted = 1 WHERE ';
 			$first_line = true;
 			foreach ($srv_to_delete as $service)
 			{
@@ -2232,7 +2308,7 @@ class Envoimoinscher extends CarrierModule
 		}
 		$smarty->assign('multiParcels', ($parcels = $this->model->getParcelsInfos($params['id_order'])));
 		$smarty->assign('multiSize', count($parcels));
-		return $this->display(__FILE__, '/views/templates/admin/hookAdminOrder.tpl');
+		return $this->display(__FILE__, '/views/templates/hook/hookAdminOrder.tpl');
 	}
 
 	/**
@@ -2285,7 +2361,9 @@ class Envoimoinscher extends CarrierModule
 			Tools::redirect('order.php?step=2');
 			return false;
 		}
-		Db::getInstance()->autoExecute(_DB_PREFIX_.'emc_api_pricing', array('price_eap' => (float)$price), 'UPDATE', _DB_PREFIX_.'cart_id_cart = '.(int)$cart_id.' ');
+		Db::getInstance()->autoExecute(_DB_PREFIX_.'emc_api_pricing',
+				array('price_eap' => (float)$price),
+				'UPDATE', _DB_PREFIX_.'cart_id_cart = '.(int)$cart_id.' ');
 		return true;
 	}
 
@@ -2372,7 +2450,7 @@ class Envoimoinscher extends CarrierModule
 	{
 		$smarty = $this->getContext()->smarty;
 		$smarty->assign('emcBaseDir', _MODULE_DIR_.'/envoimoinscher/');
-		return $this->display(__FILE__, '/views/templates/admin/header_hook.tpl');
+		return $this->display(__FILE__, '/views/templates/hook/header_hook.tpl');
 	}
 
 	/**
@@ -2408,13 +2486,12 @@ class Envoimoinscher extends CarrierModule
 		$smarty->assign('offersCount', count($points));
 		$smarty->assign('loaderSrc', __PS_BASE_URI__.'img/loader.gif');
 		$smarty->assign('baseDir', __PS_BASE_URI__);
-		return $this->display(__FILE__, '/views/templates/admin/envoimoinscher_carrier.tpl');
+		return $this->display(__FILE__, '/views/templates/hook/envoimoinscher_carrier.tpl');
 	}
 
 	public function hookFooter($data)
 	{
-		if ($data) return $this->display(__FILE__, '/views/templates/admin/footer.tpl');
-		return $this->display(__FILE__, '/views/templates/admin/footer.tpl');
+		return $this->display(__FILE__, '/views/templates/hook/footer.tpl');
 	}
 
 	/**
@@ -2451,7 +2528,7 @@ class Envoimoinscher extends CarrierModule
 		$env_cl = new Envoimoinscher;
 		$config = $helper->configArray(Db::getInstance()->ExecuteS('SELECT * FROM '._DB_PREFIX_.'configuration
 			 WHERE name LIKE "EMC_%"'));
-		$poi_cl = new EnvParcelPoint(array(
+		$poi_cl = new Env_ParcelPoint(array(
 			'user' => $config['EMC_LOGIN'],
 			'pass' => $config['EMC_PASS'],
 			'key' => $config['EMC_KEY']));
@@ -2616,7 +2693,7 @@ class Envoimoinscher extends CarrierModule
 		$all_delivery_dates = array();
 		// EnvoiMoinsCher library
 		$offers_orders = $this->model->getOffersOrder();
-		$cot_cl = new EnvQuotation(
+		$cot_cl = new Env_Quotation(
 			array(
 				'user' => $config['EMC_LOGIN'],
 				'pass' => $config['EMC_PASS'],
@@ -2719,7 +2796,7 @@ class Envoimoinscher extends CarrierModule
 			$cot_cl->getOffersMulti();
 			$offers_quotation = $cot_cl->offers;
 		}
-		
+
 		if ($cot_cl->curl_error)
 		{
 			if ($params['testPage'])
@@ -2867,18 +2944,19 @@ class Envoimoinscher extends CarrierModule
 							}
 						}
 						// finally, convert the prices
+						$currency = new Currency((int)$params['cartObject']->id_currency);
 						$offer['priceTTC_db'] = Tools::convertPrice(
 							(float)$offer['priceTTC_db'],
-							new Currency((int)$params['cartObject']->id_currency));
+							$currency);
 						$offer['priceHT'] = Tools::convertPrice(
 							(float)$offer['priceHT'],
-							new Currency((int)$params['cartObject']->id_currency));
+							$currency);
 						$offer['priceHT_db'] = Tools::convertPrice(
 							(float)$offer['priceHT_db'],
-							new Currency((int)$params['cartObject']->id_currency));
+							$currency);
 						$offer['priceTTC_client'] = Tools::convertPrice(
 							(float)$offer['priceTTC_client'],
-							new Currency((int)$params['cartObject']->id_currency));
+							$currency);
 						// add carrier only when price is defined
 						$variable = 'choosePoint'.
 							$offer['operator']['code'].
@@ -2957,7 +3035,7 @@ class Envoimoinscher extends CarrierModule
 	{
 		return $this->parseUpgradeXml(_PS_MODULE_DIR_.$this->name.'/sql/upgrades/upgrades.xml');
 	}
-	
+
 	/**
 	 * Executes upgrade queries.
 	 * @access public
@@ -3212,7 +3290,7 @@ class Envoimoinscher extends CarrierModule
 		require_once(_PS_MODULE_DIR_.'/envoimoinscher/Env/Service.php');
 		$helper = new EnvoimoinscherHelper;
 		$config = $helper->configArray($this->model->getConfigData());
-		$ser_class = new EnvService(array(
+		$ser_class = new Env_Service(array(
 			'user' => $config['EMC_LOGIN'],
 			'pass' =>	$config['EMC_PASS'],
 			'key' => $config['EMC_KEY']));
@@ -3312,7 +3390,7 @@ class Envoimoinscher extends CarrierModule
 		require_once(_PS_MODULE_DIR_.'/envoimoinscher/Env/OrderStatus.php');
 		$helper = new EnvoimoinscherHelper;
 		$config = $helper->configArray($this->model->getConfigData());
-		$ors_class = new EnvOrderStatus(array(
+		$ors_class = new Env_OrderStatus(array(
 			'user' => $config['EMC_LOGIN'],
 			'pass' =>	$config['EMC_PASS'],
 			'key' => $config['EMC_KEY']));
@@ -3462,7 +3540,7 @@ class Envoimoinscher extends CarrierModule
 
 		// Get level configuration
 		$emc_user = (int)Configuration::get('EMC_USER');
-		
+
 		if ($emc_user < 3)
 		{
 			// If we need to previous configuration
@@ -3487,7 +3565,7 @@ class Envoimoinscher extends CarrierModule
 
 			return;
 		}
-		
+
 		// Save status
 		if (Tools::getValue('EMC_Status') && Tools::getValue('ajax'))
 		{
@@ -3569,7 +3647,7 @@ class Envoimoinscher extends CarrierModule
 				$api_env = Configuration::get('EMC_ENV');
 
 				// update e-mail configuration
-				$user_class = new EnvUser(array('user' => $api_login, 'pass' => $api_pass, 'key' => $api_key));
+				$user_class = new Env_User(array('user' => $api_login, 'pass' => $api_pass, 'key' => $api_key));
 				$user_class->setPlatformParams($this->ws_name, _PS_VERSION_, $this->version);
 				$user_class->setEnv(Tools::strtolower($api_env));
 
@@ -3591,9 +3669,8 @@ class Envoimoinscher extends CarrierModule
 	private function postProcessIntroduction()
 	{
 		Configuration::updateValue('EMC_USER', 0);
-		return;
 	}
-	
+
 	/**
 	 * Set Merchant configuration
 	 * @return string Error message
@@ -3710,7 +3787,7 @@ class Envoimoinscher extends CarrierModule
 
 					// EMC column
 					$data = array(
-						'id_es'				   =>(int) $service['id_es'],
+						'id_es'				   =>(int)$service['id_es'],
 						'pricing_es'           => $pricing,
 						'name'                 => $service['label_es'].' ('.$service['name_eo'].')',
 						'active'               => 1,
@@ -3722,11 +3799,11 @@ class Envoimoinscher extends CarrierModule
 					);
 
 					$carrier_id = $this->model->saveCarrier($data, $service);
-										
+
 					if ($carrier_id === false)
 						return false;
 					$not_in[]   = (int)$carrier_id;
-					
+
 					DB::getInstance()->Execute('UPDATE '._DB_PREFIX_.'emc_services
 					  SET id_carrier = '.$carrier_id.', pricing_es = '.$pricing.'
 					  WHERE id_es = '.(int)$service['id_es'].'');
@@ -3788,13 +3865,13 @@ class Envoimoinscher extends CarrierModule
 				' AND CONCAT_WS("_", es.`emc_operators_code_eo` , es.`code_es` ) IN ('.implode(',', $full_list).') ')
 			);
 			foreach ($srv_list as $service)
-			{				
+			{
 				$pricing = (Tools::getValue($service['emc_operators_code_eo'].'_'.$service['code_es'].'_emc') == 'real')?
 						(EnvoimoinscherModel::REAL_PRICE):(EnvoimoinscherModel::RATE_PRICE);
-				
+
 				// EMC column
 				$data = array(
-					'id_es'				   =>(int) $service['id_es'],
+					'id_es'				   =>(int)$service['id_es'],
 					'pricing_es'           => $pricing,
 					'name'                 => $service['label_es'].' ('.$service['name_eo'].')',
 					'active'               => 1,
@@ -3813,7 +3890,7 @@ class Envoimoinscher extends CarrierModule
 				if ($carrier_id === false)
 					return false;
 				$not_in[]   = (int)$carrier_id;
-				
+
 			}
 
 			// Carriers have been saved

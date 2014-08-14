@@ -63,6 +63,7 @@ fieldset.gris table tr td.first, fieldset.gris table tr td.second {color: #b6b3b
 float:left;
 width:auto;
 height:auto;
+width:100%;
 }
 
 .clearfix{

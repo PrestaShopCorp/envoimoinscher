@@ -27,5 +27,5 @@
 <p class="first">{l s='order currently shiping' mod='envoimoinscher'}</p>
 <p>{l s='pending :' mod='envoimoinscher'} <span id="todo">{$all|escape:'htmlall'}</span></p>
 <p>{l s='done :' mod='envoimoinscher'} <span id="done">{$done|escape:'htmlall'}</span></p>
-<p><a href="index.php?controller=AdminEnvoiMoinsCher&option=cancelOrder&token={$token|escape:'htmlall'}" class="action_module">{l s='cancel pending shipment' mod='envoimoinscher'}</a></p>
+<p><a href="index.php?controller=AdminEnvoiMoinsCher&option=cancelOrder&token={$token|escape:'htmlall'}" class="action_module btn btn-default">{l s='cancel pending shipment' mod='envoimoinscher'}</a></p>
 </div>
