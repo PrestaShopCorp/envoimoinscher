@@ -260,21 +260,6 @@ class Envoimoinscher extends CarrierModule
 		// remove column in table
 		$columns = DB::getInstance()->executeS('DESCRIBE `'._DB_PREFIX_.'carrier`');
 		$column_to_remove = array('emc_services_id_es', 'emc_type'); // Column to remove
-		$alter_table_carrier = 'ALTER TABLE `'._DB_PREFIX_.'carrier` ';
-		$find = false;
-		if ($columns && count($columns) > 0)
-		{
-			foreach ($columns as $column)
-			{
-				if (in_array($column['Field'], $column_to_remove))
-				{
-					if ($find === true)
-						$alter_table_carrier .= ', ';
-					$alter_table_carrier .= ' DROP COLUMN `'.$column['Field'].'` ';
-					$find = true;
-				}
-			}
-		}
 
 		// remove emc carriers
 		$remove_emc_carriers = 'UPDATE `'._DB_PREFIX_.'carrier` set deleted = 1 where external_module_name = "'.$this->name.'"';
@@ -283,7 +268,6 @@ class Envoimoinscher extends CarrierModule
 		if ($this->tablesRollback() === false ||
 				parent::uninstall() === false ||
 				$tab->delete() === false ||
-				DB::getInstance()->execute($alter_table_carrier) === false ||
 				DB::getInstance()->execute($remove_emc_carriers) === false)
 			return false;
 		return true;
@@ -1899,7 +1883,12 @@ class Envoimoinscher extends CarrierModule
 				Db::getInstance()->autoExecute(_DB_PREFIX_.'emc_api_pricing', $offers[$this->id_carrier]['pricingData'], 'INSERT IGNORE');
 				$return = $offers[$this->id_carrier]['priceHT_db'];
 			}
-			else if (count($offers) === 0)
+			// for relay points if free delivery
+			elseif(isset($offers[$ref->id_carrier])){
+				Db::getInstance()->autoExecute(_DB_PREFIX_.'emc_api_pricing', $offers[$ref->id_carrier]['pricingData'], 'INSERT IGNORE');
+				$return = $offers[$ref->id_carrier]['priceHT_db'];
+			}
+			elseif (count($offers) === 0)
 			{
 				$error_message = sprintf($this->l('No offers found for the address %1$s %2$s, %3$s %4$s %5$s, the cart weighs %6$s kg'),
 					$cookie->customer_firstname,
@@ -2437,6 +2426,10 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function hookupdateCarrier($params)
 	{
+		// if it's not our carrier, nothing to do here
+		if($params['carrier']->external_module_name !== $this->name)
+			return;
+
 		$data = array('id_carrier' => (int)$params['carrier']->id);
 		Db::getInstance()->autoExecute(_DB_PREFIX_.'emc_services', $data, 'UPDATE', 'ref_carrier = '.(int)$params['carrier']->id_reference);
 	}
@@ -2466,6 +2459,10 @@ class Envoimoinscher extends CarrierModule
 		$points = array();
 		$point = '';
 		$pricing = $this->model->getLastPrices(EnvoimoinscherHelper::getPricingCode($params['cart']));
+		if(empty($pricing)){
+			$this->getOrderShippingCost($params['cart'], 311);
+			$pricing = $this->model->getLastPrices(EnvoimoinscherHelper::getPricingCode($params['cart']));
+		}
 		if (isset($pricing['points_eap']))
 		{
 			$points = unserialize($pricing['points_eap']);
@@ -2629,7 +2626,9 @@ class Envoimoinscher extends CarrierModule
 	public function makeApiCall($params)
 	{
 		$cookie = $this->getContext()->cookie;
-
+		$currency = new Currency((int)$params['cartObject']->id_currency);
+		$carrier_tax = 0;
+		
 		// If no address selected, we set the default one
 		if ((empty($params['address']) || count($params['address']) === 0) ||
 				((empty($params['address']['city']) || count($params['address']['city']) === 0 || $params['address']['city'] == '') &&
@@ -2666,7 +2665,7 @@ class Envoimoinscher extends CarrierModule
 		if (isset($configuration['PS_SHIPPING_FREE_PRICE']))
 			$free_fees_price = Tools::convertPrice(
 				(float)$configuration['PS_SHIPPING_FREE_PRICE'],
-				new Currency((int)$params['cartObject']->id_currency)
+				$currency
 			);
 		// Free delivery by cart price
 		if ($params['cartValue'] >= (float)$free_fees_price && (float)$free_fees_price > 0)
@@ -2859,6 +2858,7 @@ class Envoimoinscher extends CarrierModule
 							$offer['priceHT_db'] = 0;
 							$offer['priceHT'] = 0;
 							$offer['priceTTC_db'] = 0;
+							$offer['priceTTC_client'] = 0;
 						}
 						else
 						{
@@ -2881,7 +2881,6 @@ class Envoimoinscher extends CarrierModule
 						// If not free delivery, make all pricing operations
 						if (!$free_delivery && !$discount_shipping)
 						{
-							$carrier_tax = 0;
 							$carrier = new Carrier($offer_db['id_carrier']);
 							$carrier_tax = Tax::getCarrierTaxRate((int)$offer_db['id_carrier'], (int)$params['cartObject']->{Configuration::get('PS_TAX_ADDRESS_TYPE')});
 							if ($carrier->getShippingMethod() == Carrier::SHIPPING_METHOD_WEIGHT)
@@ -2944,7 +2943,6 @@ class Envoimoinscher extends CarrierModule
 							}
 						}
 						// finally, convert the prices
-						$currency = new Currency((int)$params['cartObject']->id_currency);
 						$offer['priceTTC_db'] = Tools::convertPrice(
 							(float)$offer['priceTTC_db'],
 							$currency);
@@ -3221,17 +3219,22 @@ class Envoimoinscher extends CarrierModule
 	public function downloadLabels()
 	{
 		$cookie = $this->getContext()->cookie;
-
 		$orders_to_get = array();
+		$refs = array();
+
 		if (Tools::isSubmit('orders'))
 			foreach (Tools::getValue('orders') as $ord)
 				$orders_to_get[] = (int)$ord;
 		elseif (Tools::isSubmit('order'))
 			$orders_to_get[] = (int)Tools::getValue('order');
-		$references = $this->model->getReferencesToLabels($orders_to_get);
-		$refs = array();
-		foreach ($references as $reference)
-			$refs[] = $reference['ref_emc_eor'];
+		
+		if(count($orders_to_get) > 0)
+		{
+			$references = $this->model->getReferencesToLabels($orders_to_get);
+			foreach ($references as $reference)
+				$refs[] = $reference['ref_emc_eor'];
+		}
+		
 		if (count($refs) > 0)
 		{
 			$slip_url = stristr($references[0]['link_ed'], $references[0]['ref_emc_eor'], true);
