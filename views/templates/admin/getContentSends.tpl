@@ -140,8 +140,8 @@
 				{section name=conf loop=$pickupConf}
 					<label for="pickupDay{$smarty.section.conf.index|escape:'htmlall'}">{l s='Pickup date : D +' mod='envoimoinscher'} <sup class="emc-required">*</sup></label>
 					<div class="margin-form">
-						<input type="text" name="pickupDay{$smarty.section.conf.index|escape:'htmlall'}" id="pickupDay{$smarty.section.conf.index|escape:'htmlall'}" value="{$pickupConf[conf].j|escape:'htmlall'}" style="width: 30px;" /> {l s='for orders past between' mod='envoimoinscher'} 
-						<select name="pickupFrom{$smarty.section.conf.index|intval}" class="fromto" style="width:70px;">
+						<input type="text" name="pickupDay{$smarty.section.conf.index|escape:'htmlall'}" id="pickupDay{$smarty.section.conf.index|escape:'htmlall'}" value="{$pickupConf[conf].j|escape:'htmlall'}" class="pickupDaylist" /> {l s='for orders past between' mod='envoimoinscher'} 
+						<select name="pickupFrom{$smarty.section.conf.index|intval}" class="fromto pickupFrom_date">
 							{if $smarty.section.conf.index == 0}
 								<option value="0" selected="selected">0:00</option>
 							{else}
@@ -150,7 +150,7 @@
 								{/section}
 							{/if}
 						</select> {l s='and' mod='envoimoinscher'}
-						<select name="pickupTo{$smarty.section.conf.index|escape:'htmlall'}" class="fromto" style="width:70px;">							
+						<select name="pickupTo{$smarty.section.conf.index|escape:'htmlall'}" class="fromto pickupFrom_date">							
 							{if $smarty.section.conf.index == 1}
 								<option value="24" selected="selected">24:00</option>
 							{else}
@@ -168,7 +168,7 @@
 			{/if}
 			<label for="labelDate">{l s='Label for delivery date :' mod='envoimoinscher'}</label>
 			<div class="margin-form">
-				<input type="text" name="labelDeliveryDate" id="labelDeliveryDate" value="{$EMC_config.EMC_LABEL_DELIVERY_DATE|escape:'htmlall'}" style="width:250px;" />
+				<input type="text" name="labelDeliveryDate" id="labelDeliveryDate" value="{$EMC_config.EMC_LABEL_DELIVERY_DATE|escape:'htmlall'}" class="labelDeliveryDate" />
 				<p class="preference_description">{l s='Specify the delivery date label seen by the client. Example : "Delivery date : {DATE}". Empty label to disable.' mod='envoimoinscher'}</p>
 			</div>
 			<div class="clear both"></div>

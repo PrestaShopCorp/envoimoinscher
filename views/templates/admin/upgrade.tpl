@@ -25,9 +25,9 @@
 
 <h2>{l s='EnvoiMoinsCher : Update' mod='envoimoinscher'}</h2> 
   {if $error}
-    <div class="alert error">{l s='The update was not properly executed.' mod='envoimoinscher'}</div>
+    <div class="bootstrap"><div class="alert alert-danger">{l s='The update was not properly executed.' mod='envoimoinscher'}</div></div>
   {else}
-    <div class="conf">{l s='The update has been properly executed.' mod='envoimoinscher'}</div>
+    <div class="bootstrap"><div class="conf alert alert-success">{l s='The update has been properly executed.' mod='envoimoinscher'}</div></div>
   {/if}
   <p>&larr; <a href="index.php?controller=AdminModules&configure=envoimoinscher&token={$token|escape:'htmlall'}&tab_module=shipping_logistics&module_name=envoimoinscher" class="action_module">{l s='Back to configuration page' mod='envoimoinscher'}</a></p>
 </form>

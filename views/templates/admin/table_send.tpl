@@ -23,7 +23,7 @@
  * International Registred Trademark & Property of PrestaShop SA
  *}
 <div class="clearfix"></div>
-<div style="text-align:right" class="bootstrap">
+<div class="bootstrap text_align_right">
 	<p>
 		<input type="submit" class="btn btn-default" name="sendValueWithCheck" value="{l s='Send with check' mod='envoimoinscher'}" />
 		&nbsp;

@@ -73,6 +73,36 @@ class EnvoimoinscherModel
 	}
 
 	/**
+	 * Return the partnership code of the account
+	 * @access public
+	 * @return string
+	 */
+	public function getPartnership()
+	{
+		$partnership = Configuration::get('EMC_PARTNERSHIP');
+		if ($partnership == '')
+		{
+			require_once(_PS_MODULE_DIR_.'envoimoinscher/Env/WebService.php');
+			require_once(_PS_MODULE_DIR_.'envoimoinscher/Env/User.php');
+
+			$login = Configuration::get('EMC_LOGIN');
+			$pass = Configuration::get('EMC_PASS');
+			$key = Configuration::get('EMC_KEY');
+			$env = Configuration::get('EMC_ENV');
+			
+			$lib = new Env_User(array('user' => $login, 'pass' => $pass, 'key' => $key));
+			$lib->setEnv(Tools::strtolower($env));
+			$lib->getPartnership();
+			
+			$partnership = $lib->partnership;
+			
+			Configuration::updateValue('EMC_PARTNERSHIP',$partnership);
+		}
+		
+		return $partnership;
+	}
+	
+	/**
 	 * Return an array with the news for the module
 	 * @param $platform : platform name (will be prestashop here)
 	 * @param $version : version of the module
@@ -422,7 +452,7 @@ class EnvoimoinscherModel
 				 a.firstname AS afirstname,
 				 a.lastname AS alastname,
 				 es.emc_operators_code_eo AS emc_operators_code_eo,
-				 es.is_parcel_point_es, o.total_products_wt AS totalOrder,
+				 es.is_parcel_pickup_point_es, o.total_products_wt AS totalOrder,
 				 c.id_carrier AS carrierId,
 				 CONCAT_WS("_", es.emc_operators_code_eo, es.code_es) AS offerCode
 			 FROM '._DB_PREFIX_.'orders o
@@ -667,7 +697,8 @@ class EnvoimoinscherModel
 			'delivery'      => $delivery,
 			'proforma'      => $proforma,
 			'code_eo'       => $row[0]['emc_operators_code_eo'],
-			'is_pp'         => $row[0]['is_parcel_point_es'],
+			'is_pp'         => $row[0]['is_parcel_pickup_point_es'],
+			'is_dp'         => $row[0]['is_parcel_dropoff_point_es'],
 			'isEMCCarrier'  => (bool)$row[0]['external_module_name'] == $this->module_name
 		);
 	}
@@ -728,7 +759,8 @@ class EnvoimoinscherModel
 			'desc_store_es' => pSQL(($service['srvInfos']['label_store'])),
 			'label_store_es' => pSQL($service['label']),
 			'price_type_es' => 0,
-			'is_parcel_point_es' => (int)$service['delivery'] == 'DROPOFF_POINT',
+			'is_parcel_dropoff_point_es' => (int)$service['delivery'] == 'DROPOFF_POINT',
+			'is_parcel_pickup_point_es' => (int)$service['delivery'] == 'PICKUP_POINT',
 			'family_es' => (int)$service['srvInfos']['offer_family'],
 			'pricing_es' => EnvoimoinscherModel::REAL_PRICE
 			);
@@ -1045,7 +1077,7 @@ class EnvoimoinscherModel
 	*/
 	public function getOrderData($order)
 	{
-		return $this->db->ExecuteS('SELECT a.*, co.iso_code, o.id_order, es.is_parcel_point_es,
+		return $this->db->ExecuteS('SELECT a.*, co.iso_code, o.id_order, es.is_parcel_pickup_point_es,
 			 ep.point_ep, es.emc_operators_code_eo FROM '._DB_PREFIX_.'orders o
 			 JOIN '._DB_PREFIX_.'address a ON o.id_address_delivery = a.id_address
 			 JOIN '._DB_PREFIX_.'country co ON co.id_country = a.id_country
@@ -1067,7 +1099,7 @@ class EnvoimoinscherModel
 		return $this->db->ExecuteS('SELECT eap.prices_eap ,
 			 eap.point_eap, c.id_carrier,
 			 es.emc_operators_code_eo,
-			 es.is_parcel_point_es
+			 es.is_parcel_pickup_point_es, es.is_parcel_dropoff_point_es
 			 FROM '._DB_PREFIX_.'carrier c
 			 JOIN '._DB_PREFIX_.'emc_services es ON es.id_carrier = c.id_carrier
 			 JOIN '._DB_PREFIX_.'emc_api_pricing eap ON eap.'._DB_PREFIX_.'cart_id_cart = '.(int)$id_cart.'

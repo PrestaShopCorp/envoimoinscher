@@ -25,15 +25,15 @@
 
 <div id="allOffersTable">
 {if isset($isajax) && $isajax == "1" && !$isEMCCarrier}
-  <div class="alert error" style="width:400px;">{l s='Carrier not available anymore. You can select a new one (inform your customer about the change) or ' mod='envoimoinscher'}
+  <div class="alert alert-danger error_size">{l s='Carrier not available anymore. You can select a new one (inform your customer about the change) or ' mod='envoimoinscher'}
   <a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$orderid|escape:'htmlall'}&option=send&token={$token|escape:'htmlall'}" class="action_module">{l s='cancel this weight change' mod='envoimoinscher'}</a>.
   </div>
 {elseif isset($modifPrice) && $modifPrice == "1"}
-<div class="alert error" style="width:400px;">{l s='No carrier found for new caracteristics of the dispatch.' mod='envoimoinscher'}
+<div class="alert alert-danger error_size">{l s='No carrier found for new caracteristics of the dispatch.' mod='envoimoinscher'}
 </div>
 {/if}
 {if $offersNb > 0}
-  <table class="table" cellspacing="0" style="width:870px;">
+  <table class="table" cellspacing="0">
     <thead>
       <tr>
         <th>{l s='Carrier' mod='envoimoinscher'}</th>
@@ -57,7 +57,7 @@
         <td>{$orderInfo.total_shipping|escape:'htmlall'}&nbsp;€ </td>
         <td>{date('d-m-Y', strtotime($offer.collection.date))|escape:'htmlall'}</td>
         <td>{date('d-m-Y', strtotime($offer.delivery.date))|escape:'htmlall'}</td>
-        <td><a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$orderId|escape:'htmlall'}&option=replace&code={$offer.operator.code|escape:'htmlall'}_{$offer.service.code|escape:'htmlall'}&token={$token|escape:'htmlall'}" style="font-size:10px;" class="action_module">{l s='Replace with this offer' mod='envoimoinscher'}</a></td>
+        <td><a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$orderId|escape:'htmlall'}&option=replace&code={$offer.operator.code|escape:'htmlall'}_{$offer.service.code|escape:'htmlall'}&token={$token|escape:'htmlall'}" class="action_module font-size10">{l s='Replace with this offer' mod='envoimoinscher'}</a></td>
       </tr>
         {/if}
       {/foreach}

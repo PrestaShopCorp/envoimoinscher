@@ -59,16 +59,17 @@
 	<div class="bootstrap">
 		{include file="$submenuTemplate" var=$actual}
 
+		<div class="clearfix"></div>
+
 		{if $errorLabels == 1}
-		<div class="conf">{l s='please select slips to download' mod='envoimoinscher'}</div>
+		<div class="alert alert-warning">{l s='please select slips to download' mod='envoimoinscher'}</div>
 		{/if}
 
-		<div class="clearfix"></div>
 
 		<div class="panel">
 			<p>{l s='list shipments, to download slips : check then clic "download"' mod='envoimoinscher'}</p>
 			<form method="post" target="_blank" action="index.php?controller=AdminEnvoiMoinsCher&option=download&token={$token|escape:'htmlall'}">
-				<p style="text-align:right"><input type="submit" class="btn btn-default" id="send1" name="sendValue" value="{l s='Download shipment notes' mod='envoimoinscher'}" /></p>
+				<p class="text_align_right"><input type="submit" class="btn btn-default" id="send1" name="sendValue" value="{l s='Download shipment notes' mod='envoimoinscher'}" /></p>
 				{include file="$ordersTableTemplate" id="1" orders=$orders tokenOrder=$tokenOrder ordersTodo=$orders type="history"}
 			</form>
 			{include file="$pagerTemplate" var=$pager}

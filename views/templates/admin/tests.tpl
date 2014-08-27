@@ -81,16 +81,16 @@
   </p>
   <div id="offers">
   {if $isError == 1}
-    <div class="alert error">{$errorMsg|escape:'htmlall'}</div>
+    <div class="bootstrap"><div class="alert  alert-danger">{$errorMsg|escape:'htmlall'}</div></div>
   {/if} 
   {if $isError == 0 && $offers}
     <table class="table"> 
     <tbody id="offersBody">
       <tr>
-        <th style="width:100px;">{l s='Offer' mod='envoimoinscher'}</th>
-        <th style="width:100px;">{l s='Carrier' mod='envoimoinscher'}</th>
-        <th style="width:100px;">{l s='Price ET' mod='envoimoinscher'}</th>
-        <th style="width:100px;">{l s='Price ATI' mod='envoimoinscher'}</th>
+        <th class="width100">{l s='Offer' mod='envoimoinscher'}</th>
+        <th class="width100">{l s='Carrier' mod='envoimoinscher'}</th>
+        <th class="width100">{l s='Price ET' mod='envoimoinscher'}</th>
+        <th class="width100">{l s='Price ATI' mod='envoimoinscher'}</th>
         <th>{l s='Description' mod='envoimoinscher'}</th>
       </tr> 
     {foreach from=$offers key=o item=offer}

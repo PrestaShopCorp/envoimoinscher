@@ -83,7 +83,7 @@
 		<script type="text/javascript" src="{$emcBaseDir|unescape:'html'}/js/jquery.boxfancy.js"></script>
 	{/if}
 
-	<div id="warn-online-message" class="alert alert-warning warn warning" {if $EMC_config.EMC_SRV_MODE === 'online'}style="display:none;"{/if}>
+	<div id="warn-online-message" class="alert alert-warning warn warning {if $EMC_config.EMC_SRV_MODE === 'online'}hidden{/if}" >
 		{l s='Once the configuration done, set your module "Online" in order to display your offers' mod='envoimoinscher'}
 	</div>
 
@@ -266,11 +266,11 @@
 					}
 					else
 					{
-						message = "<p style='color:green'>{/literal}{l s='offer update succeed' mod='envoimoinscher'}{literal}</p><br/>";
+						message = "<p class='green_color'>{/literal}{l s='offer update succeed' mod='envoimoinscher'}{literal}</p><br/>";
 						if (ret.offers_added.length > 0)
 						{
 							message += "<b>" + ret.offers_added.length + " {/literal}{l s='new offers : list' mod='envoimoinscher'}{literal}</b>"
-							message += "<ul style='margin-left:20px;list-style-type:square'>";
+							message += "<ul class='list-style-square ml20'>";
 							for (i = 0 ; i < ret.offers_added.length ; i++)
 							{
 								message += "<li>"+ret.offers_added[i]+"</li>";
@@ -281,7 +281,7 @@
 						{
 							message += "<b>" + ret.offers_updated.length + " {/literal}{l s='new updated offers : list' mod='envoimoinscher'}{literal}</b>"
 							//message += "<br/><b style='color:orange;'>Attention : si un transporteur que vous utilisez est mis à jour, vous devez le supprimer et le recréer via le module pour appliquer les changements de <u>description</u></b>"
-							message += "<ul style='margin-left:20px;list-style-type:square'>";
+							message += "<ul class='list-style-square ml20'>";
 							for (i = 0 ; i < ret.offers_updated.length ; i++)
 							{
 								message += "<li>"+ret.offers_updated[i]+"</li>";
@@ -291,7 +291,7 @@
 						if (ret.offers_deleted.length > 0)
 						{
 							message += "<b>" + ret.offers_deleted.length + " {/literal}{l s='x offers deleted : list' mod='envoimoinscher'}{literal}</b>"
-							message += "<ul style='margin-left:20px;list-style-type:square'>";
+							message += "<ul class='list-style-square ml20'>";
 							for (i = 0 ; i < ret.offers_deleted.length ; i++)
 							{
 								message += "<li>"+ret.offers_deleted[i]+"</li>";
@@ -303,7 +303,7 @@
 				},
 				error : function(ret)
 				{
-					$('#carriers_update_result').html("<p style='color:red'>{/literal}{l s='Error : cant get carriers list' mod='envoimoinscher'}{literal} <br/><div style='color:red'>"+ret.responseText+"</div></p>");
+					$('#carriers_update_result').html("<p class='red_color'>{/literal}{l s='Error : cant get carriers list' mod='envoimoinscher'}{literal} <br/><div class='red_color'>"+ret.responseText+"</div></p>");
 				}
 			});
 			return false;
@@ -540,7 +540,7 @@
 			{/literal}
 		</script>
 	{else}
-		<fieldset id="EMC_Content" style="display: none;">
+		<fieldset id="EMC_Content" class="hidden">
 			<ul class="EMC_steps">
 				<li>
 					<a{if $EMC_config.EMC_USER >= -1 || empty($EMC_config.EMC_USER) || $EMC_config.EMC_USER == ""} class="selected{if $EMC_config.EMC_USER > 0} old{/if}"{/if}>
@@ -579,7 +579,7 @@
 					<a class="btnPrev{if $EMC_config.EMC_USER >= 0} selected{/if}">{l s='Previous' mod='envoimoinscher'}</a>
 					<a class="btnValid {if $EMC_config.EMC_USER > -1 && $EMC_config.EMC_USER < 2} selected{/if}">{l s='Next' mod='envoimoinscher'}</a>
 					<a class="btnClose{if $EMC_config.EMC_USER == 2} selected{/if}">{l s='End' mod='envoimoinscher'}</a>
-					<form method="POST" style="display: none;" id="btnPrev">
+					<form method="POST" class="hidden" id="btnPrev">
 						<input type="hidden" name="previous" value="{$EMC_config.EMC_USER|escape:'htmlall'}" />
 						<input type="submit">
 					</form>

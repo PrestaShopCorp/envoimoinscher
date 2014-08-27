@@ -23,13 +23,13 @@
  * International Registred Trademark & Property of PrestaShop SA
  *}
 
-<div id="tableContent">
+<div id="tableContent" class="bootstrap">
     {if isset($modifPrice) && $modifPrice == "1"}
-    <div class="alert" style="width:440px;">
+    <div class="alert alert-success alert-size">
     {l s='Following your modifications, the price has been updated. To trigger the dispatch with the new price, press a second time on the Send button.' mod='envoimoinscher'}
     </div>
     {/if}
-    <table class="table" cellspacing="0" style="width: 100%">
+    <table class="table fullwidth" cellspacing="0">
       <thead>
         <tr>
 		<th>{l s='Carrier' mod='envoimoinscher'}</th>
@@ -44,10 +44,10 @@
         <tr>
           <td>{$offer.operator.label|escape:'htmlall'}</td>
           <td>{$offer.service.label|escape:'htmlall'}</td>
-          <td><span id="htIns" {if !$offer.insurance}style="display:none;"{/if}>{$offer.priceHT}&nbsp;€</span> <span id="htNoIns"  {if $offer.insurance}style="display:none;"{/if}>{$offer.priceHTNoIns}&nbsp;€</span></td>
-          <td><span id="ttcIns" {if !$offer.insurance}style="display:none;"{/if}>{$offer.priceTTC}&nbsp;€</span> <span id="ttcNoIns"  {if $offer.insurance}style="display:none;"{/if}>{$offer.priceTTCNoIns}&nbsp;€</span></td>
+          <td><span id="htIns" {if !$offer.insurance}class="hidden"{/if}>{$offer.priceHT}&nbsp;€</span> <span id="htNoIns"  {if $offer.insurance}class="hidden"{/if}>{$offer.priceHTNoIns}&nbsp;€</span></td>
+          <td><span id="ttcIns" {if !$offer.insurance}class="hidden"{/if}>{$offer.priceTTC}&nbsp;€</span> <span id="ttcNoIns"  {if $offer.insurance}class="hidden"{/if}>{$offer.priceTTCNoIns}&nbsp;€</span></td>
           <td>{$offer.collect|escape:'htmlall'}</td>
-          <td>{$offer.delivery|escape:'htmlall'}</td> 
+          <td>{$offer.delivery|escape:'htmlall'}</td>
         </tr>
       </tbody>
     </table>

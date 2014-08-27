@@ -6,6 +6,100 @@
 	z-index: 1000;
 	display: none;
 }
+/* reset bootstrap input : we dont want display block and width 100% anymore */
+.bootstrap .form-control, .bootstrap input[type="text"], .bootstrap input[type="search"], .bootstrap input[type="password"], .bootstrap textarea, .bootstrap select {
+	display: inline;
+	width: initial;
+	padding: 2px;
+}
+
+.relative{
+	position:relative;
+}
+
+.alert_size,
+.default_alert_size{
+  width: 400px;
+}
+
+.text_align_right{
+	text-align:right
+}
+
+.text_align_center{
+	text-align: center;
+}
+
+.floatleft{
+	float: left;
+}
+
+.valignmiddle{
+	vertical-align: middle;
+}
+
+.fullwidth{
+	width: 100%;
+}
+
+.width100
+{
+	width: 100px;
+}
+
+.font-size10{
+  font-size:10px;
+}
+
+.green_color{
+	color: green;
+}
+
+.red_color{
+	color: green;
+}
+
+/* Margin && padding */
+
+.padding5{
+	padding:5px;
+}
+
+.mt10{
+	margin-top: 10px;
+}
+
+.mt20{
+	margin-top:20px;
+}
+
+.ml10{
+	margin-left:10px;
+}
+
+.ml20{
+	margin-left:20px;
+}
+
+.mr5{
+	margin-right: 5px;
+}
+
+.mb15{
+  margin-bottom: 15px;
+}
+
+.bold{
+	font-weight:bold;
+}
+
+.list-style-square{
+	list-style-type:square;
+}
+
+.no-list-style{
+	list-style-type:square;
+}
 
 .presta_1_6{
 	margin:0 0 0 -30px;
@@ -201,6 +295,18 @@ list-style-type:decimal;
 	margin-bottom:0px;
 }
 
+#allOffersTable .error_size{
+  width:400px;
+}
+
+#allOffersTable .table{
+  width:870px;
+}
+
+#tableContent .alert-size{
+	width: 440px;
+}
+
 /*******************************************/
 
 #EMC_top {
@@ -286,6 +392,18 @@ margin: 15px 0px;
 }
 
 /**** Sends ****/
+
+.pickupDaylist{
+	width: 30px;
+}
+.pickupFrom_date{
+	width:70px;
+}
+
+.labelDeliveryDate{
+	width:250px;
+}
+
 #EMC_Menu > ul > li.sends > a {
 	background-position: -96px -48px;
 }
@@ -310,6 +428,10 @@ margin: 15px 0px;
 #EMC_Menu > ul > li.help:hover > a,
 #EMC_Menu > ul > li.help.active > a {
 	background-position: -191px 0px;
+}
+
+#multiParcelRow #errorMultiParcel{
+	width:160px;
 }
 
 /** Fast configuration **/
@@ -560,6 +682,21 @@ min-height:160px;
 	border: 1px solid transparent;
 	padding: 2px 4px;
 	color: blue;
+}
+
+.thousand_box{
+	width:1000px;
+	height:1000px;
+}
+
+.wating_loader_point{
+	margin-top:3px;
+	margin-right:4px;
+}
+
+.list_points_loaded{
+	display:none;
+	min-width:300px;
 }
 
 #emc-infos{

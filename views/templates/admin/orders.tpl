@@ -67,12 +67,12 @@
 
 		{if $ordersTodo > 0 || $massOrderPassed == 1}
 		<div class="panel">
-			<div id="okResult" class="conf" style="display:none;"><span></span></div>
-			<div id="errorResult" class="error" style="display:none;"><span></span></div>
+			<div id="okResult" class="conf hidden"><span></span></div>
+			<div id="errorResult" class="error hidden"><span></span></div>
 			{include file="$massTemplate" all=$ordersTodo done=0 token=$token}
 		</div>
 		{elseif $normalOrderPassed == 1}
-		<div style="float:left;">
+		<div class="clearfix alert alert-success">
 			{l s='order delivery successfully send' mod='envoimoinscher'}
 		</div>
 		{/if}
@@ -83,7 +83,7 @@
 			<p>{l s='list EMC carrier orders pending help' mod='envoimoinscher'}</p>
 			<form id="orderDo1" method="post" action="index.php?controller=AdminEnvoiMoinsCher&option=initOrder&token={$token|escape:'htmlall'}">
 				<div>
-					<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendTop"}</div>
+					<div class="blockButtons {if $ordersTodo > 0}hidden{/if}">{include file="$ordersSendTop"}</div>
 					{include file="$ordersTableTemplate" id="1" orders=$ordersEmc tokenOrder=$tokenOrder type="with"}
 					<input type="hidden" name="type" value="withEmc" />
 					<input type="hidden" name="typeDb" value="1" />
@@ -104,7 +104,7 @@
 			<h2>{l s='order without EMC carrier' mod='envoimoinscher'}</h2>
 			<p>{l s='list no EMC carrier orders pending help' mod='envoimoinscher'}</p>
 			<form id="orderDo2" method="post" action="index.php?controller=AdminEnvoiMoinsCher&option=initOrder&token={$token|escape:'htmlall'}"><div>
-				<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendTop"}</div>
+				<div class="blockButtons {if $ordersTodo > 0}hidden{/if}">{include file="$ordersSendTop"}</div>
 				{include file="$ordersTableTemplate" id="2" orders=$ordersOthers tokenOrder=$tokenOrder type="without"}
 				<input type="hidden" name="type" value="withoutEmc" />
 				<input type="hidden" name="typeDb" value="2" />
@@ -125,7 +125,7 @@
 				<br /><br />{l s='list order help' mod='envoimoinscher'}
 			</p>
 			<form id="orderDo3" method="post" action="index.php?controller=AdminEnvoiMoinsCher&option=initOrder&token={$token|escape:'htmlall'}"><div>
-				<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendTop"}</div>
+				<div class="blockButtons {if $ordersTodo > 0}hidden{/if}">{include file="$ordersSendTop"}</div>
 				{include file="$ordersTableTemplate" id="3" orders=$ordersErrors tokenOrder=$tokenOrder type="error"}
 				<input type="hidden" name="type" value="errors" />
 				<input type="hidden" name="typeDb" value="3" />

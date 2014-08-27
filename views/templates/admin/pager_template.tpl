@@ -23,16 +23,16 @@
  * International Registred Trademark & Property of PrestaShop SA
  *}
 
-<p style="text-align:center;">
+<p class="text_align_center">
 	<span>{l s='Pagination' mod='envoimoinscher'} :</span>
-	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}=1"><img style="vertical-align:middle;" src="../img/admin/list-prev2.gif" /></a>
+	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}=1"><img class="valignmiddle" src="../img/admin/list-prev2.gif" /></a>
 
 	{foreach from=$pager.before key=p item=page}
-	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$page|escape:'htmlall'}" class="action_module" style="margin-right:5px;">{$page}</a>
+	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$page|escape:'htmlall'}" class="action_module mr5">{$page}</a>
 	{/foreach}
-	<span style="font-weight:bold; margin-right:5px;">{$pager.actual|escape:'htmlall'}</span>
+	<span class="bold mr5">{$pager.actual|escape:'htmlall'}</span>
 	{foreach from=$pager.after key=p item=page}
-	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$page|escape:'htmlall'}" class="action_module" style="margin-right:5px;">{$p}</a>
+	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$page|escape:'htmlall'}" class="action_module mr5">{$p}</a>
 	{/foreach}
-	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$pager.last|escape:'htmlall'}"><img style="vertical-align:middle;"  src="../img/admin/list-next2.gif" /></a>
+	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$pager.last|escape:'htmlall'}"><img class="valignmiddle" src="../img/admin/list-next2.gif" /></a>
 </p>

@@ -108,7 +108,7 @@ class EnvoimoinscherOrder
 			'module'       => $this->prestashop_config['wsName'],
 			'version'      => $this->prestashop_config['version'],
 			'type_emballage.emballage' => Configuration::get('EMC_WRAPPING'),
-			'partnership'  => 'prestashop'
+			'partnership'  => $this->model->getPartnership()
 		);
 		$cot_cl->setEnv(Tools::strtolower($this->order_data['config']['EMC_ENV']));
 
@@ -184,10 +184,12 @@ class EnvoimoinscherOrder
 		$quot_info['retrait.pointrelais'] = $this->order_data['order'][0]['emc_operators_code_eo'].'-'.$quot_info['retrait.pointrelais'];
 
 		// set tracking key
-		$shop_domain = Tools::getShopDomain();
 		$tracking_key = sha1($this->order_id.$helper->getValueToToken($quot_info).Tools::getRemoteAddr().time());
 		$url_params = '?key='.$tracking_key.'&order='.$this->order_id;
-		$quot_info['url_tracking'] = 'http://'.$shop_domain.'/'.__PS_BASE_URI__.'modules/envoimoinscher/tracking/tracking.php'.$url_params;
+		$shop_domain = Tools::getShopDomain();
+		$protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
+		$url = Tools::getShopDomain().__PS_BASE_URI__.'modules/envoimoinscher/tracking/tracking.php';
+		$quot_info['url_tracking'] = $protocol.str_replace('//','/',$url).$url_params;
 
 		$order_object['tmp_quote'] = $quot_info;
 		$order_object['tracking_key'] = $tracking_key;

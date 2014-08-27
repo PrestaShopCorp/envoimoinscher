@@ -24,12 +24,12 @@
  * International Registred Trademark & Property of PrestaShop SA
  */
 
-$text_tracking = urldecode(Tools::getValue('text'));
-$local_tracking = urldecode(Tools::getValue('localisation'));
-
 require_once(realpath(dirname(__FILE__).'/../../../config/defines.inc.php'));
 require_once(_PS_MODULE_DIR_.'/../config/config.inc.php');
 require_once(_PS_MODULE_DIR_.'/../init.php');
+
+$text_tracking = urldecode(Tools::getValue('text'));
+$local_tracking = urldecode(Tools::getValue('localisation'));
 
 require_once(_PS_MODULE_DIR_.'/envoimoinscher/envoimoinscher.php');
 

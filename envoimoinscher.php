@@ -137,10 +137,6 @@ class Envoimoinscher extends CarrierModule
 		$this->description = $this->l('Shipping module : 15 carriers with negotiated prices');
 		$this->model = new EnvoimoinscherModel(Db::getInstance(), $this->name);
 		$this->link = new Link();
-
-		/* Backward compatibility */
-		if (_PS_VERSION_ < '1.5')
-			require(_PS_MODULE_DIR_.$this->name.'/backward_compatibility/backward.php');
 	}
 
 	/**
@@ -150,6 +146,16 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function install()
 	{
+		// the module no longer compatible under PS1.5
+		if (version_compare(_PS_VERSION_, '1.5', '<'))
+		{
+		    $this->_errors[] = $this->l('ENVOIMOINSCHER is not compatible with PrestaShop lower than 1.5.');
+			$error  = '[ENVOIMOINSCHER]['.time().'] '.$this->l('ENVOIMOINSCHER is not compatible with PrestaShop lower than 1.5.');
+			Logger::addLog($error);
+		    return false;
+		}
+
+		// if curl's not avaliable, the module wont work
 		if (!extension_loaded('curl'))
 		{
 			$error  = '[ENVOIMOINSCHER]['.time().'] '.$this->l('installation : cannot install the module, curl is not available');
@@ -292,10 +298,7 @@ class Envoimoinscher extends CarrierModule
 			$tables[] = '`'._DB_PREFIX_.$table.'`';
 		$remove_tables = 'DROP TABLE IF EXISTS '.implode(',', $tables);
 
-		$keys = array();
-		foreach ($helper->getConfigKeys() as $key)
-			$keys[] = '"'.$key.'"';
-		$remove_configs = 'DELETE FROM '._DB_PREFIX_.'configuration WHERE name IN('.implode(',', $keys).')';
+		$remove_configs = 'DELETE FROM '._DB_PREFIX_.'configuration WHERE name LIKE "EMC_%"';
 
 		return DB::getInstance()->execute($remove_tables) && DB::getInstance()->execute($remove_configs);
 	}
@@ -1250,15 +1253,15 @@ class Envoimoinscher extends CarrierModule
 		$order_stats = $emc_order->getStats();
 		$helper = new EnvoimoinscherHelper;
 		$data = $this->model->prepareOrderInfo($order_id, $helper->configArray($this->model->getConfigData()));
-		if ($data['is_pp'] == 1)
+		if ($data['is_dp'] == 1)
 		{
 			$url = Envoimoinscher::getMapByOpe($data['code_eo']);
 			$helper->setFields('depot.pointrelais',
 				array('helper' => '<p class="note"><a data-fancybox-type="iframe" target="_blank" href="'.$url.
-				'" style="width:1000px;height:1000px;" class="getParcelPoint action_module fancybox">'.$this->l('Get parcel point').'</a><br/>'.
+				'" class="getParcelPoint action_module fancybox thousand_box">'.$this->l('Get parcel point').'</a><br/>'.
 				$this->l('If the popup do not show up : ').'<a target="_blank" href="'.$url.'">'.$this->l('clic here').'</a></p>'));
 		}
-		else if ($data['is_pp'] == 2)
+		else if ($data['is_dp'] == 2)
 			$helper->setFields('depot.pointrelais',
 				array(
 					'type'   => 'input',
@@ -1374,10 +1377,7 @@ class Envoimoinscher extends CarrierModule
 		if ((float)$weight == 0)
 			$html .= parent::adminDisplayWarning('Your order weight are empty, please check products or enable min weight in the module settings.');
 
-		if (Configuration::get('PS_FORCE_SMARTY_2') != 1)
-			return $html.$this->display(__FILE__, '/views/templates/admin/send.tpl');
-		else
-			return $html.$this->display(__FILE__, '/views/templates/admin/send_13.tpl');
+		return $html.$this->display(__FILE__, '/views/templates/admin/send.tpl');
 	}
 
 	/**
@@ -2087,7 +2087,7 @@ class Envoimoinscher extends CarrierModule
 							$service['desc_es'] != $carrier['label_store'] ||
 							$service['desc_store_es'] != $carrier['description'] ||
 							$service['label_store_es'] != $carrier['description_store'] ||
-							$service['is_parcel_point_es'] != $carrier['parcel_pickup_point'] ||
+							$service['is_parcel_pickup_point_es'] != $carrier['parcel_pickup_point'] ||
 							$service['is_parcel_dropoff_point_es'] != $carrier['parcel_dropoff_point'] ||
 							$service['family_es'] != $carrier['family'] ||
 							$service['type_es'] != $carrier['zone'])
@@ -2159,7 +2159,7 @@ class Envoimoinscher extends CarrierModule
 										 ,desc_store_es = "'.pSQL($service['description']).'"
 										 ,label_store_es = "'.pSQL($service['description_store']).'"
 										 ,price_type_es = 0
-										 ,is_parcel_point_es = '.(int)$service['parcel_pickup_point'].'
+										 ,is_parcel_pickup_point_es = '.(int)$service['parcel_pickup_point'].'
 										 ,is_parcel_dropoff_point_es = '.(int)$service['parcel_dropoff_point'].'
 										 ,family_es = '.(int)$service['family'].'
 										 ,type_es = '.(int)$service['zone'].'
@@ -2331,7 +2331,7 @@ class Envoimoinscher extends CarrierModule
 						(isset($codes[0]) && isset($codes[1]) && (trim($codes[0]) != $ope[0]['emc_operators_code_eo'] || !ctype_alnum(trim($codes[1])))))
 						$correct_code = false;
 				}
-				if (isset($ope[0]) && $ope[0]['is_parcel_point_es'] == 1 &&
+				if (isset($ope[0]) && $ope[0]['is_parcel_pickup_point_es'] == 1 &&
 					!$correct_code && Tools::getValue('ajax') != 'true' &&
 					Tools::getValue('ajax') != 'true')
 				{

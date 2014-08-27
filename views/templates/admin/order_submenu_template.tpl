@@ -24,7 +24,7 @@
  *}
  
 <div id="order-menu" class="bootstrap">
-	<div>
+	<div class="floatleft mb15">
 		<a href="index.php?controller=AdminEnvoiMoinsCher&token={$token}" class="action_module btn btn-{if $actual != 'history'}primary{else}default{/if}">
 			{l s='mass shipping' mod='envoimoinscher'}
 		</a> | 

@@ -695,3 +695,5 @@ $_MODULE['<{envoimoinscher}prestashop>tests_914419aa32f04011357d3b604a86d7eb'] =
 $_MODULE['<{envoimoinscher}prestashop>tests_b54dcee04ab3f47a21dd2ec9f0f87511'] = 'Prix HT €';
 $_MODULE['<{envoimoinscher}prestashop>tests_88b79558b512dceed954ac59a5d6cbfb'] = 'Prix TTC €';
 $_MODULE['<{envoimoinscher}prestashop>tests_b5a7adde1af5c87d7fd797b6245c2a39'] = 'Description';
+
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9fb35c545e67c47ee00a7bde2bf042a3'] = 'EnvoiMoinsCher n\'est pas compatible avec les versions antérieures à Prestashop 1.5.';

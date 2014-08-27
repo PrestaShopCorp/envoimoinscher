@@ -42,12 +42,15 @@
 		<link href="{$emcBaseDir|unescape:'html'}/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
 		<script type="text/javascript" src="{$emcBaseDir|unescape:'html'}/js/jquery.boxfancy.js"></script>
 	{/if}
+
+	<div class="bootstrap">
+
 	{if $alreadyPassed}
-	<div class="alert error" style="width:400px;">{l s='shipment already send : Contact EMC for more info' mod='envoimoinscher'}
+	<div class="alert alert-danger ">{l s='shipment already send : Contact EMC for more info' mod='envoimoinscher'}
 	</div>
 	{else}
 	{if isset($showErrorMessage) && $showErrorMessage == 1 && $errorType == "order"}
-	<div class="alert error" style="width:400px;">{l s='order shipment failed :' mod='envoimoinscher'}
+	<div class="alert alert-danger ">{l s='order shipment failed :' mod='envoimoinscher'}
 		{$errorMessage|escape:'htmlall'}
 	</div>
 	{/if}
@@ -67,7 +70,7 @@
 		<div id="notFoundOffer"></div><!-- notFoundOffer-->
 		<br />
 		{elseif !$isFound}
-		<div class="alert error" style="width:400px;">
+		<div class="alert alert-danger ">
 			{if !$isEMCCarrier}
 				{l s='order offer not EMC carrier offer : select EMC offer' mod='envoimoinscher'}
 			{else}
@@ -75,9 +78,9 @@
 			{/if}
 		</div>
 		<p><b>{l s='client selected offer :' mod='envoimoinscher'} </b> {$orderInfo.name|escape:'htmlall'}</p>
-		<p style="margin-top:20px;"><b>{l s='EMC offers :' mod='envoimoinscher'}</b></p>
+		<p class="mt20"><b>{l s='EMC offers :' mod='envoimoinscher'}</b></p>
 		{if isset($showErrorMessage) && $showErrorMessage == 1 && $errorType == "quote"}
-		<div class="alert error" style="width:400px;">
+		<div class="alert alert-danger ">
 			{l s='no EMC offer found : error :' mod='envoimoinscher'}
 			{$errorMessage|escape:'htmlall'}
 			{if $orderTodo <= 1}
@@ -90,7 +93,7 @@
 		{/if}
 
 		<p><b>{l s='Recipient Information' mod='envoimoinscher'}</b></p>
-		<table class="table" cellspacing="0" style="width: 100%;">
+		<table class="table fullwidth" cellspacing="0">
 			<thead>
 				<tr>
 					<th>{l s='Name' mod='envoimoinscher'}</th>
@@ -111,10 +114,10 @@
 			</tbody>
 		</table>
 		{if ($isEMCCarrier && $isFound) || (!$isEMCCarrier && !$isFound && $offersNb == 0)}<p><b>></b> <a href="#" id="changeDestData" class="action_module">{l s='Change recipient information' mod='envoimoinscher'}</a></p>{/if}
-	<div style="display:none;position:relative;" id="messageSending" class="box-left">
+	<div id="messageSending" class="hidden relative box-left">
 		<p>{l s='Your shipment is in progress, please wait.' mod='envoimoinscher'}</p>
 		<p>{l s='If your page is not charging, or the order is not shipped' mod='envoimoinscher'} <u>{l s='without you receiving an error' mod='envoimoinscher'}</u>, {l s='here are the steps to follow' mod='envoimoinscher'} :</p>
-		<ul style="margin-left:10px;">
+		<ul class="ml10">
 			<li> {l s='Connect to your account on' mod='envoimoinscher'} <a target="_blank" href="//www.envoimoinscher.com">www.envoimoinscher.com</a> {l s='and verify that the order has not been taken into account on our servers.' mod='envoimoinscher'}</li>
 			<li> {l s='If your order has been taken into account, do not return your order, please contact customer service which will help you to regularize the status of your package on Prestashop.' mod='envoimoinscher'}</li>
 		</ul>
@@ -125,14 +128,14 @@
 	<div id="foundBlock" class="box-right">
 		<p><b>{l s='Required informations' mod='envoimoinscher'}</b></p>
 		<form method="post" action="index.php?controller=AdminEnvoiMoinsCher&id_order={$orderId}&option={if !$isEMCCarrier && !$isFound}editAddress{else}command{/if}&token={$token}" id="mandatory_form">
-			<table class="table formTable" cellspacing="0" style="width: 100%;">
+			<table class="table formTable fullwidth" cellspacing="0">
 				{if $isFound}
 				{if $multiParcel == 1}
 				<tr id="multiParcelRow">
 					<th><label for="multiParcel">{l s='Multiparcel' mod='envoimoinscher'}</label></th>
 					<td class="paddingTableTd">
 						<input type="text" name="multiParcel" id="multiParcel" value="{$parcelsLength|escape:'htmlall'}" />
-						<div id="errorMultiParcel" class="alert error" style="width:160px; margin-top:10px; display:none;"><img src="{$adminImg|escape:'htmlall'}/forbbiden.gif" alt="nok" />{l s='Multiparcel error explications' mod='envoimoinscher'}
+						<div id="errorMultiParcel" class="alert alert-danger hidden mt10"><img src="{$adminImg|escape:'htmlall'}/forbbiden.gif" alt="nok" />{l s='Multiparcel error explications' mod='envoimoinscher'}
 						</div>
 					</td>
 				</tr>
@@ -259,7 +262,7 @@
 						</tr>
 						{foreach from=$offer.insuranceHtml key=m item=mandatory}
 						{if count($mandatory) > 0 && $mandatory.type != "hidden"}
-						<tr class="assuTd" {if !$offer.insurance}style="display:none;"{/if}><th>{$mandatory.label}
+						<tr class="assuTd {if !$offer.insurance}hidden{/if}"><th>{$mandatory.label}
 						</th><td class="paddingTableTd">{$mandatory.field|unescape:'html'}
 						{$mandatory.helper|unescape:'html'}
 					</td>
@@ -270,7 +273,7 @@
 				{/foreach}
 				{/if}
 				<tr>
-					<td style="text-align:center;" colspan="2">
+					<td class="text_align_center" colspan="2">
 						<input type="hidden" name="opeCode" id="opeCode" value="{if isset($offer.operator.code)}{$offer.operator.code}{/if}" />
 						<input type="hidden" name="dest_country" id="dest_country" value="{$deliveryInfo.pays|escape:'htmlall'}" />
 						<input type="hidden" name="exp_pays" id="exp_pays" value="{$shipperInfo.country|escape:'htmlall'}" />
@@ -284,4 +287,5 @@
 	</div>  
 	{/if}
 	{/if}
+	</div>
 	<div class="clear"></div>

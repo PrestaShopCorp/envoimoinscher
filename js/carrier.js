@@ -204,9 +204,9 @@ function lookForPoints(ref)
 			itemParent = ref.parent();
 		}
     itemParent.append(
-      '<div id="loaderPoints'+value+idAddress+'" style="padding:5px;">'+
-      '<br /><img src="'+loaderSrc+'" alt="" style="margin-top:3px; margin-right:4px;" /> Veuillez patienter...'+
-      '</div><div id="points'+value+idAddress+'" class="pointsUl" style="display:none; padding:5px;min-width:300px;">'+
+      '<div id="loaderPoints'+value+idAddress+'" class="padding5">'+
+      '<br /><img src="'+loaderSrc+'" alt="" class="wating_loader_point" /> Veuillez patienter...'+
+      '</div><div id="points'+value+idAddress+'" class="pointsUl padding5 list_points_loaded">'+
       '</div>');
     selectPoint(value,  ref , 'MONR', idAddress);
 		alert(carrier_translation.before_continue_select_pickup_point);

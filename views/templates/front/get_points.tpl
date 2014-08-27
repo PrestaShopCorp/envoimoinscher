@@ -24,7 +24,7 @@
  *}
 
 {foreach from=$points item=point}
-	<li style="list-style:none;">
+	<li class="no-list-style">
 		<input type="radio" id="{$point.id|escape:'htmlall'}" name="{$point.input_name|escape:'htmlall'}" value="{$point.code|escape:'htmlall'}"
 		 {if $point.checked}checked="checked" {/if}class="{$point.class|escape:'htmlall'}" onclick="{$point.js|unescape:'html'}" />
 		<b>{$point.name}</b><br /><small>({$point.address|escape:'htmlall'}, {$point.zipcode|escape:'htmlall'} {$point.city|escape:'htmlall'})</small>

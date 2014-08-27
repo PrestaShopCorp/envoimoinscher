@@ -41,16 +41,14 @@
 						<label for="offer{$offer.id_es|escape:'htmlall'}">
 							{$offer.name_eo|escape:'htmlall'} (<b>{$offer.label_es|escape:'htmlall'}</b>)
 						</label>
-						{if $offer.is_parcel_point_es == 1 && in_array($offer.id_eo, $operators) == false}
-							{if $offer.is_parcel_dropoff_point_es == 1}
-								<div class="parcelPoint" {if $offer.id_carrier == ''} style="display:none;"{/if}>
-									<label for="pp_{$offer.id_es|escape:'htmlall'}">{l s='Deposit parcel point:' mod='envoimoinscher'}</label>
-									<input type="text" name="parcel_point[{$offer.offerCode}]" id="pp_{$offer.id_es}" value="{$defaultPP}" placeholder="{l s='Parcel point code' mod='envoimoinscher'}" {if $disableServices} disabled="disabled"{/if}/><br />
-									<a data-fancybox-type="iframe" href="{Envoimoinscher::getMapByOpe($offer.code_eo)|escape:'htmlall'}" class="getParcelPoint fancybox">{l s='Get parcel point' mod='envoimoinscher'}</a>
-								</div>
-							{else}
-								<input type="hidden" name="parcel_point[{$offer.offerCode}]" id="pp_{$offer.id_es}" value="POST" {if $disableServices} disabled="disabled"{/if}/><br />
-							{/if}
+						{if $offer.is_parcel_dropoff_point_es == 1 && in_array($offer.id_eo, $operators) == false}
+							<div class="parcelPoint {if $offer.id_carrier == ''} hidden{/if}">
+								<label for="pp_{$offer.id_es|escape:'htmlall'}">{l s='Deposit parcel point:' mod='envoimoinscher'}</label>
+								<input type="text" name="parcel_point[{$offer.offerCode}]" id="pp_{$offer.id_es}" value="{$defaultPP}" placeholder="{l s='Parcel point code' mod='envoimoinscher'}" {if $disableServices} disabled="disabled"{/if}/><br />
+								<a data-fancybox-type="iframe" href="{Envoimoinscher::getMapByOpe($offer.code_eo)|escape:'htmlall'}" class="getParcelPoint fancybox">{l s='Get parcel point' mod='envoimoinscher'}</a>
+							</div>
+						{else}
+							<input type="hidden" name="parcel_point[{$offer.offerCode}]" id="pp_{$offer.id_es}" value="POST" {if $disableServices} disabled="disabled"{/if}/><br />
 						{/if}
 					</td>
 					<td class="price">
@@ -59,7 +57,7 @@
 								{l s='Disabled for %s' mod='envoimoinscher' sprintf={$nameCategory|unescape:'html'}}
 							</div>
 						{/if}
-						<div id="field2-offer{$offer.id_es}" {if $offer.id_carrier == '' || in_array($offer.id_eo, $operators)} style="display:none;"{/if}>
+						<div id="field2-offer{$offer.id_es}" {if $offer.id_carrier == '' || in_array($offer.id_eo, $operators)} class="hidden"{/if}>
 							{foreach from=$pricing key=p item=price}
 								<div class="clear">
 									<label for="off_{$p|escape:'htmlall'}_{$offer.id_es|escape:'htmlall'}">

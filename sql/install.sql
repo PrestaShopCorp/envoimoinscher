@@ -254,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_services` (
 	`desc_store_es` varchar(150) NOT NULL,
 	`label_store_es` varchar(100) NOT NULL,
 	`price_type_es` int(1) NOT NULL,
-	`is_parcel_point_es` int(1) NOT NULL,
+	`is_parcel_pickup_point_es` int(1) NOT NULL,
 	`is_parcel_dropoff_point_es` int(1) NOT NULL,
 	`family_es` int(1) NOT NULL,
 	`type_es` int(1) NOT NULL,
@@ -265,7 +265,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_services` (
 	KEY `code_es` (`code_es`)
 ) DEFAULT CHARSET=utf8;
 -- REQUEST --
-INSERT INTO `{PREFIXE}emc_services` (`id_es`, `code_es`, `emc_operators_code_eo`, `label_es`, `desc_es`, `desc_store_es`, `label_store_es`, `price_type_es`, `is_parcel_point_es`, `is_parcel_dropoff_point_es`, `family_es`, `type_es`, `pricing_es`) VALUES
+INSERT INTO `{PREFIXE}emc_services` (`id_es`, `code_es`, `emc_operators_code_eo`, `label_es`, `desc_es`, `desc_store_es`, `label_store_es`, `price_type_es`, `is_parcel_pickup_point_es`, `is_parcel_dropoff_point_es`, `family_es`, `type_es`, `pricing_es`) VALUES
 (1, "RelaisColis", "SOGP", "Relais Colis eco", "Dépôt en Relais Colis - Livraison en Relais Colis en 10 jours, en France", "Livraison en Relais Colis en 10 jours", "Relais Colis®", 0, 1, 1, 1, 1, 1),
 (2, "Standard", "UPSE", "UPS Standard", "Livraison à domicile en 24h à 72h (avant 19h), en France et dans les pays européens", "Livraison à domicile en 24h à 72h (avant 19h)", "UPS Standard", 0, 0, 0, 2, 2, 1),
 (3, "ExpressSaver", "UPSE", "UPS Express Saver", "Livraison à domicile en 72h  (avant 19h), à l\'international  (hors délai de douanes)", "Livraison à domicile en 72h (avant 19h, hors délai de douanes)", "UPS Express Saver", 0, 0, 0, 2, 2, 1),
@@ -288,7 +288,11 @@ INSERT INTO `{PREFIXE}emc_services` (`id_es`, `code_es`, `emc_operators_code_eo`
 (20, "EASY", "COPR", "Colis Privé EASY", "Livraison à domicile en 2 à 3 jours. En cas d\'absence, 2nde présentation ou dépôt en relais. <b>Offre sous conditions de volume.</b>", "Livraison à domicile en 2 à 3 jours. En cas d\'absence, 2nde présentation ou dépôt en relais Kiala", "Colis Privé EASY", 0, 0, 0, 1, 1, 1),
 (21, "Chrono18", "CHRP", "Chrono18", "Dépôt en bureau de poste - Livraison express à domicile, le lendemain (avant 18h), en France. Dépôt en bureau de poste si la livraison rate.", "Livraison express à domicile, le lendemain (avant 18h). Si la livraison rate, dépôt en bureau de poste", "Chrono18", 0, 0, 0, 1, 1, 1),
 (22, "ColissimoAccess", "POFR", "La Poste Colissimo Access France", "Délai indicatif de 48h en jours ouvrables pour les envois en France métropolitaine. Remise sans signature.", "Livraison à domicile en 48h", "La Poste Colissimo Access France. Remise sans signature.", 0, 0, 0, 1, 1, 1),
-(23, "ColissimoExpert", "POFR", "La Poste Colissimo Expert France", "Délai indicatif de 48h en jours ouvrables pour les envois en France métropolitaine. Remise contre signature.", "Livraison à domicile en 48h", "La Poste Colissimo Expert France. Remise contre signature.", 0, 0, 0, 1, 1, 1);
+(23, "ColissimoExpert", "POFR", "La Poste Colissimo Expert France", "Délai indicatif de 48h en jours ouvrables pour les envois en France métropolitaine. Remise contre signature.", "Livraison à domicile en 48h", "La Poste Colissimo Expert France. Remise contre signature.", 0, 0, 0, 1, 1, 1),
+(25, 'DomicileEurope', 'MONR', 'Domicile Europe', 'Livraison à domicile en 4 à 6 jours, dans certains pays d\'Europe', 'Livraison à domicile en 4 à 6 jours', 'Mondial Relay Domicile Europe', 0, 0, 1, 2, 2, 1),
+(26,	'StandardAP',	'UPSE',	'UPS Standard Access Point',	'Livraison en point relais en 24h à 72h (avant 19h), en France et dans les pays européens',	'Livraison en point relais en 24h à 72h (avant 19h)',	'UPS Standard Access Point',	0,	1,	0,	2,	2,	1);
+
+;
 -- REQUEST --
 DROP TABLE IF EXISTS `{PREFIXE}emc_operators_categories`;
 -- REQUEST --

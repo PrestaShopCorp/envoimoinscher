@@ -3,7 +3,7 @@
 	<name>envoimoinscher</name>
 	<displayName><![CDATA[EnvoiMoinsCher]]></displayName>
 	<version><![CDATA[3.1.4]]></version>
-	<description><![CDATA[Shipping module : 21 carriers with negotiated prices]]></description>
+	<description><![CDATA[Shipping plugin : 15 negociated carriers]]></description>
 	<author><![CDATA[EnvoiMoinsCher]]></author>
 	<tab><![CDATA[shipping_logistics]]></tab>
 	<is_configurable>1</is_configurable>
