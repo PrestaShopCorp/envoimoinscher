@@ -45,7 +45,7 @@ $(document).ready(function() {
   });
 
   $('#changeDestData').click(function() {
-    $('.changeDest').show(); 
+    $('.changeDest').removeClass("hidden"); 
     return false;
   });
   		
@@ -65,7 +65,7 @@ $(document).ready(function() {
 		$("#messageSending").css("left",""+left+"px");
 		$("#messageSending").width(width);
 		$("#messageSending").css("top",""+($("#changeDestData").offset().top + 40 ) +"px");
-		$("#messageSending").css("display","block");
+		$("#messageSending").removeClass("hidden");
 	});
 			
 	$('#submitForm').click(function() {
@@ -170,12 +170,12 @@ function makeParcels()
 {
   modified = false;
   $(".appendRowParcels").remove();
-  $("#errorMultiParcel").hide();
+  $("#errorMultiParcel").addClass("hidden");
   if($("#multiParcel").val() == "") return false;
   var nr = parseInt($("#multiParcel").val());
   if(""+nr == "NaN" || nr < 2)
   {
-    $("#errorMultiParcel").show();
+    $("#errorMultiParcel").removeClass("hidden");
     return false;
   }
   $("#multiParcel").val(nr);
@@ -214,22 +214,19 @@ function modifWeight()
 
 function modifInsurance(ref)
 {
-  var htIns = "none";
-  var ttcIns = "none";
-  var htNoIns = "block";
-  var ttcNoIns = "block";
-  var assuTd = "none";
   if(typeof($(ref).attr("checked")) != "undefined")
-  {
-    htIns = "block";
-    ttcIns = "block";
-    htNoIns = "none";
-    ttcNoIns = "none"
-    assuTd = ""
+  {			
+		$("#htIns").removeClass("hidden");
+		$("#ttcIns").removeClass("hidden");
+		$("#htNoIns").addClass("hidden");
+		$("#ttcNoIns").addClass("hidden");
+		$(".assuTd").removeClass("hidden");
   }
-  $("#htIns").css("display", htIns);
-  $("#ttcIns").css("display", ttcIns);
-  $("#htNoIns").css("display", htNoIns);
-  $("#ttcNoIns").css("display", ttcNoIns);
-  $(".assuTd").css("display", assuTd);
+	else{
+		$("#htIns").addClass("hidden");
+		$("#ttcIns").addClass("hidden");
+		$("#htNoIns").removeClass("hidden");
+		$("#ttcNoIns").removeClass("hidden");
+		$(".assuTd").addClass("hidden");	
+	}
 }

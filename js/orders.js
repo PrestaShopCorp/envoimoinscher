@@ -71,8 +71,8 @@ function doLabelRequest(index)
           $('#selectOrDeselectAll1').removeClass('deselectAll').addClass('selectAll')
           // put label's url into orders table
           $("#labelgen"+ordersIds[index]).remove(); 
-          $("#label"+ordersIds[index]).show(); 
-          $("#checkbox-"+ordersIds[index]).show(); 
+          $("#label"+ordersIds[index]).removeClass("hidden"); 
+          $("#checkbox-"+ordersIds[index]).removeClass("hidden"); 
           // $("#label"+ordersIds[index] + " a").attr("href", res.labelUrl); 
           ordersIds.splice(index, 1);
           noLabels.splice(index, 1);

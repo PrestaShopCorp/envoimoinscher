@@ -270,6 +270,8 @@ class EnvoimoinscherOrder
 			$this->order_data['employee'] = (int)$cookie->id_employee;
 			$this->model->insertOrder($this->order_id, $this->order_data, $order_object['object']->order, $_POST);
 			// increment 'ok'
+			if(!isset($this->stats['ok']))
+				$this->stats['ok'] = 0;
 			$this->stats['ok']++;
 		}
 		else

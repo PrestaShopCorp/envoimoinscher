@@ -25,7 +25,7 @@
 
 <div id="tableContent" class="bootstrap">
     {if isset($modifPrice) && $modifPrice == "1"}
-    <div class="alert alert-success alert-size">
+    <div class="alert alert-success alert-size conf">
     {l s='Following your modifications, the price has been updated. To trigger the dispatch with the new price, press a second time on the Send button.' mod='envoimoinscher'}
     </div>
     {/if}

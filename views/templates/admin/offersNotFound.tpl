@@ -25,11 +25,11 @@
 
 <div id="allOffersTable">
 {if isset($isajax) && $isajax == "1" && !$isEMCCarrier}
-  <div class="alert alert-danger error_size">{l s='Carrier not available anymore. You can select a new one (inform your customer about the change) or ' mod='envoimoinscher'}
+  <div class="alert alert-danger error_size error">{l s='Carrier not available anymore. You can select a new one (inform your customer about the change) or ' mod='envoimoinscher'}
   <a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$orderid|escape:'htmlall'}&option=send&token={$token|escape:'htmlall'}" class="action_module">{l s='cancel this weight change' mod='envoimoinscher'}</a>.
   </div>
 {elseif isset($modifPrice) && $modifPrice == "1"}
-<div class="alert alert-danger error_size">{l s='No carrier found for new caracteristics of the dispatch.' mod='envoimoinscher'}
+<div class="alert alert-danger error_size error">{l s='No carrier found for new caracteristics of the dispatch.' mod='envoimoinscher'}
 </div>
 {/if}
 {if $offersNb > 0}

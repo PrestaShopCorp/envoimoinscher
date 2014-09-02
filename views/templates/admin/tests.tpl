@@ -81,7 +81,7 @@
   </p>
   <div id="offers">
   {if $isError == 1}
-    <div class="bootstrap"><div class="alert  alert-danger">{$errorMsg|escape:'htmlall'}</div></div>
+    <div class="bootstrap"><div class="alert alert-danger error">{$errorMsg|escape:'htmlall'}</div></div>
   {/if} 
   {if $isError == 0 && $offers}
     <table class="table"> 

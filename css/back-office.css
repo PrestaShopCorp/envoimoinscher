@@ -638,7 +638,7 @@ min-height:160px;
 
 #menu_tabs {
 	position: relative;
-	z-index: 1000;
+	z-index: 100;
 	margin-bottom:5px;
 }
 

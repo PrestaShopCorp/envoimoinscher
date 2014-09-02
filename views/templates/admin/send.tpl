@@ -46,11 +46,11 @@
 	<div class="bootstrap">
 
 	{if $alreadyPassed}
-	<div class="alert alert-danger ">{l s='shipment already send : Contact EMC for more info' mod='envoimoinscher'}
+	<div class="alert alert-danger error">{l s='shipment already send : Contact EMC for more info' mod='envoimoinscher'}
 	</div>
 	{else}
 	{if isset($showErrorMessage) && $showErrorMessage == 1 && $errorType == "order"}
-	<div class="alert alert-danger ">{l s='order shipment failed :' mod='envoimoinscher'}
+	<div class="alert alert-danger error">{l s='order shipment failed :' mod='envoimoinscher'}
 		{$errorMessage|escape:'htmlall'}
 	</div>
 	{/if}
@@ -70,7 +70,7 @@
 		<div id="notFoundOffer"></div><!-- notFoundOffer-->
 		<br />
 		{elseif !$isFound}
-		<div class="alert alert-danger ">
+		<div class="alert alert-danger error">
 			{if !$isEMCCarrier}
 				{l s='order offer not EMC carrier offer : select EMC offer' mod='envoimoinscher'}
 			{else}
@@ -135,7 +135,7 @@
 					<th><label for="multiParcel">{l s='Multiparcel' mod='envoimoinscher'}</label></th>
 					<td class="paddingTableTd">
 						<input type="text" name="multiParcel" id="multiParcel" value="{$parcelsLength|escape:'htmlall'}" />
-						<div id="errorMultiParcel" class="alert alert-danger hidden mt10"><img src="{$adminImg|escape:'htmlall'}/forbbiden.gif" alt="nok" />{l s='Multiparcel error explications' mod='envoimoinscher'}
+						<div id="errorMultiParcel" class="alert alert-danger error hidden mt10"><img src="{$adminImg|escape:'htmlall'}/forbbiden.gif" alt="nok" />{l s='Multiparcel error explications' mod='envoimoinscher'}
 						</div>
 					</td>
 				</tr>

@@ -289,7 +289,7 @@ INSERT INTO `{PREFIXE}emc_services` (`id_es`, `code_es`, `emc_operators_code_eo`
 (21, "Chrono18", "CHRP", "Chrono18", "Dépôt en bureau de poste - Livraison express à domicile, le lendemain (avant 18h), en France. Dépôt en bureau de poste si la livraison rate.", "Livraison express à domicile, le lendemain (avant 18h). Si la livraison rate, dépôt en bureau de poste", "Chrono18", 0, 0, 0, 1, 1, 1),
 (22, "ColissimoAccess", "POFR", "La Poste Colissimo Access France", "Délai indicatif de 48h en jours ouvrables pour les envois en France métropolitaine. Remise sans signature.", "Livraison à domicile en 48h", "La Poste Colissimo Access France. Remise sans signature.", 0, 0, 0, 1, 1, 1),
 (23, "ColissimoExpert", "POFR", "La Poste Colissimo Expert France", "Délai indicatif de 48h en jours ouvrables pour les envois en France métropolitaine. Remise contre signature.", "Livraison à domicile en 48h", "La Poste Colissimo Expert France. Remise contre signature.", 0, 0, 0, 1, 1, 1),
-(25, 'DomicileEurope', 'MONR', 'Domicile Europe', 'Livraison à domicile en 4 à 6 jours, dans certains pays d\'Europe', 'Livraison à domicile en 4 à 6 jours', 'Mondial Relay Domicile Europe', 0, 0, 1, 2, 2, 1),
+(25, 'DomicileEurope', 'MONR', 'Domicile Europe', 'Livraison à domicile en 4 à 6 jours, dans certains pays d\'Europe', 'Livraison à domicile en 4 à 6 jours', 'Mondial Relay Domicile Europe', 0, 0, 1, 1, 2, 1),
 (26,	'StandardAP',	'UPSE',	'UPS Standard Access Point',	'Livraison en point relais en 24h à 72h (avant 19h), en France et dans les pays européens',	'Livraison en point relais en 24h à 72h (avant 19h)',	'UPS Standard Access Point',	0,	1,	0,	2,	2,	1);
 
 ;

@@ -640,8 +640,8 @@ class EnvoimoinscherModel
 		$proforma = $this->makeProforma($row);
 		// put default informa
 
-		if (isset($config['EMC_PP_'.Tools::strtoupper($row[0]['offerCode'])]))
-			$default_point = $config['EMC_PP_'.Tools::strtoupper($row[0]['offerCode'])];
+		if (isset($config['EMC_PP_'.Tools::strtoupper(substr($row[0]['offerCode'], -25))]))
+			$default_point = $config['EMC_PP_'.Tools::strtoupper(substr($row[0]['offerCode'], -25))];
 		else
 			$default_point = null;
 
@@ -886,7 +886,7 @@ class EnvoimoinscherModel
 			'date_order_eor'                 => date('Y-m-d H:i:s'),
 			'date_collect_eor'               => $date_collect_eor,
 			'date_del_eor'                   => $date_del_eor,
-			'tracking_eor'                   => pSQL($data['trackingKey']),
+			'tracking_eor'                   => pSQL( (isset($data['trackingKey']) ? $data['trackingKey'] : null ) ),
 			'parcels_eor'                    => count($data['parcels'])
 			);
 		$this->db->autoExecute(_DB_PREFIX_.'emc_orders', $order_data, 'REPLACE');

@@ -25,7 +25,7 @@
 
 <h2>{l s='EnvoiMoinsCher : Update' mod='envoimoinscher'}</h2> 
   {if $error}
-    <div class="bootstrap"><div class="alert alert-danger">{l s='The update was not properly executed.' mod='envoimoinscher'}</div></div>
+    <div class="bootstrap"><div class="alert alert-danger error">{l s='The update was not properly executed.' mod='envoimoinscher'}</div></div>
   {else}
     <div class="bootstrap"><div class="conf alert alert-success">{l s='The update has been properly executed.' mod='envoimoinscher'}</div></div>
   {/if}

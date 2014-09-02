@@ -128,9 +128,9 @@ class Envoimoinscher extends CarrierModule
 		);
 		$this->name = 'envoimoinscher';
 		$this->tab = 'shipping_logistics';
-		$this->version = '3.1.4';
+		$this->version = '3.1.5';
 		$this->author = 'EnvoiMoinsCher';
-		$this->local_version = '3.1.4';
+		$this->local_version = '3.1.5';
 		parent::__construct();
 		$this->page = basename(__FILE__, '.php');
 		$this->displayName = 'EnvoiMoinsCher';
@@ -1259,10 +1259,10 @@ class Envoimoinscher extends CarrierModule
 		$data = $this->model->prepareOrderInfo($order_id, $helper->configArray($this->model->getConfigData()));
 		if ($data['is_dp'] == 1)
 		{
-			$url = Envoimoinscher::getMapByOpe($data['code_eo'], substr($data['order'][0]['offerCode'],5), $data['config']['EMC_CITY'], $data['config']['EMC_POSTALCODE'], $data['config']['EMC_ADDRESS'], 'FR');
+			$url = Envoimoinscher::getMapByOpe($data['code_eo']);
 			$helper->setFields('depot.pointrelais',
 				array('helper' => '<p class="note"><a data-fancybox-type="iframe" target="_blank" href="'.$url.
-				'" style="width:1000px;height:1000px;" class="getParcelPoint action_module fancybox">'.$this->l('Get parcel point').'</a><br/>'.
+				'" class="getParcelPoint action_module fancybox thousand_box">'.$this->l('Get parcel point').'</a><br/>'.
 				$this->l('If the popup do not show up : ').'<a target="_blank" href="'.$url.'">'.$this->l('clic here').'</a></p>'));
 		}
 		else if ($data['is_dp'] == 2)
@@ -1275,7 +1275,6 @@ class Envoimoinscher extends CarrierModule
 			);
 		$url = Envoimoinscher::getMapByOpe(
 			$data['code_eo'],
-			substr($data['order'][0]['offerCode'],5),
 			urlencode($data['delivery']['ville']),
 			$data['delivery']['code_postal'],
 			urlencode($data['delivery']['adresse']), $data['order'][0]['iso_code']);
@@ -3742,10 +3741,9 @@ class Envoimoinscher extends CarrierModule
 	{
 		$parcel_points = Tools::getValue('parcel_point');
 
-		// fetch the 32 last char -- PS config field accept <= 32 char in PS 1.5
 		if (count($parcel_points) > 0)
 			foreach ($parcel_points as $carrier => $code)
-				Configuration::updateValue('EMC_PP_'.Tools::strtoupper(substr($carrier, -25)), $code);
+				Configuration::updateValue('EMC_PP_'.Tools::strtoupper($carrier), $code);
 	}
 
 	/**
@@ -4021,11 +4019,27 @@ class Envoimoinscher extends CarrierModule
 		return '';
 	}
 
-	public static function getMapByOpe($ope, $srv = false, $city = false, $postalcode = false, $address = false, $country = false)	{
-		
-					$link = '//www.envoimoinscher.com/choix-relais.html?cp='.($postalcode ? $postalcode : Configuration::get('EMC_POSTALCODE')).
-							'&ville='.urlencode(($city ? $city : Configuration::get('EMC_CITY'))).'&country='.($country ? $country : 'FR').'&srv='.$srv.'&ope='.$ope;
-		
+	public static function getMapByOpe($ope, $city = false, $postalcode = false, $address = false, $pays = false)
+	{
+		switch ($ope)
+		{
+			case 'MONR':
+				$link = '//www.envoimoinscher.com/choix-relais.html?monrCp='.
+								($postalcode ? $postalcode : Configuration::get('EMC_POSTALCODE')).
+								'&monrVille='.urlencode(($city ? $city : Configuration::get('EMC_CITY'))).
+								'&monrPays='.($pays ? $pays : 'FR').'&poids=3.0&ope='.$ope.'&noSelect=false&mapDiv=loadMapexpe&list=listexpe&map=expe&isPrestashop=true';
+				break;
+			case 'SOGP':
+				$link = '//www.envoimoinscher.com/choix-relais.html?fcp='.
+								($postalcode ? $postalcode : Configuration::get('EMC_POSTALCODE')).
+								'&fadr='.urlencode(($address ? $address : Configuration::get('EMC_ADDRESS	'))).
+								'&fvil='.urlencode(($city ? $city : Configuration::get('EMC_CITY'))).'&TypeLiv=REL&type=Exp&isPrestashop=true';
+				break;
+			case 'CHRP':
+			default:
+				$link = '#';
+				break;
+		}
 		return $link;
 	}
 }

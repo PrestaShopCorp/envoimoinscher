@@ -47,7 +47,7 @@
 			{foreach from=$orders key=o item=order}
 				<tr id="row-{$order.idOrder|escape:'htmlall'}">
 					<td class="text-center">
-						<span id="checkbox-{$order.idOrder} {if $order.generated_ed == "0"}hidden{/if}"><input type="checkbox" checked="checked" name="orders[]" id="order-{$order.idOrder}" value="{$order.idOrder}" /></span>
+						<span id="checkbox-{$order.idOrder}" class="{if $order.generated_ed == "0"}hidden{/if}"><input type="checkbox" checked="checked" name="orders[]" id="order-{$order.idOrder}" value="{$order.idOrder}" /></span>
 					</td>
 					<td class="text-center">{$order.idOrder|escape:'htmlall'}</td>
 					<td>{$order.firstNameShort|escape:'htmlall'}. {$order.lastname|escape:'htmlall'}</td>
@@ -78,7 +78,7 @@
 						{/if}
 						</span>
 						{/if}  
-						<span id="label{$order.idOrder} {if $order.generated_ed == "0"}hidden{/if}">
+						<span id="label{$order.idOrder}" class="{if $order.generated_ed == "0"}hidden{/if}">
 							<a href="{if $order.parcels_eor > 1}index.php?controller=AdminEnvoiMoinsCher&option=download&token={$token}&order={$order.idOrder}{else}{$order.link_ed}{/if}" class="action_module btn btn-default" target="_blank">
 							{if $order.parcels_eor > 1}
 								{l s='download slips' mod='envoimoinscher'}

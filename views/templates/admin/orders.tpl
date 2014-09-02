@@ -72,7 +72,7 @@
 			{include file="$massTemplate" all=$ordersTodo done=0 token=$token}
 		</div>
 		{elseif $normalOrderPassed == 1}
-		<div class="clearfix alert alert-success">
+		<div class="clearfix alert alert-success conf">
 			{l s='order delivery successfully send' mod='envoimoinscher'}
 		</div>
 		{/if}

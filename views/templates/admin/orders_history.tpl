@@ -62,7 +62,7 @@
 		<div class="clearfix"></div>
 
 		{if $errorLabels == 1}
-		<div class="alert alert-warning">{l s='please select slips to download' mod='envoimoinscher'}</div>
+		<div class="alert alert-warning warn">{l s='please select slips to download' mod='envoimoinscher'}</div>
 		{/if}
 
 

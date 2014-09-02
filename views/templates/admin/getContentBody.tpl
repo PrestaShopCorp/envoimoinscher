@@ -32,7 +32,7 @@
 	 
 	{if isset($missedValues) && count($missedValues)}
 		<div class="bootstrap">
-			<div class="alert alert-danger">
+			<div class="alert alert-danger error">
 			{l s='missing fields info list' mod='envoimoinscher'}
 			{foreach from=$missedValues key=m item=missed}
 				<br />- {$missed|escape:'htmlall'}
@@ -42,12 +42,12 @@
 	{/if}
 	{if $EMC_config.EMC_USER != "" && $EMC_config.EMC_USER >= 2 && ($EMC_config.EMC_KEY == '' || $EMC_config.EMC_LOGIN == '' || $EMC_config.EMC_PASS == '')}
 		<div class="bootstrap">
-			<div class="alert alert-danger">{l s='You are using the wrong credentials. The module will not work.' mod='envoimoinscher'}</div>
+			<div class="alert alert-danger error">{l s='You are using the wrong credentials. The module will not work.' mod='envoimoinscher'}</div>
 		</div>
 	{/if}
 	{if $multiShipping == 1}
 		<div class="bootstrap">
-			<div class="alert alert-danger">{l s='The module is not compatible with the "multishipping" option, it will not work.' mod='envoimoinscher'}</div>
+			<div class="alert alert-danger error">{l s='The module is not compatible with the "multishipping" option, it will not work.' mod='envoimoinscher'}</div>
 		</div>
 	{/if}
 
@@ -64,17 +64,26 @@
 	{foreach from=$API_errors item=error}
 		{if $error.id === false}
 		<div class="bootstrap">
-			<div class="alert alert-danger">{l s='API error : unknow error' mod='envoimoinscher'}{$error.message|escape:'htmlall'}</div>
+			<div class="alert alert-danger error">{l s='API error : unknow error' mod='envoimoinscher'}{$error.message|escape:'htmlall'}</div>
+		</div>
+		{elseif $error.id === "API error : Invalid account payment method"}
+		<div class="bootstrap">
+			<div class="alert alert-danger error">{l s="the module in production mode requires the activation of deferred payment. to do so, go to preference tab into your" mod='envoimoinscher'} <a href="{$website_url}" target="_blank" alt="Website">{l s="account" mod='envoimoinscher'}</a> {l s="and activate the deferred payment." mod='envoimoinscher'}</div>
 		</div>
 		{else}
 		<div class="bootstrap">
-			<div class="alert alert-danger">{l s=$error.id mod='envoimoinscher'}</div>
+			<div class="alert alert-danger error">{l s=$error.id mod='envoimoinscher'}</div>
 		</div>
 		{/if}
 	{/foreach}
+
+	<div class="alert alert-warning warn warning {if $EMC_config.EMC_ENV != 'TEST'}hidden{/if}">
+		{l s='the module in production mode requires the activation of deferred payment. to do so, go to preference tab into your account and activate the deferred payment.' mod='envoimoinscher'}
+	</div>
+
 	{if $need_update}
 		<div class="bootstrap">
-			<div class="alert alert-warning">{l s='Your last offers update is one month old, think about updating them in the "Help" section' mod='envoimoinscher'}</div>
+			<div class="alert alert-warning warn">{l s='Your last offers update is one month old, think about updating them in the "Help" section' mod='envoimoinscher'}</div>
 		</div>
 	{/if}
 		<link href="{$emcBaseDir|unescape:'html'}/css/back-office.css" rel="stylesheet" type="text/css" media="all" />
