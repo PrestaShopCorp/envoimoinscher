@@ -435,7 +435,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentsends_46123735ced07ebd9ac3806047
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_74af568c1265a4097904bbaa588856e4'] = 'Offers choice help';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_08b8bbf608ac77290936c21b3b886349'] = 'Empty cache';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_6d9163f98d9567378655c87b6d0e0eb9'] = 'Advanced carriers';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_b1fc79ec48fc72c2e44126470c77ec14'] = 'Carriers bellow use parcels' weight and dimensions to calculate shipping cost.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsends_b1fc79ec48fc72c2e44126470c77ec14'] = 'Carriers bellow use parcels\' weight and dimensions to calculate shipping cost.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_b3a18ac139b9bd358c1e051326c7c647'] = 'That\'s why we advise you to personalize parcels dimensions.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_166536aa9f0d8c2019385ed9f0324157'] = 'You will benefit of a more accurate billing without surprises.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_2aa635f8f7524ee65568df5b19dc7181'] = 'Real price: prices given directly from EnvoiMoinsCher, no need to set anything else.';
