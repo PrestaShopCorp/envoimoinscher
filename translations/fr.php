@@ -98,8 +98,8 @@ $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_7b5e380396d53133abac4c719bb
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_ed3f0177fb6dedb7f7441cda23e138a9'] = 'Votre module doit être en mode hors ligne.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f32d5fccdc1903dbadfd314f7a97ca9a'] = 'Erreur lors de la mise à jour de vos offres : ';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_bd5155b7f37815e4ff73f40250f1fb37'] = 'Mise à jour : Erreur lors de la mise à jour des offres disponible : ';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f573b1b9110d8f464986a5cca5c2b7da'] = 'Le point relais obligé, n\'a pas été choisi pour le panier %s';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_c31d2d07c5a39907661491d44010c9de'] = 'Une erreur pendant la récupération des offres EnvoiMoinsCher : ';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f573b1b9110d8f464986a5cca5c2b7da'] = 'Le point relais obligatoire n\'a pas été choisi pour le panier %s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_c31d2d07c5a39907661491d44010c9de'] = 'Erreur lors de la récupération des offres EnvoiMoinsCher : ';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9af9d05426a7aa3598c60804498d47c1'] = 'Obtenir le code';
 
 /*
@@ -277,7 +277,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_3444fdb5d426430f49af2949d73
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_6a26f548831e6a8c26bfbbd9f6ec61e0'] = 'Aide';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_7f94eb81ecfe807b7cf10a8b7c044342'] = 'Questions courantes';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_40fac7a4bd26c192505dacc43493ef55'] = 'Pour installer et configurer le module, suivez les instructions de';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_55876228853abf632dec9346a4f372ec'] = 'la documentation';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_55876228853abf632dec9346a4f372ec'] = 'documentation';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_d7b83b82540dd856636f5834d32f67a6'] = 'Si vous rencontrez un problème, nous vous recommandons de consulter tout d\'abord la ';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_53075bbae7e3590835d21f20a8da88f0'] = 'page log';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e33e4873ead1e24cc95fac042e3e2d60'] = 'où les erreurs sont listées. Vous pourrez résoudre rapidement par vous-même les erreurs signalées et si besoin débloquer immédiatement des envois.';
@@ -286,59 +286,58 @@ $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_376786119ef4f697fb706ee7a32
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_20d5ae96602cc38bd25c657a1c00c1f1'] = 'Par téléphone :';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c3cfe6926eb07bdbd2e4492e3047761a'] = 'Service technique :';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_349e382f0296df50626840c9b78ee735'] = 'Merci de compléter tous les champs obligatoires';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_07db5022d338b285303756bf93f699f3'] = 'Où puis-je trouver de l\'aide pour la configuration de mon module?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_07db5022d338b285303756bf93f699f3'] = 'Où puis-je trouver de l\'aide pour la configuration de mon module ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_154fdb5ae9006e1bff78c54ca6c3425d'] = 'Une documentation est disponible pour le paramétrage de module : ';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5142943bdd139d539bca8c25f2695214'] = 'Une documentation est également prévu pour la partie expédition : ';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_55876228853abf632dec9346a4f372ec'] = 'documentation';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_d948ff95570cf84c8bc231cac2af276a'] = 'expédition';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_d91d0c7900f95d659afaf7a24c1a31f8'] = 'Vous pouvez contacter l’aide technique par email sur informationapi@envoimoinscher.com pour vous aider en cas de blocages lors de votre configuration, néanmoins nous vous conseillons de vérifier dans un premier temps si votre blocage n\'est pas lié à un des cas présenté ci-dessous.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_11bd04e87454e394531e588060f4fdc8'] = 'Est-ce que je peux tester mon module avant de l\'activer en front-office?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_11bd04e87454e394531e588060f4fdc8'] = 'Est-ce que je peux tester mon module avant de l\'activer en front-office ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_cc0b86ba6115a80bc7ec78b94a04d59c'] = 'Une page de simulation vous permet d\'effectuer des cotations sur vos articles : ';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_73699677bd8b78e71ea35e7b54be1deb'] = 'Les offres que j\'ai choisies ne s\'affichent pas';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_aa1d3fb77faecb270f3876e3d642e3bb'] = 'Si lors d\'une commande en front-office aucune offre du module EnvoiMoinsCher n\'est retournée, posez-vous les questions suivantes :';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e571329278c2aaf471bb41035b1701f7'] = 'Est-ce que le module est bien "en ligne"?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e571329278c2aaf471bb41035b1701f7'] = 'Est-ce que le module est bien "en ligne" ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_146a8ac7ced910a469961678040968be'] = 'Si non, sachez que votre module doit être en ligne pour pouvoir fonctionner en front-office. Si votre configuration est terminée, vous pouvez passer votre module en ligne en cliquant sur la croix rouge en face de "État du module" en haut à gauche de cette page.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_0c3ff77dc4d7c6ee71f41da06930b8f0'] = 'Mes identifiants sont-ils corrects?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_0c3ff77dc4d7c6ee71f41da06930b8f0'] = 'Mes identifiants sont-ils corrects ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_4c3a689efd04fb1d4b7e6f653d1f7dd1'] = 'Si ce n\'est pas le cas, un message d\'erreur s’affiche en haut de la page.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5c30cea08ff2bdcf919c5de22cc2a6ee'] = 'Il y a-il eu des configurations récentes sur mes transporteurs?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5c30cea08ff2bdcf919c5de22cc2a6ee'] = 'Il y a-il eu des configurations récentes sur mes transporteurs ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_165050391b40524d5d9921f680698dfc'] = 'Si c\'est le cas les modifications n\'ont peut-être pas encore pris effet, vider le cache (en haut à gauche de cette page) devrait régler le problème.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_b8bdb352fdd815f9f7418f139dbc2ce6'] = 'Mes articles ont-ils bien un poids d\'indiqué (dans Catalogue -> Produits -> Éditer produit -> Transport)?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_b8bdb352fdd815f9f7418f139dbc2ce6'] = 'Mes articles ont-ils bien un poids d\'indiqué (dans Catalogue -> Produits -> Éditer produit -> Transport) ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_87b000ba6c126f0ea8dcc044f156f2fc'] = 'Le module ne peut pas afficher de frais de ports pour un article sans poids mais il est possible d\'indiquer un poids par défaut pour les articles dans l\'onglet "Description des envois".';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_54f7fca5d538d1e9f2f2e3a67cc8cb6d'] = 'Le module est-il activé?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_54f7fca5d538d1e9f2f2e3a67cc8cb6d'] = 'Le module est-il activé ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_a5ee8fbd6f56add40e04bce7398c78da'] = 'Vous pouvez le vérifier dans la liste des modules.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_dea606020ef9b6ffc60198088f8dc1f7'] = 'Est-ce que j\'ai bien indiqué une adresse valide sur mon compte en front-office?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_dea606020ef9b6ffc60198088f8dc1f7'] = 'Est-ce que j\'ai bien indiqué une adresse valide sur mon compte en front-office ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2d24c5ba00cc6b1b0577e6e1e8fc579f'] = 'Il se peut que le transporteur ne reconnaisse pas le format d\'adresse indiqué, vous pouvez essayer sur une adresse simple comme 75002 / Paris / rue de la paix.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e4f2a5370b5653658778005a59a4c335'] = 'Vos offres ne sont toujours pas visible? il y a sûrement des messages de logs enregistrés concernant EnvoiMoinsCher (commençant par "[ENVOIMOINSCHER]"). Contactez le service technique (informationAPI@envoimoinscher.com) en indiquant les messages de logs que vous avez pu trouver et un accès à votre back-office pour accélérer la résolution de votre problème. Une réponse vous sera apportée dans les 24H.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e4f2a5370b5653658778005a59a4c335'] = 'Vos offres ne sont toujours pas visible ? il y a sûrement des messages de logs enregistrés concernant EnvoiMoinsCher (commençant par "[ENVOIMOINSCHER]"). Contactez le service technique (informationAPI@envoimoinscher.com) en indiquant les messages de logs que vous avez pu trouver et un accès à votre back-office pour accélérer la résolution de votre problème. Une réponse vous sera apportée dans les 24H.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c7a9711ebce1a0ef420699f6dbb6dbb9'] = 'Cliquez ici pour accéder à vos logs : ';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_42c5c6df7d58d8e75a32bf2148983e4d'] = 'Les prix ne correspondent pas à ceux que j\'ai configurés';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_423ce067749bbbe3530e0c8cf6fc84b6'] = 'Si lors d\'une commande en front-office les prix indiqués par les transporteurs EnvoiMoinscher ne correspondent pas à ceux que vous avez indiqués, posez-vous les questions suivantes.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_448a46781993b4d059dde60383325ad0'] = 'Si vous utilisez "le prix réel" (prix fixé par EnvoiMoinsCher) sur vos transporteurs :';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_7d3c22f72179c00f2e84a2877f36bc46'] = 'Est-ce que le poids / volume de mon article est correct?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_7d3c22f72179c00f2e84a2877f36bc46'] = 'Est-ce que le poids / volume de mon article est correct ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_01d040b0bdb0e12126850b1afd70393a'] = 'Le prix est calculé en fonction du poids de vos articles et du volume (transporteurs avancés uniquement), il faut donc vérifier si le poids des articles (dans Catalogue -> Produits -> Editer produit -> Transport) est correct et sous la bonne unité de poids. Si aucun poids n\'est indiqué, vérifiez aussi le poids par défaut dans l\'onglet "Description des envois". Enfin, pour les transporteurs avancés vous devez configurer la table de volume des envois dans l\'onglet "Transporteurs avancés".';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c637a8677c71c9720a856c2f7c202cbd'] = 'Si vous utilisez "le forfait" (prix fixé par vous) sur vos transporteurs :';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_fd2d25fb24d5a19f95538146fee65811'] = 'Mes transporteurs sont-ils bien en "forfait"?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_fd2d25fb24d5a19f95538146fee65811'] = 'Mes transporteurs sont-ils bien en "forfait" ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_1b55814f3f8233ebf3657e4eb25c78b8'] = 'Pour pouvoir utiliser votre configuration de prix, vous devez indiquer vos transporteurs en "forfait" dans l\'onglet "Transporteurs simples" et "Transporteurs avancés".';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_12a29be76cd9033641c18b927806e016'] = 'Est-ce que j\'ai bien configuré mes tranches?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_12a29be76cd9033641c18b927806e016'] = 'Est-ce que j\'ai bien configuré mes tranches ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_122a271ec8ad61e0881bd1bde7612520'] = 'Le prix est-il celui que vous avez indiqué dans vos tranches de poids/prix (Transport -> Transporteurs  -> Editer transporteur), il faut donc bien vérifier que ces tranches soient correctes.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2aee1c96bddcf897b821d09e107be08f'] = 'Vos prix ne sont toujours pas corrects? Contactez le service technique (informationAPI@envoimoinscher) en fournissant un accès à votre back-office pour accélérer la résolution de votre problème. Une réponse vous sera apportée dans les 24H.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2aee1c96bddcf897b821d09e107be08f'] = 'Vos prix ne sont toujours pas corrects ? Contactez le service technique (informationAPI@envoimoinscher) en fournissant un accès à votre back-office pour accélérer la résolution de votre problème. Une réponse vous sera apportée dans les 24H.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c3b0b604abfb9a350d244e1eb887b522'] = 'Les points relais ne s\'affichent pas';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_88e3db595c2b230d8553f801af39fe18'] = 'Si votre transporteur à points relais s\'affiche en front-office mais pas les points relais, voici les questions à se poser :';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_be6d7c4fdae93d4ae2d43ebbb7b8026f'] = 'Est-ce que j\'utilise un thème personnalisé?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_be6d7c4fdae93d4ae2d43ebbb7b8026f'] = 'Est-ce que j\'utilise un thème personnalisé ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5988347880a6c7f3927a1f06d2bc167a'] = 'Un thème personnalisé est souvent la raison pour laquelle les points relais ne s\'affichent pas. Si jamais vous en utilisez un, voyez avec votre webmaster pour passer temporairement sur le thème par défaut et vider le cache smarty. Si les points relais s\'affichent normalement sans le thème personnalisé, il faut donc que votre webmaster réutilise le fichier "order-carrier.tpl" du thème par défaut sur votre thème personnalisé.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_252326fc237811bc3cf2ee0c02e90946'] = 'L\'option "frais de ports offert" (dans Transport -> Paramètres) est-elle activée?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_252326fc237811bc3cf2ee0c02e90946'] = 'L\'option "frais de ports offert" (dans Transport -> Paramètres) est-elle activée ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2a097705a8e3a45d204e3ac2e6c792e5'] = 'Cette option pose malheureusement problème avec les modules de transport, en effet ils sont désactivés une fois les frais de ports offert activé. Nous vous conseillons donc de passer plutôt par des tranches de prix pour offrir vos frais de ports (une tranche de prix à 0€ suffit).';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_782a7eeae1402f2ea88497cfa4cfd18b'] = 'Y a-t-il un point relais proche de l\'adresse de livraison?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_782a7eeae1402f2ea88497cfa4cfd18b'] = 'Y a-t-il un point relais proche de l\'adresse de livraison ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_9b004befe1bb4a111143913c508c561d'] = 'Même si ç\'est rare, il se peut qu\'aucun point relais ne soit disponibles dans cette région. Afin d\'en être sûr, essayer avec une adresse de livraison simple comme 75002 / Paris / rue de la paix.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_228ed76edd298514990cc1b679fc52b4'] = 'Vos points relais ne s\'affichent toujours pas? Contactez le service technique (informationAPI@envoimoinscher) en fournissant un accès à votre back-office pour accélérer la résolution de votre problème. Une réponse vous sera apportée dans les 24H.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_228ed76edd298514990cc1b679fc52b4'] = 'Vos points relais ne s\'affichent toujours pas ? Contactez le service technique (informationAPI@envoimoinscher) en fournissant un accès à votre back-office pour accélérer la résolution de votre problème. Une réponse vous sera apportée dans les 24H.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5741ceb5ecc370599a79ab29727a8edb'] = 'Mon bordereau ne se génère pas après une expédition';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_82782d529ec83c09dfc3d892dc86d38c'] = 'Après avoir expédié une commande EnvoiMoinsCher, dans la liste des envois expediés, un lien vers le bordereau doit apparaitre. Si jamais ce lien reste en cours de génération, voici les questions à vous poser :';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e723a5a7980fdba0de9c7254cf66db6e'] = 'Est-ce que j\'ai attendu assez longtemps?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e723a5a7980fdba0de9c7254cf66db6e'] = 'Est-ce que j\'ai attendu assez longtemps ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_46195a5b27e3967e318bcee302fa0f63'] = 'Selon le transporteur, la génération peut prendre jusqu\'à 5 minutes, il faut donc parfois attendre un peu.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_4bca038cdde2f92997bdb4108d382085'] = 'Suis-je en environnement de test?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_4bca038cdde2f92997bdb4108d382085'] = 'Suis-je en environnement de test ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2946b4aaf998509aad67e9bec809a20c'] = 'Si c\'est le cas, la commande n\'a pas été prise en compte et le bordereau ne se génèrera pas. Si votre commande était réelle, vous devez tout d\'abord passer en environnement de production (en haut à gauche de cette page : "Environnement de travail") et re-passer votre commande sur notre site, n\'oubliez pas de vous connecter sur votre compte pour que la commande soit rajoutée à votre facture. Cliquez ici pour accéder au site EnvoiMoinsCher : ';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_236b2d6be1145873a68c73a05f0cf473'] = 'Votre bordereau ne se génère toujours pas? Contactez immédiatement le service technique (informationAPI@envoimoinscher) en fournissant un accès à votre back-office pour accélérer la résolution de votre problème. Une réponse vous sera apportée dans les plus brefs délais.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_236b2d6be1145873a68c73a05f0cf473'] = 'Votre bordereau ne se génère toujours pas ? Contactez immédiatement le service technique (informationAPI@envoimoinscher) en fournissant un accès à votre back-office pour accélérer la résolution de votre problème. Une réponse vous sera apportée dans les plus brefs délais.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_138dfc67b7698890ff87c06110cc6796'] = 'Pour toute autre question, nous restons disponible : ';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_787263aaceab5c2ab4f8b36a05e5cb21'] = 'Une autre question?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_787263aaceab5c2ab4f8b36a05e5cb21'] = 'Une autre question ?';
 
 /*
 	--- getcontentmerchant ---
@@ -671,10 +670,7 @@ $_MODULE['<{envoimoinscher}prestashop>send_ac5db32bb5629009f97ec8ffc905499f'] = 
 $_MODULE['<{envoimoinscher}prestashop>send_34d08c5258f2a3e1e9f7825666e0e6ca'] = 'Assurer cet envoi';
 $_MODULE['<{envoimoinscher}prestashop>send_94966d90747b97d1f0f206c98a8b1ac3'] = 'Expédier';
 $_MODULE['<{envoimoinscher}prestashop>send_384f92bb616556a4edf25a91b2aa814c'] = 'Multi-colis';
-$_MODULE['<{envoimoinscher}prestashop>send_fad88feaf938901e44b2df83bb2a9631'] = 'Le multi-colis permet d\'expédier la commande
-																				en plusieurs colis au lieu d\'un seul : veuillez indiquer le nombre de colis à expédier pour cette
-																				commande en saisissant un chiffre supérieur ou égal à 2. Si la commande doit être envoyée
-																				en 1 seul colis, laissez la case vide.';
+$_MODULE['<{envoimoinscher}prestashop>send_fad88feaf938901e44b2df83bb2a9631'] = 'Le multi-colis permet d\'expédier la commande en plusieurs colis au lieu d\'un seul : veuillez indiquer le nombre de colis à expédier pour cette commande en saisissant un chiffre supérieur ou égal à 2. Si la commande doit être envoyée en 1 seul colis, laissez la case vide.';
 $_MODULE['<{envoimoinscher}prestashop>send_209802fb858e2c83205027dbbb5d9e6c'] = 'Colis';
 
 //test

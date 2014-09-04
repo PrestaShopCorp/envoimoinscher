@@ -29,53 +29,56 @@
 	</legend>
 	<div id="help-update">
 		<h2 class="title-help">{l s='Upgrade' mod='envoimoinscher'}</h2>
-	<li class="main-question"><h2>{l s='SQL update' mod='envoimoinscher'}</h2></li>
-	<table class="table upgradeList">
-		<thead>
-			<tr>
-				<th class="center">
-					{l s='Version' mod='envoimoinscher'}
-				</th>
-				<th class="center">
-					{l s='Date' mod='envoimoinscher'}
-				</th>
-				<th class="center">
-					{l s='Changements' mod='envoimoinscher'}
-				</th>
-				<th class="center">
-					{l s='Actions' mod='envoimoinscher'}
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			{if isset($upgrades) && $upgrades && sizeof($upgrades)}
-				{foreach from=$upgrades item='upgrade' key='u'}
+	<li class="main-question">
+	{if isset($upgrades) && $upgrades && sizeof($upgrades)}
+		<h2>{l s='SQL update' mod='envoimoinscher'}</h2></li>
+		<table class="table upgradeList">
+			<thead>
+				<tr>
+					<th class="center">
+						{l s='Version' mod='envoimoinscher'}
+					</th>
+					<th class="center">
+						{l s='Date' mod='envoimoinscher'}
+					</th>
+					<th class="center">
+						{l s='Changements' mod='envoimoinscher'}
+					</th>
+					<th class="center">
+						{l s='Actions' mod='envoimoinscher'}
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{if isset($upgrades) && $upgrades && sizeof($upgrades)}
+					{foreach from=$upgrades item='upgrade' key='u'}
+						<tr>
+							<td class="center">
+								{$upgrade.from|escape:'htmlall'} - {$upgrade.to|escape:'htmlall'}
+							</td>
+							<td class="center">
+								{$upgrade.date|escape:'htmlall'}
+							</td>
+							<td class="center">
+								{$upgrade.description|unescape:'html'}
+							</td>
+							<td class="center">
+								<a class="button" href="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall'}&option=upgrade&up_id={$u|escape:'htmlall'}" class="action_module">effectuer</a>
+							</td>
+						</tr>
+					{/foreach}
+				{else}
 					<tr>
-						<td class="center">
-							{$upgrade.from|escape:'htmlall'} - {$upgrade.to|escape:'htmlall'}
-						</td>
-						<td class="center">
-							{$upgrade.date|escape:'htmlall'}
-						</td>
-						<td class="center">
-							{$upgrade.description|unescape:'html'}
-						</td>
-						<td class="center">
-							<a class="button" href="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall'}&option=upgrade&up_id={$u|escape:'htmlall'}" class="action_module">effectuer</a>
+						<td colspan="4">
+							<div class="warn">
+								{l s='No upgrade at this time' mod='envoimoinscher'}
+							</div>
 						</td>
 					</tr>
-				{/foreach}
-			{else}
-				<tr>
-					<td colspan="4">
-						<div class="warn">
-							{l s='No upgrade at this time' mod='envoimoinscher'}
-						</div>
-					</td>
-				</tr>
-			{/if}
-		</tbody>
-	</table>
+				{/if}
+			</tbody>
+		</table>
+	{/if}
 	<li class="main-question"><h2>{l s='Carriers update' mod='envoimoinscher'}</h2></li>
 	<p>{l s='Update all the carriers:' mod='envoimoinscher'}<a id="loadAllCarriers" onclick="loadAllCarriers();" class="action_module" rel="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall'}&option=loadAllCarriers">{l s='Update carriers' mod='envoimoinscher'}</a></p>
 	<div id="carriers_update_result"></div>

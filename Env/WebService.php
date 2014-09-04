@@ -204,8 +204,7 @@ class Env_WebService
 			$result = false;
 			$this->resp_error = true;
 			$i = 0;
-			if ($this->construct_list)
-				$i = count($this->resp_errors_list);
+			$i = count($this->resp_errors_list);
 			$this->resp_errors_list[$i] = array('code' => 'http_file_not_found',
 														'url' => $curl_info['url'],
 														'message' => 'Votre requête n\'a pas été correctement envoyée. Veuillez vous rassurer qu\'elle
@@ -269,12 +268,12 @@ class Env_WebService
 		}
 		*/
 		foreach ($ch as $k => $c)
-		{
+		{		
 				$data[$k] = curl_multi_getcontent($c);
 				curl_multi_remove_handle($mh, $c);
 				file_put_contents($_SERVER['DOCUMENT_ROOT'].'/return.xml', $data[$k]);
-		}
-
+		}		
+		
 		foreach ($ch as $k => $c)
 		{
 			$curl_info = curl_getinfo($c);
@@ -291,8 +290,7 @@ class Env_WebService
 				$data[$k] = false;
 				$this->resp_error = true;
 				$i = 0;
-				if ($this->construct_list)
-					$i = count($this->resp_errors_list);
+				$i = count($this->resp_errors_list);
 				$this->resp_errors_list[$i] = array('code' => 'http_file_not_found',
 													'url' => $curl_info['url'],
 													'message' => 'Votre requête n\'a pas été correctement envoyée. Veuillez vous rassurer qu\'elle

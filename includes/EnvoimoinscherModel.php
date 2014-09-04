@@ -136,7 +136,7 @@ class EnvoimoinscherModel
 	public function getApiParams($platform, $version)
 	{
 		require_once(_PS_MODULE_DIR_.'envoimoinscher/Env/WebService.php');
-		require_once(_PS_MODULE_DIR_.'envoimoinscher/Env/Quotation.php');
+		require_once(_PS_MODULE_DIR_.'envoimoinscher/Env/Parameters.php');
 
 		$login = Configuration::get('EMC_LOGIN');
 		$pass = Configuration::get('EMC_PASS');
@@ -153,24 +153,14 @@ class EnvoimoinscherModel
 		if ($login == '' && $pass == '' && $key == '')
 			return $params;
 
-		//TODO Récupérer paramètre depuis fonctions
 		// get a quotation for the params
-		$from = array('pays' => 'FR','code_postal' => '75002','ville' => 'Paris','type' => 'entreprise','adresse' => '');
-		$to = array('pays' => 'FR','code_postal' => '75002','ville' => 'Paris','type' => 'particulier','adresse' => '');
 		$date = new DateTime();
-		$quot_info = array('collecte' => $date->format('Y-m-d'),'delai' => 'aucun','valeur' => '10','code_contenu' => 10120,'operateur' => 'POFR');
-		$lib = new Env_Quotation(array('user' => $login, 'pass' => $pass, 'key' => $key));
+		$lib = new Env_Parameters(array('user' => $login, 'pass' => $pass, 'key' => $key));
 		$lib->setPlatformParams($platform, _PS_VERSION_, $version);
-		$lib->setPerson('expediteur', $from);
-		$lib->setPerson('destinataire', $to);
 		$lib->setEnv(Tools::strtolower($env));
-		$lib->setType('colis', array(1 => array('poids' => 1,'longueur' => 20,'largeur' => 20,'hauteur' => 20)));
-		$lib->getQuotation($quot_info);
-		$lib->getOffers(false);
+		$lib->getParameters();
 
-		foreach ($lib->offers as $offer)
-			if ($offer['operator']['code'] == 'POFR' && !isset($params['type_emballage.emballage']))
-				$params['type_emballage.emballage'] = $offer['mandatory']['type_emballage.emballage'];
+		$params = $lib->parameters;
 
 		$params['error_code'] = $lib->resp_errors_list;
 

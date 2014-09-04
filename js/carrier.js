@@ -44,7 +44,7 @@ function selectPoint(ref, link, operator, address)
     	alert(carrier_translation.no_pickup_point_found_try_other_addr);
       }
       else{
-				res = '<p><b>'+carrier_translation.select_pickup_point1+'<a href="#" id="openMap" onclick="javascript:makeMap(\'MONR\', \''+ref+'\', \''+address+'\');return false;">'+carrier_translation.select_pickup_point2+'</a></b></p>'+
+				res = '<p><b>'+carrier_translation.select_pickup_point1+'<a href="#" id="openMap" class="click-here" onclick="javascript:makeMap(\'MONR\', \''+ref+'\', \''+address+'\');return false;">'+carrier_translation.select_pickup_point2+'</a></b></p>'+
 				'<ul>'+res +'</ul>';
 	      $('#points'+ref+address).show();
 	      $('#points'+ref+address).html(res);

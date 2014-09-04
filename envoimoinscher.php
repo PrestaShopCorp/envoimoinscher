@@ -621,13 +621,15 @@ class Envoimoinscher extends CarrierModule
 
 		// we build the array $wrapping_types (wrapping type for POFR)
 		$wrapping_types = array();
-		if (isset($api_params['type_emballage.emballage']))
-			foreach ($api_params['type_emballage.emballage']['array'] as $type)
-				$wrapping_types[count($wrapping_types)] = array(
+		if (isset($api_params['POFR']['services']['ColissimoAccess']['parameters']['emballage.type_emballage']))
+			foreach ($api_params['POFR']['services']['ColissimoAccess']['parameters']['emballage.type_emballage']['values'] as $type)
+			{
+				$wrapping_types[] = array(
 					'id' => $type,
 					'name' => Tools::substr($type, strpos($type, '-') + 1)
 				);
-
+			}
+		
 		$helper = new EnvoimoinscherHelper();
 
 		$config = $helper->configArray($this->model->getConfigData()); // Get configs
@@ -721,7 +723,7 @@ class Envoimoinscher extends CarrierModule
 	public function hookDisplayBackOfficeHeader()
 	{
 		if (Tools::getValue('controller') === 'AdminModules')
-			$this->getContext()->controller->addCSS($this->_path.'/css/back-office.css', 'all');
+			$this->getContext()->controller->addCSS($this->_path.'/css/back-office.css?version='.$this->version, 'all');
 	}
 
 	/**
@@ -1262,7 +1264,7 @@ class Envoimoinscher extends CarrierModule
 			$url = Envoimoinscher::getMapByOpe($data['code_eo'], substr($data['order'][0]['offerCode'],5), $data['config']['EMC_CITY'], $data['config']['EMC_POSTALCODE'], $data['config']['EMC_ADDRESS'], 'FR');
 			$helper->setFields('depot.pointrelais',
 				array('helper' => '<p class="note"><a data-fancybox-type="iframe" target="_blank" href="'.$url.
-				'" style="width:1000px;height:1000px;" class="getParcelPoint action_module fancybox">'.$this->l('Get parcel point').'</a><br/>'.
+				'" class="getParcelPoint action_module fancybox thousand_box">'.$this->l('Get parcel point').'</a><br/>'.
 				$this->l('If the popup do not show up : ').'<a target="_blank" href="'.$url.'">'.$this->l('clic here').'</a></p>'));
 		}
 		else if ($data['is_dp'] == 2)
@@ -1598,12 +1600,12 @@ class Envoimoinscher extends CarrierModule
 					)
 				)
 			),
-			'type_emballage.emballage' 	=> Configuration::get('EMC_WRAPPING'),
+			'type_emballage.emballage' 				=> Configuration::get('EMC_WRAPPING'),
 			'delai'        							=> $offers_orders[0]['emcValue'],
 			'code_contenu' 							=> $data['config']['EMC_NATURE'],
 			'valeur'       							=> (float)$data['order'][0]['total_products'],
 			'module'       							=> $this->ws_name,
-			'version' 									=> $this->local_version
+			'version' 								=> $this->local_version
 		);
 
 		$cot_cl->setEnv(Tools::strtolower($data['config']['EMC_ENV']));
@@ -1812,12 +1814,12 @@ class Envoimoinscher extends CarrierModule
 
 		$cache_code = 'cache_'.$this->id_carrier.spl_object_hash($ref).$shipping_cost;
 
+		if (Configuration::get('EMC_SRV_MODE') == EnvoimoinscherModel::MODE_CONFIG)
+			return false;
+			
 		// cache of shipping cost
 		if (isset(Envoimoinscher::$cache[$cache_code]))
 			return Envoimoinscher::$cache[$cache_code];
-
-		if (Configuration::get('EMC_SRV_MODE') == EnvoimoinscherModel::MODE_CONFIG)
-			return false;
 
 		// for backoffice orders
 		$pricing_code = '';
@@ -2010,7 +2012,7 @@ class Envoimoinscher extends CarrierModule
 		$lib = new Env_CarriersList(array('user' => $login, 'pass' => $pass, 'key' => $key));
 		$lib->setPlatformParams($this->ws_name, _PS_VERSION_, $this->version);
 		$lib->setEnv(Tools::strtolower($env));
-		$lib->loadCarriersList($this->ws_name, $this->version);
+		$lib->getCarriersList($this->ws_name, $this->version);
 
 		if ($lib->curl_error)
 		{
@@ -2134,7 +2136,7 @@ class Envoimoinscher extends CarrierModule
 															','.(int)$service['parcel_dropoff_point'].
 															','.(int)$service['family'].
 															','.(int)$service['zone'].
-															',1);';
+															',1)';
 			}
 			$sql .= ';';
 			$query[] = $sql;
@@ -2227,6 +2229,7 @@ class Envoimoinscher extends CarrierModule
 		{
 			if ($q != '' && Db::getInstance()->execute($q) === false)
 			{
+				
 				Logger::addLog('[ENVOIMOINSCHER]['.time().'] '.$this->l('Update : Error while updating your offers : ').$q);
 				if ($ajax)
 				{
@@ -2242,6 +2245,7 @@ class Envoimoinscher extends CarrierModule
 		Db::getInstance()->execute('COMMIT;');
 
 		$result = array();
+		$result['queries'] = $query;
 		$result['offers_added'] = array();
 		$result['offers_updated'] = array();
 		$result['offers_deleted'] = array();
@@ -2370,12 +2374,16 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function hooknewOrder($params)
 	{
-		$cookie = $this->getContext()->cookie;
-
-		$cookie->emc_carrier = '';
 		// Get cart carrier (if EnvoiMoinsCher, make some supplementary operations)
 		$row = $this->model->getCarrierByCartPricing($params['cart']->id);
-		if ($row[0]['point_eap'] != '')
+		// if it's not our carrier, nothing to do here
+		if($row[0]['external_module_name'] !== $this->name)
+			return;
+			
+		$cookie = $this->getContext()->cookie;
+		$cookie->emc_carrier = '';
+		
+		if (isset($row[0]['point_eap']) && $row[0]['point_eap'] != '')
 		{
 			// Insert parcel point informations
 			$point = explode('-', $row[0]['point_eap']);
@@ -2720,6 +2728,7 @@ class Envoimoinscher extends CarrierModule
 					)
 				)
 			),
+			'type_emballage.emballage' => $config['EMC_WRAPPING'],
 			'delai'        => $offers_orders[0]['emcValue'],
 			'code_contenu' => $config['EMC_NATURE'],
 			'valeur'       => $params['cartValue'],
