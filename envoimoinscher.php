@@ -3093,6 +3093,10 @@ class Envoimoinscher extends CarrierModule
 	 */
 	private function parseUpgradeXml($file)
 	{
+		if(file_exists($file))
+		{
+			return array();
+		}
 		$result = array();
 		$dom_cl = new DOMDocument();
 		$dom_cl->load($file);
