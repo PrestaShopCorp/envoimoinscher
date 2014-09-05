@@ -490,8 +490,9 @@ class Envoimoinscher extends CarrierModule
 
 		//$helper = new EnvoimoinscherHelper();
 		$datas = array(
-			'link'     => new Link(),
-			'upgrades' => $this->parseUpgradeXml(_PS_MODULE_DIR_.'envoimoinscher/sql/upgrades/upgrades.xml')
+			'link'       => new Link(),
+			'upgrades'   => $this->parseUpgradeXml(_PS_MODULE_DIR_.'envoimoinscher/sql/upgrades/upgrades.xml'),
+			'emcBaseDir' => _MODULE_DIR_.'/envoimoinscher/'
 		);
 
 		$smarty->assign($datas);
@@ -3093,7 +3094,7 @@ class Envoimoinscher extends CarrierModule
 	 */
 	private function parseUpgradeXml($file)
 	{
-		if(file_exists($file))
+		if(!file_exists($file))
 		{
 			return array();
 		}
