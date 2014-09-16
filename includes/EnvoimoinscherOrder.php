@@ -66,9 +66,9 @@ class EnvoimoinscherOrder
 		if (isset($planning['id_eopl']))
 		{
 			$this->planning_id = $planning['id_eopl'];
-			$this->orders = unserialize($planning['orders_eopl']);
-			$this->stats = unserialize($planning['stats_eopl']);
-			$this->errors = unserialize($planning['errors_eopl']);
+			$this->orders = Tools::jsonDecode($planning['orders_eopl'], true);
+			$this->stats = Tools::jsonDecode($planning['stats_eopl'], true);
+			$this->errors = Tools::jsonDecode($planning['errors_eopl'], true);
 			$this->type = $planning['type_eopl'];
 		}
 	}
@@ -186,10 +186,10 @@ class EnvoimoinscherOrder
 		// set tracking key
 		$tracking_key = sha1($this->order_id.$helper->getValueToToken($quot_info).Tools::getRemoteAddr().time());
 		$url_params = '?key='.$tracking_key.'&order='.$this->order_id;
-		$shop_domain = Tools::getShopDomain();
-		$protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
+		//$shop_domain = Tools::getShopDomain();
+		$protocol = stripos($_SERVER['SERVER_PROTOCOL'], 'https') === true ? 'https://' : 'http://';
 		$url = Tools::getShopDomain().__PS_BASE_URI__.'modules/envoimoinscher/tracking/tracking.php';
-		$quot_info['url_tracking'] = $protocol.str_replace('//','/',$url).$url_params;
+		$quot_info['url_tracking'] = $protocol.str_replace('//', '/', $url).$url_params;
 
 		$order_object['tmp_quote'] = $quot_info;
 		$order_object['tracking_key'] = $tracking_key;
@@ -270,7 +270,7 @@ class EnvoimoinscherOrder
 			$this->order_data['employee'] = (int)$cookie->id_employee;
 			$this->model->insertOrder($this->order_id, $this->order_data, $order_object['object']->order, $_POST);
 			// increment 'ok'
-			if(!isset($this->stats['ok']))
+			if (!isset($this->stats['ok']))
 				$this->stats['ok'] = 0;
 			$this->stats['ok']++;
 		}

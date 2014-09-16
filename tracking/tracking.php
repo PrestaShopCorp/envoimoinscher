@@ -95,7 +95,7 @@ if (ctype_alnum(Tools::getValue('key')) && $order_id > 0)
 		if ($text_tracking == '')
 		{
 			$cmd_row = Db::getInstance()->ExecuteS('SELECT * FROM '._DB_PREFIX_.'order_state_lang
-				 WHERE id_order_state = '.$new_order_atate.' AND id_lang = '.$emc->language->id);
+				 WHERE id_order_state = '.pSQL($new_order_atate).' AND id_lang = '.pSQL($emc->language->id));
 			$text_tracking = 'Etat de votre commande : '.$cmd_row[0]['name'];
 		}
 		$date_get = date('Y-m-d H:i:s', strtotime(Tools::getValue('date')));
@@ -105,7 +105,7 @@ if (ctype_alnum(Tools::getValue('key')) && $order_id > 0)
 		Db::getInstance()->Execute('INSERT INTO '._DB_PREFIX_.'emc_tracking
 			 ('._DB_PREFIX_.'orders_id_order, state_et, date_et, text_et, localisation_et)
 			 VALUES
-			 ('.$order_id.', "'.Tools::getValue('etat').'", "'.$date_get.'", "'.$text_tracking.'", "'.$local_tracking.'")
+			 ('.$order_id.', "'.Tools::getValue('etat').'", "'.$date_get.'", "'.pSQL($text_tracking).'", "'.pSQL($local_tracking).'")
 			 ');
 	}
 	else

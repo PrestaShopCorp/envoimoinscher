@@ -80,7 +80,9 @@
 .ml20{
 	margin-left:20px;
 }
-
+.pl50{
+	padding-left: 50px;
+}
 .mr5{
 	margin-right: 5px;
 }
@@ -121,6 +123,46 @@ margin-bottom:50px;
 	margin-left:20px
 }
 
+/*-- HELP SECTION --*/
+#help-question .title p, 
+#help-question .subtitle p{
+	cursor: pointer;
+}
+#help-question .title{
+	text-align: left;
+	font-size: 1.2em;
+	margin: 20px;
+	font-weight: bold;
+}
+#help-question .subtitle{
+	font-size: 1.1em;
+	padding: 8px 0 0px 0px;
+}
+#help-question .noliststyle{
+	list-style: none;
+}
+#help-question .bloc-reponses,
+#help-question .response
+{
+	display: none;
+}
+
+#help-question .response{
+	background-color: #FFFFFF;
+	border: 1px solid rgb(214, 214, 214);
+	padding: 10px;
+	margin-right: 25px;
+	border-radius: 3px
+}
+#help-question .bloc-reponses ul{
+	padding-left: 20px;
+	list-style: initial;
+}
+#help-question .bloc-reponses .list_question{
+	padding-left: 52px;
+	list-style: none;
+}
+
 .title-help{
 border:1px solid #AAD;
 background-color:#CCF;
@@ -143,6 +185,8 @@ padding-left:40px;
 list-style-type:decimal;
 }
 
+
+/*--       --*/
 #EMC_cfg_bg > #EMC_Content {
 	width: 75%;
 	margin: 30px auto;
@@ -625,7 +669,7 @@ min-height:160px;
 
 
 .borderBlock {
-	width:250px; 
+	width:270px; 
 	display: inline-block;
 	padding:10px; 
 	border:1px solid #DFD5C3; 

@@ -68,7 +68,7 @@
 		</div>
 		{elseif $error.id === "API error : Invalid account payment method"}
 		<div class="bootstrap">
-			<div class="alert alert-danger error">{l s="the module in production mode requires the activation of deferred payment. to do so, go to preference tab into your" mod='envoimoinscher'} <a href="{$website_url}" target="_blank" alt="Website">{l s="account" mod='envoimoinscher'}</a> {l s="and activate the deferred payment." mod='envoimoinscher'}</div>
+			<div class="alert alert-danger error">{l s="the module in production mode requires the activation of deferred payment. to do so, go to preference tab into your" mod='envoimoinscher'} <a href="{$website_url|unescape:'html'}" target="_blank" alt="Website">{l s="account" mod='envoimoinscher'}</a> {l s="and activate the deferred payment." mod='envoimoinscher'}</div>
 		</div>
 		{else}
 		<div class="bootstrap">

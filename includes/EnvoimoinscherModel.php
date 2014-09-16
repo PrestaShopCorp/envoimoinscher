@@ -89,19 +89,18 @@ class EnvoimoinscherModel
 			$pass = Configuration::get('EMC_PASS');
 			$key = Configuration::get('EMC_KEY');
 			$env = Configuration::get('EMC_ENV');
-			
+
 			$lib = new Env_User(array('user' => $login, 'pass' => $pass, 'key' => $key));
 			$lib->setEnv(Tools::strtolower($env));
 			$lib->getPartnership();
-			
+
 			$partnership = $lib->partnership;
-			
-			Configuration::updateValue('EMC_PARTNERSHIP',$partnership);
+
+			Configuration::updateValue('EMC_PARTNERSHIP', $partnership);
 		}
-		
 		return $partnership;
 	}
-	
+
 	/**
 	 * Return an array with the news for the module
 	 * @param $platform : platform name (will be prestashop here)
@@ -154,7 +153,7 @@ class EnvoimoinscherModel
 			return $params;
 
 		// get a quotation for the params
-		$date = new DateTime();
+		//$date = new DateTime();
 		$lib = new Env_Parameters(array('user' => $login, 'pass' => $pass, 'key' => $key));
 		$lib->setPlatformParams($platform, _PS_VERSION_, $version);
 		$lib->setEnv(Tools::strtolower($env));
@@ -630,8 +629,8 @@ class EnvoimoinscherModel
 		$proforma = $this->makeProforma($row);
 		// put default informa
 
-		if (isset($config['EMC_PP_'.Tools::strtoupper(substr($row[0]['offerCode'], -25))]))
-			$default_point = $config['EMC_PP_'.Tools::strtoupper(substr($row[0]['offerCode'], -25))];
+		if (isset($config['EMC_PP_'.Tools::strtoupper(Tools::substr($row[0]['offerCode'], -25))]))
+			$default_point = $config['EMC_PP_'.Tools::strtoupper(Tools::substr($row[0]['offerCode'], -25))];
 		else
 			$default_point = null;
 
@@ -805,7 +804,7 @@ class EnvoimoinscherModel
 		//if no more service attached to this operator, delete it too
 		$r2 = true;
 		if (!$this->hasServices($parts[0]))
-			$r2 = $this->db->Execute('DELETE FROM '._DB_PREFIX_.'emc_operators WHERE code_eo = "'.$parts[0].'"');
+			$r2 = $this->db->Execute('DELETE FROM '._DB_PREFIX_.'emc_operators WHERE code_eo = "'.pSQL($parts[0]).'"');
 		return $r && $r2;
 	}
 
@@ -833,7 +832,7 @@ class EnvoimoinscherModel
 	{
 		if (Tools::strlen($code) != 4) return array();
 		return $this->db->ExecuteS('SELECT * FROM '._DB_PREFIX_.'emc_operators
-			WHERE code_eo = "'.$code.'"');
+			WHERE code_eo = "'.pSQL($code).'"');
 	}
 
 	/**
@@ -874,8 +873,8 @@ class EnvoimoinscherModel
 			'ref_emc_eor'                    => pSQL($emc_order['ref']),
 			'service_eor'                    => pSQL($emc_order['service']['label']),
 			'date_order_eor'                 => date('Y-m-d H:i:s'),
-			'date_collect_eor'               => $date_collect_eor,
-			'date_del_eor'                   => $date_del_eor,
+			'date_collect_eor'               => pSQL($date_collect_eor),
+			'date_del_eor'                   => pSQL($date_del_eor),
 			'tracking_eor'                   => pSQL( (isset($data['trackingKey']) ? $data['trackingKey'] : null ) ),
 			'parcels_eor'                    => count($data['parcels'])
 			);
@@ -886,7 +885,7 @@ class EnvoimoinscherModel
 			$parcel_data = array(
 				''._DB_PREFIX_.'orders_id_order' => (int)$order_id,
 				'number_eop'                     => (int)$p,
-				'weight_eop'                     => $parcel['poids'],
+				'weight_eop'                     => pSQL($parcel['poids']),
 				'length_eop'                     => (int)$parcel['longueur'],
 				'width_eop'                      => (int)$parcel['largeur'],
 				'height_eop'                     => (int)$parcel['hauteur']
@@ -1203,6 +1202,8 @@ class EnvoimoinscherModel
 	*/
 	public function getReferencesToLabels($orders)
 	{
+		$orders = array_map('intval', $orders);
+
 		return $this->db->ExecuteS('SELECT * FROM '._DB_PREFIX_.'emc_orders eo
 			 JOIN '._DB_PREFIX_.'emc_documents ed ON eo.'._DB_PREFIX_.'orders_id_order = ed.'._DB_PREFIX_.'orders_id_order
 			 AND ed.type_ed = "label" WHERE eo.'._DB_PREFIX_.'orders_id_order IN ('.implode(', ', $orders).')
@@ -1254,9 +1255,9 @@ class EnvoimoinscherModel
 	public function updateOrdersList($data, $id)
 	{
 		$sql_data = array(
-			'orders_eopl' => pSQL(serialize($data['orders'])),
-			'stats_eopl' => pSQL(serialize($data['stats'])),
-			'errors_eopl' => pSQL(serialize($data['errors']))
+			'orders_eopl' => pSQL(Tools::jsonEncode($data['orders'])),
+			'stats_eopl' => pSQL(Tools::jsonEncode($data['stats'])),
+			'errors_eopl' => pSQL(Tools::jsonEncode($data['errors']))
 			);
 		$this->db->autoExecute(_DB_PREFIX_.'emc_orders_plannings', $sql_data, 'UPDATE', 'id_eopl = '.(int)$id);
 	}
@@ -1271,9 +1272,9 @@ class EnvoimoinscherModel
 	public function makeNewPlanning($orders, $type)
 	{
 		$sql_data = array(
-			'orders_eopl' => pSQL(serialize(array('todo' => $orders, 'done' => array()))),
-			'stats_eopl'  => pSQL(serialize(array('total' => count($orders), 'ok' => 0, 'skipped' => 0, 'errors' => 0))),
-			'errors_eopl' => pSQL(serialize(array())),
+			'orders_eopl' => pSQL(Tools::jsonEncode(array('todo' => $orders, 'done' => array()))),
+			'stats_eopl'  => pSQL(Tools::jsonEncode(array('total' => count($orders), 'ok' => 0, 'skipped' => 0, 'errors' => 0))),
+			'errors_eopl' => pSQL(Tools::jsonEncode(array())),
 			'date_eopl'   => date('Y-m-d H:i:s'),
 			'type_eopl'   => (int)$type
 		);
@@ -1295,7 +1296,7 @@ class EnvoimoinscherModel
 	{
 		$data = array(
 			_DB_PREFIX_.'orders_id_order' => (int)$order,
-			'data_eopo'                   => pSQL(serialize($post_data)),
+			'data_eopo'                   => pSQL(Tools::jsonEncode($post_data)),
 			'date_eopo'                   => date('Y-m-d H:i:s')
 		);
 		$this->db->autoExecute(_DB_PREFIX_.'emc_orders_post', $data, 'REPLACE');
@@ -1304,7 +1305,7 @@ class EnvoimoinscherModel
 	public function getPostData($order)
 	{
 		$row = $this->db->ExecuteS('SELECT * FROM '._DB_PREFIX_.'emc_orders_post WHERE '._DB_PREFIX_.'orders_id_order = '.(int)$order.'');
-		if (isset($row[0]['data_eopo'])) return unserialize($row[0]['data_eopo']);
+		if (isset($row[0]['data_eopo'])) return Tools::jsonDecode($row[0]['data_eopo'], true);
 		return array(
 			'delivery'     => array(),
 			'quote'        => array(),
@@ -1420,8 +1421,8 @@ class EnvoimoinscherModel
 		$row = Db::getInstance()->executes('SELECT * FROM '._DB_PREFIX_.'carrier WHERE deleted = 0 AND id_carrier = '.$carrier_id);
 
 		DB::getInstance()->Execute('UPDATE '._DB_PREFIX_.'emc_services
-			 SET id_carrier = '.$carrier_id.', ref_carrier = '.$row[0]['id_reference'].', pricing_es = '.$data['pricing_es'].'
-			 WHERE id_es = '.$data['id_es'].'');
+			 SET id_carrier = '.$carrier_id.', ref_carrier = '.$row[0]['id_reference'].', pricing_es = '.pSQL($data['pricing_es']).'
+			 WHERE id_es = '.pSQL($data['id_es']).'');
 
 		if ((int)$service['id_carrier'] === 0)
 		{
@@ -1575,7 +1576,7 @@ class EnvoimoinscherModel
 	{
 		$row = $this->db->getRow('SELECT * FROM '._DB_PREFIX_.'cart WHERE id_cart = '.(int)$cart);
 		//TODO : gérer multi-livraisons avec $options
-		//$options = unserialize($row['delivery_option']);
+		//$options = Tools::jsonDecode($row['delivery_option'],true);
 		return $row;
 	}
 
@@ -1607,7 +1608,7 @@ class EnvoimoinscherModel
 	{
 		$rows = $this->db->getRow('SELECT * FROM '._DB_PREFIX_.'configuration WHERE name = "EMC_NO_FREESHIP"');
 		if (!isset($rows['value'])) $rows['value'] = array();
-		else $rows['value'] = unserialize($rows['value']);
+		else $rows['value'] = Tools::jsonDecode($rows['value'], true);
 		$carrier = $this->db->getRow('SELECT * FROM '._DB_PREFIX_.'carrier c
 			 JOIN '._DB_PREFIX_.'emc_services es ON c.id_carrier = es.id_carrier
 			 WHERE c.id_carrier = '.(int)$carrier_id);
@@ -1617,7 +1618,7 @@ class EnvoimoinscherModel
 
 	public function getLastPrices($cart_code)
 	{
-		return $this->db->getRow('SELECT * FROM '._DB_PREFIX_.'emc_api_pricing WHERE id_ap = "'.$cart_code.'" ORDER BY date_eap DESC');
+		return $this->db->getRow('SELECT * FROM '._DB_PREFIX_.'emc_api_pricing WHERE id_ap = "'.pSQL($cart_code).'" ORDER BY date_eap DESC');
 	}
 
 	public function cleanCache()

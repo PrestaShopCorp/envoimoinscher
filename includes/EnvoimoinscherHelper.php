@@ -283,14 +283,16 @@ class EnvoimoinscherHelper {
 
 			$uniq_id = rand(0, 3333).time();
 			if ($spec['type'] == 'input' && $type == 'text')
-				$field_form = '<input type="text" name="'.$field['code'].'" value="'.$default.'" maxlength="'.$spec['maxlength'].'" class="input-text" />';
+				$field_form = '<input type="text" name="'.$field['code'].'" value="'.Tools::safeOutput($default).
+				'" maxlength="'.$spec['maxlength'].'" class="input-text" />';
 			elseif ($spec['type'] == 'input' && $type == 'hidden')
-				$field_form = '<input type="hidden" name="'.$field['code'].'" value="'.$default.'" />';
+				$field_form = '<input type="hidden" name="'.$field['code'].'" value="'.Tools::safeOutput($default).'" />';
 			elseif ($spec['type'] == 'select')
 				$field_form = $this->prepareSelect($field['code'], $spec['content'], $default, $order_page);
 
 			if ($type !== 'hidden' && isset($spec['hidden']) && $spec['hidden'] === true)
-				$field_form = '<input type="hidden" name="'.$field['code'].'" value="'.$default.'" maxlength="'.$spec['maxlength'].'" class="input-text" />';
+				$field_form = '<input type="hidden" name="'.$field['code'].'" value="'.Tools::safeOutput($default).
+				'" maxlength="'.$spec['maxlength'].'" class="input-text" />';
 
 			$field_html = '<label for="field_'.$uniq_id.'">'.Tools::ucfirst($field['label']).'</label>';
 			return array(
@@ -319,7 +321,7 @@ class EnvoimoinscherHelper {
 		if (!isset($config['EMC_NO_FREESHIP']) || trim($config['EMC_NO_FREESHIP']) == '')
 			$config['EMC_NO_FREESHIP'] = array();
 		else
-			$config['EMC_NO_FREESHIP'] = unserialize($config['EMC_NO_FREESHIP']);
+			$config['EMC_NO_FREESHIP'] = Tools::jsonDecode($config['EMC_NO_FREESHIP'], true);
 		return $config;
 	}
 
@@ -363,8 +365,8 @@ class EnvoimoinscherHelper {
 			{
 				$from_to = array();
 				foreach ((array)$day_arr['hours'] as $hour)
-					$from_to[] = 'de '.$hour['from'].' à '.$hour['to'].'';
-				$day[] = '<b>'.$day_arr['day'].'</b> <br />'.implode('<br />', $from_to);
+					$from_to[] = Tools::safeOutput('de '.$hour['from'].' à '.$hour['to'].'');
+				$day[] = '<b>'.Tools::safeOutput($day_arr['day']).'</b> <br />'.implode('<br />', $from_to);
 			}
 		}
 		return $day;
@@ -389,11 +391,11 @@ class EnvoimoinscherHelper {
 			if ($source[0] == 'this')
 			{
 				$params = isset($info['params'])?(array)$info['params']:array();
-				$options = $this->$source[1]($params, $order_page);
+				$options = $this->$source[1]($params, Tools::safeOutput($order_page));
 				foreach ($options as $o => $option)
 				{
 					$selected = '';
-					if ($o == $default)
+					if ($o == Tools::safeOutput($default))
 						$selected = 'selected="selected"';
 					$html .= '<option value="'.$o.'" '.$selected.'>&nbsp;'.$option.'&nbsp;</option>';
 				}

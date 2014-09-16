@@ -43,15 +43,15 @@
         </tr>
         <tr>
           <td><label for="fromPostalCode">{l s='Departure zipcode : ' mod='envoimoinscher'}</label></td>
-          <td><input type="text" name="fromPostalCode" id="fromPostalCode" value="{if isset($postData.fromPostalCode) && $postData.fromPostalCode != ""}{$postData.fromPostalCode}{else}{$configEmc.EMC_POSTALCODE}{/if}" /></td>
+          <td><input type="text" name="fromPostalCode" id="fromPostalCode" value="{if isset($postData.fromPostalCode) && $postData.fromPostalCode != ""}{$postData.fromPostalCode|escape:'htmlall'}{else}{$configEmc.EMC_POSTALCODE}{/if}" /></td>
         </tr>
         <tr>
           <td><label for="fromCity">{l s='Departure city : ' mod='envoimoinscher'}</label></td>
-          <td><input type="text" name="fromCity" id="fromCity" value="{if isset($postData.fromCity) && $postData.fromCity != ''}{$postData.fromCity}{else}{$configEmc.EMC_CITY}{/if}" /></td>
+          <td><input type="text" name="fromCity" id="fromCity" value="{if isset($postData.fromCity) && $postData.fromCity != ''}{$postData.fromCity|escape:'htmlall'}{else}{$configEmc.EMC_CITY}{/if}" /></td>
         </tr>
         <tr>
           <td><label for="fromAddr">{l s='Departure address : ' mod='envoimoinscher'}</label></td>
-          <td><input type="text" name="fromAddr" id="fromAddr" value="{if isset($postData.fromAddr) && $postData.fromAddr != ''}{$postData.fromAddr}{else}{$configEmc.EMC_ADDRESS}{/if}" /></td>
+          <td><input type="text" name="fromAddr" id="fromAddr" value="{if isset($postData.fromAddr) && $postData.fromAddr != ''}{$postData.fromAddr|escape:'htmlall'}{else}{$configEmc.EMC_ADDRESS}{/if}" /></td>
         </tr>
         <tr>
           <td><label for="toCountry">{l s='Destination\'s country : ' mod='envoimoinscher'}</label></td>
@@ -63,15 +63,15 @@
         </tr>
         <tr>
           <td><label for="toPostalCode">{l s='Destination\'s zipcode : ' mod='envoimoinscher'}</label></td>
-          <td><input type="text" name="toPostalCode" id="toPostalCode" value="{if isset($postData.toPostalCode)}{$postData.toPostalCode}{/if}" /></td>
+          <td><input type="text" name="toPostalCode" id="toPostalCode" value="{if isset($postData.toPostalCode)}{$postData.toPostalCode|escape:'htmlall'}{/if}" /></td>
         </tr>
         <tr>
           <td><label for="toCity">{l s='Destination\'s city : ' mod='envoimoinscher'}</label></td>
-          <td><input type="text" name="toCity" id="toCity" value="{if isset($postData.toCity)}{$postData.toCity}{/if}" /></td>
+          <td><input type="text" name="toCity" id="toCity" value="{if isset($postData.toCity)}{$postData.toCity|escape:'htmlall'}{/if}" /></td>
         </tr>
         <tr>
           <td><label for="toAddr">{l s='Destination\'s address : ' mod='envoimoinscher'}</label></td>
-          <td><input type="text" name="toAddr" id="toAddr" value="{if isset($postData.toAddr)}{$postData.toAddr}{/if}" /></td>
+          <td><input type="text" name="toAddr" id="toAddr" value="{if isset($postData.toAddr)}{$postData.toAddr|escape:'htmlall'}{/if}" /></td>
         </tr>
       </tbody>
     </table>

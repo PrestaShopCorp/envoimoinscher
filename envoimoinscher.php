@@ -139,7 +139,7 @@ class Envoimoinscher extends CarrierModule
 		$this->description = $this->l('Shipping module : 15 carriers with negotiated prices');
 		$this->model = new EnvoimoinscherModel(Db::getInstance(), $this->name);
 		$this->link = new Link();
-		$this->website_url = "https://www.envoimoinscher.com";
+		$this->website_url = 'https://www.envoimoinscher.com';
 	}
 
 	/**
@@ -152,10 +152,10 @@ class Envoimoinscher extends CarrierModule
 		// the module no longer compatible under PS1.5
 		if (version_compare(_PS_VERSION_, '1.5', '<'))
 		{
-		    $this->_errors[] = $this->l('ENVOIMOINSCHER is not compatible with PrestaShop lower than 1.5.');
+			$this->_errors[] = $this->l('ENVOIMOINSCHER is not compatible with PrestaShop lower than 1.5.');
 			$error  = '[ENVOIMOINSCHER]['.time().'] '.$this->l('ENVOIMOINSCHER is not compatible with PrestaShop lower than 1.5.');
 			Logger::addLog($error);
-		    return false;
+			return false;
 		}
 
 		// if curl's not avaliable, the module wont work
@@ -267,8 +267,8 @@ class Envoimoinscher extends CarrierModule
 		$tab = new Tab($id_tab); // Instanciation of tab
 
 		// remove column in table
-		$columns = DB::getInstance()->executeS('DESCRIBE `'._DB_PREFIX_.'carrier`');
-		$column_to_remove = array('emc_services_id_es', 'emc_type'); // Column to remove
+		//$columns = DB::getInstance()->executeS('DESCRIBE `'._DB_PREFIX_.'carrier`');
+		//$column_to_remove = array('emc_services_id_es', 'emc_type'); // Column to remove
 
 		// remove emc carriers
 		$remove_emc_carriers = 'UPDATE `'._DB_PREFIX_.'carrier` set deleted = 1 where external_module_name = "'.$this->name.'"';
@@ -630,7 +630,7 @@ class Envoimoinscher extends CarrierModule
 					'name' => Tools::substr($type, strpos($type, '-') + 1)
 				);
 			}
-		
+
 		$helper = new EnvoimoinscherHelper();
 
 		$config = $helper->configArray($this->model->getConfigData()); // Get configs
@@ -919,7 +919,7 @@ class Envoimoinscher extends CarrierModule
 			// get zone_id by country id
 			$country_iso = Tools::getValue('toCountry');
 			$zone_row = Db::getInstance()->executeS('SELECT * FROM '._DB_PREFIX_.'country
-				 WHERE iso_code = "'.$country_iso.'"');
+				 WHERE iso_code = "'.pSQL($country_iso).'"');
 
 			$offers = $this->makeApiCall(array(
 				'testPage' => true,
@@ -947,7 +947,7 @@ class Envoimoinscher extends CarrierModule
 				'id_lang' => $cookie->id_lang,
 				'cartObject' => $cart_object,
 				'additionalCost' => 0,
-				'dbCart' => array('delivery_option' => serialize(array()))
+				'dbCart' => array('delivery_option' => Tools::jsonEncode(array()))
 			));
 			if (isset($offers['isError']) && $offers['isError'] == 1)
 			{
@@ -1057,7 +1057,7 @@ class Envoimoinscher extends CarrierModule
 
 		// all orders to send
 		$planning = $this->model->getLastPlanning();
-		$orders_to_send = unserialize($planning['orders_eopl']);
+		$orders_to_send = Tools::jsonDecode($planning['orders_eopl'], true);
 		$smarty->assign('tab_news', $this->model->getApiNews($this->ws_name, $this->version));
 		$smarty->assign('tpl_news', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/news.tpl');
 		$smarty->assign('local_fancybox', $this->useLocalFancybox());
@@ -1262,7 +1262,8 @@ class Envoimoinscher extends CarrierModule
 		$data = $this->model->prepareOrderInfo($order_id, $helper->configArray($this->model->getConfigData()));
 		if ($data['is_dp'] == 1)
 		{
-			$url = Envoimoinscher::getMapByOpe($data['code_eo'], substr($data['order'][0]['offerCode'],5), $data['config']['EMC_CITY'], $data['config']['EMC_POSTALCODE'], $data['config']['EMC_ADDRESS'], 'FR');
+			$url = Envoimoinscher::getMapByOpe($data['code_eo'], Tools::substr($data['order'][0]['offerCode'], 5),
+				$data['config']['EMC_CITY'], $data['config']['EMC_POSTALCODE'], $data['config']['EMC_ADDRESS'], 'FR');
 			$helper->setFields('depot.pointrelais',
 				array('helper' => '<p class="note"><a data-fancybox-type="iframe" target="_blank" href="'.$url.
 				'" class="getParcelPoint action_module fancybox thousand_box">'.$this->l('Get parcel point').'</a><br/>'.
@@ -1278,7 +1279,7 @@ class Envoimoinscher extends CarrierModule
 			);
 		$url = Envoimoinscher::getMapByOpe(
 			$data['code_eo'],
-			substr($data['order'][0]['offerCode'],5),
+			Tools::substr($data['order'][0]['offerCode'], 5),
 			urlencode($data['delivery']['ville']),
 			$data['delivery']['code_postal'],
 			urlencode($data['delivery']['adresse']), $data['order'][0]['iso_code']);
@@ -1682,7 +1683,7 @@ class Envoimoinscher extends CarrierModule
 				{
 					$is_proforma = true;
 					$proforma_data = $data['proforma'];
-					$session_proforma = unserialize($cookie->emc_order_proforma);
+					$session_proforma = Tools::jsonDecode($cookie->emc_order_proforma, true);
 					if (isset($session_proforma[1]) && count($session_proforma[1]) > 1)
 						$proforma_data = $session_proforma;
 				}
@@ -1817,7 +1818,7 @@ class Envoimoinscher extends CarrierModule
 
 		if (Configuration::get('EMC_SRV_MODE') == EnvoimoinscherModel::MODE_CONFIG)
 			return false;
-			
+
 		// cache of shipping cost
 		if (isset(Envoimoinscher::$cache[$cache_code]))
 			return Envoimoinscher::$cache[$cache_code];
@@ -1832,7 +1833,7 @@ class Envoimoinscher extends CarrierModule
 		// ajax page : get carrier pricing from database
 		$price_row = Db::getInstance()->getRow('SELECT *
 			 FROM `'._DB_PREFIX_.'emc_api_pricing`
-			 WHERE `id_ap` = "'.$pricing_code.'"
+			 WHERE `id_ap` = "'.pSQL($pricing_code).'"
 			 AND DATE(`date_eap`) = CURDATE() ');
 		$update = false;
 		if ($price_row !== 'false')
@@ -1888,12 +1889,15 @@ class Envoimoinscher extends CarrierModule
 
 			if (isset($offers[$this->id_carrier]))
 			{
-				Db::getInstance()->autoExecute(_DB_PREFIX_.'emc_api_pricing', $offers[$this->id_carrier]['pricingData'], 'INSERT IGNORE');
+				$sql_offers = array_map('pSQL', $offers[$this->id_carrier]['pricingData']);
+				Db::getInstance()->autoExecute(_DB_PREFIX_.'emc_api_pricing', $sql_offers, 'INSERT IGNORE');
 				$return = $offers[$this->id_carrier]['priceHT_db'];
 			}
 			// for relay points if free delivery
-			elseif(isset($offers[$ref->id_carrier])){
-				Db::getInstance()->autoExecute(_DB_PREFIX_.'emc_api_pricing', $offers[$ref->id_carrier]['pricingData'], 'INSERT IGNORE');
+			elseif (isset($offers[$ref->id_carrier]))
+			{
+				$sql_offers = array_map('pSQL', $offers[$ref->id_carrier]['pricingData']);
+				Db::getInstance()->autoExecute(_DB_PREFIX_.'emc_api_pricing', $sql_offers, 'INSERT IGNORE');
 				$return = $offers[$ref->id_carrier]['priceHT_db'];
 			}
 			elseif (count($offers) === 0)
@@ -1913,7 +1917,7 @@ class Envoimoinscher extends CarrierModule
 		}
 		else
 		{
-			$prices = unserialize($price_row['carriers_eap']);
+			$prices = Tools::jsonDecode($price_row['carriers_eap'], true);
 			if (!isset($prices[$ref->id_address_delivery]) || !isset($prices[$ref->id_address_delivery][$this->id_carrier]))
 				$return = false;
 			else
@@ -2230,7 +2234,7 @@ class Envoimoinscher extends CarrierModule
 		{
 			if ($q != '' && Db::getInstance()->execute($q) === false)
 			{
-				
+
 				Logger::addLog('[ENVOIMOINSCHER]['.time().'] '.$this->l('Update : Error while updating your offers : ').$q);
 				if ($ajax)
 				{
@@ -2329,6 +2333,7 @@ class Envoimoinscher extends CarrierModule
 		$error_occured = false;
 		$correct_code = true;
 		$options = unserialize($params['cart']->delivery_option);
+
 		foreach ($options as $o => $option)
 		{
 			$ope = $this->model->getCarrierWithPricing($cart_id, $option);
@@ -2351,7 +2356,7 @@ class Envoimoinscher extends CarrierModule
 					$variable = 'choosePoint'.$ope[0]['emc_operators_code_eo'].$o;
 					$cookie->$variable = 1;
 				}
-				$prices = unserialize($ope[0]['prices_eap']);
+				$prices = Tools::jsonDecode($ope[0]['prices_eap'], true);
 				$price = $price + $prices[$o][$ope[0]['id_carrier']];
 			}
 		}
@@ -2378,12 +2383,12 @@ class Envoimoinscher extends CarrierModule
 		// Get cart carrier (if EnvoiMoinsCher, make some supplementary operations)
 		$row = $this->model->getCarrierByCartPricing($params['cart']->id);
 		// if it's not our carrier, nothing to do here
-		if($row[0]['external_module_name'] !== $this->name)
+		if ($row[0]['external_module_name'] !== $this->name)
 			return;
-			
+
 		$cookie = $this->getContext()->cookie;
 		$cookie->emc_carrier = '';
-		
+
 		if (isset($row[0]['point_eap']) && $row[0]['point_eap'] != '')
 		{
 			// Insert parcel point informations
@@ -2441,7 +2446,7 @@ class Envoimoinscher extends CarrierModule
 	public function hookupdateCarrier($params)
 	{
 		// if it's not our carrier, nothing to do here
-		if($params['carrier']->external_module_name !== $this->name)
+		if ($params['carrier']->external_module_name !== $this->name)
 			return;
 
 		$data = array('id_carrier' => (int)$params['carrier']->id);
@@ -2473,16 +2478,17 @@ class Envoimoinscher extends CarrierModule
 		$points = array();
 		$point = '';
 		$pricing = $this->model->getLastPrices(EnvoimoinscherHelper::getPricingCode($params['cart']));
-		if(empty($pricing)){
+		if (empty($pricing))
+		{
 			$this->getOrderShippingCost($params['cart'], 311);
 			$pricing = $this->model->getLastPrices(EnvoimoinscherHelper::getPricingCode($params['cart']));
 		}
 		if (isset($pricing['points_eap']))
 		{
-			$points = unserialize($pricing['points_eap']);
+			$points = Tools::jsonDecode($pricing['points_eap'], true);
 			$point = $pricing['point_eap'];
 		}
-		$delivery = ($pricing['date_delivery'] == '')?array():unserialize($pricing['date_delivery']);
+		$delivery = ($pricing['date_delivery'] == '')?array():Tools::jsonDecode($pricing['date_delivery'], true);
 		$cart_data = $this->prepareQuotationCartData($params['cart']->id, $params['address']);
 
 		foreach ($delivery as $key => $value)
@@ -2642,7 +2648,7 @@ class Envoimoinscher extends CarrierModule
 		$cookie = $this->getContext()->cookie;
 		$currency = new Currency((int)$params['cartObject']->id_currency);
 		$carrier_tax = 0;
-		
+
 		// If no address selected, we set the default one
 		if ((empty($params['address']) || count($params['address']) === 0) ||
 				((empty($params['address']['city']) || count($params['address']['city']) === 0 || $params['address']['city'] == '') &&
@@ -2668,7 +2674,7 @@ class Envoimoinscher extends CarrierModule
 			'PS_SHIPPING_FREE_WEIGHT'
 		));
 		// Multi-shipping : get current carrier id
-		$options = (array)unserialize($params['dbCart']['delivery_option']);
+		$options = (array)Tools::jsonDecode($params['dbCart']['delivery_option'], true);
 		$default_carrier = 0;
 		foreach ($options as $o => $option)
 			if ($o == $params['dbCart']['current_address'])
@@ -3009,14 +3015,16 @@ class Envoimoinscher extends CarrierModule
 				}
 			}
 		}
-		$prices_eap = (isset($params['dbCart']['current_address']) ? serialize(array($params['dbCart']['current_address'] => $prices_array)) : null);
-		$carriers_eap = (isset($params['dbCart']['current_address']) ? serialize(array($params['dbCart']['current_address'] => $carriers_info)) : null);
+		$prices_eap = (isset($params['dbCart']['current_address']) ?
+			Tools::jsonEncode(array($params['dbCart']['current_address'] => $prices_array)) : null);
+		$carriers_eap = (isset($params['dbCart']['current_address']) ?
+			Tools::jsonEncode(array($params['dbCart']['current_address'] => $carriers_info)) : null);
 		$pricing_data = array(
 			_DB_PREFIX_.'cart_id_cart' => $params['cart'],
 			'date_eap'                 => date('Y-m-d H:i:s'),
-			'date_delivery' 					 => serialize($all_delivery_dates),
+			'date_delivery' 					 => Tools::jsonEncode($all_delivery_dates),
 			'free_shipping_eap'        => ($free_delivery || (isset($discount_shipping) && $discount_shipping)) ? 1 : 0,
-			'points_eap'               => serialize($all_points_list),
+			'points_eap'               => Tools::jsonEncode($all_points_list),
 			'id_ap'                    => (isset($params['pricingCode']) ? $params['pricingCode'] : false),
 			'prices_eap'               => $prices_eap,
 			'carriers_eap'             => $carriers_eap
@@ -3094,10 +3102,8 @@ class Envoimoinscher extends CarrierModule
 	 */
 	private function parseUpgradeXml($file)
 	{
-		if(!file_exists($file))
-		{
+		if (!file_exists($file))
 			return array();
-		}
 		$result = array();
 		$dom_cl = new DOMDocument();
 		$dom_cl->load($file);
@@ -3246,14 +3252,14 @@ class Envoimoinscher extends CarrierModule
 				$orders_to_get[] = (int)$ord;
 		elseif (Tools::isSubmit('order'))
 			$orders_to_get[] = (int)Tools::getValue('order');
-		
-		if(count($orders_to_get) > 0)
+
+		if (count($orders_to_get) > 0)
 		{
 			$references = $this->model->getReferencesToLabels($orders_to_get);
 			foreach ($references as $reference)
 				$refs[] = $reference['ref_emc_eor'];
 		}
-		
+
 		if (count($refs) > 0)
 		{
 			$slip_url = stristr($references[0]['link_ed'], $references[0]['ref_emc_eor'], true);
@@ -3759,7 +3765,7 @@ class Envoimoinscher extends CarrierModule
 		// fetch the 32 last char -- PS config field accept <= 32 char in PS 1.5
 		if (count($parcel_points) > 0)
 			foreach ($parcel_points as $carrier => $code)
-				Configuration::updateValue('EMC_PP_'.Tools::strtoupper(substr($carrier, -25)), $code);
+				Configuration::updateValue('EMC_PP_'.Tools::strtoupper(Tools::substr($carrier, -25)), $code);
 	}
 
 	/**
@@ -3796,7 +3802,7 @@ class Envoimoinscher extends CarrierModule
 				Configuration::updateValue('EMC_SERVICES', implode(',', $all_ser));
 				$full_list = array();
 				foreach ($all_ser as $serv)
-					$full_list[] = '\''.$serv.'\'';
+					$full_list[] = '\''.pSQL($serv).'\'';
 				$not_in = array();
 				$srv_list = $helper->makeCodeKeys($this->model->getOffers(
 					false,
@@ -3828,7 +3834,7 @@ class Envoimoinscher extends CarrierModule
 					$not_in[]   = (int)$carrier_id;
 
 					DB::getInstance()->Execute('UPDATE '._DB_PREFIX_.'emc_services
-					  SET id_carrier = '.$carrier_id.', pricing_es = '.$pricing.'
+					  SET id_carrier = '.pSQL($carrier_id).', pricing_es = '.$pricing.'
 					  WHERE id_es = '.(int)$service['id_es'].'');
 				}
 
@@ -3880,7 +3886,7 @@ class Envoimoinscher extends CarrierModule
 			Configuration::updateValue('EMC_SERVICES', implode(',', $all_ser));
 			$full_list = array();
 			foreach ($all_ser as $serv)
-				$full_list[] = '\''.$serv.'\'';
+				$full_list[] = '\''.pSQL($serv).'\'';
 			$not_in = array();
 			$srv_list = $helper->makeCodeKeys($this->model->getOffers(
 				false,
@@ -4035,11 +4041,11 @@ class Envoimoinscher extends CarrierModule
 		return '';
 	}
 
-	public static function getMapByOpe($ope, $srv = false, $city = false, $postalcode = false, $address = false, $country = false)	{
-		
-					$link = '//www.envoimoinscher.com/choix-relais.html?cp='.($postalcode ? $postalcode : Configuration::get('EMC_POSTALCODE')).
-							'&ville='.urlencode(($city ? $city : Configuration::get('EMC_CITY'))).'&country='.($country ? $country : 'FR').'&srv='.$srv.'&ope='.$ope;
-		
+	public static function getMapByOpe($ope, $srv = false, $city = false, $postalcode = false, $address = false, $country = false)
+	{
+		$link = '//www.envoimoinscher.com/choix-relais.html?cp='.($postalcode ? $postalcode : Configuration::get('EMC_POSTALCODE')).
+				'&ville='.urlencode(($city ? $city : Configuration::get('EMC_CITY'))).'&country='.($country ? $country : 'FR').'&srv='.$srv.'&ope='.$ope;
+
 		return $link;
 	}
 }

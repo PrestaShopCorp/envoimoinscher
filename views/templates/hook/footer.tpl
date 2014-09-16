@@ -22,6 +22,40 @@
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
+ 
+<style type="text/css">
+	#mapContainer{
+		display:none;
+		width:80%;
+		height:80%;
+		position: absolute;
+		top:100px;
+		paddding:10px;
+		left:10%;
+		z-index:11111;
+		border:3px solid #000000;
+		background: #FFFFFF;
+	}
+
+	#mapContainer p{
+		width:98%;
+		text-align:right;
+		height:auto; 
+		padding-right:2%; 
+		margin-top:1%;
+	}
+
+	#mapContainer #map_canva{
+		width:100%; 
+		height:89%;
+	}
+
+	.click-here{
+		text-decoration: underline;
+		font-weight : bold;
+		color: #333;
+	}
+</style>
 
 <div id="allMap">
 	<div id="mapContainer">
