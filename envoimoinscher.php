@@ -3837,7 +3837,7 @@ class Envoimoinscher extends CarrierModule
 					$not_in[]   = (int)$carrier_id;
 
 					DB::getInstance()->Execute('UPDATE '._DB_PREFIX_.'emc_services
-					  SET id_carrier = '.pSQL($carrier_id).', pricing_es = '.$pricing.'
+					  SET id_carrier = '.(int)$carrier_id.', pricing_es = '.$pricing.'
 					  WHERE id_es = '.(int)$service['id_es'].'');
 				}
 
