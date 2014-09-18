@@ -95,7 +95,7 @@ if (ctype_alnum(Tools::getValue('key')) && $order_id > 0)
 		if ($text_tracking == '')
 		{
 			$cmd_row = Db::getInstance()->ExecuteS('SELECT * FROM '._DB_PREFIX_.'order_state_lang
-				 WHERE id_order_state = '.(int)$new_order_atate.' AND id_lang = '.(int)$emc->language->id);
+				 WHERE id_order_state = '.pSQL($new_order_atate).' AND id_lang = '.pSQL($emc->language->id));
 			$text_tracking = 'Etat de votre commande : '.$cmd_row[0]['name'];
 		}
 		$date_get = date('Y-m-d H:i:s', strtotime(Tools::getValue('date')));

@@ -259,7 +259,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentcarrierssimple_9054761d7e0ae94a2
 $_MODULE['<{envoimoinscher}prestashop>getcontentcarrierssimple_94966d90747b97d1f0f206c98a8b1ac3'] = 'Enregistrer';
 
 /*
-	--- getcontenthelp ---
+	--- getcontenthelp --- 
 */
 
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_6c92285fa6d3e827b198d120ea3ac674'] = 'ici';

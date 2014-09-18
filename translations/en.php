@@ -32,6 +32,7 @@
  * value = value 
  */
 
+
 global $_MODULE;
 $_MODULE = array();
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_7f74918fbc764950d04a34d798bb1f99'] = 'An error occured, this step will not work';

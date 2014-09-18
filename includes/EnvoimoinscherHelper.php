@@ -514,10 +514,8 @@ class EnvoimoinscherHelper {
 	*/
 	public static function getPricingCode($cart)
 	{
-		$code = $cart->id;
-		//$time = time() / 3600;
 		$delivery_address = new Address($cart->id_address_delivery);
-		$code .= $delivery_address->company;
+		$code = $delivery_address->company;
 		$code .= $delivery_address->address1;
 		$code .= $delivery_address->address2;
 		$code .= $delivery_address->postcode;
@@ -528,8 +526,22 @@ class EnvoimoinscherHelper {
 		$code .= Configuration::get('EMC_CITY');
 		$code .= date('Y-m');
 
+		$weight = 0;
 		foreach ($cart->getProducts() as $product)
-			$code .= $product['id_product_attribute'].';'.$product['id_product'].';'.$product['cart_quantity'].';'.$product['weight'].'!';
+		{
+			if ($product['weight'] != 0)
+				$weight += $product['cart_quantity'] * $product['weight'];
+			else
+				$weight += $product['cart_quantity'] * (int)Configuration::get('EMC_AVERAGE_WEIGHT');
+		}
+		$code .= $weight;
+
+		// if address isn't set yet we put a default value to find cache
+		if ($cart->id_address_delivery == 0)
+			$code .= 'def';
+		else
+			$code .= $cart->id;
+
 		return sha1($code);
 	}
 
