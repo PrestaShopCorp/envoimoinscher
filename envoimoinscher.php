@@ -128,9 +128,9 @@ class Envoimoinscher extends CarrierModule
 		);
 		$this->name = 'envoimoinscher';
 		$this->tab = 'shipping_logistics';
-		$this->version = '3.1.6';
+		$this->version = '3.1.7';
 		$this->author = 'EnvoiMoinsCher';
-		$this->local_version = '3.1.6';
+		$this->local_version = '3.1.7';
 		parent::__construct();
 		$this->page = basename(__FILE__, '.php');
 		$this->displayName = 'EnvoiMoinsCher';
@@ -622,12 +622,21 @@ class Envoimoinscher extends CarrierModule
 
 		// we build the array $wrapping_types (wrapping type for POFR)
 		$wrapping_types = array();
-		if (isset($api_params['type_emballage.emballage']))
-			foreach ($api_params['type_emballage.emballage']['array'] as $type)
-				$wrapping_types[count($wrapping_types)] = array(
-					'id' => $type,
-					'name' => Tools::substr($type, strpos($type, '-') + 1)
-				);
+
+		foreach ($api_params as $api_param)
+		{
+			if (isset($api_param['code']['fr']) &&  $api_param['code']['fr'] == 'emballage.type_emballage')
+			{
+				foreach ($api_param['values'] as $type)
+				{
+					$wrapping_types[count($wrapping_types)] = array(
+						'id' => $type,
+						'name' => Tools::substr($type, strpos($type, '-') + 1)
+					);
+				}
+			}
+		}
+
 		$helper = new EnvoimoinscherHelper();
 
 		$config = $helper->configArray($this->model->getConfigData()); // Get configs
@@ -1826,7 +1835,7 @@ class Envoimoinscher extends CarrierModule
 			 FROM `'._DB_PREFIX_.'emc_api_pricing`
 			WHERE `id_ap` = "'.pSQL($pricing_code).'" ');
 		$update = false;
-		
+
 		if ($price_row !== 'false')
 		{
 			$date_eap_timestamp = strtotime($price_row['date_eap']);
@@ -1835,7 +1844,7 @@ class Envoimoinscher extends CarrierModule
 			$date_upd_cfg_timestamp = strtotime(DB::getInstance()->getValue($query));
 
 			$update = $date_eap_timestamp < $date_upd_cfg_timestamp || $date_upd_cfg_timestamp === false;
-		}	
+		}
 
 		//if prices not found in emc prices table
 		if ($price_row === false || $update === true)
@@ -1852,7 +1861,7 @@ class Envoimoinscher extends CarrierModule
 				$address = new Address($ref->id_address_delivery);
 				$country = Db::getInstance()->getRow('SELECT * FROM '._DB_PREFIX_.'country WHERE id_country = "'.$address->id_country.'"');
 
-				$cart_data['address']['type'] = 'particulier'; 
+				$cart_data['address']['type'] = 'particulier';
 				$cart_data['address']['country'] = $country['iso_code'];
 				$cart_data['address']['postcode'] = $address->postcode;
 				$cart_data['address']['street'] = $address->address1;

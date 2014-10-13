@@ -1,0 +1,2 @@
+UPDATE `{PREFIXE}emc_services` SET `desc_es`='Dépôt en Relais Colis - Livraison en Relais Colis en 10 jours, en France', `desc_store_es`='Livraison en Relais Colis en 10 jours' WHERE `code_es`="RelaisColis";
+-- REQUEST --

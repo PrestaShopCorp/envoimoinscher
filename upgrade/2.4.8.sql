@@ -1,0 +1,2 @@
+INSERT INTO {PREFIXE}emc_services (code_es, emc_operators_code_eo, label_es, desc_es, desc_store_es, label_store_es, price_type_es, is_parcel_point_es, family_es) VALUES ('Chrono18', 'CHRP', 'Chrono18', 'Dépôt en bureau de poste - Livraison express à domicile, le lendemain (avant 18h), en France. Dépôt en bureau de poste si la livraison rate.', 'Livraison express à domicile, le lendemain (avant 18h). Si la livraison rate, dépôt en bureau de poste', 'Chrono18', 0, 0, 2);
+-- REQUEST --

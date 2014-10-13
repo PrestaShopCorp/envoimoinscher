@@ -27,7 +27,7 @@
 		<table class="table order" id="ORDERSTABLE{$id|escape:'htmlall'}" cellspacing="0" cellpadding="0">
 			<thead>
 				<tr>
-					<th class="fixed-width-xs"></th>
+					<th class="fixed-width-xs"><span class="title_box text-center"><input id="selectOrDeselectAll{$id|escape:'htmlall'}" type="checkbox" checked="checked" /></span></th>
 					<th class="fixed-width-xs text-center"><span class="title_box active text-center">{l s='ID' mod='envoimoinscher'}</span></th>
 					<th><span class="title_box">{l s='recipient' mod='envoimoinscher'}</span></th>
 					<th class="text-center"><span class="title_box">{l s='Pickup' mod='envoimoinscher'}</span></th>

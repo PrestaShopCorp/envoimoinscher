@@ -23,6 +23,7 @@
  * International Registred Trademark & Property of PrestaShop SA
  */
 
+ 
  // checkboxes handling
 function selectDeselectAll(container, ref)
 {
