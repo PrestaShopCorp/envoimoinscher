@@ -1,0 +1,9 @@
+INSERT INTO {PREFIXE}emc_services (code_es, emc_operators_code_eo, label_es, desc_es, desc_store_es, label_store_es, price_type_es, is_parcel_point_es, family_es) VALUES ("ChronoRelais", "CHRP", "Chrono Relais", "Livraison en points relais Chronopost", "Livraison en points relais Chronopost", "Chrono Relais", "0", "1", "1");
+-- REQUEST --
+INSERT INTO {PREFIXE}emc_services (code_es, emc_operators_code_eo, label_es, desc_es, desc_store_es, label_store_es, price_type_es, is_parcel_point_es, family_es) VALUES ("ExpressInternationalColis", "TNTE", "Express International", "Livraison à domicile en 1 à 7 jours, à l\'international (hors délai de douanes)", "Livraison à domicile en 1 à 7 jours (hors délai de douanes)", "Express International", "0", "0", "2");
+-- REQUEST --
+UPDATE {PREFIXE}emc_services SET desc_es = 'Livraison express à domicile en 24h à 72h, à l\'international (hors délai de douanes)', desc_store_es = 'Livraison express à domicile en 24h à 72h (hors délai de douanes)' WHERE {PREFIXE}emc_services.code_es = 'ExpressWorldwide';
+-- REQUEST --
+UPDATE {PREFIXE}emc_services SET desc_es = 'Dépôt en bureau de poste - Livraison à domicile en 2 à 4 jours, en Europe (hors délai de douanes)', desc_store_es = 'Livraison à domicile en 2 à 4 jours (hors délai de douanes)' WHERE {PREFIXE}emc_services.code_es = 'DepotexpressEurope';
+-- REQUEST --
+UPDATE {PREFIXE}emc_services SET desc_es = 'Dépôt en bureau de poste - Livraison express à domicile, le lendemain (avant 13h), en France. Dépôt en bureau de poste si la livraison rate.', desc_store_es = 'Livraison express à domicile, le lendemain (avant 13h). Si la livraison rate, dépôt en bureau de poste' WHERE {PREFIXE}emc_services.code_es = 'Depotexpress';

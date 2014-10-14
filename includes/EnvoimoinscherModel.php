@@ -875,7 +875,7 @@ class EnvoimoinscherModel
 			'date_order_eor'                 => date('Y-m-d H:i:s'),
 			'date_collect_eor'               => pSQL($date_collect_eor),
 			'date_del_eor'                   => pSQL($date_del_eor),
-			'tracking_eor'                   => pSQL( (isset($data['trackingKey']) ? $data['trackingKey'] : null ) ),
+			'tracking_eor'                   => pSQL( (isset($data['tracking_key']) ? $data['tracking_key'] : null ) ),
 			'parcels_eor'                    => count($data['parcels'])
 			);
 		$this->db->autoExecute(_DB_PREFIX_.'emc_orders', $order_data, 'REPLACE');

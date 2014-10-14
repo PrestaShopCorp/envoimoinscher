@@ -132,7 +132,7 @@ class Env_Parameters extends Env_WebService {
 			}
 			$operator_data['services'][$service_data['code']] = $service_data;
 		}
-		$this->parameters[$operator_data['code']] = $operator_data;
+		$this->parameters[$operator_data['code']] = $parameter_data;
 	}
 }
 ?>
