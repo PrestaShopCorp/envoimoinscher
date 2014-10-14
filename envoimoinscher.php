@@ -2416,6 +2416,8 @@ class Envoimoinscher extends CarrierModule
 				Db::getInstance()->autoExecute(_DB_PREFIX_.'emc_points', $data, 'INSERT');
 			}
 		}
+		
+		Configuration::updateValue('ENVOIMOINSCHER_CONFIGURATION_OK', true);
 		return true;
 	}
 
