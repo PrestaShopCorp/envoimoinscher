@@ -128,7 +128,7 @@ class Envoimoinscher extends CarrierModule
 		);
 		$this->name = 'envoimoinscher';
 		$this->tab = 'shipping_logistics';
-		$this->version = '3.1.7';
+		$this->version = '3.1.8';
 		$this->author = 'EnvoiMoinsCher';
 		$this->local_version = '3.1.7';
 		parent::__construct();
