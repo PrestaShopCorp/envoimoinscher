@@ -2859,10 +2859,7 @@ class Envoimoinscher extends CarrierModule
 				$presented = array();
 				// look for discount type : free shipping
 				$discount_shipping = false;
-				if (!$params['testPage'])
-					foreach ($this->getContext()->cart->getCartRules() as $rule)
-						if ((int)$rule['free_shipping'] == 1)
-							$discount_shipping = true;
+
 				$classes_css = 0;
 
 				foreach ($offers_quotation as $offer)
