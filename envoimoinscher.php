@@ -128,9 +128,9 @@ class Envoimoinscher extends CarrierModule
 		);
 		$this->name = 'envoimoinscher';
 		$this->tab = 'shipping_logistics';
-		$this->version = '3.1.8';
+		$this->version = '3.1.9';
 		$this->author = 'EnvoiMoinsCher';
-		$this->local_version = '3.1.7';
+		$this->local_version = '3.1.9';
 		parent::__construct();
 		$this->page = basename(__FILE__, '.php');
 		$this->displayName = 'EnvoiMoinsCher';
@@ -2861,10 +2861,7 @@ class Envoimoinscher extends CarrierModule
 				$presented = array();
 				// look for discount type : free shipping
 				$discount_shipping = false;
-				if (!$params['testPage'])
-					foreach ($this->getContext()->cart->getCartRules() as $rule)
-						if ((int)$rule['free_shipping'] == 1)
-							$discount_shipping = true;
+
 				$classes_css = 0;
 
 				foreach ($offers_quotation as $offer)
