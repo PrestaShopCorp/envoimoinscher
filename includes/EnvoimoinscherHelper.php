@@ -527,13 +527,18 @@ class EnvoimoinscherHelper {
 		$code .= date('Y-m');
 
 		$weight = 0;
+		$price = 0;
 		foreach ($cart->getProducts() as $product)
 		{
+			$price += $product['total_wt'];
+
 			if ($product['weight'] != 0)
 				$weight += $product['cart_quantity'] * $product['weight'];
 			else
-				$weight += $product['cart_quantity'] * (int)Configuration::get('EMC_AVERAGE_WEIGHT');
+				$weight += $product['cart_quantity'] * (float)Configuration::get('EMC_AVERAGE_WEIGHT');
 		}
+
+		$code .= $price;
 		$code .= $weight;
 
 		// if address isn't set yet we put a default value to find cache
