@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_documents` (
 	`{PREFIXE}cart_id_cart` int(10) unsigned NOT NULL,
 	`link_ed` varchar(255) NOT NULL,
 	`generated_ed` int(1) NOT NULL DEFAULT 0,
-	`type_ed` enum("label","proforma") NOT NULL,
+	`type_ed` varchar(100) NOT NULL,
 	PRIMARY KEY (`id_ed`),
 	KEY `{PREFIXE}orders_id_order` (`{PREFIXE}orders_id_order`)
 ) DEFAULT CHARSET=utf8;

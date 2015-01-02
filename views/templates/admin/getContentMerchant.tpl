@@ -173,33 +173,6 @@
 			</select>
 		</div>
 		<div class="clear both"></div>
-		{*
-		 TODO : A déplacer
-		<!-- Relais colis -->
-		<label for="EMC_exp_relais_colis">
-			{l s='Relay point depot to Relais Colis®:' mod='envoimoinscher'}
-		</label>
-		<div class="margin-form">
-			<input type="text" id="EMC_exp_relais_colis" name="EMC_exp_relais_colis" value="{Tools::getValue('EMC_exp_relais_colis', $EMC_config.EMC_RELAIS_SOGP)|escape:'htmlall'}" />
-			<p class="preference_description">
-				{l s='To choose Relais Colis ®, copy and paste the code point near your choice (for example: K1168, K1161, K1170).' mod='envoimoinscher'}<br />
-				<a href="#" class="action_module" onclick="javascript: openPopupEmc('SOGP'); return false;">{l s='Get the code' mod='envoimoinscher'}</a>
-			</p>
-		</div>
-		<div class="clear both"></div>
-		<!-- Mondial relay -->
-		<label for="EMC_exp_mondial_relay">
-			{l s='Relay point depot to Mondial Relay:' mod='envoimoinscher'}
-		</label>
-		<div class="margin-form add-tooltip">
-			<input type="text" id="EMC_exp_mondial_relay" name="EMC_exp_mondial_relay" value="{Tools::getValue('EMC_exp_mondial_relay', $EMC_config.EMC_RELAIS_MONR)|escape:'htmlall'}" />
-			<p class="preference_description">
-				{l s='To select your pick-up point, copy and paste the code point near your choice (for example: 010081, 042358, 072559, 067199).' mod='envoimoinscher'}<br />
-				<a href="#" class="action_module" onclick="javascript: openPopupEmc('MONR'); return false;">{l s='Get the code' mod='envoimoinscher'}</a>
-			</p>
-		</div>
-		<div class="clear both"></div>
-		*}
 	</fieldset>
 	<br />
 	<div class="margin-form">

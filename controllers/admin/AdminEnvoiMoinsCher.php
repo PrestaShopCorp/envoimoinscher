@@ -30,6 +30,7 @@ class AdminEnvoiMoinsCherController extends ModuleAdminController
 
 	public function __construct()
 	{
+		$this->bootstrap = true;
 		$this->className = 'AdminEnvoiMoinsCherController';
 		parent::__construct();
 	}
@@ -94,8 +95,8 @@ class AdminEnvoiMoinsCherController extends ModuleAdminController
 				$html .= $emc->loadAllCarriers();
 			break;
 
-			case 'download':
-			// to display labels correctly, we have to clean buffor
+			case 'downloadLabels':
+			// to display labels correctly, we have to clean buffer
 			ob_end_clean();
 			$emc->downloadLabels();
 			break;
@@ -117,6 +118,7 @@ class AdminEnvoiMoinsCherController extends ModuleAdminController
 			break;
 
 			case 'history':
+				$this->addJqueryUI('ui.datepicker');
 				$html .= $emc->ordersHistoryTable();
 			break;
 
@@ -133,6 +135,7 @@ class AdminEnvoiMoinsCherController extends ModuleAdminController
 			break;
 
 			default:
+				$this->addJqueryUI('ui.datepicker');
 				$html .= $emc->ordersTable();
 			break;
 		}

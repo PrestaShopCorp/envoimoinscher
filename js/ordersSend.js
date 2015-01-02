@@ -110,7 +110,7 @@ function showFinalMessage()
 					var errorLine = res.errors[i];
 					message += errorLine.id + " : " + errorLine.message + " <br />";
 				}
-				message += "<p>Les commandes qui n'ont pas pu être expédiées seront classées  dans le tableau \"<a href=\"index.php?controller=AdminEnvoiMoinsCher&r="+(new Date().getTime())+"&token="+token+"#errorsTable\" class=\"action_module\">Commandes à compléter ou invalides</a>\" quand vous cliquerez sur le lien ou au rafraîchissement de la page.</p>";
+				message += "<p>Les commandes qui n'ont pas pu être expédiées seront classées dans le tableau \"<a href=\"index.php?controller=AdminEnvoiMoinsCher&token="+token+"\" class=\"action_module\">Commandes en attente de livraison</a>\" en filtrant par type de commande \"Commandes à compléter ou invalides\".</p>";
 			}
 			message += "<p>La page se rafraichira automatiquement dans 10 secondes</p>";
 			$("#massStats").remove();

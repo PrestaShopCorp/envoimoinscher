@@ -120,6 +120,18 @@ $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_09cd87c25b730ba6961afe08e34
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_ed1265feb8df537d6b2fb15a74c5fe6d'] = 'EnvoiMoinsCher : shipping cancelled';
 
 /*
+	--- push ---
+*/
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_d9f6b1548250ed044e8989f5a3356739'] = 'Unknown or invalid address';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5257af7e2d84e4efe68baf75d41c027c'] = '%s. Target order : %s. Caller IP address : %s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_24909e87dc242b9dd539e10609b8b050'] = 'Order not found';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6cf9dfe268dd7ac0df3b63b8b4ebaecf'] = 'Unable to update order\'s status data';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_eaebb329adcb6a498c4f32787aa52606'] = 'Unable to update order\'s tracking data';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_0d89e67085c1ff1d8c6d0b3de5eca1a3'] = 'Uknown push command ';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b55db12cbf41df23a6773237500437bd'] = 'EnvoiMoinsCher : shipping cancelled';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_78afe832a877977f8c2f7542933ab57f'] = 'Order\'s state : ';
+
+/*
 	--- familytpl ---
 */
 $_MODULE['<{envoimoinscher}prestashop>familytpl_9461bed8b71377318436990e57106729'] = 'Offers';
@@ -165,7 +177,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_3b9da21ba184c3e6a12546ebd4f
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_104c343635d8507902db2bb804b9b80a'] = 'Changes not saved. Click \"Cancel\" to save or \"Ok\" to close without saving.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_3cfedc660eea9ef51ee72af1ab3ae161'] = 'Are you sure you want to switch the pluggin offline? (EnvoiMoinsCher carriers will not be available)';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_b8f0e8b69496f6a88abff2eab905a5d2'] = 'Carriers';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_7edaed702d94d2c7807d20d662c7067a'] = 'I have an account !';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_3b2aee63259f6dc9b94914884474f8de'] = 'I already have an account!';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_dd1f775e443ff3b9a89270713580a51b'] = 'Previous';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_10ac3d04253ef7e1ddc73e6091c0cd55'] = 'Next';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_87557f11575c0ad78e4e28abedc13b6e'] = 'End';
@@ -641,6 +653,26 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_5206c388b2df3c5c3e409cc
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_6bf52dd4e979d8a42c579c5b29134b4b'] = 'sent to recipient (Your customer). He will be notified that a parcel has been sent to him. Careful asthis notification is sent by EnvoiMoinsCher and not the carrier.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_599fb8ba75fbb9a51f0bc2b12bc37d91'] = 'Billing mail:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_6b69b11c69ebfc2732d060d958f17f2c'] = 'sent to billing address, as on your EnvoiMoinsCher profile, it permits you to give you your bill for sent orders.';
+
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_b2d37ae1cedf42ff874289b721860af2'] = 'Logs';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_6a46073326f43ac74c35dfb05325aee7'] = 'Enable Logs:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_9e9eadc1a66becf7ccd5412ece710ecd'] = 'By selecting the log option, You will receive all errors logs if no carriers found for a specific address, errors during tracking insertion... It can help you to configure the plugin';
+
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_8b8a2d9414fb12e43eba1ca1967a08d1'] = 'Default filter settings for orders pending shipment table';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_bec2929a066e5fec15276fcc2aa28cfb'] = 'Order type:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_eb92025cb8c66f1850c13a9b602a1856'] = 'Show all';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_4c046142d123c9845630d5e130c4ca23'] = 'EnvoiMoinsCher orders';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_31d9e809d013d7957adb349b38f30981'] = 'Non EnvoiMoinsCher orders';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_5cead4b84ff46817d33e0b29b83e963f'] = 'Invalid or incomplete orders';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_24a23d787190f2c4812ff9ab11847a72'] = 'Status:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_f8617a92ba0a0a4eabee724eab7c9f48'] = 'Carrier:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_0946f88509bcc476781fa7a29b57eaea'] = 'Deleted carriers';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_0fea0555a4d8c0069e510d80754a1279'] = 'Time frame:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_00f715e6996082570427a235b16e691a'] = 'Last year';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_80cbddde2192d459a99ee9b8088a6df5'] = 'Last month';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_438c1d266bf3659e6efafc0c898ae635'] = 'Last week';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_ca64b33e992780cb21dd1e62b5871c0c'] = 'Last day';
+
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_94966d90747b97d1f0f206c98a8b1ac3'] = 'Register';
 
 /*
@@ -651,6 +683,7 @@ $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_carrier_799e206bc31adb0a84b
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_carrier_fd04cc467298489f784b6245d53f9e26'] = 'this map';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_carrier_5e4d4eb92b194915378f99c3d98f8483'] = 'Select a point';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_carrier_5b72bb34f71de8f958de0e790464cda4'] = 'Please select your relay point to continue';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_carrier_19818d797c079e879ca8e252acde02cc'] = 'Close X';
 
 /*
 	--- offersNotFound---
@@ -685,38 +718,101 @@ $_MODULE['<{envoimoinscher}prestashop>offerstable_0c4f82ac8c388cb72b1ba684f10fa0
 $_MODULE['<{envoimoinscher}prestashop>orders_history_819fc0ab10fa2a0bedd9bf1abeeffa93'] = 'Please select slips to download.';
 $_MODULE['<{envoimoinscher}prestashop>orders_history_7586d6d043e19da6cda1bd92968c4e31'] = 'Shipping list, to download slips select them and click on "Download"';
 $_MODULE['<{envoimoinscher}prestashop>orders_history_1127d00bfb5a697620b2af01faeb2389'] = 'Download slips';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_60a842e40426612cc03e95bcc7b9e787'] = 'Download delivery slips';
 
 /*
 	--- pager_template ---
 */
 $_MODULE['<{envoimoinscher}prestashop>pager_template_cbb81506a7fe3ef03f7a89c76c52131a'] = 'Pagination';
+
 /*
 	--- orders_table_template ---
 */
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_b718adec73e04ce3ec720dd11a06a308'] = 'ID';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_d6e41fc5d1bcfead1db3b6dc05774971'] = 'Recipient';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_5e6846e2397be840668ca4f98989f357'] = 'Planed date';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_9acb44549b41563697bb490144ec6258'] = 'Status'; 
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_96fd07f8244c1d8b9a38930ea4bdec97'] = 'Collect';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_065ab3a28ca4f16f55f103adc7d0226f'] = 'Delivery';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_ee97be03cb04119af45014d815621ce1'] = 'Order';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_6e954afe33a34d3033162aef4c213171'] = 'Real price (ATI)';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_7d9dd7f2ff8e3fe0a2fe76aa1c81159d'] = 'Customer price (ATI)';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_78cfcdcc8bf657b69f22aa67bb4420af'] = 'Total (ATI)';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_909268b4fbf2b5502e1db980cb325e34'] = 'EnvoiMoinsCher reference';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_69f2c83b1bb06bc6c5809f6b719538be'] = 'Carrier (Offer)';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_220f3d3750583b9db48568a0b5b9a5f1'] = 'Keyword';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_c7dd744861f63b6520c77e904f61e15a'] = 'Recipient\'s name or email';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_464bf5481eb364ce5fe120922562d5d3'] = 'Order type';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_eb92025cb8c66f1850c13a9b602a1856'] = 'Show all';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_4c046142d123c9845630d5e130c4ca23'] = 'EnvoiMoinsCher orders';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_31d9e809d013d7957adb349b38f30981'] = 'Non EnvoiMoinsCher orders';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_5cead4b84ff46817d33e0b29b83e963f'] = 'Invalid or incomplete orders';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_cecd99f29c9767659cfeaba3cec8092a'] = 'Mass order will only be available if';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_0a4b05c8cdb7a80cd0450792f34e8280'] = 'you select a type.';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_ec53a8c4f07baed5d8825072c89799be'] = 'Status';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_fcef3194db60b89fa54d8da3092e7d40'] = 'Use ctrl+clic to select multiple values';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_914419aa32f04011357d3b604a86d7eb'] = 'Carrier';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_0946f88509bcc476781fa7a29b57eaea'] = 'Deleted carriers';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_44749712dbec183e983dcd78a7736c41'] = 'Date';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_5da618e8e4b89c66fe86e32cdafde142'] = 'From';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_e12167aa0a7698e6ebc92b4ce3909b53'] = 'To';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_d7778d0c64b6ba21494c97f77a66885a'] = 'Filter';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_53d1adb6768b24251b16e8d453e45133'] = 'Reset to default filter';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_a081c9610c122ca2d1fe29935930f908'] = 'All orders';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_9e76af287aebcea9bd1624df1f2821c0'] = 'You can change default filter settings on the ';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_fa45e69411da3b5b3f34ed3545c0e07e'] = 'EnvoiMoinsCher module configuration page';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_20db0bfeecd8fe60533206a2b5e9891a'] = 'First name';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_8d3f5eff9c40ee315d452392bed5309b'] = 'Last name';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_ce8ae9da5b7cd6c3df2929543a9af92d'] = 'Email';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_6311ae17c1ee52b36e68aaf4ad066387'] = 'Other';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_902b0d55fddef6f8d651fe1035b7d4bd'] = 'Error';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_d21b12927fddc132b7b242f229bd81d0'] = 'Customer price (ATI)';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_4733fcda19c0c7f47ce8fd0e17c2b12a'] = 'Total (ATI)';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_4ac985c8346e43cf95e930805d55d74a'] = 'Carrier (offer)';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_4a32ad9f54d2af781026b05382b79be8'] = 'Order card';
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_004bf6c9a40003140292e97330236c53'] = 'Action';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_545f5531b95af08fae5af52eb5a43039'] = 'Creating slips';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_83f17465a8f45baecb846a715cbceb41'] = 'Creating slip';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_63b71e914f85311dc281b7f58bd73457'] = 'Download slips';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_07e72a07eb3e098e74190c2ecd7f6dc7'] = 'Download slip';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_6a3fa1689b5762b8cf6210a4a508910b'] = 'Follow this sending';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_b9987a246a537f4fe86f1f2e3d10dbdb'] = 'Display';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_2a3f1166b041928019e4e8718d628665'] = 'Send';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_96fd07f8244c1d8b9a38930ea4bdec97'] = 'Collect';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_065ab3a28ca4f16f55f103adc7d0226f'] = 'Delivery';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_6a0d9eaee314c567fd72fb97ee707a36'] = 'Order Card';
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_5ef0c737746fae2ca90e66c39333f8f6'] = 'Errors';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_b9987a246a537f4fe86f1f2e3d10dbdb'] = 'Display';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_94966d90747b97d1f0f206c98a8b1ac3'] = 'Send';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_7422ce5bd4ca7fe70580111d456e5457'] = 'No order found';
+
+/*
+	--- orders_history_table_template ---
+*/
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_b718adec73e04ce3ec720dd11a06a308'] = 'ID';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_220f3d3750583b9db48568a0b5b9a5f1'] = 'Keyword';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_c7dd744861f63b6520c77e904f61e15a'] = 'Recipient\'s name or email';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_914419aa32f04011357d3b604a86d7eb'] = 'Carrier';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_eb92025cb8c66f1850c13a9b602a1856'] = 'Show all';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_0946f88509bcc476781fa7a29b57eaea'] = 'Deleted carriers';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_559e7ca805230fc80e3644f87bb3994d'] = 'Order date';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_5da618e8e4b89c66fe86e32cdafde142'] = 'From';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_e12167aa0a7698e6ebc92b4ce3909b53'] = 'To';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_d7778d0c64b6ba21494c97f77a66885a'] = 'Filter';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_c9735d44ad107c68675c021faa6d6ecf'] = 'Reset filter';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_20db0bfeecd8fe60533206a2b5e9891a'] = 'First name';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_8d3f5eff9c40ee315d452392bed5309b'] = 'Last name';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_ce8ae9da5b7cd6c3df2929543a9af92d'] = 'Email';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_96fd07f8244c1d8b9a38930ea4bdec97'] = 'Pickup';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_065ab3a28ca4f16f55f103adc7d0226f'] = 'Delivery';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_ee97be03cb04119af45014d815621ce1'] = 'Command';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_ec53a8c4f07baed5d8825072c89799be'] = 'Status';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_7657e1e56bcec31d9f670a1464eb0497'] = 'Real price (ATI)';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_d21b12927fddc132b7b242f229bd81d0'] = 'Customer price (ATI)';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_4733fcda19c0c7f47ce8fd0e17c2b12a'] = 'Total (ATI)';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_909268b4fbf2b5502e1db980cb325e34'] = 'EMC reference';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_4ac985c8346e43cf95e930805d55d74a'] = 'Carrier (offer)';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_4a32ad9f54d2af781026b05382b79be8'] = 'Order card';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_004bf6c9a40003140292e97330236c53'] = 'Action';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_5ef0c737746fae2ca90e66c39333f8f6'] = 'Errors';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_b9987a246a537f4fe86f1f2e3d10dbdb'] = 'Display';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_833280e24bf9b93f62a65de49aae8efd'] = 'Slips currently generating';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_9570a6891b2461146ff1e37f1466becc'] = 'Slip currently generating';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_ccf12e9026810792b6a7dcb042e97f38'] = 'Download slips';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_0f7f9c0e1838b8104f2442ea73630fc4'] = 'Download slip';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_6da161395d06a8831a58a6cdbdb37032'] = 'Download delivery slip';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_ebcf0ff85e89529f8af2ef0192bbd686'] = 'Download manifest';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_2ca3197f0fb8f9ff793adcf49c7831d1'] = 'Download connote';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_5236a5cc347632bdc5a853368faf56ab'] = 'Download proforma invoice';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_0c01aa3fa1c30218b8f4a5514cd0357f'] = 'Download b13a';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_18aaeb83afb79d66a434378abd1ffe86'] = 'Track shipment';
+// History table from ajax request
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_ccf12e9026810792b6a7dcb042e97f38'] = 'Download slips';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_0f7f9c0e1838b8104f2442ea73630fc4'] = 'Download slip';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6da161395d06a8831a58a6cdbdb37032'] = 'Download delivery slip';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_ebcf0ff85e89529f8af2ef0192bbd686'] = 'Download manifest';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_2ca3197f0fb8f9ff793adcf49c7831d1'] = 'Download connote';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5236a5cc347632bdc5a853368faf56ab'] = 'Download proforma invoice';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_0c01aa3fa1c30218b8f4a5514cd0357f'] = 'Download b13a';
 
 /*
 	--- massOrders ---
@@ -747,11 +843,6 @@ $_MODULE['<{envoimoinscher}prestashop>tracking_0ff2e9a5853227b30039b792ffc99a84'
 $_MODULE['<{envoimoinscher}prestashop>tracking_b1bff0a827eff3ee3b933527b3db153a'] = 'Selected relay point';
 
 /*
-	--- footer ---
-*/
-$_MODULE['<{envoimoinscher}prestashop>footer_19818d797c079e879ca8e252acde02cc'] = 'Close X';
-
-/*
 	--- upgrade ---
 */
 $_MODULE['<{envoimoinscher}prestashop>upgrade_acfdd815909d032984aa04ad335d28e1'] = 'EnvoiMoinsCher: update';
@@ -769,17 +860,12 @@ $_MODULE['<{envoimoinscher}prestashop>hookadminorder_e170e3a15923188224c1c2bd147
 /*
 	--- orders ---
 */
-$_MODULE['<{envoimoinscher}prestashop>orders_94ea843837b40535ec608f0c0de771bd'] = 'Shipping order done';
-$_MODULE['<{envoimoinscher}prestashop>orders_75a0b7bd21d1202d40f58cca9995790b'] = 'Orders shipped by EnvoiMoinsCher selected  ';
-$_MODULE['<{envoimoinscher}prestashop>orders_2ae616b423892c6912957afc562f255f'] = 'Here are orders for which an EnvoiMoinsCher carrier was selected on checkout. Your EnvoiMoinsCher carrier is already defined: you can send those orders. If you want to use mullti-shipping on a command, you must send it manually clicking "send" (last row). Every processed order will be put on "Previous order(s)", sometimes after page refresh.';
-$_MODULE['<{envoimoinscher}prestashop>orders_f36330e8475a60315c1a1fbc899d0557'] = 'No EnvoiMoinsCher order to send.';
-$_MODULE['<{envoimoinscher}prestashop>orders_97caf984caf67301d5a3d8c70e377bf6'] = 'Orders without EnvoiMoinsCher carrier selected ';
-$_MODULE['<{envoimoinscher}prestashop>orders_be80184d98a631554b90091bcd54e3da'] = 'Here are orders with another carrier than EnvoiMoinsCher carrier selected or no carrier selected. If you wish to send some with our plugin you will have to select a EnvoiMoinsCher carrier for every order before sending.';
-$_MODULE['<{envoimoinscher}prestashop>orders_2ec5727f36d62698a5de12586f0f7c73'] = 'Invalid or incomplete orders';
-$_MODULE['<{envoimoinscher}prestashop>orders_8feb6b95ee71189444efbc66c4d51225'] = 'Here are orders with:';
-$_MODULE['<{envoimoinscher}prestashop>orders_a7aa2fd07aa636807b320cd72eb5e6c5'] = '- Missing informations: for example, Chosen offer by your customer is not available yet ';
-$_MODULE['<{envoimoinscher}prestashop>orders_f1ba68439cb7d3aac665f9912227a569'] = '- Validation errors: incorrect recipient phone number, etc.';
-$_MODULE['<{envoimoinscher}prestashop>orders_18077bc90ac1154447ef4919a860890a'] = 'To be able to send orders, you must complete or correct them. You will go directly to informations check screen. If the offer is not available yet, you will be able to select a new offer to replace the old one. (do not forget to tell your customer).';
+$_MODULE['<{envoimoinscher}prestashop>orders_94ea843837b40535ec608f0c0de771bd'] = 'Your order was successfully shipped';
+$_MODULE['<{envoimoinscher}prestashop>orders_96b116411ff302f22c09644cdb93e0e3'] = 'Orders pending shipment';
+$_MODULE['<{envoimoinscher}prestashop>orders_155e6be09457fa3f7777dc6abc8a8156'] = 'Here is a list of your orders pending shipment:';
+$_MODULE['<{envoimoinscher}prestashop>orders_8fe3884634bd36464cf0e7ecbd2cc89b'] = 'EnvoiMoinsCher orders: you can send those right way. If you want to use multi-shipping on a command, you must send it manually clicking "send" (last column). Processed orders will be displayed on the "Previous order(s)" tab (if they don\'t, try refreshing the page).';
+$_MODULE['<{envoimoinscher}prestashop>orders_c5bcb595b9b4eb89f3589a19325e8585'] = 'Other carriers: if you wish to send some with our plugin you will have to select a EnvoiMoinsCher carrier for every order before sending.';
+$_MODULE['<{envoimoinscher}prestashop>orders_7a578ab19312b2dea0fdf07d7ca1c63a'] = 'Invalid or incomplete orders: you must complete or correct them to be able to send them. You will be redirected to the information check screen upon sending. If the offer is not available yet, you will be able to select a new offer to replace the previous one (do not forget to tell your customer).';
 
 /*
 	--- send ---

@@ -20,7 +20,7 @@
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
  * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
- * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @license   http://opensource.org/licenses/afl-3.0.php	Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  */
 
@@ -45,26 +45,26 @@ class EnvoimoinscherModel
 			'emcValue' => 'minimum',
 			'alias' => 'le délai'));
 	/* About price */
-	const RATE_PRICE          = 0;
-	const REAL_PRICE          = 1;
+	const RATE_PRICE					= 0;
+	const REAL_PRICE					= 1;
 
-	const WITHOUT_CHECK       = 0;
-	const WITH_CHECK          = 1;
+	const WITHOUT_CHECK			 = 0;
+	const WITH_CHECK					= 1;
 	/* Multi-parcel */
-	const MULTI_PARCEL        = 1;
+	const MULTI_PARCEL				= 1;
 	/* Zone (type) */
-	const ZONE_FRANCE         = 1;
-	const ZONE_INTER 		  = 2;
-	const ZONE_EUROPE         = 3;
+	const ZONE_FRANCE				 = 1;
+	const ZONE_INTER 			= 2;
+	const ZONE_EUROPE				 = 3;
 	/* Family */
-	const FAM_ECONOMIQUE      = 1;
-	const FAM_EXPRESSISTE     = 2;
+	const FAM_ECONOMIQUE			= 1;
+	const FAM_EXPRESSISTE		 = 2;
 	/* Module mode */
-	const MODE_CONFIG         = 'config';
-	const MODE_ONLINE         = 'online';
+	const MODE_CONFIG				 = 'config';
+	const MODE_ONLINE				 = 'online';
 	/* Track */
-	const TRACK_EMC_TYPE      = 1;
-	const TRACK_OPE_TYPE      = 2;
+	const TRACK_EMC_TYPE			= 1;
+	const TRACK_OPE_TYPE			= 2;
 
 	public function __construct($db, $module)
 	{
@@ -173,9 +173,9 @@ class EnvoimoinscherModel
 	public function getApiErrorCode($message)
 	{
 		$error_list = array(
-			'access_denied - invalid API key'                => 'API error : Invalid API key',
-			'access_denied - invalid user password'          => 'API error : Invalid password',
-			'access_denied - wrong credentials'              => 'API error : Wrong credentials',
+			'access_denied - invalid API key'								=> 'API error : Invalid API key',
+			'access_denied - invalid user password'					=> 'API error : Invalid password',
+			'access_denied - wrong credentials'							=> 'API error : Wrong credentials',
 			'access_denied - Invalid account payment method' => 'API error : Invalid account payment method',
 		);
 
@@ -232,8 +232,8 @@ class EnvoimoinscherModel
 
 	/**
 	 * Get offers by Family
-	 * @param  [type] $family [description]
-	 * @return [type]         [description]
+	 * @param	[type] $family [description]
+	 * @return [type]				 [description]
 	 */
 	public function getOffersByFamily($family = false)
 	{
@@ -264,13 +264,13 @@ class EnvoimoinscherModel
 	}
 
 	/**
-	* Gets the number of EnvoiMoinsCher orders and other orders which haven't been send yet.
+	* Gets the number of EnvoiMoinsCher orders and other orders which haven't been sent yet.
 	* @access public
 	* @return int Orders count.
 	*/
-	public function getEligibleOrdersCount()
+	public function getEligibleOrdersCount($params)
 	{
-		$sql = 'SELECT *
+		$sql = 'SELECT *, a.firstname AS toFirstname, a.lastname AS toLastname
 			 FROM '._DB_PREFIX_.'orders o
 			 JOIN '._DB_PREFIX_.'order_carrier oc
 				 ON oc.id_order = o.id_order
@@ -278,26 +278,135 @@ class EnvoimoinscherModel
 				 ON eo.'._DB_PREFIX_.'orders_id_order = o.id_order
 			 JOIN '._DB_PREFIX_.'carrier c
 				 ON c.id_carrier = oc.id_carrier
+			 JOIN '._DB_PREFIX_.'address a
+				 ON a.id_address = o.id_address_delivery
+			 JOIN '._DB_PREFIX_.'customer cr
+				 ON cr.id_customer = a.id_customer
 			 LEFT JOIN '._DB_PREFIX_.'emc_orders_errors er
 				 ON er.'._DB_PREFIX_.'orders_id_order = o.id_order
-			 WHERE (c.external_module_name = "envoimoinscher" OR o.delivery_number = 0)
-				 AND eo.ref_emc_eor IS NULL
-			 GROUP BY o.id_order
+			 WHERE eo.ref_emc_eor IS NULL';
+
+		//apply filters
+		if (!empty($params['filterBy']))
+		{
+
+			//by order type
+			if (isset($params['filterBy']['type_order']))
+			{
+				switch ($params['filterBy']['type_order'])
+				{
+					case 0:
+						$sql .= ' AND c.external_module_name = "envoimoinscher" AND (er.errors_eoe = "" OR er.errors_eoe is NULL)';
+						break;
+					case 1:
+						$sql .= ' AND c.external_module_name != "envoimoinscher" AND (er.errors_eoe = "" OR er.errors_eoe is NULL)';
+						break;
+					case 2:
+						$sql .= ' AND er.errors_eoe != ""';
+						break;
+					default:
+						break;
+				}
+			}
+
+			//by order id
+			if (isset($params['filterBy']['filter_id_order']))
+				$sql .= ' AND o.id_order = '.(int)$params['filterBy']['filter_id_order'];
+
+			//by order status
+			if (isset($params['filterBy']['status']) && is_array($params['filterBy']['status']))
+			{
+				$filter = ' AND o.current_state IN (';
+				$statuses = array();
+				foreach ($params['filterBy']['status'] as $value)
+					array_push($statuses, $value);
+				$filter .= implode(',', $statuses).')';
+				if (count($statuses) > 0)
+					$sql .= $filter;
+			}
+
+			//by carrier
+			if (isset($params['filterBy']['carriers']) && $params['filterBy']['carriers'] != 'all')
+			{
+				if ($params['filterBy']['carriers'] == 'del')
+					$sql .= ' AND c.name NOT IN (SELECT name FROM '._DB_PREFIX_.'carrier WHERE deleted=0)';
+				else
+					$sql .= ' AND c.name LIKE "'.pSQL($params['filterBy']['carriers']).'"';
+			}
+
+			//by date
+			if (isset($params['filterBy']['start_order_date']))
+				$sql .= " AND o.date_add >= STR_TO_DATE('".pSQL($params['filterBy']['start_order_date'])."', '%Y-%m-%d')";
+
+			if (isset($params['filterBy']['end_order_date']))
+				$sql .= " AND o.date_add <= DATE_ADD(STR_TO_DATE('".pSQL($params['filterBy']['end_order_date'])."', '%Y-%m-%d'), INTERVAL 1 DAY)";
+
+			//by recipient (string contained in company, first name, last name or email)
+			if (isset($params['filterBy']['recipient']) && !empty($params['filterBy']['recipient']))
+				foreach ($params['filterBy']['recipient'] as $value)
+					$sql .= ' AND (INSTR(a.firstname, "'.pSQL($value).'") > 0
+						OR INSTR(a.lastname, "'.pSQL($value).'") > 0
+						OR INSTR(cr.email, "'.pSQL($value).'") > 0)';
+		}
+		else
+		{
+			//add default order type filter chosen in module config pages
+			switch (Configuration::get('EMC_FILTER_TYPE_ORDER'))
+			{
+				case '0':
+					$sql .= ' AND c.external_module_name = "envoimoinscher" AND (er.errors_eoe = "" OR er.errors_eoe is NULL)';
+					break;
+				case '1':
+					$sql .= ' AND c.external_module_name != "envoimoinscher" AND (er.errors_eoe = "" OR er.errors_eoe is NULL)';
+					break;
+				case '2':
+					$sql .= ' AND er.errors_eoe != ""';
+					break;
+				default:
+					break;
+			}
+
+			//add default order status filter chosen in module config pages
+			$filter = ' AND o.current_state IN (';
+			$filter .= implode(',', explode(';', Configuration::get('EMC_FILTER_STATUS'))).')';
+			$sql .= $filter;
+
+			//add default carrier filter chosen in module config pages
+			if (Configuration::get('EMC_FILTER_CARRIERS') == 'del')
+				$sql .= ' AND c.name NOT IN (SELECT name FROM '._DB_PREFIX_.'carrier WHERE deleted=0)';
+			else if (Configuration::get('EMC_FILTER_CARRIERS') != 'all')
+				$sql .= ' AND c.name LIKE "'.pSQL(Configuration::get('EMC_FILTER_CARRIERS')).'"';
+
+			//add default start date filter chosen in module config pages
+			switch (Configuration::get('EMC_FILTER_START_DATE'))
+			{
+				case 'all':
+					break;
+
+				case 'year':
+					$sql .= " AND o.date_add >= STR_TO_DATE('".pSQL(date('Y-m-d', strtotime('-1 year')))."', '%Y-%m-%d')";
+					break;
+
+				case 'month':
+					$sql .= " AND o.date_add >= STR_TO_DATE('".pSQL(date('Y-m-d', strtotime('-1 month')))."', '%Y-%m-%d')";
+					break;
+
+				case 'week':
+					$sql .= " AND o.date_add >= STR_TO_DATE('".pSQL(date('Y-m-d', strtotime('-1 week')))."', '%Y-%m-%d')";
+					break;
+
+				case 'day':
+					$sql .= " AND o.date_add >= STR_TO_DATE('".pSQL(date('Y-m-d', strtotime('-1 day')))."', '%Y-%m-%d')";
+					break;
+			}
+		}
+
+		$sql .= ' GROUP BY o.id_order
 			 ORDER BY o.id_order DESC';
 
 		$orders = $this->db->ExecuteS($sql);
-		//we sort orders by EMC/other carriers
-		$final = array('emc' => 0, 'others' => 0, 'errors' => 0);
-		foreach ($orders as $order)
-		{
-			$key = 'others';
-			if ($order['errors_eoe'] != '')
-				$key = 'errors';
-			elseif ($order['external_module_name'] == 'envoimoinscher')
-				$key = 'emc';
-			$final[$key]++;
-		}
-		return $final;
+
+		return count($orders);
 	}
 
 	/**
@@ -308,9 +417,10 @@ class EnvoimoinscherModel
 	*/
 	public function getEligibleOrders($params, $limits = array())
 	{
-		$base_sql = 'SELECT *, oc.id_carrier AS carrierId,
+		$sql = 'SELECT *, o.date_add AS order_date_add, oc.id_carrier AS carrierId,
 				 c.name AS carrierName, cur.sign,
 				 o.id_order AS idOrder, SUBSTRING(a.firstname, 1, 1) AS firstNameShort,
+				 a.firstname AS toFirstname, a.lastname AS toLastname,
 				 DATE_FORMAT(eo.date_del_eor, \'%d-%m-%Y\') AS dateDel,
 				 DATE_FORMAT(eo.date_collect_eor, \'%d-%m-%Y\') AS dateCol,
 				 DATE_FORMAT(eo.date_order_eor, \'%d-%m-%Y\') AS dateCom,
@@ -325,6 +435,8 @@ class EnvoimoinscherModel
 				 ON cl.id_carrier = c.id_carrier
 			 JOIN '._DB_PREFIX_.'address a
 				 ON a.id_address = o.id_address_delivery
+			 JOIN '._DB_PREFIX_.'customer cr
+				 ON cr.id_customer = a.id_customer
 			 JOIN '._DB_PREFIX_.'currency cur
 				 ON o.id_currency = cur.id_currency
 			 LEFT JOIN '._DB_PREFIX_.'emc_services es
@@ -345,24 +457,126 @@ class EnvoimoinscherModel
 				 ON d.'._DB_PREFIX_.'orders_id_order = o.id_order AND type_ed = "label"
 			 LEFT JOIN '._DB_PREFIX_.'emc_orders_errors er
 				 ON er.'._DB_PREFIX_.'orders_id_order = o.id_order
-			 WHERE eo.ref_emc_eor IS NULL';
+						 WHERE eo.ref_emc_eor IS NULL';
 
-		$final = array();
+		//apply filters
+		if (!empty($params['filterBy']))
+		{
+			//by order type
+			if (isset($params['filterBy']['type_order']))
+			{
+				switch ($params['filterBy']['type_order'])
+				{
+					case 0:
+						$sql .= ' AND c.external_module_name = "envoimoinscher" AND (er.errors_eoe = "" OR er.errors_eoe is NULL)';
+						break;
+					case 1:
+						$sql .= ' AND c.external_module_name != "envoimoinscher" AND (er.errors_eoe = "" OR er.errors_eoe is NULL)';
+						break;
+					case 2:
+						$sql .= ' AND er.errors_eoe != ""';
+						break;
+					default:
+						break;
+				}
+			}
 
-		$sql = $base_sql.' AND errors_eoe != ""
-			 GROUP BY o.id_order
-			 ORDER BY o.id_order DESC '.$limits['errors'];
-		$final['errors'] = $this->db->ExecuteS($sql);
+			//by order id
+			if (isset($params['filterBy']['filter_id_order']))
+				$sql .= ' AND o.id_order = '.(int)$params['filterBy']['filter_id_order'];
 
-		$sql = $base_sql.' AND c.external_module_name = "envoimoinscher" AND (errors_eoe = "" OR errors_eoe is NULL)
-			 GROUP BY o.id_order
-			 ORDER BY o.id_order DESC '.$limits['emc'];
-		$final['emc'] = $this->db->ExecuteS($sql);
+			//by order status
+			if (isset($params['filterBy']['status']) && is_array($params['filterBy']['status']))
+			{
+				$filter = ' AND o.current_state IN (';
+				$statuses = array();
+				foreach ($params['filterBy']['status'] as $value)
+					array_push($statuses, $value);
+				$filter .= implode(',', $statuses).')';
+				if (count($statuses) > 0)
+					$sql .= $filter;
+			}
 
-		$sql = $base_sql.' AND c.external_module_name != "envoimoinscher" AND o.delivery_number = 0 AND (errors_eoe = "" OR errors_eoe is NULL)
-			 GROUP BY o.id_order
-			 ORDER BY o.id_order DESC '.$limits['others'];
-		$final['others'] = $this->db->ExecuteS($sql);
+			//by carrier
+			if (isset($params['filterBy']['carriers']) && $params['filterBy']['carriers'] != 'all')
+			{
+				if ($params['filterBy']['carriers'] == 'del')
+					$sql .= ' AND c.name NOT IN (SELECT name FROM '._DB_PREFIX_.'carrier WHERE deleted=0)';
+				else
+					$sql .= ' AND c.name LIKE "'.pSQL($params['filterBy']['carriers']).'"';
+			}
+
+			//by date
+			if (isset($params['filterBy']['start_order_date']))
+				$sql .= " AND o.date_add >= STR_TO_DATE('".pSQL($params['filterBy']['start_order_date'])."', '%Y-%m-%d')";
+
+			if (isset($params['filterBy']['end_order_date']))
+				$sql .= " AND o.date_add <= DATE_ADD(STR_TO_DATE('".pSQL($params['filterBy']['end_order_date'])."', '%Y-%m-%d'), INTERVAL 1 DAY)";
+
+			//by recipient (string contained in company, first name, last name or email)
+			if (isset($params['filterBy']['recipient']) && !empty($params['filterBy']['recipient']))
+				foreach ($params['filterBy']['recipient'] as $value)
+					$sql .= ' AND (INSTR(a.firstname, "'.pSQL($value).'") > 0
+							OR INSTR(a.lastname, "'.pSQL($value).'") > 0
+							OR INSTR(cr.email, "'.pSQL($value).'") > 0)';
+		}
+		else
+		{
+			//add default order type filter chosen in module config pages
+			switch (Configuration::get('EMC_FILTER_TYPE_ORDER'))
+			{
+				case '0':
+					$sql .= ' AND c.external_module_name = "envoimoinscher" AND (er.errors_eoe = "" OR er.errors_eoe is NULL)';
+					break;
+				case '1':
+					$sql .= ' AND c.external_module_name != "envoimoinscher" AND (er.errors_eoe = "" OR er.errors_eoe is NULL)';
+					break;
+				case '2':
+					$sql .= ' AND er.errors_eoe != ""';
+					break;
+				default:
+					break;
+			}
+
+			//add default order status filter chosen in module config pages
+			$filter = ' AND o.current_state IN (';
+			$filter .= implode(',', explode(';', Configuration::get('EMC_FILTER_STATUS'))).')';
+			$sql .= $filter;
+
+			//add default carrier filter chosen in module config pages
+			if (Configuration::get('EMC_FILTER_CARRIERS') == 'del')
+				$sql .= ' AND c.name NOT IN (SELECT name FROM '._DB_PREFIX_.'carrier WHERE deleted=0)';
+			else if (Configuration::get('EMC_FILTER_CARRIERS') != 'all')
+				$sql .= ' AND c.name LIKE "'.pSQL(Configuration::get('EMC_FILTER_CARRIERS')).'"';
+
+			//add default start date filter chosen in module config pages
+			switch (Configuration::get('EMC_FILTER_START_DATE'))
+			{
+				case 'all':
+					break;
+
+				case 'year':
+					$sql .= " AND o.date_add >= STR_TO_DATE('".pSQL(date('Y-m-d', strtotime('-1 year')))."', '%Y-%m-%d')";
+					break;
+
+				case 'month':
+					$sql .= " AND o.date_add >= STR_TO_DATE('".pSQL(date('Y-m-d', strtotime('-1 month')))."', '%Y-%m-%d')";
+					break;
+
+				case 'week':
+					$sql .= " AND o.date_add >= STR_TO_DATE('".pSQL(date('Y-m-d', strtotime('-1 week')))."', '%Y-%m-%d')";
+					break;
+
+				case 'day':
+					$sql .= " AND o.date_add >= STR_TO_DATE('".pSQL(date('Y-m-d', strtotime('-1 day')))."', '%Y-%m-%d')";
+					break;
+			}
+		}
+
+		$sql .= ' GROUP BY o.id_order
+							ORDER BY o.id_order DESC '.$limits;
+
+		$final = $this->db->ExecuteS($sql);
 
 		return $final;
 	}
@@ -376,6 +590,7 @@ class EnvoimoinscherModel
 	public function getDoneOrders($params)
 	{
 		$sql = 'SELECT *, cur.sign,
+				 DATE_FORMAT(o.date_add, \'%d-%m-%Y\') as dateAdd,
 				 o.id_order AS idOrder,
 				 c.name AS carrierName,
 				 SUBSTRING(a.firstname, 1, 1) AS firstNameShort,
@@ -393,13 +608,15 @@ class EnvoimoinscherModel
 				 ON cl.id_carrier = c.id_carrier
 			 JOIN '._DB_PREFIX_.'address a
 				 ON a.id_address = o.id_address_delivery
+			 JOIN '._DB_PREFIX_.'customer cr
+				 ON cr.id_customer = a.id_customer
 			 JOIN '._DB_PREFIX_.'currency cur
-				 ON o.id_currency = cur.id_currency
-			 JOIN '._DB_PREFIX_.'emc_services es
-				 ON c.id_carrier = es.id_carrier
-			 JOIN '._DB_PREFIX_.'emc_operators eop
-				 ON eop.code_eo = es.emc_operators_code_eo
-			 LEFT JOIN '._DB_PREFIX_.'emc_documents d
+				 ON o.id_currency = cur.id_currency ';
+			/*JOIN '._DB_PREFIX_.'emc_services es
+				 ON c.id_reference = es.ref_carrier
+				JOIN '._DB_PREFIX_.'emc_operators eop
+				 ON eop.code_eo = es.emc_operators_code_eo*/
+			 $sql .= 'LEFT JOIN '._DB_PREFIX_.'emc_documents d
 				 ON d.'._DB_PREFIX_.'orders_id_order = o.id_order AND type_ed = "label"
 			 LEFT JOIN '._DB_PREFIX_.'order_history oh
 				 ON oh.id_order = o.id_order AND oh.id_order_history = (
@@ -410,9 +627,13 @@ class EnvoimoinscherModel
 				 ON osl.id_order_state = oh.id_order_state AND osl.id_lang = '.(int)$params['lang'].'
 			 WHERE eo.ref_emc_eor != ""
 			 AND c.external_module_name = "envoimoinscher"
-			 AND cl.id_lang = '.(int)$params['lang'].'
-			 GROUP BY o.id_order
-			 ORDER BY o.id_order DESC LIMIT '.(int)$params['start'].', '.(int)$params['limit'].' ';
+			 AND cl.id_lang = '.(int)$params['lang'].' ';
+
+		if ('' != $params['filters'])
+			$sql .= $params['filters'].' ';
+
+		$sql .= 'GROUP BY o.id_order
+			ORDER BY o.id_order DESC LIMIT '.(int)$params['start'].', '.(int)$params['limit'].' ';
 		return $this->db->ExecuteS($sql);
 	}
 
@@ -618,10 +839,10 @@ class EnvoimoinscherModel
 			if ($dimensions)
 			{
 				$final_parcels[$k] = array(
-					'poids'    => $one_parcel_weight,
+					'poids'		=> $one_parcel_weight,
 					'longueur' => (float)$dimensions['length_ed'],
-					'largeur'  => (float)$dimensions['width_ed'],
-					'hauteur'  => (float)$dimensions['height_ed']
+					'largeur'	=> (float)$dimensions['width_ed'],
+					'hauteur'	=> (float)$dimensions['height_ed']
 				);
 			}
 		}
@@ -677,18 +898,18 @@ class EnvoimoinscherModel
 		}
 		$defaults['raison'] = 'sale';
 		return array(
-			'order'         => $row,
+			'order'				 => $row,
 			'productWeight' => $product_weight,
-			'default'       => $defaults,
-			'dimensions'    => $dimensions,
-			'parcels'       => $final_parcels,
-			'config'        => $config,
-			'delivery'      => $delivery,
-			'proforma'      => $proforma,
-			'code_eo'       => $row[0]['emc_operators_code_eo'],
-			'is_pp'         => $row[0]['is_parcel_pickup_point_es'],
-			'is_dp'         => $row[0]['is_parcel_dropoff_point_es'],
-			'isEMCCarrier'  => (bool)$row[0]['external_module_name'] == $this->module_name
+			'default'			 => $defaults,
+			'dimensions'		=> $dimensions,
+			'parcels'			 => $final_parcels,
+			'config'				=> $config,
+			'delivery'			=> $delivery,
+			'proforma'			=> $proforma,
+			'code_eo'			 => $row[0]['emc_operators_code_eo'],
+			'is_pp'				 => $row[0]['is_parcel_pickup_point_es'],
+			'is_dp'				 => $row[0]['is_parcel_dropoff_point_es'],
+			'isEMCCarrier'	=> (bool)$row[0]['external_module_name'] == $this->module_name
 		);
 	}
 
@@ -704,7 +925,7 @@ class EnvoimoinscherModel
 		foreach ($items as $item)
 		{
 			$proforma[$s] = array('description_en' => $item['product_name'],
-				'description_fr' => $item['product_name'],  'nombre' => $item['product_quantity'],
+				'description_fr' => $item['product_name'],	'nombre' => $item['product_quantity'],
 				'valeur' => $item['product_price'],
 				'origine' => 'FR', 'poids' => $item['product_weight']);
 			$s++;
@@ -867,16 +1088,16 @@ class EnvoimoinscherModel
 		$date_del_eor = $emc_order['delivery']['date'].' '.(isset($emc_order['delivery']['time'])?$emc_order['delivery']['time']:'');
 		$order_data = array(
 			''._DB_PREFIX_.'orders_id_order' => (int)$order_id,
-			'emc_operators_code_eo'          => pSQL($emc_order['offer']['operator']['code']),
-			'price_ht_eor'                   => (float)$emc_order['price']['tax-exclusive'],
-			'price_ttc_eor'                  => (float)$emc_order['price']['tax-inclusive'],
-			'ref_emc_eor'                    => pSQL($emc_order['ref']),
-			'service_eor'                    => pSQL($emc_order['service']['label']),
-			'date_order_eor'                 => date('Y-m-d H:i:s'),
-			'date_collect_eor'               => pSQL($date_collect_eor),
-			'date_del_eor'                   => pSQL($date_del_eor),
-			'tracking_eor'                   => pSQL( (isset($data['tracking_key']) ? $data['tracking_key'] : null ) ),
-			'parcels_eor'                    => count($data['parcels'])
+			'emc_operators_code_eo'					=> pSQL($emc_order['offer']['operator']['code']),
+			'price_ht_eor'									 => (float)$emc_order['price']['tax-exclusive'],
+			'price_ttc_eor'									=> (float)$emc_order['price']['tax-inclusive'],
+			'ref_emc_eor'										=> pSQL($emc_order['ref']),
+			'service_eor'										=> pSQL($emc_order['service']['label']),
+			'date_order_eor'								 => date('Y-m-d H:i:s'),
+			'date_collect_eor'							 => pSQL($date_collect_eor),
+			'date_del_eor'									 => pSQL($date_del_eor),
+			'tracking_eor'									 => pSQL( (isset($data['tracking_key']) ? $data['tracking_key'] : null ) ),
+			'parcels_eor'										=> count($data['parcels'])
 			);
 		$this->db->autoExecute(_DB_PREFIX_.'emc_orders', $order_data, 'REPLACE');
 		//insert parcels
@@ -884,25 +1105,25 @@ class EnvoimoinscherModel
 		{
 			$parcel_data = array(
 				''._DB_PREFIX_.'orders_id_order' => (int)$order_id,
-				'number_eop'                     => (int)$p,
-				'weight_eop'                     => pSQL($parcel['poids']),
-				'length_eop'                     => (int)$parcel['longueur'],
-				'width_eop'                      => (int)$parcel['largeur'],
-				'height_eop'                     => (int)$parcel['hauteur']
+				'number_eop'										 => (int)$p,
+				'weight_eop'										 => pSQL($parcel['poids']),
+				'length_eop'										 => (int)$parcel['longueur'],
+				'width_eop'											=> (int)$parcel['largeur'],
+				'height_eop'										 => (int)$parcel['hauteur']
 				);
 			$this->db->autoExecute(_DB_PREFIX_.'emc_orders_parcels', $parcel_data, 'REPLACE');
 		}
-		//insert new shipping documents into emc_documents
-		foreach ($emc_order['labels'] as $label) 	//labels
+		//insert new shipping documents into emc_documents (deprecated, documents are now loaded from push request)
+		/*foreach ($emc_order['labels'] as $label) 	//labels
 		{
 			$this->db->autoExecute(
 				_DB_PREFIX_.'emc_documents',
 				array(
 					''._DB_PREFIX_.'orders_id_order' => (int)$order_id,
-					'link_ed'                        => pSQL($label),
-					'type_ed'                        => 'label',
-					'generated_ed'                   => 0,
-					''._DB_PREFIX_.'cart_id_cart'    => (int)$data['order'][0]['id_cart']
+					'link_ed'												=> pSQL($label),
+					'type_ed'												=> 'label',
+					'generated_ed'									 => 0,
+					''._DB_PREFIX_.'cart_id_cart'		=> (int)$data['order'][0]['id_cart']
 				),
 				'REPLACE'
 			);
@@ -913,13 +1134,13 @@ class EnvoimoinscherModel
 				_DB_PREFIX_.'emc_documents',
 				array(
 					''._DB_PREFIX_.'orders_id_order' => (int)$order_id,
-					'link_ed'                        => pSQL($emc_order['proforma']),
-					'type_ed'                        => 'proforma',
-					'generated_ed'                   => 1,
-					''._DB_PREFIX_.'cart_id_cart'    => (int)$data['order'][0]['id_cart']
+					'link_ed'												=> pSQL($emc_order['proforma']),
+					'type_ed'												=> 'proforma',
+					'generated_ed'									 => 1,
+					''._DB_PREFIX_.'cart_id_cart'		=> (int)$data['order'][0]['id_cart']
 				),
 				'REPLACE');
-		}
+		}*/
 		//update order (shipping_number with EnvoiMoinsCher referency)
 		$this->db->autoExecute(
 			_DB_PREFIX_.'orders',
@@ -1273,10 +1494,10 @@ class EnvoimoinscherModel
 	{
 		$sql_data = array(
 			'orders_eopl' => pSQL(Tools::jsonEncode(array('todo' => $orders, 'done' => array()))),
-			'stats_eopl'  => pSQL(Tools::jsonEncode(array('total' => count($orders), 'ok' => 0, 'skipped' => 0, 'errors' => 0))),
+			'stats_eopl'	=> pSQL(Tools::jsonEncode(array('total' => count($orders), 'ok' => 0, 'skipped' => 0, 'errors' => 0))),
 			'errors_eopl' => pSQL(Tools::jsonEncode(array())),
-			'date_eopl'   => date('Y-m-d H:i:s'),
-			'type_eopl'   => (int)$type
+			'date_eopl'	 => date('Y-m-d H:i:s'),
+			'type_eopl'	 => (int)$type
 		);
 		$this->db->autoExecute(_DB_PREFIX_.'emc_orders_plannings', $sql_data, 'INSERT');
 	}
@@ -1296,8 +1517,8 @@ class EnvoimoinscherModel
 	{
 		$data = array(
 			_DB_PREFIX_.'orders_id_order' => (int)$order,
-			'data_eopo'                   => pSQL(Tools::jsonEncode($post_data)),
-			'date_eopo'                   => date('Y-m-d H:i:s')
+			'data_eopo'									 => pSQL(Tools::jsonEncode($post_data)),
+			'date_eopo'									 => date('Y-m-d H:i:s')
 		);
 		$this->db->autoExecute(_DB_PREFIX_.'emc_orders_post', $data, 'REPLACE');
 	}
@@ -1307,11 +1528,11 @@ class EnvoimoinscherModel
 		$row = $this->db->ExecuteS('SELECT * FROM '._DB_PREFIX_.'emc_orders_post WHERE '._DB_PREFIX_.'orders_id_order = '.(int)$order.'');
 		if (isset($row[0]['data_eopo'])) return Tools::jsonDecode($row[0]['data_eopo'], true);
 		return array(
-			'delivery'     => array(),
-			'quote'        => array(),
-			'parcels'      => array(),
-			'proforma'     => array(),
-			'emcErrorTxt'  => '',
+			'delivery'		 => array(),
+			'quote'				=> array(),
+			'parcels'			=> array(),
+			'proforma'		 => array(),
+			'emcErrorTxt'	=> '',
 			'emcErrorSend' => ''
 		);
 	}
@@ -1362,7 +1583,7 @@ class EnvoimoinscherModel
 	{
 		$emc = new Envoimoinscher();
 		return array(
-			self::FAM_ECONOMIQUE   	=> $emc->l('Economic offers'),
+			self::FAM_ECONOMIQUE	 	=> $emc->l('Economic offers'),
 			self::FAM_EXPRESSISTE 	=> $emc->l('Express offers'),
 		);
 	}
@@ -1398,15 +1619,15 @@ class EnvoimoinscherModel
 		//Set Carrier
 		$carrier = new Carrier((int)$service['id_carrier']);
 
-		$carrier->id_reference         = (int)$service['id_carrier'];
-		$carrier->name                 = $data['name'];
-		$carrier->active               = (int)$data['active'];
-		$carrier->is_module            = (int)$data['is_module'];
-		$carrier->need_range           = (int)$data['need_range'];
-		$carrier->range_behavior       = (int)$data['range_behavior'];
-		$carrier->shipping_external    = (int)$data['shipping_external'];
+		$carrier->id_reference				 = (int)$service['id_carrier'];
+		$carrier->name								 = $data['name'];
+		$carrier->active							 = (int)$data['active'];
+		$carrier->is_module						= (int)$data['is_module'];
+		$carrier->need_range					 = (int)$data['need_range'];
+		$carrier->range_behavior			 = (int)$data['range_behavior'];
+		$carrier->shipping_external		= (int)$data['shipping_external'];
 		$carrier->external_module_name = $data['external_module_name'];
-		$carrier->delay                = array();
+		$carrier->delay								= array();
 
 		if ($langs && count($langs) > 0)
 			foreach ($langs as $lang)
@@ -1435,7 +1656,7 @@ class EnvoimoinscherModel
 				{
 					$datas[] = array(
 						'id_carrier' => (int)$carrier_id,
-						'id_group'   => (int)$group['id_group']
+						'id_group'	 => (int)$group['id_group']
 						);
 				}
 			}
@@ -1488,6 +1709,9 @@ class EnvoimoinscherModel
 			array('need_range' => 1),
 			'UPDATE',
 			'external_module_name = "envoimoinscher" AND need_range = 1');
+
+		// clean the cache
+		$this->cleanCache();
 	}
 
 	/**
@@ -1495,11 +1719,11 @@ class EnvoimoinscherModel
 	* @access public
 	* @param int $order Order id
 	* @return array Array with keys the same as two tables with carrier informations :
-	*               'orders' for orders table and 'order_carrier' for order_carriers table
+	*							 'orders' for orders table and 'order_carrier' for order_carriers table
 	*/
 	public function getOrderCarriers($order)
 	{
-		$orders = $this->db->executeS('SELECT o.id_carrier AS oCarrier,  o.total_shipping AS oShipping,
+		$orders = $this->db->executeS('SELECT o.id_carrier AS oCarrier,	o.total_shipping AS oShipping,
 			 total_shipping_tax_incl AS oShippingInc, carrier_tax_rate AS oCarrierTax,
 			 total_shipping_tax_excl AS oShippingExc, o.id_cart AS oCart,
 			 c.id_carrier AS cCarrier, c.delivery_option AS cDelivery,
@@ -1537,7 +1761,7 @@ class EnvoimoinscherModel
 	public function getOrdersByCart($cart)
 	{
 		$orders = $this->db->executeS('SELECT o.id_order, o.id_address_delivery AS oAddress,
-			 o.id_carrier AS oCarrier,  o.total_shipping AS oShipping,
+			 o.id_carrier AS oCarrier,	o.total_shipping AS oShipping,
 			 total_shipping_tax_incl AS oShippingInc, carrier_tax_rate AS oCarrierTax,
 			 total_shipping_tax_excl AS oShippingExc, o.id_cart AS oCart,
 			 c.id_carrier AS cCarrier, c.delivery_option AS cDelivery,
@@ -1631,5 +1855,194 @@ class EnvoimoinscherModel
 		$query = 'SELECT `name_eca` FROM `'._DB_PREFIX_.'emc_categories` WHERE `id_eca` = "'.(int)$id_eca.'" ';
 
 		return DB::getInstance()->getValue($query);
+	}
+
+	public function orderWithKeyExists($order, $key)
+	{
+		return count(Db::getInstance()->ExecuteS('SELECT * FROM '._DB_PREFIX_.'emc_orders eo
+		 JOIN '._DB_PREFIX_.'orders o ON o.id_order = eo.'._DB_PREFIX_.'orders_id_order
+		 WHERE eo.'._DB_PREFIX_.'orders_id_order = '.$order.' AND eo.tracking_eor = "'.$key.'" ')) > 0;
+	}
+
+	public function handlePush()
+	{
+		$type 		= Tools::getValue('type');
+		$key			= Tools::getValue('key');
+		$order 		= (int)Tools::getValue('order');
+		$return 	= false;
+		$emc 			= new Envoimoinscher();
+		$error_message = '';
+
+		// Check if order exists
+		if ($this->orderWithKeyExists($order, $key))
+		{
+			// Execute the push request
+			switch ($type)
+			{
+				case 'tracking' :
+					$text = urldecode(Tools::getValue('text'));
+					$localisation = urldecode(Tools::getValue('localisation'));
+					$state = Tools::getValue('etat');
+					$date = strtotime(Tools::getValue('date'));
+					$return = $this->updateTracking($order, $text, $localisation, $state, $date);
+					if ($return == false)
+						$error_message = $emc->l('Unable to update order\'s tracking data');
+					break;
+				case 'status' :
+					$emc_ref = urldecode(Tools::getValue('emc_reference'));
+					$ope_ref = urldecode(Tools::getValue('carrier_reference'));
+					$documents = array();
+					$documents['label'] = urldecode(Tools::getValue('label_url'));
+					if (Tools::isSubmit('remise'))
+						$documents['remise'] = urldecode(Tools::getValue('remise'));
+					if (Tools::isSubmit('manifest'))
+						$documents['manifest'] = urldecode(Tools::getValue('manifest'));
+					if (Tools::isSubmit('connote'))
+						$documents['connote'] = urldecode(Tools::getValue('connote'));
+					if (Tools::isSubmit('proforma'))
+						$documents['proforma'] = urldecode(Tools::getValue('proforma'));
+					if (Tools::isSubmit('b13a'))
+						$documents['b13a'] = urldecode(Tools::getValue('b13a'));
+
+					$return = $this->updateStatus($order, $emc_ref, $ope_ref, $documents);
+					if ($return === false)
+						$error_message = $emc->l('Unable to update order\'s status data');
+					break;
+				default :
+					$error_message = $emc->l('Uknown push command : ').$type;
+					break;
+			}
+		}
+		else
+		{
+			$error_message = $emc->l('Order not found');
+			$return = false;
+		}
+
+		// The push request has not been done correctly
+		if ($return === false)
+		{
+			$ip_address = $emc->l('Unknown address');
+			if (preg_match('/^([A-Za-z0-9.]+)$/', Tools::getRemoteAddr()))
+				$ip_address = Tools::getRemoteAddr();
+			$error_msg = sprintf(
+				$emc->l('%s. Target order : %s.Caller IP address : %s'),
+				$error_message,
+				$order,
+				$ip_address
+			);
+			Logger::addLog('[ENVOIMOINSCHER]['.time().'] '.$error_msg, 4, 1);
+		}
+		return $return;
+	}
+
+	public function updateTracking($order, $text, $localisation, $state, $date)
+	{
+		$emc = new Envoimoinscher();
+		$cookie = $emc->getContext()->cookie;
+
+		// Get module tracking configs
+		$confs = Configuration::getMultiple(array('EMC_ANN', 'EMC_ENVO', 'EMC_CMD', 'EMC_LIV'));
+
+		// Get the new state
+		$new_state = 0;
+		switch ($state)
+		{
+			case 'CMD':
+				$new_state = $confs['EMC_CMD'];
+			break;
+			case 'ENV':
+				$new_state = $confs['EMC_ENVO'];
+			break;
+			case 'ANN':
+				$message = new Message();
+				$texte = $emc->l('EnvoiMoinsCher : Dispatch cancelled');
+				$message->message = htmlentities($texte, ENT_COMPAT, 'UTF-8');
+				$message->id_order = $order;
+				$message->private = 1;
+				$message->add();
+				$new_state = $confs['EMC_ANN'];
+			break;
+			case 'LIV':
+				$new_state = $confs['EMC_LIV'];
+			break;
+			default:
+				return false;
+		}
+
+		// Get the last order state (prevent repeat of the same state)
+		$history_row = Db::getInstance()->ExecuteS('SELECT * FROM '._DB_PREFIX_.'order_history
+			 WHERE id_order = '.$order.' ORDER BY id_order_history DESC LIMIT 1');
+
+		// The order has already been delivered, no need to add more tracking info
+		if ($history_row[0]['id_order_state'] == $confs['EMC_LIV'])
+			return true;
+
+		// Update the order's history
+		if ((int)$new_state > 0 && $new_state != $history_row[0]['id_order_state'])
+		{
+			$history = new OrderHistory();
+			$history->id_order = $order;
+			$history->changeIdOrderState($new_state, $order);
+			$history->id_employee = (int)$cookie->id_employee;
+			$history->addWithemail();
+		}
+
+		// Generate a tracking message if no one was given
+		if ($text == '')
+		{
+			$cmd_row = Db::getInstance()->ExecuteS('SELECT * FROM '._DB_PREFIX_.'order_state_lang
+				 WHERE id_order_state = '.(int)$new_state.' AND id_lang = '.(int)$cookie->id_lang);
+			$text = $emc->l('Order\'s state : ').$cmd_row[0]['name'];
+		}
+
+		// Generate the default date if no one was given
+		if ($date == false)
+			$date = time();
+
+		// Add tracking info
+		Db::getInstance()->Execute('INSERT INTO '._DB_PREFIX_.'emc_tracking
+			 ('._DB_PREFIX_.'orders_id_order, state_et, date_et, text_et, localisation_et)
+			 VALUES ('.$order.', "'.$state.'", "'.date('Y-m-d H:i:s', $date).'", "'.pSQL($text).'", "'.pSQL($localisation).'")');
+
+		return true;
+	}
+
+	public function updateStatus($order, $emc_ref, $ope_ref, $documents)
+	{
+		// Add all documents's urls
+		foreach ($documents as $name => $url)
+		{
+			Db::getInstance()->autoExecute(
+				_DB_PREFIX_.'emc_documents',
+				array(
+					''._DB_PREFIX_.'orders_id_order' => (int)$order,
+					'link_ed'												=> pSQL(trim($url)),
+					'type_ed'												=> pSQL($name),
+					'generated_ed'									 => 1,
+					''._DB_PREFIX_.'cart_id_cart'		=> 0,
+				),
+				'INSERT'
+			);
+		}
+
+		// Update the emc's order
+		Db::getInstance()->autoExecute(
+			_DB_PREFIX_.'emc_orders',
+			array('ref_ope_eor' => pSQL($ope_ref)),
+			'UPDATE',
+			''._DB_PREFIX_.'orders_id_order = '.(int)$order
+		);
+
+		// Update the prestashop's order
+		$tracking_mode = Configuration::get('EMC_TRACK_MODE');
+		$shipping_number = EnvoimoinscherModel::TRACK_OPE_TYPE == $tracking_mode?$ope_ref:$emc_ref;
+		Db::getInstance()->autoExecute(
+			_DB_PREFIX_.'orders',
+			array('shipping_number' => pSQL($shipping_number)),
+			'UPDATE',
+			'id_order = '.(int)$order
+		);
+		return true;
 	}
 }

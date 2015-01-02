@@ -1914,7 +1914,7 @@ td, th { padding: 0; }
   .bootstrap .table-responsive > .table-bordered > thead > tr > th:first-child, .bootstrap .table-responsive > .table-bordered > thead > tr > td:first-child, .bootstrap .table-responsive > .table-bordered > tbody > tr > th:first-child, .bootstrap .table-responsive > .table-bordered > tbody > tr > td:first-child, .bootstrap .table-responsive > .table-bordered > tfoot > tr > th:first-child, .bootstrap .table-responsive > .table-bordered > tfoot > tr > td:first-child { border-left: 0; }
   .bootstrap .table-responsive > .table-bordered > thead > tr > th:last-child, .bootstrap .table-responsive > .table-bordered > thead > tr > td:last-child, .bootstrap .table-responsive > .table-bordered > tbody > tr > th:last-child, .bootstrap .table-responsive > .table-bordered > tbody > tr > td:last-child, .bootstrap .table-responsive > .table-bordered > tfoot > tr > th:last-child, .bootstrap .table-responsive > .table-bordered > tfoot > tr > td:last-child { border-right: 0; }
   .bootstrap .table-responsive > .table-bordered > tbody > tr:last-child > th, .bootstrap .table-responsive > .table-bordered > tbody > tr:last-child > td, .bootstrap .table-responsive > .table-bordered > tfoot > tr:last-child > th, .bootstrap .table-responsive > .table-bordered > tfoot > tr:last-child > td { border-bottom: 0; } }
-.bootstrap fieldset { padding: 0; margin: 0; border: 0; min-width: 0; }
+/*.bootstrap fieldset { padding: 0; margin: 0; border: 0; min-width: 0; }*/
 .bootstrap legend { display: block; width: 100%; padding: 0; margin-bottom: 17px; font-size: 18px; line-height: inherit; color: #333333; border: 0; border-bottom: 1px solid #e5e5e5; }
 .bootstrap label { display: inline-block; margin-bottom: 5px; font-weight: bold; }
 .bootstrap input[type="search"] { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
@@ -4038,11 +4038,10 @@ i.mce-i-backcolor { background: #bbbbbb; }
 .ladda-button[data-size=s] .ladda-label { font-size: 0.9em; }
 .ladda-button[data-size=l] .ladda-label { font-size: 1.2em; }
 .ladda-button[data-size=xl] .ladda-label { font-size: 1.5em; }
+
 /*
 .nobootstrap { background-color: white; min-width: 1200px; padding: 100px 30px; }
 .nobootstrap form p { margin: 0.5em 0 0; padding: 0 0 0.5em; }
-.nobootstrap fieldset { background-color: #ebedf4; border: 1px solid #ccced7; color: #585a69; margin: 0 0 10px 0; padding: 1em; }
-.nobootstrap fieldset img { padding: 0 4px 0 0; vertical-align: bottom; }
 .nobootstrap legend { background: #ebedf4; border: 1px solid #ccced7; font-weight: 700; margin: 0; padding: 0.2em 0.5em; text-align: left; }
 .nobootstrap legend a { color: #585984; text-decoration: none; }
 .nobootstrap label { color: #585a69; text-shadow: 0 1px 0 white; float: left; width: 250px; padding: 0.2em 0.5em 0 0; text-align: right; font-weight: bold; }
@@ -4107,18 +4106,58 @@ i.mce-i-backcolor { background: #bbbbbb; }
 */
 
 /* added css */
-.bootstrap .panel {
-font: 400 12px/1.42857 "Open Sans",Helvetica,Arial,sans-serif;
-background-color: #ebedf4;
+.EMC_box, #EMC_Content {
+    background-color: #ebedf4 !important;
+    border: 1px solid #ccced7 !important;
+    box-sizing: border-box;
+    color: #585a69;
+    float: left;
+    margin: 0 0 10px !important;
+    padding: 1em;
+    width: 100%;
+}
+
+#EMC_Content fieldset{
+	background: none repeat scroll 0 0 #ebedf4;
+	border: 1px solid #ccced7;
+	font-weight: 700;
+	margin: 0;
+	padding: 0.2em 0.5em;
+	text-align: left;
+}
+
+#EMC_Content legend{
+background: none repeat scroll 0 0 #ebedf4;
 border: 1px solid #ccced7;
-box-sizing: border-box;
-color: #585a69;
-float: left;
-margin: 0 0 10px;
-padding: 1em;
+font-weight: 700;
+margin-bottom: 3px;
+padding: 0.2em 0.5em;
+text-align: left;
+color: #333;
+display: block;
+font-size: 18px;
+line-height: inherit;
 width: 100%;
 }
 
-.bootstrap .warn{
-padding-bottom:13px !important;
+#EMC_Content label{
+color: #585a69;
+float: left;
+font-weight: bold;
+padding: 0.2em 0.5em 0 0;
+text-align: right;
+text-shadow: 0 1px 0 #fff;
+width: 250px;
+}
+
+#EMC_Content .margin-form p{
+   margin: 0.5em 0 0;
+    padding: 0 0 0.5em;
+    color: #7f7f7f;
+    font-size: 0.85em;
+}
+
+#content ul{
+	padding-left:40px !important;
+	list-style:none outside disc !important;
 }

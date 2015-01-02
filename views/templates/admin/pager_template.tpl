@@ -22,17 +22,21 @@
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
-
+{if $pager.before|@count gt 0 || $pager.after|@count gt 0}
 <p class="text_align_center">
 	<span>{l s='Pagination' mod='envoimoinscher'} :</span>
-	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}=1"><img class="valignmiddle" src="../img/admin/list-prev2.gif" /></a>
-
+	{if $pager.before|@count gt 0}
+		<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}=1{if isset($filterUrl)}{$filterUrl}{/if}"><img class="valignmiddle" src="../img/admin/list-prev2.gif" /></a>
+	{/if}
 	{foreach from=$pager.before key=p item=page}
-	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$page|escape:'htmlall'}" class="action_module mr5">{$page}</a>
+	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$page|escape:'htmlall'}{if isset($filterUrl)}{$filterUrl}{/if}" class="action_module mr5">{$page}</a>
 	{/foreach}
 	<span class="bold mr5">{$pager.actual|escape:'htmlall'}</span>
 	{foreach from=$pager.after key=p item=page}
-	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$page|escape:'htmlall'}" class="action_module mr5">{$p}</a>
+	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$page|escape:'htmlall'}{if isset($filterUrl)}{$filterUrl}{/if}" class="action_module mr5">{$p}</a>
 	{/foreach}
-	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$pager.last|escape:'htmlall'}"><img class="valignmiddle" src="../img/admin/list-next2.gif" /></a>
+	{if $pager.after|@count gt 0}
+		<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$pager.last|escape:'htmlall'}{if isset($filterUrl)}{$filterUrl}{/if}"><img class="valignmiddle" src="../img/admin/list-next2.gif" /></a>
+	{/if}
 </p>
+{/if}

@@ -6,7 +6,7 @@
 	z-index: 1000;
 	display: none;
 }
-/* reset bootstrap input : we dont want display block and width 100% anymore */
+/* reset bootstrap input : we dont want display block and width 100% */
 .bootstrap .form-control, .bootstrap input[type="text"], .bootstrap input[type="search"], .bootstrap input[type="password"], .bootstrap textarea, .bootstrap select {
 	display: inline;
 	width: initial;
@@ -305,10 +305,9 @@ list-style-type:decimal;
 #EMC_cfg_bg > #EMC_Content > .actionBar > a {
 	display: inline-block;
 	margin: 5px 10px 0 3px;
-	padding: 5px;
+	padding: 5px 10px;
 	text-decoration: none;
 	text-align: center;
-	width: 100px;
 	color: #F8F8F8;
 	outline-style: none;
 	background-color: #CCCCCC;
@@ -666,7 +665,6 @@ min-height:160px;
 #EMC_Sends > form > .margin-form > p.preference_description > input[type=checkbox] {
 	margin-top: -3px;
 }
-
 
 .borderBlock {
 	width:270px; 
@@ -1082,9 +1080,21 @@ display:none;
 margin-top:0px;
 }
 
-#introduction .important,#introduction .important a{
+#introduction .important{
 font-weight:bold;
 color:#268ccd;
+}
+
+#introduction .important a{
+font-weight:400;
+text-align:center;
+color:#fff;
+background-color:#5A5655;
+border: 1px solid #5A5655;
+padding:5px 10px;
+-moz-border-radius: 5px;
+-webkit-border-radius:5px;
+text-decoration:none;
 }
 
 #logo_intro{
@@ -1162,4 +1172,10 @@ width:50px;
 .emc-required{
 color:red;
 }
+
+.document-download{
+marin-bottom:5px;
+}
+
+
 

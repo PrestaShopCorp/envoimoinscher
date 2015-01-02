@@ -37,7 +37,7 @@
 			<li>{l s='Reassemble information' mod='envoimoinscher'}<b>{l s='shipment tracking' mod='envoimoinscher'}</b>{l s='in your backoffice' mod='envoimoinscher'}</li>
 			<li><b>{l s='One dedicated customer service' mod='envoimoinscher'}</b>{l s='for your customer service' mod='envoimoinscher'}<b>{l s='1 single billing' mod='envoimoinscher'}</b>{l s='regardless of the selected carriers' mod='envoimoinscher'}</li>
 		</ul>
-		<p class="important"><a target="_blank" href="http://www.envoimoinscher.com/inscription">{l s='Create your free account and get your API key' mod='envoimoinscher'}</a></p>
+		<p class="important text_align_center mt10"><a target="_blank" href="http://ecommerce.envoimoinscher.com/landing/prestashop/?utm_source=prestashop&utm_medium=partner&utm_campaign=201409_landing">{l s='Create your free account and get your API key' mod='envoimoinscher'}</a></p>
 		<input type="submit" class="hidden" name="btnIntro" value="Suivant">
 	</fieldset>
 </form>

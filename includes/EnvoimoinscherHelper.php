@@ -526,7 +526,7 @@ class EnvoimoinscherHelper {
 		$code .= Configuration::get('EMC_CITY');
 		$code .= date('Y-m');
 
-		$weight = 0;		
+		$weight = 0;
 		$price = 0;
 		foreach ($cart->getProducts() as $product)
 		{

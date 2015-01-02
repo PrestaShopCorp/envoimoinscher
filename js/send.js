@@ -62,7 +62,7 @@ $(document).ready(function() {
 		}
 		$("#submitForm").attr("disabled","disabled");
 		$("#messageSending").css("position","absolute");
-		$("#messageSending").css("left",""+left+"px");
+		//$("#messageSending").css("left",""+left+"px");
 		$("#messageSending").width(width);
 		$("#messageSending").css("top",""+($("#changeDestData").offset().top + 40 ) +"px");
 		$("#messageSending").removeClass("hidden");

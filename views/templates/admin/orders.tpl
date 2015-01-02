@@ -39,18 +39,13 @@
 	var orderActionUrl = "index.php?controller=AdminEnvoiMoinsCher&option=initOrder&do=1&token={$token|escape:'htmlall'}";
 	var orderResultUrl = "index.php?controller=AdminEnvoiMoinsCher&option=initOrder&results=1&token={$token|escape:'htmlall'}";
 	var ordersDone = 0;
-	var notChecked = new Array();
-	var allElements = new Array();
-	notChecked[1] = 0;
-	allElements[1] = {$ordersEmcCount|escape:'htmlall'};
-	notChecked[2] = 0;
-	allElements[2] = {$ordersNoEmcCount|escape:'htmlall'};
-	notChecked[3] = 0;
-	allElements[3] = {$ordersErrorsCount|escape:'htmlall'};
+	var notChecked = 0;
+	var allElements = {$ordersCount|escape:'htmlall'};
 	var ordersTodo = {$ordersTodo|escape:'htmlall'};
 	</script>
 	<script type="text/javascript" src="{$baseDir|escape:'htmlall'}modules/envoimoinscher/js/checkboxes.js"></script>
 	<script type="text/javascript" src="{$baseDir|escape:'htmlall'}modules/envoimoinscher/js/ordersSend.js"></script>
+	<script type="text/javascript" src="{$baseDir|escape:'htmlall'}modules/envoimoinscher/js/ordersFilter.js"></script>
 	<link type="text/css" rel="stylesheet" href="{$baseDir|escape:'htmlall'}modules/envoimoinscher/css/backend_styles.css" />
 
 	{if $local_fancybox}
@@ -78,63 +73,29 @@
 		{/if}
 
 		<div class="panel">
-		{if $showEmcTable}
-			<h2>{l s='EMC carrier order selected' mod='envoimoinscher'}</h2>
-			<p>{l s='list EMC carrier orders pending help' mod='envoimoinscher'}</p>
-			<form id="orderDo1" method="post" action="index.php?controller=AdminEnvoiMoinsCher&option=initOrder&token={$token|escape:'htmlall'}">
+			<h2>{l s='Orders pending shipment' mod='envoimoinscher'}</h2>
+			<p>{l s='Here is a list of your orders pending shipment:' mod='envoimoinscher'}
+				<ul>
+					<li>{l s='EnvoiMoinsCher orders: you can send those right way. If you want to use multi-shipping on a command, you must send it manually clicking send (last column). Processed orders will be displayed on the Previous order(s) tab.' mod='envoimoinscher'}</li>
+					<li>{l s='Other carriers: If you wish to send some with our plugin you will have to select a EnvoiMoinsCher carrier for every order before sending.' mod='envoimoinscher'}</li>
+					<li>{l s='Invalid or incomplete orders: you must complete or correct them to be able to send them. You will be redirected to the information check screen upon sending. If the offer is not available yet, you will be able to select a new offer to replace the previous one (do not forget to tell your customer).' mod='envoimoinscher'}</li>
+				</ul>
+			</p>
+			<form id="orderDo" method="post" action="index.php?controller=AdminEnvoiMoinsCher&option=initOrder&token={$token|escape:'htmlall'}">
 				<div>
-					<div class="blockButtons {if $ordersTodo > 0}hidden{/if}">{include file="$ordersSendTop"}</div>
-					{include file="$ordersTableTemplate" id="1" orders=$ordersEmc tokenOrder=$tokenOrder type="with"}
-					<input type="hidden" name="type" value="withEmc" />
-					<input type="hidden" name="typeDb" value="1" />
+					{if !isset($filters) || !isset($filters.type_order) || $filters.type_order == "all"}
+						{if !isset($filters)}
+							{assign "filters" ""}
+						{/if}
+					{else}
+						<div class="blockButtons {if $ordersTodo > 0}hidden{/if}">{include file="$ordersSendTop"}</div>
+					{/if}
+					{include file="$pagerTemplate" var=$pager}
+					{include file="$ordersTableTemplate" orders=$orders tokenOrder=$tokenOrder}
+					{include file="$pagerTemplate" var=$pager}
 					<!--<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendBottom"}</div>-->
 				</div>
 			</form>
-			<br />
-			{include file="$pagerTemplate" pager=$pager_emc}
-			<br />
-		{else}
-			<h2>{l s='EMC carrier order selected' mod='envoimoinscher'}</h2>
-			<p>{l s='no EMC order to ship' mod='envoimoinscher'}</p> 
-		{/if}
 		</div>
-
-		{if $showOthersTable}
-		<div class="panel">
-			<h2>{l s='order without EMC carrier' mod='envoimoinscher'}</h2>
-			<p>{l s='list no EMC carrier orders pending help' mod='envoimoinscher'}</p>
-			<form id="orderDo2" method="post" action="index.php?controller=AdminEnvoiMoinsCher&option=initOrder&token={$token|escape:'htmlall'}"><div>
-				<div class="blockButtons {if $ordersTodo > 0}hidden{/if}">{include file="$ordersSendTop"}</div>
-				{include file="$ordersTableTemplate" id="2" orders=$ordersOthers tokenOrder=$tokenOrder type="without"}
-				<input type="hidden" name="type" value="withoutEmc" />
-				<input type="hidden" name="typeDb" value="2" />
-				<!--<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendBottom"}</div>-->
-			</div></form>
-			<br />
-			{include file="$pagerTemplate" pager=$pager_others}
-			<br />
-		</div>
-		{/if}
-
-		{if $showErrorsTable}
-		<div class="panel">
-			<h2 id="errorsTable">{l s='invalid or uncomplete order' mod='envoimoinscher'}</h2>
-			<p>{l s='list orders where :' mod='envoimoinscher'}
-				<br />{l s='list order list 1' mod='envoimoinscher'}
-				<br />{l s='list order list 2' mod='envoimoinscher'}
-				<br /><br />{l s='list order help' mod='envoimoinscher'}
-			</p>
-			<form id="orderDo3" method="post" action="index.php?controller=AdminEnvoiMoinsCher&option=initOrder&token={$token|escape:'htmlall'}"><div>
-				<div class="blockButtons {if $ordersTodo > 0}hidden{/if}">{include file="$ordersSendTop"}</div>
-				{include file="$ordersTableTemplate" id="3" orders=$ordersErrors tokenOrder=$tokenOrder type="error"}
-				<input type="hidden" name="type" value="errors" />
-				<input type="hidden" name="typeDb" value="3" />
-				<!--<div class="blockButtons" style="{if $ordersTodo > 0}display:none;{/if}">{include file="$ordersSendBottom"}</div>-->
-			</div></form>
-			<br />
-			{include file="$pagerTemplate" pager=$pager_error}
-			<br />
-		</div>
-		{/if}
 	
 	</div>

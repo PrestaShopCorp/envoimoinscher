@@ -336,12 +336,11 @@
 		}
 
 		function EMCtoggleCarrier (carrier) {
-			EMC_modify = true;
-			var EMC_env = $("#EMC_env").attr("alt");
-			if (EMC_env == "true") {
+			if ($("#module_online").attr("checked")  == "checked") {
 				alert("{/literal}{l s='Please set the module state to off' mod='envoimoinscher'}{literal}");
 				return;
 			}
+			EMC_modify = true;
 			var value = carrier.attr('alt');
 			if (carrier.parents('tr').hasClass('disabled') === false) {
 				var prices = carrier.parents('tr').find('.price').children('div');
@@ -583,7 +582,7 @@
 			</div>
 			<div class="actionBar">
 				{if $EMC_config.EMC_USER == -1}
-					<a class="btnValid selected">{l s='I have an account' mod='envoimoinscher'}</a>
+					<a class="btnValid selected">{l s='I already have an account' mod='envoimoinscher'}</a>
 				{else}
 					<a class="btnPrev{if $EMC_config.EMC_USER >= 0} selected{/if}">{l s='Previous' mod='envoimoinscher'}</a>
 					<a class="btnValid {if $EMC_config.EMC_USER > -1 && $EMC_config.EMC_USER < 2} selected{/if}">{l s='Next' mod='envoimoinscher'}</a>

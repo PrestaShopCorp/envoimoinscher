@@ -180,7 +180,7 @@
 			<div class="margin-form">
 				<input type="checkbox" name="EMC_use_axa" id="EMC_use_axa" value="1" {if Tools::getValue('EMC_use_axa', $EMC_config.EMC_ASSU) == "1"} checked="checked"{/if}/>
 				<p class="preference_description">
-					{l s='By selecting the insurance option declared value, I have read of:' mod='envoimoinscher'}<a href="http://www.envoimoinscher.com/notice-axa.html" class="action_module" target="_blank">{l s='the instructions of the insurance contract insured AXA' mod='envoimoinscher'}</a>.
+					{l s='By selecting the insurance option declared value, I have read of:' mod='envoimoinscher'}<a href="http://www.envoimoinscher.com/faq/131-tout-savoir-sur-l-assurance-ad-valorem.html" class="action_module" target="_blank">{l s='the instructions of the insurance contract insured AXA' mod='envoimoinscher'}</a>.
 					<br /><br />
 					{l s='Warning, the insufficiency and inadequacy of your package are excluded from the guarantee risk AXA, be sure to overprotect your shipment.' mod='envoimoinscher'}
 					<br /><br />

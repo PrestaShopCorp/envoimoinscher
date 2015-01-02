@@ -23,6 +23,7 @@
  * International Registred Trademark & Property of PrestaShop SA
  *}
 
+<script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript">
 /*
 * We need text translation for external js
@@ -34,10 +35,45 @@ var carrier_translation = {
 	select_pickup_point1 				 : "{l s='select pickup point 1' mod='envoimoinscher'}",
 	select_pickup_point2 				 : "{l s='select pickup point 2' mod='envoimoinscher'}",
 	select_this_pickup_point 			 : "{l s='select this pickup point' mod='envoimoinscher'}",
-	before_continue_select_pickup_point  : "{l s='before continue : select pickup point' mod='envoimoinscher'}"
+	before_continue_select_pickup_point  : "{l s='before continue : select pickup point' mod='envoimoinscher'}",
+	close_map : "{l s='close X' mod='envoimoinscher'}"
 };
 </script>
- 
+
+ <style type="text/css">
+	#mapContainer{
+		display:none;
+		width:80%;
+		height:80%;
+		position: absolute;
+		top:100px;
+		paddding:10px;
+		left:10%;
+		z-index:11111;
+		border:3px solid #000000;
+		background: #FFFFFF;
+	}
+
+	#mapContainer p{
+		width:98%;
+		text-align:right;
+		height:auto; 
+		padding-right:2%; 
+		margin-top:1%;
+	}
+
+	#mapContainer #map_canva{
+		width:100%; 
+		height:89%;
+	}
+
+	.click-here{
+		text-decoration: underline;
+		font-weight : bold;
+		color: #333;
+	}
+</style>
+
 <script type="text/javascript" src="{$baseDir|escape:'htmlall'}modules/envoimoinscher/js/carrier.js"></script>
 <link type="text/css" rel="stylesheet" href="{$baseDir|escape:'htmlall'}modules/envoimoinscher/css/carrier.css" />
 <script type="text/javascript"> 
@@ -70,6 +106,8 @@ var carrier_translation = {
 {/foreach} 
 
   jQuery(document).ready(function() { 
+  
+		document.body.innerHTML+='<div id="allMap"><div id="mapContainer"><p><a href="#" onclick="hideMap(); return false;">'+carrier_translation.close_map+'</a></p><div id="map_canvas"></div></div></div>';document.body.innerHTML+='<div id="allMap"><div id="mapContainer"><p><a href="#" onclick="hideMap(); return false;">'+carrier_translation.close_map+'</a></p><div id="map_canvas"></div></div></div>';
     // init google maps
     var contentMap = $('#allMap').html();
     $('#allMap').remove();
