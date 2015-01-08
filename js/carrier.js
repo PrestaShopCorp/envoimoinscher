@@ -86,7 +86,6 @@ function initialize(ope, carrierdId, addressId)
   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
   points = $('#parcelPoints'+carrierdId+ope+addressId).val().split('|');
   infos = $('#parcelInfos'+carrierdId+ope+addressId).val().split('|');
-  console.log($('#parcelNames'+carrierdId+ope+addressId).val());
   parcelNames = $('#parcelNames'+carrierdId+ope+addressId).val().split('|');
   parcelIds = $('#parcelIds'+carrierdId+ope+addressId).val().split('|');
   for(var i = 0; i <  points.length ; i++)
@@ -209,7 +208,7 @@ function lookForPoints(ref)
       '</div><div id="points'+value+idAddress+'" class="pointsUl padding5 list_points_loaded">'+
       '</div>');
     selectPoint(value,  ref , 'MONR', idAddress);
-		alert(carrier_translation.before_continue_select_pickup_point);
+		//alert(carrier_translation.before_continue_select_pickup_point);
   }
 	else{
 		return 'shown';

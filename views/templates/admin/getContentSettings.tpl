@@ -123,6 +123,70 @@
 			<input type="checkbox" name="EMC_mail_bill" id="EMC_mail_bill" class="checkbox" value="1" {if isset($mailConfig.bill) && $mailConfig.bill == "true"}checked="checked"{/if} />
 		</div>
 		<div class="clear both"></div>
+	</fieldset>	
+	<fieldset>
+		<legend>{l s='Logs' mod='envoimoinscher'}</legend>
+		<!-- Use AXA -->
+		<label for="EMC_use_axa">{l s='Enable Logs:' mod='envoimoinscher'}</label>
+
+		<div class="margin-form add-tooltip" title="{l s='By selecting the log option, You will receive all errors logs if no carriers found for a specific address, errors during tracking insertion... It can help you to configure the plugin' mod='envoimoinscher'}">
+			<input type="checkbox" name="EMC_enabled_logs" id="EMC_enabled_logs" value="1" {if Tools::getValue('EMC_enabled_logs', $EMC_config.EMC_ENABLED_LOGS) == "1"} checked="checked"{/if}/>
+		</div>
+		<div class="clear both"></div>
+	</fieldset>
+  <fieldset>
+		<legend>{l s='Default filter settings for orders pending shipment table' mod='envoimoinscher'}</legend>
+		<label for="EMC_filter_type_order">{l s='Order type:' mod='envoimoinscher'}</label>
+		<div class="margin-form">
+			<select id="EMC_filter_type_order" name="EMC_filter_type_order">
+        <option value="all" {if !isset($EMC_config.EMC_FILTER_TYPE_ORDER) || $EMC_config.EMC_FILTER_TYPE_ORDER == "all"}selected{/if}>{l s='Show all' mod='envoimoinscher'}</option>
+        <option value="0" {if isset($EMC_config.EMC_FILTER_TYPE_ORDER) && $EMC_config.EMC_FILTER_TYPE_ORDER == "0"}selected{/if}>{l s='EnvoiMoinsCher orders' mod='envoimoinscher'}</option>
+        <option value="1" {if isset($EMC_config.EMC_FILTER_TYPE_ORDER) && $EMC_config.EMC_FILTER_TYPE_ORDER == "1"}selected{/if}>{l s='Non EnvoiMoinsCher orders' mod='envoimoinscher'}</option>
+        <option value="2" {if isset($EMC_config.EMC_FILTER_TYPE_ORDER) && $EMC_config.EMC_FILTER_TYPE_ORDER == "2"}selected{/if}>{l s='Invalid or incomplete orders' mod='envoimoinscher'}</option>
+			</select>
+    </div>
+		<div class="clear both"></div>
+    <label for="EMC_filter_status">{l s='Status:' mod='envoimoinscher'}</label>
+		<div class="margin-form">
+			<select id="EMC_filter_status" name="EMC_filter_status[]" multiple size="3">
+        {if isset($states) && $states && sizeof($states)}
+          {if (isset($EMC_config.EMC_FILTER_STATUS))}
+            {assign var=selected_statuses value=";"|explode:$EMC_config.EMC_FILTER_STATUS}
+          {/if}
+          {foreach from=$states key=k item=v}
+          <option value="{$v['id_order_state']|escape:'htmlall'}" 
+          {if (isset($selected_statuses) && $v['id_order_state']|in_array:$selected_statuses)}selected
+          {elseif !isset($selected_statuses)}
+            selected
+          {/if}
+          >{$v['name']|escape:'htmlall'}</option>
+        {/foreach}
+        {/if}    
+			</select>
+    </div>
+		<div class="clear both"></div>
+    <label for="EMC_filter_carriers">{l s='Carrier:' mod='envoimoinscher'}</label>
+		<div class="margin-form">
+			<select id="EMC_filter_carriers" name="EMC_filter_carriers">
+        <option value="all" {if !isset($EMC_config.EMC_FILTER_CARRIERS) || $EMC_config.EMC_FILTER_CARRIERS == "all"}selected{/if}>{l s='Show all' mod='envoimoinscher'}</option>
+					{foreach from=$enabledCarriers key=k item=v}
+						<option value="{$v['name']}" {if isset($EMC_config.EMC_FILTER_CARRIERS) && $EMC_config.EMC_FILTER_CARRIERS == $v['name']}selected{/if}>{$v['name']}</option>
+					{/foreach}
+				<option value="del" {if isset($EMC_config.EMC_FILTER_CARRIERS) && $EMC_config.EMC_FILTER_CARRIERS == "del"}selected{/if}>{l s='Deleted carriers' mod='envoimoinscher'}</option>
+			</select>
+    </div>
+		<div class="clear both"></div>
+    <label for="EMC_filter_start_order_date">{l s='Time frame:' mod='envoimoinscher'}</label>
+		<div class="margin-form">
+			<select id="EMC_filter_start_order_date" name="EMC_filter_start_order_date">
+        <option value="all" {if !isset($EMC_config.EMC_FILTER_START_DATE) || $EMC_config.EMC_FILTER_START_DATE == "all"}selected{/if}>{l s='Show all' mod='envoimoinscher'}</option>
+        <option value="year" {if isset($EMC_config.EMC_FILTER_START_DATE) && $EMC_config.EMC_FILTER_START_DATE == "year"}selected{/if}>{l s='Last year' mod='envoimoinscher'}</option>
+        <option value="month" {if isset($EMC_config.EMC_FILTER_START_DATE) && $EMC_config.EMC_FILTER_START_DATE == "month"}selected{/if}>{l s='Last month' mod='envoimoinscher'}</option>
+        <option value="week" {if isset($EMC_config.EMC_FILTER_START_DATE) && $EMC_config.EMC_FILTER_START_DATE == "week"}selected{/if}>{l s='Last week' mod='envoimoinscher'}</option>
+        <option value="day" {if isset($EMC_config.EMC_FILTER_START_DATE) && $EMC_config.EMC_FILTER_START_DATE == "day"}selected{/if}>{l s='Last day' mod='envoimoinscher'}</option>
+			</select>
+    </div>
+		<div class="clear both"></div>
 	</fieldset>
 	<br />
 	<div class="margin-form">

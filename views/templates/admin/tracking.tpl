@@ -23,7 +23,7 @@
  * International Registred Trademark & Property of PrestaShop SA
  *}
 
-{if count($rows) > 0 || $showPoint == 1}
+{if count($rows) > 0}
   {if !$isAdmin}
 <script type="text/javascript">
   {literal}$(document).ready(function() {{/literal}
@@ -63,23 +63,4 @@
     <p><b>{l s='Recipient' mod='envoimoinscher'} :</b> {$order.firstname|escape:'htmlall'} {$order.lastname|escape:'htmlall'}</p>
     <p>{l s='There is no tracking information for this order. Please try again later or contact Envoimoinscher customer service.' mod='envoimoinscher'}</p>
   {/if}
-{/if}
-
-{if $showPoint == 1}
-<div id="LIST_POINT" class="table_block">
-  <table class="detail_step_by_step std">
-    <thead>
-      <tr><th colspan="2">{l s='Selected parcel point' mod='envoimoinscher'}</th></tr>
-    </thead>
-    <tbody>
-     <tr class="item"><td>{$point.name|escape:'htmlall'}<br />
-{$point.address|escape:'htmlall'}<br />
-{$point.zipcode|escape:'htmlall'} {$point.city|escape:'htmlall'}</td>
-<td>
-{foreach from=$schedule key=d item=day}
-  {$day|escape:'htmlall'}<br />
-{/foreach}</td></tr>
- </tbody>
- </table>
-</div>
 {/if}

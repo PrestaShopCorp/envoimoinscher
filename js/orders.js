@@ -29,77 +29,95 @@ $(document).ready(function() {
     window.open($(this).attr('href'),"emcwindow","scrollbars=1, resizable=1,width=950,height=680");
     return false;
   });
-  $('.selectRow').live('click', function() {
+  $('.selectRow').click(function() {
     $($(this).attr('rel')).addClass('selectedRow');
     $(this).addClass('deselectRow').removeClass('selectRow');
     return false;
   });
-  $('.deselectRow').live('click', function() {
+  $('.deselectRow').click(function() {
     $($(this).attr('rel')).removeClass('selectedRow');
     $(this).removeClass('deselectRow').addClass('selectRow');
     return false;
   });
-  if(labelsToDo > 0 ) doLabelRequest(0);
+  doLabelRequest();
   $('#selectOrDeselectAll1').click(function() {
     selectDeselectAll('#ORDERSTABLE1 tbody input[type="checkbox"]', this);
   });
   $('#ORDERSTABLE1 tbody input[type="checkbox"]').click(function() {
     checkboxClick(this, "#selectOrDeselectAll1", 1);
-  });  
+  });
+  /*$('input[type="submit"][name="sendValue"]').click(function(e) {
+    e.preventDefault();
+    orders = [];
+    $('#ORDERSTABLE1 tbody input[type="checkbox"]:checked').each(function(){
+      orders.push($(this).val());  
+    });
+    if(orders != []){
+      $.ajax({
+        type: 'POST',
+        url: "index.php?controller=AdminEnvoiMoinsCher&option=downloadLabels&token="+token,
+        success: function(result){
+          console.log(result);
+        },
+        data: orders,
+        async: false,
+      });
+    }
+  });*/
+  
+  
 });
 
-function doLabelRequest(index)
+function delayDoLabelRequest()
 {
-  if(typeof noLabels[index] == "undefined" && noLabels.length > 0) 
-  {
-    setTimeout("doLabelRequest(0)", 10000);
-    return;
-  } //alert("checking " + index + " << >> " + labelsToDo);
-  reqs[index] = $.ajax({
-    url: "index.php?controller=AdminEnvoiMoinsCher&ref="+noLabels[index]+"&order="+ordersIds[index]+"&option=checkLabelsAvailability&token="+token,
-    type: "GET",
-    dataType: "json",
-    success: function(res)
-    {
-      tries = 0;
-      if(res.error == 0)
-      { //alert(res.labelAvailable);
-        if(""+res.labelAvailable == "1")
-        {
-          allElements[1]++;
-          notChecked[1]++;
-          $('#selectOrDeselectAll1').removeClass('deselectAll').addClass('selectAll')
-          // put label's url into orders table
-          $("#labelgen"+ordersIds[index]).remove(); 
-          $("#label"+ordersIds[index]).removeClass("hidden"); 
-          $("#checkbox-"+ordersIds[index]).removeClass("hidden"); 
-          // $("#label"+ordersIds[index] + " a").attr("href", res.labelUrl); 
-          ordersIds.splice(index, 1);
-          noLabels.splice(index, 1);
-          labelsToDo--;
-          if(labelsToDo == 0) return;
-        }
-        var o = index + 1;
-        reqs[index].abort();
-        doLabelRequest(o);
-      }
-      else if(res.error == 1)
-      {
-        reqs[index].abort();
-        doLabelRequest(index);
-      }
-    },
-    error: function(jqXHR, textStatus, errorThrown)
-    {
-      if(tries < 3)
-      {
-        tries++;
-        doLabelRequest(index);
-      }
-      else
-      {
-        alert("Une erreur s'est produite pendant la récupération des bordereaux de livraison : "+errorThrown)
-      }
-    }	
-  });
+	setTimeout("doLabelRequest()",10000);
+}
+
+function doLabelRequest()
+{
+  // Get all order's to check
+	orders_to_call = "";
+	$(".label-not-generated").each(function(){
+		if (orders_to_call != "")
+		{
+			orders_to_call += ";";
+		}
+		orders_to_call += $(this).attr("order-id");
+	});
+	
+	if (orders_to_call != "")
+	{
+		// Call server for documents
+		$.ajax({
+			url: "index.php?controller=AdminEnvoiMoinsCher&orders="+orders_to_call+"&option=checkLabelsAvailability&token="+token,
+			type: "GET",
+			dataType: "json",
+			success: function(res)
+			{
+				// update orders
+				for(order_id in res)
+				{
+					// add documents
+					labels = res[order_id];
+					content = "";
+					for(label_id in labels)
+					{
+						content += "<a href=\""+labels[label_id].url+"\" class=\"doc-"+labels[label_id].type+" action_module btn btn-default\" target=\"_blank\">"+labels[label_id].name+"</a><br/>";
+					}
+					$("#label"+order_id+" .documents").html(content);		
+					
+					// no need to check again
+					$("#label"+order_id+" .documents").removeClass("label-not-generated");
+					$("#label"+order_id+" .openTrackPopup").removeClass("hidden");
+					$("#checkbox-"+order_id).removeClass("hidden");
+					$("#order-"+order_id).attr("checked",false);
+				}
+				delayDoLabelRequest();
+			},
+			error: function(jqXHR, textStatus, errorThrown)
+			{
+				delayDoLabelRequest();
+			}	
+		});
+	}
 }

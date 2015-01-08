@@ -15,13 +15,13 @@
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
- * versions in the future. If you wish to customize PrestaShop for your
- * needs please refer to http://www.prestashop.com for more information.
+ * versions in the future. If you wish to customize this library for your
+ * needs please refer to http://www.envoimoinscher.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2011-2014 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- * International Registred Trademark & Property of PrestaShop SA
+ * International Registred Trademark & Property of EnvoiMoinsCher
  */
 
 class Env_OrderStatus extends Env_WebService
@@ -74,11 +74,11 @@ class Env_OrderStatus extends Env_WebService
 			{
 				/* The XML file is loaded, we now gather the datas */
 				$labels = array();
-				$order_labels = $this->xpath->evaluate('/order/labels');
+				$order_labels = $this->xpath->evaluate('/order/labels/*');
 				foreach ($order_labels as $label_index => $label)
 					$labels[$label_index] = $label->nodeValue;
 				$documents = array();
-				$order_documents = $this->xpath->evaluate('/order/documents');
+				$order_documents = $this->xpath->evaluate('/order/documents/*');
 				foreach ($order_documents as $docs)
 					$documents[$docs->nodeName] = $docs->nodeValue;
 				$this->order_info = array(

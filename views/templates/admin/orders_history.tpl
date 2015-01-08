@@ -44,8 +44,9 @@
 	var noLabels = new Array(); 
 	var reqs = new Array();
 	var ordersIds = new Array();
+	var cartIds = new Array();
 	{foreach from=$orders key=o item=order}
-	{if $order.generated_ed == "0" && $order.ref_emc_eor != ""} noLabels.push("{$order.ref_emc_eor}"); ordersIds.push("{$order.idOrder}"); labelsToDo++; {/if}
+	{if $order.id_order|in_array:$noAjaxOrderIds}{else} noLabels.push("{$order.ref_emc_eor}"); ordersIds.push("{$order.idOrder}"); cartIds.push("{$order.id_cart}"); labelsToDo++; {/if}
 	{/foreach}
 	var notChecked = new Array();
 	var allElements = new Array();
@@ -54,7 +55,8 @@
 	</script>
 	<script type="text/javascript" src="{$baseDir|escape:'htmlall'}modules/envoimoinscher/js/checkboxes.js"></script>
 	<script type="text/javascript" src="{$baseDir|escape:'htmlall'}modules/envoimoinscher/js/orders.js"></script>
-	<link type="text/css" rel="stylesheet" href="{$baseDir|escape:'htmlall'}modules/envoimoinscher/css/backend_styles.css" />
+  <script type="text/javascript" src="{$baseDir|escape:'htmlall'}modules/envoimoinscher/js/ordersHistoryFilter.js"></script>
+  <link type="text/css" rel="stylesheet" href="{$baseDir|escape:'htmlall'}modules/envoimoinscher/css/backend_styles.css" />
 
 	<div class="bootstrap">
 		{include file="$submenuTemplate" var=$actual}
@@ -68,10 +70,14 @@
 
 		<div class="panel">
 			<p>{l s='list shipments, to download slips : check then clic "download"' mod='envoimoinscher'}</p>
-			<form method="post" target="_blank" action="index.php?controller=AdminEnvoiMoinsCher&option=download&token={$token|escape:'htmlall'}">
-				<p class="text_align_right"><input type="submit" class="btn btn-default" id="send1" name="sendValue" value="{l s='Download shipment notes' mod='envoimoinscher'}" /></p>
+			<form method="post" target="_blank" action="index.php?controller=AdminEnvoiMoinsCher&option=downloadLabels&token={$token|escape:'htmlall'}">
+				<p class="text_align_right">
+					<input type="submit" class="btn btn-default" id="send1" name="sendValueRemises" value="{l s='Download delivery slips' mod='envoimoinscher'}" />
+					<input type="submit" class="btn btn-default" id="send1" name="sendValue" value="{l s='Download shipment notes' mod='envoimoinscher'}" />
+				</p>
+				{include file="$pagerTemplate" var=$pager}
 				{include file="$ordersTableTemplate" id="1" orders=$orders tokenOrder=$tokenOrder ordersTodo=$orders type="history"}
+				{include file="$pagerTemplate" var=$pager}
 			</form>
-			{include file="$pagerTemplate" var=$pager}
 		</div>
 	</div>
