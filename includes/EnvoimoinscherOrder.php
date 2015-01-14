@@ -100,7 +100,7 @@ class EnvoimoinscherOrder
 		);
 
 		$offers_orders = $this->model->getOffersOrder();
-		$emc = new Envoimoinscher();
+		$emc = Module::getInstanceByName('envoimoinscher');
 		$cot_cl->setPlatformParams($emc->ws_name, _PS_VERSION_, $emc->version);
 		$quot_info = array(
 			'delai'        => $offers_orders[$this->order_data['config']['EMC_ORDER']]['emcValue'],
@@ -246,7 +246,7 @@ class EnvoimoinscherOrder
 	 */
 	public function doOrder($do_skip = true)
 	{
-		$emc = new Envoimoinscher();
+		$emc = Module::getInstanceByName('envoimoinscher');
 		$cookie = $emc->getContext()->cookie;
 
 		$order_object = $this->getOrderObject();
