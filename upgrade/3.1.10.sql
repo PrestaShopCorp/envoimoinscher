@@ -1,0 +1,1 @@
+alter table {PREFIXE}emc_documents modify type_ed varchar(100);

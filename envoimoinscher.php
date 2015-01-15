@@ -171,7 +171,7 @@ class Envoimoinscher extends CarrierModule
 		$states_array = array();
 		foreach ($states as $state)
 		{
-					array_push($states_array, $state['id_order_state']);
+			$states_array[] = $state['id_order_state'];
 			if ($state['template'] === 'preparation')
 				$emc_cmd = (int)$state['id_order_state'];
 			else if ($state['template'] === 'shipped')
@@ -638,19 +638,21 @@ class Envoimoinscher extends CarrierModule
 						'id' => '',
 						'name' => $this->l('Please choose a wrapping type')
 		);
-
-		foreach ($api_params['POFR']['services'] as $api_param)
+		if (isset($api_params['POFR']))
 		{
-			if (isset($api_param['parameters']['emballage.type_emballage']))
+			foreach ($api_params['POFR']['services'] as $api_param)
 			{
-				foreach ($api_param['parameters']['emballage.type_emballage']['values'] as $type)
+				if (isset($api_param['parameters']['emballage.type_emballage']))
 				{
-					$wrapping_types[] = array(
-						'id' => $type,
-						'name' => Tools::substr($type, strpos($type, '-') + 1)
-					);
+					foreach ($api_param['parameters']['emballage.type_emballage']['values'] as $type)
+					{
+						$wrapping_types[] = array(
+							'id' => $type,
+							'name' => Tools::substr($type, strpos($type, '-') + 1)
+						);
+					}
+					break;
 				}
-				break;
 			}
 		}
 
@@ -1016,21 +1018,42 @@ class Envoimoinscher extends CarrierModule
 		$cookie = $this->getContext()->cookie;
 		$helper = new EnvoimoinscherHelper;
 		$config = $helper->configArray($this->model->getConfigData());
+		$params = array();
 
-		//get filters
-		$params = '';
+		// init pagers
+		require_once('lib/Pager.php');
+
+		//add language to params
+		$params['lang'] = $cookie->id_lang;
+
+		//add filters
 		if (Tools::isSubmit('type_order'))
 			$params['filterBy']['type_order'] = Tools::getValue('type_order');
+		else
+			$params['filterBy']['type_order'] = $config['EMC_FILTER_TYPE_ORDER'];
+			
 		if (Tools::isSubmit('filter_id_order'))
 			$params['filterBy']['filter_id_order'] = (int)Tools::getValue('filter_id_order');
+			
 		if (Tools::isSubmit('status'))
 			$params['filterBy']['status'] = Tools::getValue('status');
+		else
+			$params['filterBy']['status'] = explode(';', $config['EMC_FILTER_STATUS']);
+			
 		if (Tools::isSubmit('carriers'))
 			$params['filterBy']['carriers'] = Tools::getValue('carriers');
+		else
+			$params['filterBy']['carriers'] = $config['EMC_FILTER_CARRIERS'];
+
 		if (Tools::isSubmit('start_order_date'))
 			$params['filterBy']['start_order_date'] = Tools::getValue('start_order_date');
+		else
+			if ($config['EMC_FILTER_START_DATE'] != 'all')
+				$params['filterBy']['start_order_date'] = date('Y-m-d', strtotime('-1 '.$config['EMC_FILTER_START_DATE']));
+			
 		if (Tools::isSubmit('end_order_date'))
 			$params['filterBy']['end_order_date'] = Tools::getValue('end_order_date');
+		
 		if (Tools::isSubmit('recipient'))
 		{
 			$words = explode(' ', trim(Tools::getValue('recipient')));
@@ -1038,8 +1061,16 @@ class Envoimoinscher extends CarrierModule
 				$params['filterBy']['recipient'][$key] = $value;
 		}
 
-		// init pagers
-		require_once('lib/Pager.php');
+		// generate filter url
+		$filter_url = '&type_order='.$params['filterBy']['type_order']
+								 .(isset($params['filterBy']['filter_id_order'])?'&filter_id_order='.$params['filterBy']['filter_id_order']:'')
+								 .'&carriers='.$params['filterBy']['carriers']
+								 .(isset($params['filterBy']['start_order_date'])?'&start_order_date='.$params['filterBy']['start_order_date']:'')
+								 .(isset($params['filterBy']['end_order_date'])?'&end_order_date='.$params['filterBy']['end_order_date']:'')
+								 .(isset($params['filterBy']['recipient'])?'&recipient='.implode('+',$params['filterBy']['recipient']):'');
+		if (isset($params['filterBy']['status']) && is_array($params['filterBy']['status']))
+			foreach ($params['filterBy']['status'] as $key => $value)
+				$filter_url .= '&status[]='.$value;
 
 		// get orders
 		$orders_count = $this->model->getEligibleOrdersCount($params);
@@ -1064,82 +1095,18 @@ class Envoimoinscher extends CarrierModule
 		$limits = 'LIMIT '.(int)$start.','.(int)$per_page;
 		$smarty->assign('pager', $pager->setPages());
 
-		//add language to params
-		$params['lang'] = $cookie->id_lang;
-
 		$orders = $this->model->getEligibleOrders($params, $limits);
-
+		
 		//get enabled carriers
 		$sql = 'SELECT id_carrier, name FROM '._DB_PREFIX_.'carrier WHERE deleted=0';
 		$enabled_carriers = Db::getInstance()->ExecuteS($sql);
-
-		//send filter settings back
-		if (isset($params['filterBy']))
-		{
-			$smarty->assign('filters', $params['filterBy']);
-			$filter_url = '';
-			if (isset($params['filterBy']['type_order']))
-				$filter_url .= '&type_order='.$params['filterBy']['type_order'];
-			if (isset($params['filterBy']['filter_id_order']))
-				$filter_url .= '&filter_id_order='.$params['filterBy']['filter_id_order'];
-			if (isset($params['filterBy']['status']) && is_array($params['filterBy']['status']))
-				foreach ($params['filterBy']['status'] as $key => $value)
-					$filter_url .= '&status[]='.$value;
-			if (isset($params['filterBy']['carriers']))
-				$filter_url .= '&carriers='.$params['filterBy']['carriers'];
-			if (isset($params['filterBy']['start_order_date']))
-				$filter_url .= '&start_order_date='.$params['filterBy']['start_order_date'];
-			if (isset($params['filterBy']['end_order_date']))
-				$filter_url .= '&end_order_date='.$params['filterBy']['end_order_date'];
-			if (isset($params['filterBy']['recipient']))
-			{
-				$filter_url .= '&recipient=';
-				$i = 0;
-				foreach ($params['filterBy']['recipient'] as $key => $value)
-				{
-					if ($i == 0)
-						$filter_url .= $value;
-					else
-						$filter_url .= '+'.$value;
-					$i++;
-				}
-			}
-			$smarty->assign('filterUrl', $filter_url);
-		}
-		//else send default filter settings
-		else
-		{
-			$params['filterBy']['type_order'] = $config['EMC_FILTER_TYPE_ORDER'];
-			$params['filterBy']['status'] = explode(';', $config['EMC_FILTER_STATUS']);
-			$params['filterBy']['carriers'] = $config['EMC_FILTER_CARRIERS'];
-			switch ($config['EMC_FILTER_START_DATE'])
-			{
-				case 'all':
-					break;
-
-				case 'year':
-					$params['filterBy']['start_order_date'] = date('Y-m-d', strtotime('-1 year'));
-					break;
-
-				case 'month':
-					$params['filterBy']['start_order_date'] = date('Y-m-d', strtotime('-1 month'));
-					break;
-
-				case 'week':
-					$params['filterBy']['start_order_date'] = date('Y-m-d', strtotime('-1 week'));
-					break;
-
-				case 'day':
-					$params['filterBy']['start_order_date'] = date('Y-m-d', strtotime('-1 day'));
-					break;
-			}
-			$smarty->assign('filters', $params['filterBy']);
-		}
-
+		
 		// all orders to send
 		$planning = $this->model->getLastPlanning();
 		$orders_to_send = Tools::jsonDecode($planning['orders_eopl'], true);
 		$param_config = '&configure=envoimoinscher&tab_module=shipping_logistics&module_name=envoimoinscher&EMC_tabs=settings';
+		$smarty->assign('filters', $params['filterBy']);
+		$smarty->assign('filterUrl', $filter_url);
 		$smarty->assign('tab_news', $this->model->getApiNews($this->ws_name, $this->version));
 		$smarty->assign('tpl_news', _PS_MODULE_DIR_.'envoimoinscher/views/templates/admin/news.tpl');
 		$smarty->assign('local_fancybox', $this->useLocalFancybox());
@@ -1187,6 +1154,11 @@ class Envoimoinscher extends CarrierModule
 		$helper = new EnvoimoinscherHelper();
 		$config = $helper->configArray($this->model->getConfigData());
 		$emc_order = new EnvoimoinscherOrder($this->model);
+		
+		// check if any order has been selected
+		if (!Tools::isSubmit('orders'))
+			Tools::redirectAdmin($admin_link_base);
+			
 		if (!Tools::getValue('do') && !Tools::getValue('results') && !Tools::getValue('mide'))
 		{
 			$orders = Tools::getValue('orders'); // Get orders
@@ -1888,7 +1860,7 @@ class Envoimoinscher extends CarrierModule
 			)
 		);
 		$cot_cl->setType($data['config']['EMC_TYPE'], $data['parcels']);
-		$cot_cl->getQuotation($quot_info); // Init params for Quotation
+		@$cot_cl->getQuotation($quot_info); // Init params for Quotation
 		$cot_cl->getOffers(false); // Get Offers
 		$is_found = false;
 		$final_offer = $proforma_data = array();
@@ -3071,7 +3043,7 @@ class Envoimoinscher extends CarrierModule
 		$offers_quotation = array();
 		if (count($offers_db) == 1) // correction needed for quotation
 		{
-			$cot_cl->getQuotation($quot_info);
+			@$cot_cl->getQuotation($quot_info);
 			$cot_cl->getOffers(false);
 			$offers_quotation = $cot_cl->offers;
 		}
@@ -3084,7 +3056,7 @@ class Envoimoinscher extends CarrierModule
 				$cot_cl->setParamMulti($quot_info);
 			}
 
-			$cot_cl->getQuotationMulti();
+			@$cot_cl->getQuotationMulti();
 			$cot_cl->getOffersMulti();
 			$offers_quotation = $cot_cl->offers;
 		}
@@ -3538,7 +3510,8 @@ class Envoimoinscher extends CarrierModule
 		if (count($refs) > 0)
 		{
 			// Get the document's base url
-			$base_url = explode('?', $references[0]['link_ed'])[0];
+			$base_url = explode('?', $references[0]['link_ed']);
+			$base_url = $base_url[0];
 
 			// Set url's params
 			if (Tools::getValue('sendValueRemises'))
@@ -3705,12 +3678,11 @@ class Envoimoinscher extends CarrierModule
 
 	public function checkLabelsAvailability()
 	{
-		$emc = new Envoimoinscher();
 		$orders_id = explode(';', Tools::getValue('orders'));
 		if (count($orders_id) > 0)
 		{
 			$documents = Db::getInstance()->ExecuteS('SELECT * FROM '._DB_PREFIX_.'emc_documents
-				WHERE generated_ed = 1 AND '._DB_PREFIX_.'orders_id_order in ('.implode(',', $orders_id).')');
+				WHERE generated_ed = 1 AND '._DB_PREFIX_.'orders_id_order in ('.implode(',', array_map('intval', $orders_id)).')');
 
 			// get all documents for each order
 			$order_documents = array();
@@ -3721,7 +3693,7 @@ class Envoimoinscher extends CarrierModule
 					$order_documents[$id] = array();
 				$order_documents[$id][] = array(
 					'type'	=> $document['type_ed'],
-					'name' 	=> $emc->l('download '.$document['type_ed']),
+					'name' 	=> $this->l('download '.$document['type_ed']),
 					'url'		=> $document['link_ed']
 				);
 			}
