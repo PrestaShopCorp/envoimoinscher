@@ -2708,7 +2708,6 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function hookHeader()
 	{
-		$this->getContext()->controller->addJs('https://maps.google.com/maps/api/js?sensor=false');
 		$smarty = $this->getContext()->smarty;
 		$smarty->assign('emcBaseDir', _MODULE_DIR_.'/envoimoinscher/');
 		return $this->display(__FILE__, '/views/templates/hook/header_hook.tpl');
@@ -2742,6 +2741,8 @@ class Envoimoinscher extends CarrierModule
 
 		foreach ($delivery as $key => $value)
 			$delivery[$key] = $this->dateToString($value);
+
+		$this->getContext()->controller->addJs('https://maps.google.com/maps/api/js?sensor=false');
 
 		$smarty->assign('point', $point);
 		$smarty->assign('points', $points);
