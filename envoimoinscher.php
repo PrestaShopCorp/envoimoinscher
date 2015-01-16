@@ -2708,6 +2708,7 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function hookHeader()
 	{
+		$this->getContext()->controller->addJs('https://maps.google.com/maps/api/js?sensor=false');
 		$smarty = $this->getContext()->smarty;
 		$smarty->assign('emcBaseDir', _MODULE_DIR_.'/envoimoinscher/');
 		return $this->display(__FILE__, '/views/templates/hook/header_hook.tpl');
