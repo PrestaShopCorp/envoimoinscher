@@ -2744,6 +2744,8 @@ class Envoimoinscher extends CarrierModule
 		foreach ($delivery as $key => $value)
 			$delivery[$key] = $this->dateToString($value);
 
+		$this->getContext()->controller->addJs('https://maps.google.com/maps/api/js?sensor=false');
+
 		$smarty->assign('point', $point);
 		$smarty->assign('points', $points);
 		$smarty->assign('delivery', $delivery);

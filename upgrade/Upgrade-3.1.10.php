@@ -31,7 +31,7 @@ function upgrade_module_3_1_10($module)
 	$states = OrderState::getOrderStates((int)$module->getContext()->language->id);
 	$states_array = array();
 	foreach ($states as $state)
-		array_push($states_array, $state['id_order_state']);
+		$states_array[] = $state['id_order_state'];
 	Configuration::updateValue('EMC_FILTER_TYPE_ORDER', 'all');	 
 	Configuration::updateValue('EMC_FILTER_STATUS', implode(';', $states_array));
 	Configuration::updateValue('EMC_FILTER_CARRIERS', 'all');
