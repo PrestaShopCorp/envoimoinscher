@@ -23,7 +23,6 @@
  * International Registred Trademark & Property of PrestaShop SA
  *}
 
-<script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=false"></script>
 <script type="text/javascript">
 /*
 * We need text translation for external js
