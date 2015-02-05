@@ -753,6 +753,8 @@ class Envoimoinscher extends CarrierModule
 	 */
 	public function hookDisplayBackOfficeHeader()
 	{
+		$this->getContext()->controller->addJquery();
+		$this->getContext()->controller->addJqueryUI('ui.datepicker');
 		if (Tools::getValue('controller') === 'AdminModules')
 			$this->getContext()->controller->addCSS($this->_path.'/css/back-office.css?version='.$this->version, 'all');
 	}
@@ -1045,14 +1047,22 @@ class Envoimoinscher extends CarrierModule
 		else
 			$params['filterBy']['carriers'] = $config['EMC_FILTER_CARRIERS'];
 
-		if (Tools::isSubmit('start_order_date'))
-			$params['filterBy']['start_order_date'] = Tools::getValue('start_order_date');
-		else
-			if ($config['EMC_FILTER_START_DATE'] != 'all')
+		if (Tools::isSubmit('start_order_date')){
+			if("all" != Tools::getValue('start_order_date')){
+				$params['filterBy']['start_order_date'] = Tools::getValue('start_order_date');
+			}
+		}
+		else{
+			if ($config['EMC_FILTER_START_DATE'] != 'all'){
 				$params['filterBy']['start_order_date'] = date('Y-m-d', strtotime('-1 '.$config['EMC_FILTER_START_DATE']));
-			
-		if (Tools::isSubmit('end_order_date'))
-			$params['filterBy']['end_order_date'] = Tools::getValue('end_order_date');
+			}
+		}
+		
+		if (Tools::isSubmit('end_order_date')){
+			if("all" != Tools::getValue('end_order_date')){
+				$params['filterBy']['end_order_date'] = Tools::getValue('end_order_date');
+			}
+		}
 		
 		if (Tools::isSubmit('recipient'))
 		{
@@ -1071,7 +1081,7 @@ class Envoimoinscher extends CarrierModule
 		if (isset($params['filterBy']['status']) && is_array($params['filterBy']['status']))
 			foreach ($params['filterBy']['status'] as $key => $value)
 				$filter_url .= '&status[]='.$value;
-
+		
 		// get orders
 		$orders_count = $this->model->getEligibleOrdersCount($params);
 

@@ -187,7 +187,7 @@ class EnvoimoinscherOrder
 		$tracking_key = sha1($this->order_id.$helper->getValueToToken($quot_info).Tools::getRemoteAddr().time());
 		$url_params = '?key='.$tracking_key.'&order='.$this->order_id;
 		//$shop_domain = Tools::getShopDomain();
-		$url = Tools::getHttpHost(true, true).'/modules/envoimoinscher/push/push.php';
+		$url = Tools::getHttpHost(true, true).__PS_BASE_URI__.'/modules/envoimoinscher/push/push.php';
 		$quot_info['url_push'] = $url.$url_params;
 
 		$order_object['tmp_quote'] = $quot_info;
