@@ -54,30 +54,7 @@
 
 #map_canvas {width:100%; height:93%;}
 .pointsUl ul li {list-style:none;}
-div.opc-overlay {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	background: url('img/ajax-loader.gif') #666 no-repeat center center;
-	opacity: 0.7;
-	filter : alpha(opacity=70); /* IE < 8 */
-	-moz-opacity : 0.7; 
-    -ms-filter: "alpha(opacity=70)"; /* IE 8 */
-	z-index: 99
-}
 
-div.opc-overlay-cart {
-	position: static; 
-    margin: 0px auto;
-    display:block;
-	width: 25px;
-	height: 50px;
-	background: url('img/ajax-loader.gif') no-repeat center center;
-}
-
-div.opc-main-block {position: relative }
 .hook_extracarrier {margin:0; padding:0;}
  
 .pointsUl {

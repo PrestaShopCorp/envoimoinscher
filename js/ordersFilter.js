@@ -62,9 +62,7 @@ function applyFilter(token)
 	data['token'] = token;
 	
 	//send order type filter content
-	if($("select[name='type_order']").val() != "all"){
-		data['type_order'] = $("select[name='type_order']").val();
-	}
+	data['type_order'] = $("select[name='type_order']").val();
 	
 	//send order id filter content
 	var filter_id_order = $.trim($("input[name='filter_id_order']").val());
@@ -84,19 +82,22 @@ function applyFilter(token)
 	}
 	
 	//send carriers filter content
-	if($("select[name='carriers']").val() != "all"){
-		data['carriers'] = $("select[name='carriers']").val();
-	}
+	data['carriers'] = $("select[name='carriers']").val();
 	
 	//send date filter content
 	var start_order_date = $("input[name='start_order_date']").val();
 	var end_order_date = $("input[name='end_order_date']").val();
-	if(start_order_date!="")
-	{
+
+	if(start_order_date == ""){
+		data['start_order_date'] = "all";	
+	}
+	else{
 		data['start_order_date'] = start_order_date;
 	}
-	if(end_order_date!="")
-	{
+	if(end_order_date == ""){
+		data['end_order_date'] = "all";
+	}
+	else{
 		data['end_order_date'] = end_order_date;
 	}
 
@@ -131,7 +132,13 @@ function noFilter(token)
 	var data = {};
 	data['controller'] = 'AdminEnvoiMoinsCher';
 	data['token'] = token;
+	data['type_order'] = "all";
+	data['carriers'] = "all";
+	data['start_order_date'] = "all";
+	data['end_order_date'] = "all";
+	
 	params = $.param(data);
+	
   var appendUrl = '';
   $("select[name='status[]'] option").each(function(index, elem){
     appendUrl += '&status[]='+elem.value;

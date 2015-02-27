@@ -329,19 +329,19 @@ class EnvoimoinscherModel
 			//by order type
 			switch ($params['filterBy']['type_order'])
 			{
-				case 0:
+				case "0":
 					$sql .= ' AND c.external_module_name = "envoimoinscher" AND (er.errors_eoe = "" OR er.errors_eoe is NULL)';
 					break;
-				case 1:
+				case "1":
 					$sql .= ' AND c.external_module_name != "envoimoinscher" AND (er.errors_eoe = "" OR er.errors_eoe is NULL)';
 					break;
-				case 2:
+				case "2":
 					$sql .= ' AND er.errors_eoe != ""';
 					break;
 				default:
 					break;
 			}
-
+			
 			//by order id
 			if (isset($params['filterBy']['filter_id_order']))
 				$sql .= ' AND o.id_order = '.(int)$params['filterBy']['filter_id_order'];
