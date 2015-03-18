@@ -103,7 +103,7 @@ class EnvoimoinscherOrder
 		$emc = Module::getInstanceByName('envoimoinscher');
 		$cot_cl->setPlatformParams($emc->ws_name, _PS_VERSION_, $emc->version);
 		$quot_info = array(
-			'delai'        => $offers_orders[$this->order_data['config']['EMC_ORDER']]['emcValue'],
+			'delai'        => 'aucun',//$offers_orders[$this->order_data['config']['EMC_ORDER']]['emcValue'],
 			'code_contenu' => $this->order_data['config']['EMC_NATURE'],
 			'module'       => $this->prestashop_config['wsName'],
 			'version'      => $this->prestashop_config['version'],
@@ -128,7 +128,7 @@ class EnvoimoinscherOrder
 				'prenom'      => $this->order_data['config']['EMC_FNAME'],
 				'nom'         => $this->order_data['config']['EMC_LNAME'],
 				'email'       => $this->order_data['config']['EMC_MAIL'],
-				'tel'         => $this->order_data['config']['EMC_TEL'],
+				'tel'         => EnvoimoinscherHelper::normalizeTelephone($this->order_data['config']['EMC_TEL']),
 				'infos'       => $this->order_data['config']['EMC_COMPL']
 			)
 		);
@@ -146,14 +146,17 @@ class EnvoimoinscherOrder
 			'nom'         => $this->order_data['delivery']['nom'],
 			'email'       => $this->order_data['delivery']['email'],
 			'societe'     => $this->order_data['delivery']['societe'],
-			'tel'         => $helper->normalizeTelephone($this->order_data['delivery']['tel']),
+			'tel'         => EnvoimoinscherHelper::normalizeTelephone($this->order_data['delivery']['tel']),
 			'infos'       => $this->order_data['delivery']['other']
 		);
 		foreach ($this->post_dest_fields as $field => $value)
 		{
 			if (Tools::isSubmit($field))
-			{
-				$dest_array[$value] = Tools::getValue($field);
+			{	
+				if($field == 'dest_tel')
+					$dest_array[$value] = EnvoimoinscherHelper::normalizeTelephone(Tools::getValue($field));
+				else
+					$dest_array[$value] = Tools::getValue($field);
 				unset($_POST[$field]);
 			}
 		}
@@ -187,7 +190,7 @@ class EnvoimoinscherOrder
 		$tracking_key = sha1($this->order_id.$helper->getValueToToken($quot_info).Tools::getRemoteAddr().time());
 		$url_params = '?key='.$tracking_key.'&order='.$this->order_id;
 		//$shop_domain = Tools::getShopDomain();
-		$url = Tools::getHttpHost(true, true).__PS_BASE_URI__.'/modules/envoimoinscher/push/push.php';
+		$url = Tools::getShopDomain(true, true).__PS_BASE_URI__.'/modules/envoimoinscher/push/push.php';
 		$quot_info['url_push'] = $url.$url_params;
 
 		$order_object['tmp_quote'] = $quot_info;

@@ -128,9 +128,9 @@ class Envoimoinscher extends CarrierModule
 		);
 		$this->name = 'envoimoinscher';
 		$this->tab = 'shipping_logistics';
-		$this->version = '3.1.11';
+		$this->version = '3.1.12';
 		$this->author = 'EnvoiMoinsCher';
-		$this->local_version = '3.1.11';
+		$this->local_version = '3.1.12';
 		parent::__construct();
 		$this->page = basename(__FILE__, '.php');
 		$this->displayName = 'EnvoiMoinsCher';
@@ -1165,12 +1165,16 @@ class Envoimoinscher extends CarrierModule
 		$config = $helper->configArray($this->model->getConfigData());
 		$emc_order = new EnvoimoinscherOrder($this->model);
 		
+		
+		
 		// check if any order has been selected
-		if (!Tools::isSubmit('orders'))
-			Tools::redirectAdmin($admin_link_base);
 			
 		if (!Tools::getValue('do') && !Tools::getValue('results') && !Tools::getValue('mide'))
 		{
+			// check if any order has been selected
+			if (!Tools::isSubmit('orders'))
+				Tools::redirectAdmin($admin_link_base);
+			
 			$orders = Tools::getValue('orders'); // Get orders
 
 			$emc_order->constructOrdersLists($orders, Tools::getValue('typeDb'));
@@ -1220,7 +1224,7 @@ class Envoimoinscher extends CarrierModule
 		{
 			$emc_order->skipOrder((int)Tools::getValue('previous'));
 			$emc_order->incrementSkipped();
-			$emc_order->updateOrdersLsit();
+			$emc_order->updateOrdersList();
 			Tools::redirectAdmin($admin_link_base.'&id_order='.(int)Tools::getValue('id_order').'&option=send');
 			die();
 		}
@@ -1491,6 +1495,7 @@ class Envoimoinscher extends CarrierModule
 	{
 		$smarty = $this->getContext()->smarty;
 		$cookie = $this->getContext()->cookie;
+		$html = '';
 
 		$order_id = (int)Tools::getValue('id_order');
 		$post_data = $this->model->getPostData($order_id);
@@ -1611,16 +1616,6 @@ class Envoimoinscher extends CarrierModule
 		$this->model->removeTemporaryPost($order_id); // Delete post values
 		$cookie->normal_order_passed = -1; // show nothing on table page
 
-		$html = '<script type="text/javascript">
-								$(function(){
-									$(".fancybox").fancybox({
-										"width"			: 1000,
-										"height"		: 760,
-										"autoDimensions": false,
-										"autoScale"		: false
-									});
-								});
-							</script>';
 		if ((float)$weight == 0)
 			$html .= parent::adminDisplayWarning('Your order weight are empty, please check products or enable min weight in the module settings.');
 
@@ -1841,7 +1836,7 @@ class Envoimoinscher extends CarrierModule
 				)
 			),
 			'type_emballage.emballage' 	=> Configuration::get('EMC_WRAPPING'),
-			'delai'											=> $offers_orders[0]['emcValue'],
+			'delai'											=> 'aucun', //'$offers_orders[0]['emcValue']
 			'code_contenu' 							=> $data['config']['EMC_NATURE'],
 			'valeur'			 							=> (float)$data['order'][0]['total_products'],
 			'module'			 							=> $this->ws_name,
@@ -1911,7 +1906,7 @@ class Envoimoinscher extends CarrierModule
 								$info = $data_def[1];
 							$default_info = $info;
 						}
-						if (!isset($mandatory['array'][0]) || preg_match('/POST/i', $mandatory['array'][0]))
+						if (preg_match('/POST/i', $mandatory['array'][0]))
 							$field_type = 'hidden';
 					}
 
@@ -2612,7 +2607,8 @@ class Envoimoinscher extends CarrierModule
 					$cookie->$variable = 1;
 				}
 				$prices = Tools::jsonDecode($ope[0]['prices_eap'], true);
-				$price = $price + $prices[$o][$ope[0]['id_carrier']];
+				if (isset($prices[$o]) && isset($prices[$o][$ope[0]['id_carrier']]))
+					$price = $price + $prices[$o][$ope[0]['id_carrier']];
 			}
 		}
 		if ($error_occured)
@@ -2752,7 +2748,7 @@ class Envoimoinscher extends CarrierModule
 		foreach ($delivery as $key => $value)
 			$delivery[$key] = $this->dateToString($value);
 
-		$this->getContext()->controller->addJs('https://maps.google.com/maps/api/js?sensor=false');
+		$this->getContext()->controller->addJs('//maps.google.com/maps/api/js?sensor=false');
 
 		$smarty->assign('point', $point);
 		$smarty->assign('points', $points);
@@ -2990,7 +2986,7 @@ class Envoimoinscher extends CarrierModule
 					)
 				)
 			),
-			'delai'				=> $offers_orders[0]['emcValue'],
+			'delai'				=> 'aucun', // $offers_orders[0]['emcValue'], nothing to do here
 			'code_contenu' => $config['EMC_NATURE'],
 			'valeur'			 => $params['cartValue'],
 			'module'			 => $this->ws_name,

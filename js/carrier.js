@@ -24,11 +24,12 @@
  */
 
  if(typeof carrierWithPoints == "undefined") {
+	 
 /**
  * Calls page to get the list of availables parcel points.
  */
 function selectPoint(ref, link, operator, address)
-{ 
+{
   $('#id_carrier'+ref+address).attr('checked', 'checked');
   // make offset
   var arr = $(link).offset();
@@ -57,7 +58,6 @@ function selectPoint(ref, link, operator, address)
       }
     }
   });
-  document.getElementById("map_canvas").innerHTML = '';
 }
 
 /**
