@@ -515,6 +515,13 @@ class EnvoimoinscherModel
 			if ($product_weight < 0.1 && (int)$config['EMC_WEIGHTMIN'] == 1)
 				$product_weight = 0.1;
 		}
+		// get send value
+		$order_value = 0.0;
+		foreach ($row as $line)
+		{
+			$order_value += $line['product_price']*$line['product_quantity'];
+		}
+		
 		//delivery
 		$addresses = $row[0]['address1'];
 		if ($row[0]['address2'] != '')
@@ -539,11 +546,11 @@ class EnvoimoinscherModel
 		$delivery['phoneAlert'] = false;
 		if ($delivery['tel'] == '')
 		{
-			$delivery['tel'] = $row[0]['phone_mobile'];
+			$delivery['tel'] = EnvoimoinscherHelper::normalizeTelephone($row[0]['phone_mobile']);
 			if ($delivery['tel'] == '')
 			{
 				//if phone number isn't indicated, put it the shipper's number
-				$delivery['tel'] = $config['EMC_TEL'];
+				$delivery['tel'] = EnvoimoinscherHelper::normalizeTelephone($config['EMC_TEL']);
 				$delivery['phoneAlert'] = true;
 			}
 		}
@@ -668,7 +675,7 @@ class EnvoimoinscherModel
 			'retrait.pointrelais' => $row[0]['point_ep'],
 			'type_emballage.emballage' => Configuration::get('EMC_WRAPPING'),
 			$config['EMC_TYPE'].'.description' => implode(',', $products_desc),
-			$config['EMC_TYPE'].'.valeur' => $row[0]['totalOrder'],
+			$config['EMC_TYPE'].'.valeur' => $order_value,
 			'assurance.selection' => $insurance,
 			'assurance.emballage' => 'Caisse',
 			'assurance.materiau' => 'Carton',
@@ -725,10 +732,13 @@ class EnvoimoinscherModel
 		$proforma = array();
 		foreach ($items as $item)
 		{
-			$proforma[$s] = array('description_en' => $item['product_name'],
-				'description_fr' => $item['product_name'],	'nombre' => $item['product_quantity'],
+			$proforma[$s] = array(
+				'description_en' => $item['product_name'],
+				'description_fr' => $item['product_name'],
+				'nombre' => $item['product_quantity'],
 				'valeur' => $item['product_price'],
-				'origine' => 'FR', 'poids' => $item['product_weight']);
+				'origine' => 'FR',
+				'poids' => $item['product_weight']);
 			$s++;
 		}
 		return $proforma;
@@ -1841,6 +1851,13 @@ class EnvoimoinscherModel
 		Db::getInstance()->autoExecute(
 			_DB_PREFIX_.'orders',
 			array('shipping_number' => pSQL($shipping_number)),
+			'UPDATE',
+			'id_order = '.(int)$order
+		);
+		
+		Db::getInstance()->autoExecute(
+			_DB_PREFIX_.'order_carrier',
+			array('tracking_number' => pSQL($shipping_number)),
 			'UPDATE',
 			'id_order = '.(int)$order
 		);

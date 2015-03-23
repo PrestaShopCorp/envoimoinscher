@@ -459,10 +459,10 @@ class EnvoimoinscherHelper {
 	* @param string $tel Number to normalize
 	* @return string Telephone number normalized
 	*/
-	public function normalizeTelephone($tel)
+	public static function normalizeTelephone($tel)
 	{
 		$tel = Tools::strtolower(iconv('UTF-8', 'ASCII//TRANSLIT', $tel));
-		$tel = preg_replace('/[^0-9-\_]/', '', $tel);
+		$tel = preg_replace('/[^0-9]/', '', $tel);
 		return $tel;
 	}
 
