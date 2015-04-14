@@ -42,7 +42,18 @@
 		<link href="{$emcBaseDir|unescape:'html'}/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
 		<script type="text/javascript" src="{$emcBaseDir|unescape:'html'}/js/jquery.boxfancy.js"></script>
 	{/if}
-
+	
+	<script type="text/javascript">
+		$(function(){
+			$(".fancybox").fancybox({
+				"width"			: 1000,
+				"height"		: 760,
+				"autoDimensions": false,
+				"autoScale"		: false
+			});
+		});
+	</script>
+	
 	<div class="bootstrap">
 
 	{if $alreadyPassed}

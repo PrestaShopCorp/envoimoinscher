@@ -192,10 +192,10 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_17f0aed422eb04003412e1913db
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_f87cd475ae802186bfe1994ad783509f'] = 'Prices are more than one month old, please update them ("Help" tab).';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_a4d1f9df55cc0e951116c0a1ae2a8312'] = 'Clear cache';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_21bfc6f0eb0467ad6e832f6115d2f2d2'] = 'Clear offers cache. Use after carrier or product changes.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_154fdb5ae9006e1bff78c54ca6c3425d'] = 'A documentation is available for EnvoiMoinsCher module settings: ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_5142943bdd139d539bca8c25f2695214'] = 'A documentation is also available for shipping configuration: ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_55876228853abf632dec9346a4f372ec'] = 'documentation';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_d948ff95570cf84c8bc231cac2af276a'] = 'shipping';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_154fdb5ae9006e1bff78c54ca6c3425d'] = '';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_5142943bdd139d539bca8c25f2695214'] = '';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_55876228853abf632dec9346a4f372ec'] = 'SETUP GUIDE';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_d948ff95570cf84c8bc231cac2af276a'] = 'SHIPPING GUIDE';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_97155b426b5847fa8aeab705f9e56ada'] = 'Careful: some fields are missing, EnvoiMoinsCher plugin cannot work correctly. Missing fields:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_eb8f14ece28c601be624df87f37bd059'] = 'Credentials invalid. EnvoiMoinsCher plugin will not work.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_e4ac074b99fc50cf5764913d41b8391b'] = 'This plugin version does not work with the option Multi-Shipping, shipping prices will not be displayed on front-office.';
