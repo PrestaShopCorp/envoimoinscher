@@ -79,7 +79,7 @@ var carrier_translation = {
   if(typeof idAddress == "undefined") {
   var idAddress = "{$id_address|escape:'htmlall'}";
   } else {
-  idAddress = "{$id_address|escape:'htmlall'}";
+		idAddress = "{$id_address|escape:'htmlall'}";
   } 
  
   if(typeof carrierWithPoints == "undefined") {
@@ -105,8 +105,7 @@ var carrier_translation = {
 {/foreach} 
 
   jQuery(document).ready(function() { 
-  
-		document.body.innerHTML+='<div id="allMap"><div id="mapContainer"><p><a href="#" onclick="hideMap(); return false;">'+carrier_translation.close_map+'</a></p><div id="map_canvas"></div></div></div>';document.body.innerHTML+='<div id="allMap"><div id="mapContainer"><p><a href="#" onclick="hideMap(); return false;">'+carrier_translation.close_map+'</a></p><div id="map_canvas"></div></div></div>';
+		$('body').append('<div id="allMap"><div id="mapContainer"><p><a href="#" onclick="hideMap(); return false;">'+carrier_translation.close_map+'</a></p><div id="map_canvas"></div></div></div>');
     // init google maps
     var contentMap = $('#allMap').html();
     $('#allMap').remove();
@@ -159,7 +158,7 @@ if(typeof isGuest == "undefined") var isGuest = 0;
 if(typeof guestCheckoutEnabled == "undefined") var guestCheckoutEnabled = 0;
 if(typeof isLogged == "undefined") var isLogged = 0;
 var isGuestCheckString = ""+isGuest+""+guestCheckoutEnabled+""+isLogged;
-if((isGuestCheckString == "010" || isGuestCheckString == "111" || isGuestCheckString == "000") && orderProcess == "order-opc")
+if((isGuestCheckString == "010" || isGuestCheckString == "111" || isGuestCheckString == "000")  && typeof(orderProcess) != "undefined" && orderProcess == "order-opc")
 {  
   lookForPoints($('input[name="delivery_option['+idAddress+']"]:checked'));
 } 

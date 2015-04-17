@@ -193,10 +193,10 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_17f0aed422eb04003412e1913db
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_f87cd475ae802186bfe1994ad783509f'] = 'Vos offres n\'ont pas été mises à jour depuis plus d\'un mois, pensez à les mettre à jour dans la rubrique "Aide".';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_a4d1f9df55cc0e951116c0a1ae2a8312'] = 'Vider le cache';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_21bfc6f0eb0467ad6e832f6115d2f2d2'] = 'Vide le cache des offres, à lancer après modification de vos transporteurs ou de vos articles.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_154fdb5ae9006e1bff78c54ca6c3425d'] = 'Une documentation est disponible pour le paramétrage de module : ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_5142943bdd139d539bca8c25f2695214'] = 'Une documentation est également prévu pour la partie expédition : ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_55876228853abf632dec9346a4f372ec'] = 'documentation';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_d948ff95570cf84c8bc231cac2af276a'] = 'expédition';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_154fdb5ae9006e1bff78c54ca6c3425d'] = '';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_5142943bdd139d539bca8c25f2695214'] = '';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_55876228853abf632dec9346a4f372ec'] = 'GUIDE DE CONFIGURATION';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_d948ff95570cf84c8bc231cac2af276a'] = 'GUIDE D\'EXPEDITION';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_97155b426b5847fa8aeab705f9e56ada'] = 'Attention : certains champs n\'ont pas été renseignés et le module peut ne pas fonctionner correctement. Les champs manquants :';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_eb8f14ece28c601be624df87f37bd059'] = 'Vos données de connexion ne sont pas correctes. Le module ne va pas fonctionner correctement.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_e4ac074b99fc50cf5764913d41b8391b'] = 'La version actuelle du module est incompatible avec l\'option "Livraison à plusieurs adresses". Les offres du module ne seront pas proposées sur l\'écran de commande.';

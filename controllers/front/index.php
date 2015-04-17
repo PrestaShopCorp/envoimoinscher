@@ -1,4 +1,5 @@
-{**
+<?php
+/**
  * 2007-2014 PrestaShop
  *
  * NOTICE OF LICENSE
@@ -21,31 +22,14 @@
  * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
- *}
+ */
 
-{foreach from=$points item=point}
-	<li class="no-list-style">
-		<input type="radio" id="{$point.id|escape:'htmlall'}" name="{$point.input_name|escape:'htmlall'}" value="{$point.code|escape:'htmlall'}"
-		 {if $point.checked}checked="checked" {/if}class="{$point.class|escape:'htmlall'}" onclick="{$point.js|unescape:'html'}" />
-		<b>{$point.name}</b><br /><small>({$point.address|escape:'htmlall'}, {$point.zipcode|escape:'htmlall'} {$point.city|escape:'htmlall'})</small>
-	</li>
-	{if $point.checked}
-		<script type="text/javascript">
-		$(document).ready(function ()
-		{
-		{$point.js|unescape:'html'}
-		});
-		</script>
-	{/if}
-{/foreach}
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
 
-{foreach from=$inputs item=input}
-	<input type="hidden" name="{$input.name|escape:'htmlall'}" id="{$input.id|escape:'htmlall'}" value="{$input.value|unescape:'html'}"/>
-{/foreach}
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Cache-Control: post-check=0, pre-check=0', false);
+header('Pragma: no-cache');
 
-<!--[if IE]>
-<script type="text/javascript">
-var marker = new google.maps.Marker(); 
-var infowindow = new google.maps.InfoWindow();
-</script>
-<![endif]-->
+header('Location: ../');
+exit;

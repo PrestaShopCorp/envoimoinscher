@@ -24,18 +24,19 @@
  */
 
  if(typeof carrierWithPoints == "undefined") {
+	 
 /**
  * Calls page to get the list of availables parcel points.
  */
 function selectPoint(ref, link, operator, address)
-{ 
+{
   $('#id_carrier'+ref+address).attr('checked', 'checked');
   // make offset
   var arr = $(link).offset();
   $('#mapContainer').css('top', (arr.top-50)+'px');
   $('#loaderPoints'+ref+address).show(); 
   $.ajax({
-    url: emcBaseDir+'/ajax/get_points.php',
+    url: 'index.php?fc=module&module=envoimoinscher&controller=ajax&option=get_point',
     type: 'POST', 
     data: { 'points' : $('#pointsList'+ref+address).val(), carrier : ref, ope: operator, addressId : address, country : $('#destCountry').val(), pointValue : parcelPointValue },
     success : function(res)
@@ -57,7 +58,6 @@ function selectPoint(ref, link, operator, address)
       }
     }
   });
-  document.getElementById("map_canvas").innerHTML = '';
 }
 
 /**
@@ -148,7 +148,7 @@ function selectPr(pr, carrierId, addressId)
 {
   makeOpeChecked(carrierId, 0, 0, addressId);
   $.ajax({
-    url: emcBaseDir+'ajax/set_point.php',
+    url: 'index.php?fc=module&module=envoimoinscher&controller=ajax&option=set_point',
     type: 'POST', 
     data: { 'point' : pr }
   });
