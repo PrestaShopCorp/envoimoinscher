@@ -100,18 +100,19 @@ function applyFilter(token)
 	else{
 		data['end_order_date'] = end_order_date;
 	}
-
-	params = $.param(data);
 	
 	//send status filter content
 	if($("select[name='status[]'] option:selected")){
-		var appendUrl = '';
+		var status_array = [];
 		$("select[name='status[]'] option:selected").each(function(index, elem){
-			appendUrl += '&status[]='+elem.value;
+			status_array.push(elem.value);
 		});
-		params += appendUrl;
+
+		data['status'] = status_array;
 	}
 	
+	params = $.param(data);
+
 	window.location.assign(location.href.substring(0, location.href.indexOf("?")+1) + params);
 }
 
@@ -139,11 +140,13 @@ function noFilter(token)
 	
 	params = $.param(data);
 	
-  var appendUrl = '';
+	var status_array = [];
   $("select[name='status[]'] option").each(function(index, elem){
-    appendUrl += '&status[]='+elem.value;
+    status_array.push(elem.value);
   });
-  params += appendUrl;
+	data['status'] = status_array;
+	
+	params = $.param(data);
 	
 	window.location.assign(location.href.substring(0, location.href.indexOf("?")+1) + params);
 }

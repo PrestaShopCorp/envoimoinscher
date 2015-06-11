@@ -77,6 +77,10 @@
 	margin-left:10px;
 }
 
+.ml10p{
+	margin-left:10%;
+}
+
 .ml20{
 	margin-left:20px;
 }
@@ -86,7 +90,9 @@
 .mr5{
 	margin-right: 5px;
 }
-
+.mb10{
+  margin-bottom: 10px;
+}
 .mb15{
   margin-bottom: 15px;
 }
@@ -212,7 +218,7 @@ list-style-type:decimal;
 	margin: 0;
 	padding: 0;
 	float: left;
-	width: 25%;
+	width: 20%;
 }
 
 #EMC_cfg_bg > #EMC_Content > .EMC_steps > li > a {
@@ -273,7 +279,7 @@ list-style-type:decimal;
 
 #EMC_cfg_bg > #EMC_Content > div {
 	overflow: auto;
-	height: 400px;
+	height: 605px;
 	width: 100%;
 	margin-bottom : 10px;
 }
@@ -281,6 +287,7 @@ list-style-type:decimal;
 #EMC_cfg_bg > #EMC_Content > div > fieldset {
 	max-width: 100%;
 	box-sizing: border-box;
+	overflow:hidden;
 }
 
 #EMC_cfg_bg > #EMC_Content > div > fieldset input[type=submit]{
@@ -334,7 +341,7 @@ list-style-type:decimal;
 }
 
 #EMC_Content > div > fieldset{
-	min-height:400px;
+	min-height:500px;
 	margin-bottom:0px;
 }
 
@@ -1076,6 +1083,207 @@ cursor:pointer;
 display:none;
 }
 
+
+#MainBox{
+	background-image: url('../img/prestashop-fond3.jpg');
+	height:100%;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;	
+}
+
+/*--- box Begin  ---*/
+#content-wrapper .box
+{
+	background-color: #ffffff;
+	margin: 0px 0px;
+	-webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow:    0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+	box-shadow:         0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+}
+#content-wrapper .box .title
+{
+	background-color: #f6882a;
+	width: 100%;
+	height:80px;
+	line-height:80px;
+	text-align: left;
+	padding-left: 10px;
+	color: #ffffff;
+	text-transform:uppercase;
+	background-image:linear-gradient(rgb(255, 153, 0), rgb(255, 108, 26));
+	font-family: "Arial black",Arial,sans-serif;
+	font-size: 25px;
+}
+#content-wrapper .box .content
+{
+	padding:10px;
+	min-height: 150px;
+}
+
+#content-wrapper #box1 .content li
+{
+	font-size: 1.1em;
+}
+
+#content-wrapper #box1 .content .blue-style
+{
+	margin-top: 22px;
+}
+#content-wrapper #box1 .content hr
+{
+	width: 95%;
+	border: none;
+	border-bottom: 1px solid rgb(216, 216, 216);
+	clear: both;
+	margin: auto;
+}
+#content-wrapper #box1 .content #img-operators
+{
+	text-align: center;
+	margin-top: 20px;
+}
+#content-wrapper #box1 .content #img-operators table
+{
+	margin: auto;
+}
+#content-wrapper #box1 .content #img-operators table img
+{
+	padding: 2px 5px;
+}
+#content-wrapper #box1 .content #img-operators table .laposte
+{
+	background-image: url('../img/logo-POFR.png');
+	background-repeat: no-repeat;
+	background-position:center;
+	min-width:150px;
+	width:180px;
+	height:92px;}
+#content-wrapper #box1 .content #img-operators table .chronopost
+{
+	background-image: url('../img/logo-chrono-intl.png');
+	background-repeat: no-repeat;
+	background-position:center;
+	min-width:150px;
+	width:180px;
+	height:92px;}
+#content-wrapper #box1 .content #img-operators table .tnt
+{
+	background-image: url('../img/logo-tnt.png');
+	background-repeat: no-repeat;
+	background-position:center;
+	min-width:150px;
+	width:180px;
+	height:92px;}	
+#content-wrapper #box1 .content #img-operators table .mondialrelay
+{
+	background-image: url('../img/logo-mondial-relay.png');
+	background-repeat: no-repeat;
+	background-position:center;
+	min-width:150px;
+	width:180px;
+	height:92px;}
+#content-wrapper #box1 .content #img-operators table .relaiscolis
+{
+	background-image: url('../img/logo-relais-colis.png');
+	background-repeat: no-repeat;
+	background-position:center;
+	min-width:150px;
+	width:180px;
+	height:92px;}
+#content-wrapper #box1 .content #img-operators table .fedex
+{
+	background-image: url('../img/logo-fedex.png');
+	background-repeat: no-repeat;
+	background-position:center;
+	min-width:150px;
+	width:180px;
+	height:92px;}
+#content-wrapper #box1 .content #img-operators table .tripledot
+{
+	font-size: 1.2em;
+}
+#content-wrapper #box1 .content #img-operators table .dhl
+{
+	background-image: url('../img/logo-dhle.png');
+	background-repeat: no-repeat;
+	background-position:center;
+	min-width:150px;
+	width:180px;
+	height:92px;}
+#content-wrapper #box1 .content #img-operators table .sodexi
+{
+	background-image: url('../img/logo-sodexi.png');
+	background-repeat: no-repeat;
+	background-position:center;
+	min-width:150px;
+	width:180px;
+	height:92px;}
+#content-wrapper #box1 .content #img-operators table .colisprive
+{
+	background-image: url('../img/logo-copr.png');
+	background-repeat: no-repeat;
+	background-position:center;
+	min-width:150px;
+	width:180px;
+	height:92px;}
+#content-wrapper #box1 .content #img-operators table .ups
+{
+	background-image: url('../img/logo-ups.png');
+	background-repeat: no-repeat;
+	background-position:center;
+	min-width:150px;
+	width:180px;
+	height:92px;}
+/*--- box End  ---*/
+
+.s17 {
+	font-size:17px}
+
+.bold {
+	font-weight:700}
+
+.orange {
+	color:#ff7e00;
+}
+
+.blue
+{
+	color: rgb(0, 173, 255);
+}
+
+.btnPosG{
+margin-left: 20%; 
+}
+
+.btnPosD{
+margin-left: 10%; 
+}
+
+ul.iconList {
+list-style-image: url('../img/puce.png');
+}
+
+.button-orange {
+    background: linear-gradient(#ff9e00, #ff7000) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid transparent;
+    border-radius: 3px;
+    color: #fff !important;
+    display: inline-block;
+    /*float: none;*/
+    font-size: 16px;
+	font-family:arial;
+    padding: 6px 20px;
+	vertical-align:middle;
+	height:35px;
+    text-align: center;
+    text-decoration: none !important;
+    text-transform: uppercase;
+	line-height:35px;
+}
+
+
 #introduction ul{
 margin-top:0px;
 }
@@ -1102,15 +1310,26 @@ float:right;
 width:400px;
 height:110px;
 margin-left:10px;
-margin-right:-20px;
+margin-right:-50px;
+margin-top:0px;
 }
 
 #logo_intro a{
 background-repeat: no-repeat;
-background-image: url('../img/logo-emc-large.png');
+background-image: url('../img/logoemcintro.png');
 display: block;
-width:400px;
-height:110px;
+width:350px;
+height:100px;
+
+-moz-transform: rotate(7deg);
+-webkit-transform: rotate(7deg);
+-o-transform: rotate(7deg);
+-ms-transform: rotate(7deg);
+transform: rotate(-5deg);
+
+box-shadow: 0px 4px 6px #333;
+-moz-box-shadow: 0px 4px 6px #333;
+-webkit-box-shadow: 0px 4px 6px #333;
 }
 
 /* fixed size fancybox */

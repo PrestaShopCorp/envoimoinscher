@@ -95,7 +95,7 @@ class EnvoimoinscherOrder
 			array(
 				'user' => $this->order_data['config']['EMC_LOGIN'],
 				'pass' => $this->order_data['config']['EMC_PASS'],
-				'key'  => $this->order_data['config']['EMC_KEY']
+				'key'  => $this->order_data['config']['EMC_KEY_'.$this->order_data['config']['EMC_ENV']]
 			)
 		);
 

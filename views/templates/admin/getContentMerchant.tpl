@@ -43,17 +43,24 @@
 			<input type="password" id="EMC_pass" name="EMC_pass" value="{Tools::getValue('EMC_pass', $EMC_config.EMC_PASS)|escape:'htmlall'}"/>
 		</div>
 		<div class="clear both"></div>
-		<label for="EMC_api">
-			{l s='API key:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
+		<label for="EMC_api_test">
+			{l s='API key (test):' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 		</label>
-		<div class="margin-form add-tooltip" title="{l s='Key you received by email from Envoimoinscher. Com. Just copy it into the provided field. Warning, this key must match the work environment chosen: testing, or production' mod='envoimoinscher'}">
-			<input type="text" id="EMC_api" name="EMC_api" value="{Tools::getValue('EMC_api', $EMC_config.EMC_KEY)|escape:'htmlall'}"/>
+		<div class="margin-form add-tooltip" title="{l s='Your Test API key enables you to make test shipment requests via our module. This key must match the TEST work environment.' mod='envoimoinscher'}">
+			<input type="text" id="EMC_api_test" name="EMC_api_test" value="{Tools::getValue('EMC_api_test', $EMC_config.EMC_KEY_TEST)|escape:'htmlall'}"/>
+		</div>
+		<div class="clear both"></div>
+		<label for="EMC_api_prod">
+			{l s='API key (production):' mod='envoimoinscher'} <sup class="emc-required">*</sup>
+		</label>
+		<div class="margin-form add-tooltip" title="{l s='Your Production API key enables you to make real shipment requests via our module. This key must match the LIVE work environment.' mod='envoimoinscher'}">
+			<input type="text" id="EMC_api_prod" name="EMC_api_prod" value="{Tools::getValue('EMC_api_prod', $EMC_config.EMC_KEY_PROD)|escape:'htmlall'}"/>
 		</div>
 		<div class="clear both"></div>
 		<div class="margin-form">
 			<p class="preference_description">
-				<a href="http://ecommerce.envoimoinscher.com/" class="action_module" target="_blank">{l s='Click here to get API key' mod='envoimoinscher'}</a>
-			</p> 
+				{l s='Please check your email for your account information.' mod='envoimoinscher'}
+			</p>
 		</div>
 		<div class="clear both"></div>
 	</fieldset>
@@ -90,7 +97,7 @@
 		<div class="clear both"></div>
 		<!-- Company -->
 		<label for="EMC_exp_company">
-			{l s='Company:' mod='envoimoinscher'}
+			{l s='Company:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 		</label>
 		<div class="margin-form add-tooltip" title="{l s='Name of the company from which the package.' mod='envoimoinscher'}">
 			<input type="text" id="EMC_exp_company" name="EMC_exp_company" value="{Tools::getValue('EMC_exp_company', $EMC_config.EMC_COMPANY)|escape:'htmlall'}" />
@@ -101,7 +108,7 @@
 			{l s='Address:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 		</label>
 		<div class="margin-form add-tooltip" title="{l s='The address from which depart packages' mod='envoimoinscher'}">
-			<textarea id="EMC_exp_address" name="EMC_exp_address">{$EMC_config.EMC_ADDRESS|escape:'htmlall'}</textarea>
+			<textarea id="EMC_exp_address" name="EMC_exp_address">{Tools::getValue('EMC_exp_address', $EMC_config.EMC_ADDRESS)|escape:'htmlall'}</textarea>
 		</div>
 		<div class="clear both"></div>
 		<!-- Post code -->

@@ -87,9 +87,9 @@ class EnvoimoinscherModel
 
 			$login = Configuration::get('EMC_LOGIN');
 			$pass = Configuration::get('EMC_PASS');
-			$key = Configuration::get('EMC_KEY');
 			$env = Configuration::get('EMC_ENV');
-
+			$key = Configuration::get('EMC_KEY_'.$env);
+			
 			$lib = new Env_User(array('user' => $login, 'pass' => $pass, 'key' => $key));
 			$lib->setEnv(Tools::strtolower($env));
 			$lib->getPartnership();
@@ -115,8 +115,8 @@ class EnvoimoinscherModel
 
 		$login = Configuration::get('EMC_LOGIN');
 		$pass = Configuration::get('EMC_PASS');
-		$key = Configuration::get('EMC_KEY');
 		$env = Configuration::get('EMC_ENV');
+		$key = Configuration::get('EMC_KEY_'.$env);
 
 		$lib = new Env_News(array('user' => $login, 'pass' => $pass, 'key' => $key));
 		$lib->setEnv(Tools::strtolower($env));
@@ -139,8 +139,8 @@ class EnvoimoinscherModel
 
 		$login = Configuration::get('EMC_LOGIN');
 		$pass = Configuration::get('EMC_PASS');
-		$key = Configuration::get('EMC_KEY');
 		$env = Configuration::get('EMC_ENV');
+		$key = Configuration::get('EMC_KEY_'.$env);
 
 		$cache_code = $login.$pass.$key.$env;
 		if (isset($this->api_params_cache[$cache_code]))
@@ -1016,11 +1016,11 @@ class EnvoimoinscherModel
 		}
 		//check new categories
 		//$codes = array();
-		if (isset($config['EMC_KEY']))
+		if (isset($config['EMC_KEY_TEST']) && isset($config['EMC_KEY_PROD']))
 		{
 			require_once(_PS_MODULE_DIR_.$this->module_name.'/Env/WebService.php');
 			require_once(_PS_MODULE_DIR_.$this->module_name.'/Env/ContentCategory.php');
-			$content_cl = new Env_ContentCategory(array('user' => $config['EMC_LOGIN'], 'pass' => $config['EMC_PASS'], 'key' => $config['EMC_KEY']));
+			$content_cl = new Env_ContentCategory(array('user' => $config['EMC_LOGIN'], 'pass' => $config['EMC_PASS'], 'key' => $config['EMC_KEY_PROD']));
 			$emc = Module::getInstanceByName('envoimoinscher');
 			$content_cl->setPlatformParams($emc->ws_name, _PS_VERSION_, $emc->version);
 			$content_cl->setParam(array('module' => $config['wsName'], 'version' => $config['localVersion']));
@@ -1254,7 +1254,7 @@ class EnvoimoinscherModel
 			$helper = new EnvoimoinscherHelper;
 			$config = $helper->configArray($this->getConfigData());
 			$poi_cl = new Env_ParcelPoint(array('user' => $config['EMC_LOGIN'], 'pass' =>
-				$config['EMC_PASS'], 'key' => $config['EMC_KEY'])
+				$config['EMC_PASS'], 'key' => $config['EMC_KEY_'.$config['EMC_ENV']])
 			);
 			$emc = Module::getInstanceByName('envoimoinscher');
 			$poi_cl->setPlatformParams($emc->ws_name, _PS_VERSION_, $emc->version);

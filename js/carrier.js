@@ -193,7 +193,8 @@ function lookForPoints(ref)
 	if (ref == null || 'string' != typeof(ref.val())){
 		return;
 	}
-  var value = ref.val().replace(",", "");
+	var splited = ref.val().split(',');
+  var value = splited[0];
   if(carrierWithPoints.indexOf(";"+value+";") !== -1 && pointsLoadingWasDone.indexOf(";"+value+";") === -1)
   { 
     pointsLoadingWasDone = pointsLoadingWasDone + ";"+value+";"; 

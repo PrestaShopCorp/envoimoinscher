@@ -40,10 +40,20 @@
 		</div>
 		</div>
 	{/if}
-	{if $EMC_config.EMC_USER != "" && $EMC_config.EMC_USER >= 2 && ($EMC_config.EMC_KEY == '' || $EMC_config.EMC_LOGIN == '' || $EMC_config.EMC_PASS == '')}
-		<div class="bootstrap">
-			<div class="alert alert-danger error">{l s='You are using the wrong credentials. The module will not work.' mod='envoimoinscher'}</div>
-		</div>
+	{if $EMC_config.EMC_USER != "" && $EMC_config.EMC_USER >= 2 && ($EMC_config.EMC_KEY_TEST == '' || $EMC_config.EMC_KEY_PROD == '' ||$EMC_config.EMC_LOGIN == '' || $EMC_config.EMC_PASS == '')}
+		{if $EMC_config.EMC_KEY_TEST == ''  && $EMC_config.EMC_ENV == 'PROD' && isset($EMC_config.EMC_KEY_PROD_DONOTCHECK) && $EMC_config.EMC_KEY_PROD_DONOTCHECK == 1 }
+			<div class="bootstrap">
+				<div class="alert alert-warning warn warning">{l s='Following the module update, please enter your API key test account.' mod='envoimoinscher'}</div>
+			</div>
+		{elseif $EMC_config.EMC_KEY_PROD == '' && $EMC_config.EMC_ENV == 'TEST' && isset($EMC_config.EMC_KEY_TEST_DONOTCHECK) && $EMC_config.EMC_KEY_TEST_DONOTCHECK == 1 }
+			<div class="bootstrap">
+				<div class="alert alert-warning warn warning">{l s='Following the module update, please enter your API key production account.' mod='envoimoinscher'}</div>
+			</div>		
+		{else}
+			<div class="bootstrap">
+				<div class="alert alert-danger error">{l s='You are using the wrong credentials. The module will not work.' mod='envoimoinscher'}</div>
+			</div>		
+		{/if}
 	{/if}
 	{if $multiShipping == 1}
 		<div class="bootstrap">
@@ -551,26 +561,32 @@
 		<fieldset id="EMC_Content" class="hidden">
 			<ul class="EMC_steps">
 				<li>
-					<a{if $EMC_config.EMC_USER >= -1 || empty($EMC_config.EMC_USER) || $EMC_config.EMC_USER == ""} class="selected{if $EMC_config.EMC_USER > 0} old{/if}"{/if}>
+					<a{if $EMC_config.EMC_USER >= -2 || empty($EMC_config.EMC_USER) || $EMC_config.EMC_USER == ""} class="selected{if $EMC_config.EMC_USER > -2} old{/if}"{/if}>
 						<label for="" class="stepNumber">1</label>
 						<span class="stepDesc">{l s='Introduction' mod='envoimoinscher'}</span>
 					</a>
 				</li>
 				<li>
-					<a{if $EMC_config.EMC_USER >= 0} class="selected{if $EMC_config.EMC_USER > 1} old{/if}"{/if}>
+					<a{if $EMC_config.EMC_USER >= -1} class="selected{if $EMC_config.EMC_USER > -1} old{/if}"{/if}>
 						<label for="" class="stepNumber">2</label>
+						<span class="stepDesc">{l s='EnvoiMoinsCher account' mod='envoimoinscher'}</span>
+					</a>
+				</li>
+				<li>
+					<a{if $EMC_config.EMC_USER >= 0} class="selected{if $EMC_config.EMC_USER > 0} old{/if}"{/if}>
+						<label for="" class="stepNumber">3</label>
 						<span class="stepDesc">{l s='Merchant account' mod='envoimoinscher'}</span>
 					</a>
 				</li>
 				<li>
-					<a{if $EMC_config.EMC_USER >= 1} class="selected{if $EMC_config.EMC_USER > 2} old{/if}"{/if}>
-						<label for="" class="stepNumber">3</label>
+					<a{if $EMC_config.EMC_USER >= 1} class="selected{if $EMC_config.EMC_USER > 1} old{/if}"{/if}>
+						<label for="" class="stepNumber">4</label>
 						<span class="stepDesc">{l s='Sends description' mod='envoimoinscher'}</span>
 					</a>
 				</li>
 				<li>
 					<a{if $EMC_config.EMC_USER >= 2} class="selected"{/if}>
-						<label for="" class="stepNumber">4</label>
+						<label for="" class="stepNumber">5</label>
 						<span class="stepDesc">{l s='Carriers choice' mod='envoimoinscher'}</span>
 					</a>
 				</li>
@@ -581,11 +597,11 @@
 				</fieldset>
 			</div>
 			<div class="actionBar">
-				{if $EMC_config.EMC_USER == -1}
-					<a class="btnValid selected">{l s='I already have an account' mod='envoimoinscher'}</a>
+				{if $EMC_config.EMC_USER == -2}
+					<!--<a class="btnValid selected">{l s='I already have an account' mod='envoimoinscher'}</a>-->
 				{else}
-					<a class="btnPrev{if $EMC_config.EMC_USER >= 0} selected{/if}">{l s='Previous' mod='envoimoinscher'}</a>
-					<a class="btnValid {if $EMC_config.EMC_USER > -1 && $EMC_config.EMC_USER < 2} selected{/if}">{l s='Next' mod='envoimoinscher'}</a>
+					<a class="btnPrev{if $EMC_config.EMC_USER >= -1} selected{/if}">{l s='Previous' mod='envoimoinscher'}</a>
+					<a class="btnValid {if $EMC_config.EMC_USER >= 0 && $EMC_config.EMC_USER < 2} selected{/if}">{l s='Next' mod='envoimoinscher'}</a>
 					<a class="btnClose{if $EMC_config.EMC_USER == 2} selected{/if}">{l s='End' mod='envoimoinscher'}</a>
 					<form method="POST" class="hidden" id="btnPrev">
 						<input type="hidden" name="previous" value="{$EMC_config.EMC_USER|escape:'htmlall'}" />
