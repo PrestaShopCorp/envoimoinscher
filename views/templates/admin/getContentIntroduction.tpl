@@ -1,5 +1,5 @@
 {**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,16 +18,16 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
 
-	<form id="introduction" method="POST" action="{$EMC_link|escape:'htmlall'}&EMC_tab=merchant">
+	<form id="introduction" method="POST" action="{$EMC_link|escape:'htmlall':'UTF-8'}&EMC_tab=merchant">
 		<div id="MainBox">
 			<div id="content-wrapper">
 				<div class="box" id="box1">
-				<div class="title">{l s='Access to 15 carriers with negotiated prices' mod='envoimoinscher'}<div id="logo_intro"><a href="http://www.envoimoinscher.com"></a></div></div>
+				<div class="title">{l s='Choose from 15 carriers with negotiated prices' mod='envoimoinscher'}<div id="logo_intro"><a href="http://www.envoimoinscher.com"></a></div></div>
 					<div class="content">
 						<ul class="iconList s17">
 							<li><span class="orange bold">{l s='Up to 75%' mod='envoimoinscher'}</span>{l s=' immediate discount on your shipments' mod='envoimoinscher'}</li>
@@ -49,7 +49,7 @@
 									<td class="ups"></td>
 									<td class="dhl"></td>
 									<td class="fedex"></td>
-									<td class="sodexi"></td>
+									<td class="happypost"></td>
 									<td class="colisprive"></td>
 								</tr>
 							</table>

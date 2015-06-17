@@ -1,5 +1,5 @@
 {**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,17 +18,17 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
 
 	{if $local_fancybox}
-		<link href="{$emcBaseDir|unescape:'html'}/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
-		<script type="text/javascript" src="{$emcBaseDir|unescape:'html'}/js/jquery.boxfancy.js"></script>
+		<link href="{$emcBaseDir}/views/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
+		<script type="text/javascript" src="{$emcBaseDir}/views/js/jquery.boxfancy.js"></script>
 	{/if}
 	{if $local_bootstrap}
-		<link href="{$emcBaseDir|unescape:'html'}/css/back-office-15.css" rel="stylesheet" type="text/css" media="all" />
+		<link href="{$emcBaseDir}/views/css/back-office-15.css" rel="stylesheet" type="text/css" media="all" />
 	{/if}
 	{literal}
 	<style type="text/css">
@@ -38,7 +38,7 @@
 	</style>
 	{/literal}
 	<script type="text/javascript">
-	var token = "{$token|escape:'htmlall'}";
+	var token = "{$token|escape:'htmlall':'UTF-8'}";
 	var labelsToDo = 0;
 	var tries = 0;
 	var noLabels = new Array(); 
@@ -51,12 +51,12 @@
 	var notChecked = new Array();
 	var allElements = new Array();
 	notChecked[1] = 0;
-	allElements[1] = {$allOrders|escape:'htmlall'}
+	allElements[1] = {$allOrders|escape:'htmlall':'UTF-8'}
 	</script>
-	<script type="text/javascript" src="{$baseDir|escape:'htmlall'}modules/envoimoinscher/js/checkboxes.js"></script>
-	<script type="text/javascript" src="{$baseDir|escape:'htmlall'}modules/envoimoinscher/js/orders.js"></script>
-  <script type="text/javascript" src="{$baseDir|escape:'htmlall'}modules/envoimoinscher/js/ordersHistoryFilter.js"></script>
-  <link type="text/css" rel="stylesheet" href="{$baseDir|escape:'htmlall'}modules/envoimoinscher/css/backend_styles.css" />
+	<script type="text/javascript" src="{$baseDir|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/js/checkboxes.js"></script>
+	<script type="text/javascript" src="{$baseDir|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/js/orders.js"></script>
+  <script type="text/javascript" src="{$baseDir|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/js/ordersHistoryFilter.js"></script>
+  <link type="text/css" rel="stylesheet" href="{$baseDir|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/css/backend_styles.css" />
 
 	<div class="bootstrap">
 		{include file="$submenuTemplate" var=$actual}
@@ -70,7 +70,7 @@
 
 		<div class="panel">
 			<p>{l s='list shipments, to download slips : check then clic "download"' mod='envoimoinscher'}</p>
-			<form method="post" target="_blank" action="index.php?controller=AdminEnvoiMoinsCher&option=downloadLabels&token={$token|escape:'htmlall'}">
+			<form method="post" target="_blank" action="index.php?controller=AdminEnvoiMoinsCher&option=downloadLabels&token={$token|escape:'htmlall':'UTF-8'}">
 				<p class="text_align_right">
 					<input type="submit" class="btn btn-default" id="send1" name="sendValueRemises" value="{l s='Download delivery slips' mod='envoimoinscher'}" />
 					<input type="submit" class="btn btn-default" id="send1" name="sendValue" value="{l s='Download shipment notes' mod='envoimoinscher'}" />

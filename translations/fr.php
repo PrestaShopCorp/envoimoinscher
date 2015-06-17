@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -19,7 +19,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  */
@@ -73,7 +73,7 @@ $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_2bd9c0ed00116be1258e0cc6661
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3c78b35502b2693fefdfc51cba3a53a5'] = 'manuel';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f8e561d352369dfa062944a0865ca410'] = 'le prix réel';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3c2b37c8fe170986ed7a4c96476371e9'] = 'le forfait';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_725d35ff70b4b9f7ca86ed981c33f074'] = 'Module de livraison : 15 transporteurs à tarifs négociés';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b103c6c2b1c1aaf9d9614d792bbd954d'] = 'Proposez à vos clients un choix de modes de livraison pour augmenter vos ventes';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_0f30b78a1d392e673e10440155b37c55'] = 'installation :  Impossible d\'installer le module car l\'extension cURL n\'est pas disponible, voir avec votre webmaster pour l\'activer.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_a4cebd5a171b5e9b10faab37953d365c'] = 'La plate-forme d\'expéditions est actuellement indisponible';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_d4fdc07829e1a91274b32c0747239997'] = 'Livraison prévue : {DATE}';
@@ -223,7 +223,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_4ee4bd3e0a295c1e81eb7584c9c
 /*
 	--- getcontentintroduction ---
 */
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_55bf654e2734ecc1965ca2c1ce1bdcd5'] = 'Accédez à 15 transporteurs à prix négociés';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_1a7ea81982d3d7b158a3038020c8429b'] = 'Faites votre choix entre 15 transporteurs à prix négociés';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_d925c629b77b27c10313247de57591e9'] = 'Jusqu\'à 75%';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_4b89617cc3b7961e8562279e3798d4f8'] = ' de remise immédiate sur vos envois';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_5a9de5d875ff3aad885189660bc1597b'] = 'Sans condition de volume ni contrat';

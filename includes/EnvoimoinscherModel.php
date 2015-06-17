@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -89,7 +89,7 @@ class EnvoimoinscherModel
 			$pass = Configuration::get('EMC_PASS');
 			$env = Configuration::get('EMC_ENV');
 			$key = Configuration::get('EMC_KEY_'.$env);
-			
+
 			$lib = new Env_User(array('user' => $login, 'pass' => $pass, 'key' => $key));
 			$lib->setEnv(Tools::strtolower($env));
 			$lib->getPartnership();
@@ -329,26 +329,26 @@ class EnvoimoinscherModel
 			//by order type
 			switch ($params['filterBy']['type_order'])
 			{
-				case "0":
+				case '0':
 					$sql .= ' AND c.external_module_name = "envoimoinscher" AND (er.errors_eoe = "" OR er.errors_eoe is NULL)';
 					break;
-				case "1":
+				case '1':
 					$sql .= ' AND c.external_module_name != "envoimoinscher" AND (er.errors_eoe = "" OR er.errors_eoe is NULL)';
 					break;
-				case "2":
+				case '2':
 					$sql .= ' AND er.errors_eoe != ""';
 					break;
 				default:
 					break;
 			}
-			
+
 			//by order id
 			if (isset($params['filterBy']['filter_id_order']))
 				$sql .= ' AND o.id_order = '.(int)$params['filterBy']['filter_id_order'];
 
 			//by order status
 			if (count($params['filterBy']['status']) > 0)
-			$sql .= ' AND o.current_state IN ('.implode(',', array_map('intval',$params['filterBy']['status'])).')';
+			$sql .= ' AND o.current_state IN ('.implode(',', array_map('intval', $params['filterBy']['status'])).')';
 
 			//by carrier
 			if ($params['filterBy']['carriers'] != 'all')
@@ -417,7 +417,7 @@ class EnvoimoinscherModel
 				 ON c.id_reference = es.ref_carrier
 				JOIN '._DB_PREFIX_.'emc_operators eop
 				 ON eop.code_eo = es.emc_operators_code_eo*/
-			 $sql .= 'LEFT JOIN '._DB_PREFIX_.'emc_documents d
+			$sql .= 'LEFT JOIN '._DB_PREFIX_.'emc_documents d
 				 ON d.'._DB_PREFIX_.'orders_id_order = o.id_order AND type_ed = "label"
 			 LEFT JOIN '._DB_PREFIX_.'order_history oh
 				 ON oh.id_order = o.id_order AND oh.id_order_history = (
@@ -518,10 +518,8 @@ class EnvoimoinscherModel
 		// get send value
 		$order_value = 0.0;
 		foreach ($row as $line)
-		{
-			$order_value += $line['product_price']*$line['product_quantity'];
-		}
-		
+			$order_value += $line['product_price'] * $line['product_quantity'];
+
 		//delivery
 		$addresses = $row[0]['address1'];
 		if ($row[0]['address2'] != '')
@@ -1503,7 +1501,7 @@ class EnvoimoinscherModel
 			foreach ($zones as $zone)
 				if (count($carrier->getZone((int)$zone['id_zone'])) === 0)
 					$carrier->addZone((int)$zone['id_zone']);
-		copy(_PS_MODULE_DIR_.$this->module_name.'/img/detail_'.Tools::strtolower($service['code_eo']).'.jpg', _PS_IMG_DIR_.'s/'.(int)$carrier_id.'.jpg');
+		Tools::copy(_PS_MODULE_DIR_.$this->module_name.'/img/detail_'.Tools::strtolower($service['code_eo']).'.jpg', _PS_IMG_DIR_.'s/'.(int)$carrier_id.'.jpg');
 		return $carrier_id;
 	}
 
@@ -1854,7 +1852,7 @@ class EnvoimoinscherModel
 			'UPDATE',
 			'id_order = '.(int)$order
 		);
-		
+
 		Db::getInstance()->autoExecute(
 			_DB_PREFIX_.'order_carrier',
 			array('tracking_number' => pSQL($shipping_number)),

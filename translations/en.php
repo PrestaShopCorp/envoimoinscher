@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -19,7 +19,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  */
@@ -73,7 +73,7 @@ $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_2bd9c0ed00116be1258e0cc6661
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3c78b35502b2693fefdfc51cba3a53a5'] = 'manual';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f8e561d352369dfa062944a0865ca410'] = 'real price';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3c2b37c8fe170986ed7a4c96476371e9'] = 'rate';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_725d35ff70b4b9f7ca86ed981c33f074'] = 'Shipping plugin : 15 negociated carriers';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b103c6c2b1c1aaf9d9614d792bbd954d'] = 'Offer your customers a choice of delivery methods to increase your sales';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_0f30b78a1d392e673e10440155b37c55'] = 'installation :  Impossible to install the plugin because Curl library is not activated. Please check with your webmaster to activate this PHP extension.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_a4cebd5a171b5e9b10faab37953d365c'] = 'Dispatch is actually unavailable.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_d4fdc07829e1a91274b32c0747239997'] = 'Delivery on : {DATE}';
@@ -221,7 +221,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_4ee4bd3e0a295c1e81eb7584c9c
 /*
 	--- getcontentintroduction ---
 */
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_55bf654e2734ecc1965ca2c1ce1bdcd5'] = 'Access to 15 carriers with negotiated prices';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_1a7ea81982d3d7b158a3038020c8429b'] = 'Choose from 15 carriers with negotiated prices';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_d925c629b77b27c10313247de57591e9'] = 'Up to 75%';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_4b89617cc3b7961e8562279e3798d4f8'] = ' immediate discount on your shipments';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_5a9de5d875ff3aad885189660bc1597b'] = 'No minimum volume, no contract';

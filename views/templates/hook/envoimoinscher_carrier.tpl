@@ -1,5 +1,5 @@
 {**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -73,17 +73,17 @@ var carrier_translation = {
 	}
 </style>
 
-<script type="text/javascript" src="{$baseDir|escape:'htmlall'}modules/envoimoinscher/js/carrier.js"></script>
-<link type="text/css" rel="stylesheet" href="{$baseDir|escape:'htmlall'}modules/envoimoinscher/css/carrier.css" />
+<script type="text/javascript" src="{$baseDir|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/js/carrier.js"></script>
+<link type="text/css" rel="stylesheet" href="{$baseDir|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/css/carrier.css" />
 <script type="text/javascript"> 
   if(typeof idAddress == "undefined") {
-  var idAddress = "{$id_address|escape:'htmlall'}";
+  var idAddress = "{$id_address|escape:'htmlall':'UTF-8'}";
   } else {
-		idAddress = "{$id_address|escape:'htmlall'}";
+		idAddress = "{$id_address|escape:'htmlall':'UTF-8'}";
   } 
  
   if(typeof carrierWithPoints == "undefined") {
-  var parcelPointValue = "{$point|escape:'htmlall'}";
+  var parcelPointValue = "{$point|escape:'htmlall':'UTF-8'}";
   var parcelPointId = "";
   var carrierWithPoints = "";
   var pointsLoadingWasDone = "";
@@ -96,11 +96,11 @@ var carrier_translation = {
   var parcelNames; 
   var parcelIds;
   var infoParcel = new Array();
-  var loaderSrc = "{$loaderSrc|escape:'htmlall'}";
+  var loaderSrc = "{$loaderSrc|escape:'htmlall':'UTF-8'}";
 
 {foreach from=$points key=id_carrier item=point}
   {if $point != ""} 
-    carrierWithPoints = carrierWithPoints + ";{$id_carrier|escape:'htmlall'};";
+    carrierWithPoints = carrierWithPoints + ";{$id_carrier|escape:'htmlall':'UTF-8'};";
   {/if} 
 {/foreach} 
 
@@ -137,13 +137,13 @@ var carrier_translation = {
   }); 
   } 
   else if(orderProcess == "order-opc") {  
-    parcelPointValue = "{$point|escape:'htmlall'}";
+    parcelPointValue = "{$point|escape:'htmlall':'UTF-8'}";
     // make carrierWithPoints and 
 	pointsLoadingWasDone = "";
 carrierWithPoints = "";
 {foreach from=$points key=id_carrier item=point}
   {if $point != ""} 
-    carrierWithPoints = carrierWithPoints + ";{$id_carrier|escape:'htmlall'};";
+    carrierWithPoints = carrierWithPoints + ";{$id_carrier|escape:'htmlall':'UTF-8'};";
   {/if} 
 {/foreach} 
   }
@@ -175,19 +175,19 @@ else
     lookForPoints($('input[name="delivery_option['+idAddress+']"]:checked'));
   });
 }
-var deliveryMessage = "{$deliveryLabel|escape:'htmlall'}";
+var deliveryMessage = "{$deliveryLabel|escape:'htmlall':'UTF-8'}";
 var dateReplace = "{ldelim}DATE{rdelim}";
 if (deliveryMessage != "")
 {
 {foreach from=$delivery key=id_carrier item=del} 
-	descr = $('div input[value="{$id_carrier|escape:'htmlall'},"]').parent().find(".delivery_option_delay");
+	descr = $('div input[value="{$id_carrier|escape:'htmlall':'UTF-8'},"]').parent().find(".delivery_option_delay");
 	if (descr.length == 0)
 	{
-		descr = $('div input[value="{$id_carrier|escape:'htmlall'},"]').parent().parent().parent().find(".delivery_option_radio").next().next();
+		descr = $('div input[value="{$id_carrier|escape:'htmlall':'UTF-8'},"]').parent().parent().parent().find(".delivery_option_radio").next().next();
 	}
 	if (descr.find(".carrier_delivery_date").length == 0)
 	{
-			descr.html(descr.html() + "<span class='carrier_delivery_date'><br/>"+ deliveryMessage.replace(dateReplace,'<b>{$del|escape:'htmlall'}</b>'.replace("-","/")) +"</span>");
+			descr.html(descr.html() + "<span class='carrier_delivery_date'><br/>"+ deliveryMessage.replace(dateReplace,'<b>{$del|escape:'htmlall':'UTF-8'}</b>'.replace("-","/")) +"</span>");
 	}
 {/foreach}
 }
@@ -196,6 +196,6 @@ if (deliveryMessage != "")
 
 
 {foreach from=$points key=id_carrier item=onePoint} 
-      <input type="hidden" name="pointsList{$id_carrier|intval}" id="pointsList{$id_carrier|intval}{$id_address|intval}" value="{$onePoint|escape:'htmlall'}" /> 
+      <input type="hidden" name="pointsList{$id_carrier|intval}" id="pointsList{$id_carrier|intval}{$id_address|intval}" value="{$onePoint|escape:'htmlall':'UTF-8'}" /> 
 {/foreach}
-  <input type="hidden" name="destCountry" id="destCountry" value="{$destCountry|escape:'htmlall'}" /><input type="hidden" name="voucherOk" id="voucherOk" value="0" />
+  <input type="hidden" name="destCountry" id="destCountry" value="{$destCountry|escape:'htmlall':'UTF-8'}" /><input type="hidden" name="voucherOk" id="voucherOk" value="0" />

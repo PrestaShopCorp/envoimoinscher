@@ -1,5 +1,5 @@
 {**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,14 +18,14 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
 
 {if isset($choice) && $choice == "create"}
 
-	<script type="text/javascript" src="{$baseDir|escape:'htmlall'}modules/envoimoinscher/js/getContentEmc.js"></script>
+	<script type="text/javascript" src="{$baseDir|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/js/getContentEmc.js"></script>
 	<script>
 		{if Tools::getValue('contact_etat')}
 			var contact_etat = "{Tools::getValue('contact_etat')}";
@@ -38,7 +38,7 @@
 		<input type="checkbox" checked="checked" disabled="true" />
 		<span>{l s='I would like to install the EnvoiMoinsCher module directly on my E-Commerce site. I will receive my API key upon validation of this form.' mod='envoimoinscher'}</span>
 	</div>
-	<form method="POST" id="account_emc" action="{$EMC_link|escape:'htmlall'}&EMC_tab=merchant">
+	<form method="POST" id="account_emc" action="{$EMC_link|escape:'htmlall':'UTF-8'}&EMC_tab=merchant">
 		<fieldset>
 			<legend>{l s='Person to contact' mod='envoimoinscher'}</legend>
 			
@@ -56,7 +56,7 @@
 				{l s='Surname:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 			</label>
 			<div class="margin-form">
-				<input type="text" name="contact_nom" value="{Tools::getValue('contact_nom')|escape:'htmlall'}" />
+				<input type="text" name="contact_nom" value="{Tools::getValue('contact_nom')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			
@@ -65,7 +65,7 @@
 				{l s='First name:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 			</label>
 			<div class="margin-form">
-				<input type="text" name="contact_prenom" value="{Tools::getValue('contact_prenom')|escape:'htmlall'}" />
+				<input type="text" name="contact_prenom" value="{Tools::getValue('contact_prenom')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			
@@ -104,7 +104,7 @@
 				{l s='Partner code, if you have one:' mod='envoimoinscher'}
 			</label>
 			<div class="margin-form">
-				<input type="text" name="partner_code" value="{Tools::getValue('partner_code')|escape:'htmlall'}" />
+				<input type="text" name="partner_code" value="{Tools::getValue('partner_code')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			
@@ -113,7 +113,7 @@
 				{l s='Your site URL:' mod='envoimoinscher'}
 			</label>
 			<div class="margin-form">
-				<input type="text" name="url" value="{Tools::getValue('url')|escape:'htmlall'}" />
+				<input type="text" name="url" value="{Tools::getValue('url')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			
@@ -122,14 +122,14 @@
 				{l s='Your email address:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 			</label>
 			<div class="margin-form">
-				<input type="text" name="contact_email" value="{Tools::getValue('contact_email')|escape:'htmlall'}" />
+				<input type="text" name="contact_email" value="{Tools::getValue('contact_email')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			<label for="contact_email2">
 				{l s='Confirm your email address:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 			</label>
 			<div class="margin-form">
-				<input type="text" name="contact_email2" value="{Tools::getValue('contact_email2')|escape:'htmlall'}" />
+				<input type="text" name="contact_email2" value="{Tools::getValue('contact_email2')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			
@@ -147,7 +147,7 @@
 				{l s='Login:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 			</label>
 			<div class="margin-form add-tooltip" title="{l s='Alphanumeric characters only (letter and/or numbers without accents)' mod='envoimoinscher'}">
-				<input type="text" name="login" value="{Tools::getValue('login')|escape:'htmlall'}" />
+				<input type="text" name="login" value="{Tools::getValue('login')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			
@@ -156,14 +156,14 @@
 				{l s='Password:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 			</label>
 			<div class="margin-form add-tooltip" title="{l s='Minimum of 6 characters' mod='envoimoinscher'}">
-				<input type="password" name="password" value="{Tools::getValue('password')|escape:'htmlall'}" />
+				<input type="password" name="password" value="{Tools::getValue('password')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			<label for="confirm_password">
 				{l s='Confirm the password:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 			</label>
 			<div class="margin-form">
-				<input type="password" name="confirm_password" value="{Tools::getValue('confirm_password')|escape:'htmlall'}" />
+				<input type="password" name="confirm_password" value="{Tools::getValue('confirm_password')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			
@@ -179,7 +179,7 @@
 				{l s='Company/Organisation:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 			</label>
 			<div class="margin-form">
-				<input type="text" name="contact_ste" value="{Tools::getValue('contact_ste')|escape:'htmlall'}" />
+				<input type="text" name="contact_ste" value="{Tools::getValue('contact_ste')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			
@@ -188,21 +188,21 @@
 				{l s='Your address:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 			</label>
 			<div class="margin-form">
-				<input type="text" name="adresse1" value="{Tools::getValue('adresse1')|escape:'htmlall'}" />
+				<input type="text" name="adresse1" value="{Tools::getValue('adresse1')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			<label for="adresse2">
 				{l s='Address 1:' mod='envoimoinscher'}
 			</label>
 			<div class="margin-form">
-				<input type="text" name="adresse2" value="{Tools::getValue('adresse2')|escape:'htmlall'}" />
+				<input type="text" name="adresse2" value="{Tools::getValue('adresse2')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			<label for="adresse3">
 				{l s='Address 2:' mod='envoimoinscher'}
 			</label>
 			<div class="margin-form">
-				<input type="text" name="adresse3" value="{Tools::getValue('adresse3')|escape:'htmlall'}" />
+				<input type="text" name="adresse3" value="{Tools::getValue('adresse3')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			
@@ -233,7 +233,7 @@
 				{l s='Postcode:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 			</label>
 			<div class="margin-form">
-				<input type="text" name="contact_cp" value="{Tools::getValue('contact_cp')|escape:'htmlall'}" />
+				<input type="text" name="contact_cp" value="{Tools::getValue('contact_cp')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			
@@ -242,7 +242,7 @@
 				{l s='City:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 			</label>
 			<div class="margin-form">
-				<input type="text" name="contact_ville" value="{Tools::getValue('contact_ville')|escape:'htmlall'}" />
+				<input type="text" name="contact_ville" value="{Tools::getValue('contact_ville')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			
@@ -251,7 +251,7 @@
 				{l s='Telephone:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 			</label>
 			<div class="margin-form">
-				<input type="text" name="contact_tel" value="{Tools::getValue('contact_tel')|escape:'htmlall'}" />
+				<input type="text" name="contact_tel" value="{Tools::getValue('contact_tel')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			
@@ -280,7 +280,7 @@
 				{l s='SIRET:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 			</label>
 			<div class="margin-form">
-				<input type="text" name="contact_stesiret" value="{Tools::getValue('contact_stesiret')|escape:'htmlall'}" />
+				<input type="text" name="contact_stesiret" value="{Tools::getValue('contact_stesiret')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			
@@ -290,7 +290,7 @@
 					{l s='Intra-community VAT No.:' mod='envoimoinscher'}
 				</label>
 				<div class="margin-form">
-					<input type="text" name="contact_tvaintra" value="{Tools::getValue('contact_tvaintra')|escape:'htmlall'}" />
+					<input type="text" name="contact_tvaintra" value="{Tools::getValue('contact_tvaintra')|escape:'htmlall':'UTF-8'}" />
 				</div>
 			</div>
 			<div class="clear both"></div>
@@ -342,7 +342,7 @@
 		<span>{l s='Please fill in the following form to receive your API key.' mod='envoimoinscher'}</span>
 	</div>
 	
-	<form method="POST" id="account_emc" action="{$EMC_link|escape:'htmlall'}&EMC_tab=merchant">
+	<form method="POST" id="account_emc" action="{$EMC_link|escape:'htmlall':'UTF-8'}&EMC_tab=merchant">
 		<fieldset>
 			<legend>{l s='Prestashop version' mod='envoimoinscher'}</legend>
 			
@@ -372,7 +372,7 @@
 				{l s='Login:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 			</label>
 			<div class="margin-form add-tooltip" title="{l s='Alphanumeric characters only (letter and/or numbers without accents)' mod='envoimoinscher'}">
-				<input type="text" name="login" value="{Tools::getValue('login')|escape:'htmlall'}" />
+				<input type="text" name="login" value="{Tools::getValue('login')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			
@@ -381,7 +381,7 @@
 				{l s='Your email address:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 			</label>
 			<div class="margin-form">
-				<input type="text" name="contact_email" value="{Tools::getValue('contact_email')|escape:'htmlall'}" />
+				<input type="text" name="contact_email" value="{Tools::getValue('contact_email')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			

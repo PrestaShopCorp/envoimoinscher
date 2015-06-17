@@ -133,11 +133,11 @@ class AdminEnvoiMoinsCherController extends ModuleAdminController
 			case 'editAddress':
 				$html .= $emc->editAddress();
 			break;
-			
+
 			case 'returnStates':
 				$html .= $emc->returnStates();
 			break;
-			
+
 			default:
 				$this->addJqueryUI('ui.datepicker');
 				$html .= $emc->ordersTable();

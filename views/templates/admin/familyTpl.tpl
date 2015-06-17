@@ -1,5 +1,5 @@
 {**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -38,14 +38,14 @@
 				{assign var="defaultPP" value="{Configuration::get(strtoupper('EMC_PP_'|cat:substr($offer.offerCode,-25)))}"}
 				<tr class="{if in_array($offer.id_eo, $operators)} disabled{/if}">
 					<td class="offer">
-						<label for="offer{$offer.id_es|escape:'htmlall'}">
-							{$offer.name_eo|escape:'htmlall'} (<b>{$offer.label_es|escape:'htmlall'}</b>)
+						<label for="offer{$offer.id_es|escape:'htmlall':'UTF-8'}">
+							{$offer.name_eo|escape:'htmlall':'UTF-8'} (<b>{$offer.label_es|escape:'htmlall':'UTF-8'}</b>)
 						</label>
 						{if $offer.is_parcel_dropoff_point_es == 1 && in_array($offer.id_eo, $operators) == false}
 							<div class="parcelPoint" {if $offer.id_carrier == ''} style="display:none;"{/if}>
-								<label for="pp_{$offer.id_es|escape:'htmlall'}">{l s='Deposit parcel point:' mod='envoimoinscher'}</label>
+								<label for="pp_{$offer.id_es|escape:'htmlall':'UTF-8'}">{l s='Deposit parcel point:' mod='envoimoinscher'}</label>
 								<input type="text" name="parcel_point[{$offer.offerCode}]" id="pp_{$offer.id_es}" value="{$defaultPP}" placeholder="{l s='Parcel point code' mod='envoimoinscher'}" {if $disableServices} disabled="disabled"{/if}/><br />
-								<a data-fancybox-type="iframe" href="{Envoimoinscher::getMapByOpe($offer.code_eo, $offer.code_es)|escape:'htmlall'}" class="getParcelPoint fancybox">{l s='Get parcel point' mod='envoimoinscher'}</a>
+								<a data-fancybox-type="iframe" href="{Envoimoinscher::getMapByOpe($offer.code_eo, $offer.code_es)|escape:'htmlall':'UTF-8'}" class="getParcelPoint fancybox">{l s='Get parcel point' mod='envoimoinscher'}</a>
 							</div>
 						{else}
 							<input type="hidden" name="parcel_point[{$offer.offerCode}]" id="pp_{$offer.id_es}" value="POST" {if $disableServices} disabled="disabled"{/if}/><br />
@@ -54,13 +54,13 @@
 					<td class="price">
 						{if in_array($offer.id_eo, $operators)}
 							<div class="center EMC_error">
-								{l s='Disabled for %s' mod='envoimoinscher' sprintf={$nameCategory|unescape:'html'}}
+								{l s='Disabled for %s' mod='envoimoinscher' sprintf={$nameCategory}}
 							</div>
 						{/if}
 						<div id="field2-offer{$offer.id_es}" {if $offer.id_carrier == '' || in_array($offer.id_eo, $operators)} style="display:none;"{/if}>
 							{foreach from=$pricing key=p item=price}
 								<div class="clear">
-									<label for="off_{$p|escape:'htmlall'}_{$offer.id_es|escape:'htmlall'}">
+									<label for="off_{$p|escape:'htmlall':'UTF-8'}_{$offer.id_es|escape:'htmlall':'UTF-8'}">
 										{if $price == "scale"}{l s='Rate' mod='envoimoinscher'}{/if}
 										{if $price == "real"}{l s='Real price' mod='envoimoinscher'}{/if}
 									</label>
@@ -69,7 +69,7 @@
 							{/foreach}
 						</div>
 					</td>
-					<td class="desc">{$offer.desc_es|escape:'htmlall'}</td>
+					<td class="desc">{$offer.desc_es|escape:'htmlall':'UTF-8'}</td>
 					<td class="status">
 						<div class="hide">
 							<input type="checkbox" name="offers[]" value="{$offer.offerCode}" id="offer{$offer.id_es}" {if $offer.id_carrier > 0 && in_array($offer.id_eo, $operators) == false} checked="checked"{/if}{if $disableServices} disabled="disabled"{/if} />

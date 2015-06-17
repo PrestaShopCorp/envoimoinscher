@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -240,13 +240,13 @@ class EnvoimoinscherHelper {
 	* @var array
 	*/
 	protected $insurance_choices = array();
-	
+
 	/**
 	* String for module authentification.
 	* @access protected
 	* @var string
 	*/
-	protected $passPhrase = 'T+sGKCHeRddqiGb+tot/q2hzGRh5oP3GlB1NEMHEGTw=';
+	protected $pass_phrase = 'T+sGKCHeRddqiGb+tot/q2hzGRh5oP3GlB1NEMHEGTw=';
 
 	/**
 	* Gets random value to generate the tracking uniq key.
@@ -628,7 +628,7 @@ class EnvoimoinscherHelper {
 			$result .= $bytes_encoding[$buff.'0000'].'==';
 		return $result;
 	}
-	
+
 	/**
 	 * Function to validate email string
 	 *
@@ -638,11 +638,11 @@ class EnvoimoinscherHelper {
 	 */
 	public function validateEmail($string)
 	{
-		if( filter_var($string, FILTER_VALIDATE_EMAIL)  === FALSE ) return false;
-		
+		if (filter_var($string, FILTER_VALIDATE_EMAIL) === false) return false;
+
 		return true;
 	}
-	
+
 	/**
 	 * Function to validate alphanumeric string
 	 *
@@ -652,11 +652,11 @@ class EnvoimoinscherHelper {
 	 */
 	public function validateAlpha($string)
 	{
-		if( ctype_alnum($string)  === FALSE ) return false;
-		
+		if (ctype_alnum($string) === false) return false;
+
 		return true;
 	}
-	
+
 	/**
 	 * Function to validate phone number
 	 *
@@ -666,8 +666,8 @@ class EnvoimoinscherHelper {
 	 */
 	public function validatePhone($string)
 	{
-		if( preg_match('/^([+\- \(\)]*[\d])+$/', $string) == 0 ) return false;
-		
+		if (preg_match('/^([+\- \(\)]*[\d])+$/', $string) == 0) return false;
+
 		return true;
 	}
 
@@ -680,39 +680,39 @@ class EnvoimoinscherHelper {
 	 */
 	public function encryptPassword($string)
 	{
-		$salt = substr($this->passPhrase, 0, 16);
-		$iv  = substr($this->passPhrase, 16, 16);
-		
-		$key = $this->pbkdf2('sha1', $this->passPhrase, $salt, 100, 32, true);
+		$salt = Tools::substr($this->pass_phrase, 0, 16);
+		$iv  = Tools::substr($this->pass_phrase, 16, 16);
+
+		$key = $this->pbkdf2('sha1', $this->pass_phrase, $salt, 100, 32, true);
 		return base64_encode(openssl_encrypt($string, 'aes-128-cbc', $key, true, $iv));
 	}
 
-	public function pbkdf2($algorithm, $password, $salt, $count, $key_length, $raw_output = false) 
+	public function pbkdf2($algorithm, $password, $salt, $count, $key_length, $raw_output = false)
 	{
-		$algorithm = strtolower($algorithm);
-		if(!in_array($algorithm, hash_algos(), true))
+		$algorithm = Tools::strtolower($algorithm);
+		if (!in_array($algorithm, hash_algos(), true))
 			throw new Exception('PBKDF2 ERROR: Invalid hash algorithm.');
 
-		if($count <= 0 || $key_length <= 0)
+		if ($count <= 0 || $key_length <= 0)
 			throw new Exception('PBKDF2 ERROR: Invalid parameters.');
 
-		$hash_length = strlen(hash($algorithm, "", true));
+		$hash_length = Tools::strlen(hash($algorithm, '', true));
 		$block_count = ceil($key_length / $hash_length);
-		for ($i = 1; $i <= $block_count; $i++) {
+		for ($i = 1; $i <= $block_count; $i++)
+		{
 			// $i encoded as 4 bytes, big endian.
-			$last = $salt . pack("N", $i);
+			$last = $salt.pack('N', $i);
 			// first iteration
 			$last = $xorsum = hash_hmac($algorithm, $last, $password, true);
 			// perform the other $count - 1 iterations
-			for ($j = 1; $j < $count; $j++) {
+			for ($j = 1; $j < $count; $j++)
 				$xorsum ^= ($last = hash_hmac($algorithm, $last, $password, true));
-			}
 			$output = '';
 			$output .= $xorsum;
-			if($raw_output)
-				return substr($output, 0, $key_length);
+			if ($raw_output)
+				return Tools::substr($output, 0, $key_length);
 			else
-				return bin2hex(substr($output, 0, $key_length));
+				return bin2hex(Tools::substr($output, 0, $key_length));
 		}
 	}
 }
