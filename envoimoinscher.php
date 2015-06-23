@@ -4049,27 +4049,27 @@ class Envoimoinscher extends CarrierModule
 			if (Tools::getValue('contact_nom'))
 				Configuration::updateValue('EMC_LNAME', Tools::getValue('contact_nom'));
 			else
-				array_push($errors, $this->l('Please specify your surname'));
+				$errors[] = $this->l('Please specify your surname');
 
 			// validate first name
 			if (Tools::getValue('contact_prenom'))
 				Configuration::updateValue('EMC_FNAME', Tools::getValue('contact_prenom'));
 			else
-				array_push($errors, $this->l('Please specify your first name'));
+				$errors[] = $this->l('Please specify your first name');
 
 			// validate occupation
 			if (!Tools::getValue('profession'))
-				array_push($errors, $this->l('Please specify your occupation'));
+				$errors[] = $this->l('Please specify your occupation');
 
 			// validate email
 			if (!Tools::getValue('contact_email'))
-				array_push($errors, $this->l('Please specify your email address'));
+				$errors[] = $this->l('Please specify your email address');
 			if (!Tools::getValue('contact_email2'))
-				array_push($errors, $this->l('Please confirm your email address'));
+				$errors[] = $this->l('Please confirm your email address');
 			elseif (Tools::getValue('contact_email') != Tools::getValue('contact_email2'))
-				array_push($errors, $this->l('Please verify your email address and its confirmation'));
+				$errors[] = $this->l('Please verify your email address and its confirmation');
 			elseif (!$helper->validateEmail(Tools::getValue('contact_email')))
-				array_push($errors, $this->l('Please specify a valid email address'));
+				$errors[] = $this->l('Please specify a valid email address');
 			else
 				Configuration::updateValue('EMC_MAIL', Tools::getValue('contact_email'));
 
@@ -4077,22 +4077,22 @@ class Envoimoinscher extends CarrierModule
 			if (Tools::getValue('login'))
 			{
 				if (!$helper->validateAlpha(Tools::getValue('login')))
-					array_push($errors, $this->l('Your ID may only contain alphanumerical characters'));
+					$errors[] = $this->l('Your ID may only contain alphanumerical characters');
 				else
 					Configuration::updateValue('EMC_LOGIN', Tools::getValue('login'));
 			}
 			else
-				array_push($errors, $this->l('Please specify a login'));
+				$errors[] = $this->l('Please specify a login');
 
 			// validate password
 			if (!Tools::getValue('password'))
-				array_push($errors, $this->l('Please enter your password'));
+				$errors[] = $this->l('Please enter your password');
 			if (!Tools::getValue('confirm_password'))
-				array_push($errors, $this->l('Please confirm your password'));
+				$errors[] = $this->l('Please confirm your password');
 			elseif (Tools::getValue('password') != Tools::getValue('confirm_password'))
-				array_push($errors, $this->l('Please verify your password and its confirmation'));
+				$errors[] = $this->l('Please verify your password and its confirmation');
 			elseif (Tools::strlen(Tools::getValue('password')) < 6)
-				array_push($errors, $this->l('Your password must contain at least 6 characters'));
+				$errors[] = $this->l('Your password must contain at least 6 characters');
 			else
 				Configuration::updateValue('EMC_PASS', Tools::getValue('password'));
 
@@ -4100,7 +4100,7 @@ class Envoimoinscher extends CarrierModule
 			if (Tools::getValue('contact_ste'))
 				Configuration::updateValue('EMC_COMPANY', Tools::getValue('contact_ste'));
 			else
-				array_push($errors, $this->l('Please specify your company'));
+				$errors[] = $this->l('Please specify your company');
 
 			// validate address
 			if (Tools::getValue('adresse1'))
@@ -4115,7 +4115,7 @@ class Envoimoinscher extends CarrierModule
 				}
 			}
 			else
-				array_push($errors, $this->l('Please specify your address'));
+				$errors[] = $this->l('Please specify your address');
 
 			// validate postcode
 			if (Tools::getValue('contact_cp'))
@@ -4125,7 +4125,7 @@ class Envoimoinscher extends CarrierModule
 					Configuration::updateValue('EMC_POSTALCODE', (int)Tools::getValue('contact_cp'));
 			}
 			else
-				array_push($errors, $this->l('Please specify your postal code'));
+				$errors[] = $this->l('Please specify your postal code');
 
 			// validate city
 			if (Tools::getValue('contact_ville'))
@@ -4135,34 +4135,34 @@ class Envoimoinscher extends CarrierModule
 					Configuration::updateValue('EMC_CITY', Tools::getValue('contact_ville'));
 			}
 			else
-				array_push($errors, $this->l('Please specify your city'));
+				$errors[] = $this->l('Please specify your city');
 
 			// validate phone
 			if (Tools::getValue('contact_tel'))
 			{
 				if (!$helper->validatePhone(Tools::getValue('contact_tel')))
-					array_push($errors, $this->l('Please specify a valid phone number'));
+					$errors[] = $this->l('Please specify a valid phone number');
 				else
 					Configuration::updateValue('EMC_TEL', Tools::getValue('contact_tel'));
 			}
 			else
-				array_push($errors, $this->l('Please specify your telephone number'));
+				$errors[] = $this->l('Please specify your telephone number');
 
 			// validate siret
 			if (!Tools::getValue('contact_stesiret'))
 			{
 				if (Tools::getValue('pz_iso') == 'FR')
-					array_push($errors, $this->l('Please specify the SIRET (business identification) number'));
+					$errors[] = $this->l('Please specify the SIRET (business identification) number');
 				else
-					array_push($errors, $this->l('Please specify the legal registration or enrolment number in the country'));
+					$errors[] = $this->l('Please specify the legal registration or enrolment number in the country');
 			}
 			elseif
 				(Tools::getValue('pz_iso') == 'FR' && Tools::strlen(Tools::getValue('contact_stesiret')) != 14)
-					array_push($errors, $this->l('The SIRET (business identification) number is invalid. Please verify that it contains 14 figures'));
+					$errors[] = $this->l('The SIRET (business identification) number is invalid. Please verify that it contains 14 figures');
 
 			// validate cgv
 			if (!Tools::getValue('cgv'))
-				array_push($errors, $this->l('Please check the General Terms of Sale before proceeding'));
+				$errors[] = $this->l('Please check the General Terms of Sale before proceeding');
 
 			if (!empty($errors))
 				return $this->displayError($this->l('The following errors have occurred:').'<ul><li>'.implode('</li><li>', $errors).'</li></ul>');
@@ -4175,22 +4175,22 @@ class Envoimoinscher extends CarrierModule
 			if (Tools::getValue('login'))
 				Configuration::updateValue('EMC_LOGIN', Tools::getValue('login'));
 			else
-				array_push($errors, $this->l('Please specify a login'));
+				$errors[] = $this->l('Please specify a login');
 
 			// validate email
 			if (Tools::getValue('contact_email'))
 			{
 				if (!$helper->validateEmail(Tools::getValue('contact_email')))
-					array_push($errors, $this->l('Please specify a valid email address'));
+					$errors[] = $this->l('Please specify a valid email address');
 				else
 					Configuration::updateValue('EMC_MAIL', Tools::getValue('contact_email'));
 			}
 			else
-				array_push($errors, $this->l('Please specify your email address'));
+				$errors[] = $this->l('Please specify your email address');
 
 			// validate cgv
 			if (Tools::getValue('cgv') == false)
-				array_push($errors, $this->l('Please check the General Terms of Sale before proceeding'));
+				$errors[] = $this->l('Please check the General Terms of Sale before proceeding');
 
 			if (!empty($errors))
 				return $this->displayError($this->l('The following errors have occurred:').'<ul><li>'.implode('</li><li>', $errors).'</li></ul>');
@@ -4282,9 +4282,9 @@ class Envoimoinscher extends CarrierModule
 			$content_type = explode(';', $curl_info['content_type']);
 
 			if (curl_errno($req) > 0)
-				array_push($errors, curl_error($req));
+				$errors[] = curl_error($req);
 			elseif ($curl_info['http_code'] != '200' && $curl_info['http_code'] != '400' && $curl_info['http_code'] != '401')
-				array_push($errors, $this->l('There has been an error sending the request.').$curl_info['http_code'].')');
+				$errors[] = $this->l('There has been an error sending the request.').$curl_info['http_code'].')';
 
 			curl_close($req);
 			if (!empty($errors))
