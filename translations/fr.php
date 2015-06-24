@@ -227,7 +227,9 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_1a7ea81982d3d7b158a
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_d925c629b77b27c10313247de57591e9'] = 'Jusqu\'à 75%';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_4b89617cc3b7961e8562279e3798d4f8'] = ' de remise immédiate sur vos envois';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_5a9de5d875ff3aad885189660bc1597b'] = 'Sans condition de volume ni contrat';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_63a07aafb3815b948a5f09166753bec8'] = 'Un <span class="blue bold">suivi de colis</span> facile et transparent';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_978b697963cfc5abfced8a4b611977c9'] = 'Un';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_8a1dae93080e2857bc3c9846d9eab0af'] = 'suivi de colis';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_0376b5725100b401b3cb81195967cf07'] = 'facile et transparent';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_a469ea008403df21eed822abc99ea113'] = '1 service client dédié';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_0397f5de3c85f4864abf7adc01d5e7a7'] = ' pour votre SAV et ';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_65df5c4b5e64086784a330bc7865a1fd'] = 'une facturation unique';
@@ -287,7 +289,12 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentemc_d04e2c1b67f3ef0d475409516b81
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_592b19c2118bde15753557dbb164f2d1'] = 'N° d\'enregistrement dans le pays:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_566b0eba5f5e59c4dbbc3e39c9a38a03'] = 'N° TVA intra-communautaire :';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_df9fc88bb784af9673a06ab68d3ede18'] = 'Mentions';
-$_MODULE['<{envoimoinscher}prestashop>getcontentemc_56a2c450de544ed0e919a4cad661e481'] = 'Je reconnais avoir lu le texte des <a target="_blank" href="http://ecommerce.envoimoinscher.com/cgvu/">Conditions Générales de Vente et d\'Utilisation du site EnvoiMoinsCher.com</a> et des <a target="_blank" href="http://ecommerce.envoimoinscher.com/api/download/cgu_api_envoimoinscher_fr.pdf">Conditions Générales d’utilisation de l’API EnvoiMoinsCher.com</a> dans son intégralité et en accepter tous les termes.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_56a2c450de544ed0e919a4cad661e481'] = 'Je reconnais avoir lu le texte des';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_fbe123b06729453d40a8ec3986b175f5'] = 'Conditions Générales de Vente et d\'Utilisation du site EnvoiMoinsCher.com';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_4dc4ec7091509ce4cb8d0265922bbe2e'] = 'et des ';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_88ef5b8c9ea69db82fd2c8f991e7d4e4'] = 'Conditions Générales d’utilisation de l’API EnvoiMoinsCher.com';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_41963ae76ff1ef6bb0b75e885a8ba140'] = 'dans son intégralité et en accepter tous les termes.';
+
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_517086580e95a032290707ca60f8089f'] = 'Je souhaite m\'abonner à la newsletter d\'EnvoiMoinsCher.com et être tenu informé(e) des évolutions des modules e-commerce.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_49066723896ceb46f8a2d0260a1e0b7b'] = 'Je souhaite recevoir les informations commerciales des Partenaires d\'EnvoiMoinsCher.com .';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_2fdfd506efea08144c0794c32ca8250a'] = 'Créer mon compte';

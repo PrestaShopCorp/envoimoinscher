@@ -32,7 +32,7 @@
 						<ul class="iconList s17">
 							<li><span class="orange bold">{l s='Up to 75%' mod='envoimoinscher'}</span>{l s=' immediate discount on your shipments' mod='envoimoinscher'}</li>
 							<li>{l s='Without requirement of volume or contract' mod='envoimoinscher'}</li>
-							<li>{l s='Easy and transparent package monitoring' mod='envoimoinscher'}</li>
+							<li>{l s='An' mod='envoimoinscher'} <span class="blue bold">{l s='Easy and transparent' mod='envoimoinscher'}</span> {l s='package monitoring' mod='envoimoinscher'}</li>
 							<li><span class="blue bold">{l s='1 dedicated customer service' mod='envoimoinscher'}</span>{l s=' for your SAV and ' mod='envoimoinscher'}<span class="blue bold">{l s='one single billing' mod='envoimoinscher'}</span></br>{l s=' whatever the carriers : ' mod='envoimoinscher'}<span class="orange bold">{l s='Envoimoinscher handles everything!' mod='envoimoinscher'}</span></li>
 						</ul>
 						<hr>
