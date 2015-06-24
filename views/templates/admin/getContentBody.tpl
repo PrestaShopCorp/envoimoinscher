@@ -241,7 +241,7 @@
 
 	</div>
 
-	<script src="{$modulePath|escape:'htmlall':'UTF-8'}js/jquery.tooltipster.min.js"></script>
+	<script src="{$modulePath|escape:'htmlall':'UTF-8'}views/js/jquery.tooltipster.min.js"></script>
 	<script type="text/javascript">
 		{literal}
 		var EMC_modify = false;
@@ -360,13 +360,13 @@
 					prices.fadeOut();
 					carrier.attr('alt', 'false');
 					checkbox.attr('checked', false);
-					carrier.attr('src', '../img/admin/disabled.gif');
+					carrier.attr('src', '../../img/admin/disabled.gif');
 				} else {
 					carrier.parents('tr').find('.parcelPoint').fadeIn();
 					prices.fadeIn();
 					carrier.attr('alt', 'true');
 					checkbox.attr('checked', true);
-					carrier.attr('src', '../img/admin/enabled.gif');
+					carrier.attr('src', '../../img/admin/enabled.gif');
 				}
 			}
 		}
@@ -374,7 +374,7 @@
 	</script>
 	{if $EMC_config.EMC_USER >= 3}
 		<fieldset id="EMC_Content" class="panel">
-			<img src="../img/loader.gif" alt="" />
+			<img src="../../img/loader.gif" alt="" />
 		</fieldset>
 		<script type="text/javascript">
 			{literal}
@@ -420,7 +420,7 @@
 					if(EMC_load === true)
 						return;
 					EMC_load = true;
-					$("#EMC_Content").html('<div class="center"><img src="../img/loader.gif" alt="" /></div>');
+					$("#EMC_Content").html('<div class="center"><img src="../../img/loader.gif" alt="" /></div>');
 					$.ajax({
 						type : "POST",
 						url : "",

@@ -1501,7 +1501,7 @@ class EnvoimoinscherModel
 			foreach ($zones as $zone)
 				if (count($carrier->getZone((int)$zone['id_zone'])) === 0)
 					$carrier->addZone((int)$zone['id_zone']);
-		Tools::copy(_PS_MODULE_DIR_.$this->module_name.'/img/detail_'.Tools::strtolower($service['code_eo']).'.jpg', _PS_IMG_DIR_.'s/'.(int)$carrier_id.'.jpg');
+		Tools::copy(_PS_MODULE_DIR_.$this->module_name.'/views/img/detail_'.Tools::strtolower($service['code_eo']).'.jpg', _PS_IMG_DIR_.'s/'.(int)$carrier_id.'.jpg');
 		return $carrier_id;
 	}
 

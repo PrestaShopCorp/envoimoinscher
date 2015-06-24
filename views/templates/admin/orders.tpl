@@ -28,7 +28,7 @@
 	.table tr td {padding: 2px; color: #000000;}
 	.table tr.small th {font-size:9px;}
 	.selectedRow {background: #dadada;}
-	#massStats {background: url(/modules/envoimoinscher/img/ajax-loader.gif) no-repeat 220px 25px;}
+	#massStats {background: url(/modules/envoimoinscher/views/img/ajax-loader.gif) no-repeat 220px 25px;}
 	</style>
 	{/literal}
 	<script type="text/javascript">

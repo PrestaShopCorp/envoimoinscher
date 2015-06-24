@@ -34,19 +34,19 @@
 			$others.removeClass("opened");
 			$others.addClass("closed");
 			$others.children(":first-child").children(":first-child").children(":first-child").attr("src",
-					window.emcBaseDir+"img/arrow_right.png");
+					window.emcBaseDir+"/views/img/arrow_right.png");
 			//SHOW
 			$(this).next().toggle("fast");
 			$(this).addClass("opened");
 			$(this).removeClass("closed");
 			$(this).children(":first-child").children(":first-child").children(":first-child").attr("src",
-					window.emcBaseDir+"img/arrow_down.png");
+					window.emcBaseDir+"/views/img/arrow_down.png");
 		} else {
 			$(this).next().toggle("fast");
 			$(this).addClass("closed");
 			$(this).removeClass("opened");
 			$(this).children(":first-child").children(":first-child").children(":first-child").attr("src",
-					window.emcBaseDir+"img/arrow_right.png");
+					window.emcBaseDir+"/views/img/arrow_right.png");
 		}
 	});
 
@@ -55,7 +55,7 @@
 	$(".openable-title:first-child").addClass("opened");
 	$(".openable-title:first-child").removeClass("closed");
 	$(".openable-title:first-child").children(":first-child").children(":first-child").children(":first-child").attr("src",
-			window.emcBaseDir+"img/arrow_down.png");
+			window.emcBaseDir+"/views/img/arrow_down.png");
 
 
 	// clic on subtitle 
