@@ -2098,7 +2098,7 @@ class Envoimoinscher extends CarrierModule
 			'EMC_CITY' => $this->l('the town'),
 			'EMC_TEL' => $this->l('the phone number'),
 			'EMC_MAIL' => $this->l('the email address'),
-			'EMC_PICKUP' => $this->l('the pickup day'));
+			'EMC_PICKUP_J1' => $this->l('the pickup day'));
 		foreach ($values as $k => $value)
 			if (in_array($k, $obligatory) && trim($value) == '')
 				$missed[] = $dictionnary[$k];
