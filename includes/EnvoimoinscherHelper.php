@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -159,7 +159,7 @@ class EnvoimoinscherHelper {
 	* @access proteced
 	* @var array
 	*/
-	protected $config_keys = array('EMC_LOGIN', 'EMC_PASS', 'EMC_KEY', 'EMC_ENV',
+	protected $config_keys = array('EMC_LOGIN', 'EMC_PASS', 'EMC_KEY_TEST', 'EMC_KEY_PROD', 'EMC_ENV',
 		'EMC_TYPE', 'EMC_NATURE', 'EMC_CIV', 'EMC_FNAME', 'EMC_LNAME', 'EMC_COMPANY',
 		'EMC_ADDRESS', 'EMC_COMPL', 'EMC_POSTALCODE', 'EMC_CITY', 'EMC_TEL', 'EMC_MAIL',
 		'EMC_PICKUP', 'EMC_MODE', 'EMC_ORDER', 'EMC_RELAIS_SOGP', 'EMC_RELAIS_MONR',
@@ -240,6 +240,13 @@ class EnvoimoinscherHelper {
 	* @var array
 	*/
 	protected $insurance_choices = array();
+
+	/**
+	* String for module authentification.
+	* @access protected
+	* @var string
+	*/
+	protected $pass_phrase = 'T+sGKCHeRddqiGb+tot/q2hzGRh5oP3GlB1NEMHEGTw=';
 
 	/**
 	* Gets random value to generate the tracking uniq key.
@@ -620,6 +627,93 @@ class EnvoimoinscherHelper {
 		elseif ($count == 2)
 			$result .= $bytes_encoding[$buff.'0000'].'==';
 		return $result;
+	}
+
+	/**
+	 * Function to validate email string
+	 *
+	 * @access public
+	 * @param String $string The email
+	 * @return boolean
+	 */
+	public function validateEmail($string)
+	{
+		if (filter_var($string, FILTER_VALIDATE_EMAIL) === false) return false;
+
+		return true;
+	}
+
+	/**
+	 * Function to validate alphanumeric string
+	 *
+	 * @access public
+	 * @param String $string The string
+	 * @return boolean
+	 */
+	public function validateAlpha($string)
+	{
+		if (ctype_alnum($string) === false) return false;
+
+		return true;
+	}
+
+	/**
+	 * Function to validate phone number
+	 *
+	 * @access public
+	 * @param String $string The number
+	 * @return boolean
+	 */
+	public function validatePhone($string)
+	{
+		if (preg_match('/^([+\- \(\)]*[\d])+$/', $string) == 0) return false;
+
+		return true;
+	}
+
+	/**
+	 * Function to encrypt password
+	 *
+	 * @access public
+	 * @param String $string The password
+	 * @return String
+	 */
+	public function encryptPassword($string)
+	{
+		$salt = Tools::substr($this->pass_phrase, 0, 16);
+		$iv  = Tools::substr($this->pass_phrase, 16, 16);
+
+		$key = $this->pbkdf2('sha1', $this->pass_phrase, $salt, 100, 32, true);
+		return base64_encode(openssl_encrypt($string, 'aes-128-cbc', $key, true, $iv));
+	}
+
+	public function pbkdf2($algorithm, $password, $salt, $count, $key_length, $raw_output = false)
+	{
+		$algorithm = Tools::strtolower($algorithm);
+		if (!in_array($algorithm, hash_algos(), true))
+			throw new Exception('PBKDF2 ERROR: Invalid hash algorithm.');
+
+		if ($count <= 0 || $key_length <= 0)
+			throw new Exception('PBKDF2 ERROR: Invalid parameters.');
+
+		$hash_length = Tools::strlen(hash($algorithm, '', true));
+		$block_count = ceil($key_length / $hash_length);
+		for ($i = 1; $i <= $block_count; $i++)
+		{
+			// $i encoded as 4 bytes, big endian.
+			$last = $salt.pack('N', $i);
+			// first iteration
+			$last = $xorsum = hash_hmac($algorithm, $last, $password, true);
+			// perform the other $count - 1 iterations
+			for ($j = 1; $j < $count; $j++)
+				$xorsum ^= ($last = hash_hmac($algorithm, $last, $password, true));
+			$output = '';
+			$output .= $xorsum;
+			if ($raw_output)
+				return Tools::substr($output, 0, $key_length);
+			else
+				return bin2hex(Tools::substr($output, 0, $key_length));
+		}
 	}
 }
 ?>

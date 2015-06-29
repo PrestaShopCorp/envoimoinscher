@@ -1,5 +1,5 @@
 {**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -26,7 +26,7 @@
 <div class="support-message">
 	<p>{l s='Settings support message' mod='envoimoinscher'}</p>
 </div>
-<form method="POST" action="{$EMC_link|escape:'htmlall'}&EMC_tabs=settings">
+<form method="POST" action="{$EMC_link|escape:'htmlall':'UTF-8'}&EMC_tabs=settings">
 	<fieldset id="EMC_optional">
 		<legend>
 			{l s='Track number' mod='envoimoinscher'}
@@ -154,12 +154,12 @@
             {assign var=selected_statuses value=";"|explode:$EMC_config.EMC_FILTER_STATUS}
           {/if}
           {foreach from=$states key=k item=v}
-          <option value="{$v['id_order_state']|escape:'htmlall'}" 
+          <option value="{$v['id_order_state']|escape:'htmlall':'UTF-8'}" 
           {if (isset($selected_statuses) && $v['id_order_state']|in_array:$selected_statuses)}selected
           {elseif !isset($selected_statuses)}
             selected
           {/if}
-          >{$v['name']|escape:'htmlall'}</option>
+          >{$v['name']|escape:'htmlall':'UTF-8'}</option>
         {/foreach}
         {/if}    
 			</select>

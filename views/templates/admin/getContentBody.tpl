@@ -1,5 +1,5 @@
- {**
- * 2007-2014 PrestaShop
+{**
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -26,7 +26,7 @@
 
 <div class="bootstrap">	
 	{if $local_bootstrap}
-		<link href="{$emcBaseDir|unescape:'html'}/css/back-office-15.css" rel="stylesheet" type="text/css" media="all" />
+		<link href="{$emcBaseDir}/views/css/back-office-15.css" rel="stylesheet" type="text/css" media="all" />
 	{/if}
 	 
 	 
@@ -35,15 +35,25 @@
 			<div class="alert alert-danger error">
 			{l s='missing fields info list' mod='envoimoinscher'}
 			{foreach from=$missedValues key=m item=missed}
-				<br />- {$missed|escape:'htmlall'}
+				<br />- {$missed|escape:'htmlall':'UTF-8'}
 			{/foreach}
 		</div>
 		</div>
 	{/if}
-	{if $EMC_config.EMC_USER != "" && $EMC_config.EMC_USER >= 2 && ($EMC_config.EMC_KEY == '' || $EMC_config.EMC_LOGIN == '' || $EMC_config.EMC_PASS == '')}
-		<div class="bootstrap">
-			<div class="alert alert-danger error">{l s='You are using the wrong credentials. The module will not work.' mod='envoimoinscher'}</div>
-		</div>
+	{if $EMC_config.EMC_USER != "" && $EMC_config.EMC_USER >= 2 && ($EMC_config.EMC_KEY_TEST == '' || $EMC_config.EMC_KEY_PROD == '' ||$EMC_config.EMC_LOGIN == '' || $EMC_config.EMC_PASS == '')}
+		{if $EMC_config.EMC_KEY_TEST == ''  && $EMC_config.EMC_ENV == 'PROD' && isset($EMC_config.EMC_KEY_PROD_DONOTCHECK) && $EMC_config.EMC_KEY_PROD_DONOTCHECK == 1 }
+			<div class="bootstrap">
+				<div class="alert alert-warning warn warning">{l s='Following the module update, please enter your API key test account.' mod='envoimoinscher'}</div>
+			</div>
+		{elseif $EMC_config.EMC_KEY_PROD == '' && $EMC_config.EMC_ENV == 'TEST' && isset($EMC_config.EMC_KEY_TEST_DONOTCHECK) && $EMC_config.EMC_KEY_TEST_DONOTCHECK == 1 }
+			<div class="bootstrap">
+				<div class="alert alert-warning warn warning">{l s='Following the module update, please enter your API key production account.' mod='envoimoinscher'}</div>
+			</div>		
+		{else}
+			<div class="bootstrap">
+				<div class="alert alert-danger error">{l s='You are using the wrong credentials. The module will not work.' mod='envoimoinscher'}</div>
+			</div>		
+		{/if}
 	{/if}
 	{if $multiShipping == 1}
 		<div class="bootstrap">
@@ -64,11 +74,11 @@
 	{foreach from=$API_errors item=error}
 		{if $error.id === false}
 		<div class="bootstrap">
-			<div class="alert alert-danger error">{l s='API error : unknow error' mod='envoimoinscher'}{$error.message|escape:'htmlall'}</div>
+			<div class="alert alert-danger error">{l s='API error : unknow error' mod='envoimoinscher'}{$error.message|escape:'htmlall':'UTF-8'}</div>
 		</div>
 		{elseif $error.id === "API error : Invalid account payment method"}
 		<div class="bootstrap">
-			<div class="alert alert-danger error">{l s="the module in production mode requires the activation of deferred payment. to do so, go to preference tab into your" mod='envoimoinscher'} <a href="{$website_url|unescape:'html'}" target="_blank" alt="Website">{l s="account" mod='envoimoinscher'}</a> {l s="and activate the deferred payment." mod='envoimoinscher'}</div>
+			<div class="alert alert-danger error">{l s='the module in production mode requires the activation of deferred payment. to do so, go to preference tab into your' mod='envoimoinscher'} <a href="{$website_url}" target="_blank" alt="Website">{l s='account' mod='envoimoinscher'}</a> {l s='and activate the deferred payment.' mod='envoimoinscher'}</div>
 		</div>
 		{else}
 		<div class="bootstrap">
@@ -86,10 +96,10 @@
 			<div class="alert alert-warning warn">{l s='Your last offers update is one month old, think about updating them in the "Help" section' mod='envoimoinscher'}</div>
 		</div>
 	{/if}
-		<link href="{$emcBaseDir|unescape:'html'}/css/back-office.css" rel="stylesheet" type="text/css" media="all" />
+		<link href="{$emcBaseDir}/views/css/back-office.css" rel="stylesheet" type="text/css" media="all" />
 	{if $local_fancybox}
-		<link href="{$emcBaseDir|unescape:'html'}/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
-		<script type="text/javascript" src="{$emcBaseDir|unescape:'html'}/js/jquery.boxfancy.js"></script>
+		<link href="{$emcBaseDir}/views/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
+		<script type="text/javascript" src="{$emcBaseDir}/views/js/jquery.boxfancy.js"></script>
 	{/if}
 
 	<div id="warn-online-message" class="alert alert-warning warn warning {if $EMC_config.EMC_SRV_MODE === 'online'}hidden{/if}" >
@@ -97,14 +107,14 @@
 	</div>
 
 	{*<div id="EMC_Intro">
-		{$introduction|unescape:'html'}
+		{$introduction}
 	</div>*}
 
 	<div class="panel EMC_box">
 		
 		<div id="EMC_Infos">
 			<div id="emc-infos">
-			<h2>{l s='EMC configuration section' mod='envoimoinscher'} <span class="version">{l s='EMC module version' mod='envoimoinscher'} {$module_version|escape:'htmlall'}</span></h3>
+			<h2>{l s='EMC configuration section' mod='envoimoinscher'} <span class="version">{l s='EMC module version' mod='envoimoinscher'} {$module_version|escape:'htmlall':'UTF-8'}</span></h3>
 			<p>{l s='Please start your module configuration by completing each mandatory fields' mod='envoimoinscher'}</p>
 			<p>{l s='NB : Do not forget to save all your modifications' mod='envoimoinscher'}</p>
 			<p>{l s='A documentation is available here:' mod='envoimoinscher'}<a href="//ecommerce.envoimoinscher.com/api/download/doc_prestashop_configurer.pdf" target="_blank" class="action_module">{l s='documentation' mod='envoimoinscher'}</a></p>	
@@ -166,7 +176,7 @@
 				<div class="over-config">
 					<label>{l s='Cache managment:' mod='envoimoinscher'}</label>
 					<div class="margin-form">
-						<a id="cleanCache" class="btn btn-default" href="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall'}&option=cleanCache">
+						<a id="cleanCache" class="btn btn-default" href="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall':'UTF-8'}&option=cleanCache">
 							{l s='Clear the cache:' mod='envoimoinscher'}
 						</a>
 					</div>
@@ -212,7 +222,7 @@
 						</div>
 					</li>
 					<li class="simulator">
-						<a id="simulator-link" href="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall'}&option=tests" target="_blank" data-tab="simulator">
+						<a id="simulator-link" href="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall':'UTF-8'}&option=tests" target="_blank" data-tab="simulator">
 						</a>
 						<div>
 							{l s='Simulator' mod='envoimoinscher'}
@@ -231,7 +241,7 @@
 
 	</div>
 
-	<script src="{$modulePath|escape:'htmlall'}js/jquery.tooltipster.min.js"></script>
+	<script src="{$modulePath|escape:'htmlall':'UTF-8'}views/js/jquery.tooltipster.min.js"></script>
 	<script type="text/javascript">
 		{literal}
 		var EMC_modify = false;
@@ -551,44 +561,50 @@
 		<fieldset id="EMC_Content" class="hidden">
 			<ul class="EMC_steps">
 				<li>
-					<a{if $EMC_config.EMC_USER >= -1 || empty($EMC_config.EMC_USER) || $EMC_config.EMC_USER == ""} class="selected{if $EMC_config.EMC_USER > 0} old{/if}"{/if}>
+					<a{if $EMC_config.EMC_USER >= -2 || empty($EMC_config.EMC_USER) || $EMC_config.EMC_USER == ""} class="selected{if $EMC_config.EMC_USER > -2} old{/if}"{/if}>
 						<label for="" class="stepNumber">1</label>
 						<span class="stepDesc">{l s='Introduction' mod='envoimoinscher'}</span>
 					</a>
 				</li>
 				<li>
-					<a{if $EMC_config.EMC_USER >= 0} class="selected{if $EMC_config.EMC_USER > 1} old{/if}"{/if}>
+					<a{if $EMC_config.EMC_USER >= -1} class="selected{if $EMC_config.EMC_USER > -1} old{/if}"{/if}>
 						<label for="" class="stepNumber">2</label>
+						<span class="stepDesc">{l s='EnvoiMoinsCher account' mod='envoimoinscher'}</span>
+					</a>
+				</li>
+				<li>
+					<a{if $EMC_config.EMC_USER >= 0} class="selected{if $EMC_config.EMC_USER > 0} old{/if}"{/if}>
+						<label for="" class="stepNumber">3</label>
 						<span class="stepDesc">{l s='Merchant account' mod='envoimoinscher'}</span>
 					</a>
 				</li>
 				<li>
-					<a{if $EMC_config.EMC_USER >= 1} class="selected{if $EMC_config.EMC_USER > 2} old{/if}"{/if}>
-						<label for="" class="stepNumber">3</label>
+					<a{if $EMC_config.EMC_USER >= 1} class="selected{if $EMC_config.EMC_USER > 1} old{/if}"{/if}>
+						<label for="" class="stepNumber">4</label>
 						<span class="stepDesc">{l s='Sends description' mod='envoimoinscher'}</span>
 					</a>
 				</li>
 				<li>
 					<a{if $EMC_config.EMC_USER >= 2} class="selected"{/if}>
-						<label for="" class="stepNumber">4</label>
+						<label for="" class="stepNumber">5</label>
 						<span class="stepDesc">{l s='Carriers choice' mod='envoimoinscher'}</span>
 					</a>
 				</li>
 			</ul>
 			<div>
 				<fieldset>
-					{$content|unescape:'html'}
+					{$content}
 				</fieldset>
 			</div>
 			<div class="actionBar">
-				{if $EMC_config.EMC_USER == -1}
-					<a class="btnValid selected">{l s='I already have an account' mod='envoimoinscher'}</a>
+				{if $EMC_config.EMC_USER == -2}
+					<!--<a class="btnValid selected">{l s='I already have an account' mod='envoimoinscher'}</a>-->
 				{else}
-					<a class="btnPrev{if $EMC_config.EMC_USER >= 0} selected{/if}">{l s='Previous' mod='envoimoinscher'}</a>
-					<a class="btnValid {if $EMC_config.EMC_USER > -1 && $EMC_config.EMC_USER < 2} selected{/if}">{l s='Next' mod='envoimoinscher'}</a>
+					<a class="btnPrev{if $EMC_config.EMC_USER >= -1} selected{/if}">{l s='Previous' mod='envoimoinscher'}</a>
+					<a class="btnValid {if $EMC_config.EMC_USER >= 0 && $EMC_config.EMC_USER < 2} selected{/if}">{l s='Next' mod='envoimoinscher'}</a>
 					<a class="btnClose{if $EMC_config.EMC_USER == 2} selected{/if}">{l s='End' mod='envoimoinscher'}</a>
 					<form method="POST" class="hidden" id="btnPrev">
-						<input type="hidden" name="previous" value="{$EMC_config.EMC_USER|escape:'htmlall'}" />
+						<input type="hidden" name="previous" value="{$EMC_config.EMC_USER|escape:'htmlall':'UTF-8'}" />
 						<input type="submit">
 					</form>
 				{/if}

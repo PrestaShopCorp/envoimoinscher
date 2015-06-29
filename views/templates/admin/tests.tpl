@@ -1,5 +1,5 @@
 {**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,18 +18,18 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
 
 <h2>{l s='EnvoiMoinsCher : shipping cost estimation' mod='envoimoinscher'}</h2> 
-<link type="text/css" rel="stylesheet" href="{$baseDir|escape:'htmlall'}modules/envoimoinscher/css/backend_styles.css" />
+<link type="text/css" rel="stylesheet" href="{$baseDir|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/css/backend_styles.css" />
 <p>{l s='The simulation page allow you to make a quotation according to the characteristics of your parcel' mod='envoimoinscher'}</p>
 <p>{l s='The prices and offers are displayed as seen by the client.' mod='envoimoinscher'}</p>
 <br />
 <div class="clear"></div>
-<form action="index.php?controller=AdminEnvoiMoinsCher&option=tests&token={$token|escape:'htmlall'}#offers" method="post" class="form" id="configForm">
+<form action="index.php?controller=AdminEnvoiMoinsCher&option=tests&token={$token|escape:'htmlall':'UTF-8'}#offers" method="post" class="form" id="configForm">
   <fieldset id="confGen" class="configForm">
     <table class="testForm">
       <tbody>
@@ -43,35 +43,35 @@
         </tr>
         <tr>
           <td><label for="fromPostalCode">{l s='Departure zipcode : ' mod='envoimoinscher'}</label></td>
-          <td><input type="text" name="fromPostalCode" id="fromPostalCode" value="{if isset($postData.fromPostalCode) && $postData.fromPostalCode != ""}{$postData.fromPostalCode|escape:'htmlall'}{else}{$configEmc.EMC_POSTALCODE}{/if}" /></td>
+          <td><input type="text" name="fromPostalCode" id="fromPostalCode" value="{if isset($postData.fromPostalCode) && $postData.fromPostalCode != ""}{$postData.fromPostalCode|escape:'htmlall':'UTF-8'}{else}{$configEmc.EMC_POSTALCODE}{/if}" /></td>
         </tr>
         <tr>
           <td><label for="fromCity">{l s='Departure city : ' mod='envoimoinscher'}</label></td>
-          <td><input type="text" name="fromCity" id="fromCity" value="{if isset($postData.fromCity) && $postData.fromCity != ''}{$postData.fromCity|escape:'htmlall'}{else}{$configEmc.EMC_CITY}{/if}" /></td>
+          <td><input type="text" name="fromCity" id="fromCity" value="{if isset($postData.fromCity) && $postData.fromCity != ''}{$postData.fromCity|escape:'htmlall':'UTF-8'}{else}{$configEmc.EMC_CITY}{/if}" /></td>
         </tr>
         <tr>
           <td><label for="fromAddr">{l s='Departure address : ' mod='envoimoinscher'}</label></td>
-          <td><input type="text" name="fromAddr" id="fromAddr" value="{if isset($postData.fromAddr) && $postData.fromAddr != ''}{$postData.fromAddr|escape:'htmlall'}{else}{$configEmc.EMC_ADDRESS}{/if}" /></td>
+          <td><input type="text" name="fromAddr" id="fromAddr" value="{if isset($postData.fromAddr) && $postData.fromAddr != ''}{$postData.fromAddr|escape:'htmlall':'UTF-8'}{else}{$configEmc.EMC_ADDRESS}{/if}" /></td>
+        </tr>
+        <tr>
+          <td><label for="toPostalCode">{l s='Destination\'s zipcode : ' mod='envoimoinscher'}</label></td>
+          <td><input type="text" name="toPostalCode" id="toPostalCode" value="{if isset($postData.toPostalCode)}{$postData.toPostalCode|escape:'htmlall':'UTF-8'}{/if}" /></td>
+        </tr>
+        <tr>
+          <td><label for="toCity">{l s='Destination\'s city : ' mod='envoimoinscher'}</label></td>
+          <td><input type="text" name="toCity" id="toCity" value="{if isset($postData.toCity)}{$postData.toCity|escape:'htmlall':'UTF-8'}{/if}" /></td>
+        </tr>
+        <tr>
+          <td><label for="toAddr">{l s='Destination\'s address : ' mod='envoimoinscher'}</label></td>
+          <td><input type="text" name="toAddr" id="toAddr" value="{if isset($postData.toAddr)}{$postData.toAddr|escape:'htmlall':'UTF-8'}{/if}" /></td>
         </tr>
         <tr>
           <td><label for="toCountry">{l s='Destination\'s country : ' mod='envoimoinscher'}</label></td>
           <td><select name="toCountry" id="toCountry">
   {foreach from=$countries key=c item=country}
-            <option value="{$country.iso_code}" {if (isset($postData.toCountry) && $postData.toCountry == $country.iso_code) || (!isset($postData.toCountry) && $country.iso_code == 'FR')}selected="selected"{/if}>{$country.name}</option>    
+            <option value="{$country.iso_code}" {if (isset($postData.toCountry) && $postData.toCountry == $country.iso_code) || (!isset($postData.toCountry) && $country.iso_code == 'FR')}selected="selected"{/if}>{$country.name}</option>
   {/foreach}
           </select></td>
-        </tr>
-        <tr>
-          <td><label for="toPostalCode">{l s='Destination\'s zipcode : ' mod='envoimoinscher'}</label></td>
-          <td><input type="text" name="toPostalCode" id="toPostalCode" value="{if isset($postData.toPostalCode)}{$postData.toPostalCode|escape:'htmlall'}{/if}" /></td>
-        </tr>
-        <tr>
-          <td><label for="toCity">{l s='Destination\'s city : ' mod='envoimoinscher'}</label></td>
-          <td><input type="text" name="toCity" id="toCity" value="{if isset($postData.toCity)}{$postData.toCity|escape:'htmlall'}{/if}" /></td>
-        </tr>
-        <tr>
-          <td><label for="toAddr">{l s='Destination\'s address : ' mod='envoimoinscher'}</label></td>
-          <td><input type="text" name="toAddr" id="toAddr" value="{if isset($postData.toAddr)}{$postData.toAddr|escape:'htmlall'}{/if}" /></td>
         </tr>
       </tbody>
     </table>
@@ -81,7 +81,7 @@
   </p>
   <div id="offers">
   {if $isError == 1}
-    <div class="bootstrap"><div class="alert alert-danger error">{$errorMsg|escape:'htmlall'}</div></div>
+    <div class="bootstrap"><div class="alert alert-danger error">{$errorMsg|escape:'htmlall':'UTF-8'}</div></div>
   {/if} 
   {if $isError == 0 && $offers}
     <table class="table"> 
@@ -95,11 +95,11 @@
       </tr> 
     {foreach from=$offers key=o item=offer}
       <tr {if $o%2 == 0}class="alt_row"{/if}>
-        <td>{$offer.service.label|escape:'htmlall'}</td>
-        <td>{$offer.operator.label|escape:'htmlall'}</td>
-        <td>{$offer.priceHT|escape:'htmlall'} €</td>
-        <td>{$offer.priceTTC_client|escape:'htmlall'} €</td>
-        <td>{$offer.characteristics|unescape:'html'}</td>
+        <td>{$offer.service.label|escape:'htmlall':'UTF-8'}</td>
+        <td>{$offer.operator.label|escape:'htmlall':'UTF-8'}</td>
+        <td>{$offer.priceHT|escape:'htmlall':'UTF-8'} €</td>
+        <td>{$offer.priceTTC_client|escape:'htmlall':'UTF-8'} €</td>
+        <td>{$offer.characteristics}</td>
       </tr>
     {/foreach}
     </tbody>

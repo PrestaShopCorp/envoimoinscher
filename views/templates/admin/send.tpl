@@ -1,5 +1,5 @@
 {**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -35,12 +35,12 @@
 	var envUrl = "{/literal}{$envUrl}{literal}";
 	{/literal}
 	</script>
-	<script type="text/javascript" src="{$baseDirCss|escape:'htmlall'}modules/envoimoinscher/js/send.js"></script>
-	<link type="text/css" rel="stylesheet" href="{$baseDirCss|escape:'htmlall'}modules/envoimoinscher/css/backend_styles.css" />
-	<link type="text/css" rel="stylesheet" href="{$baseDirCss|escape:'htmlall'}modules/envoimoinscher/css/backend_styles.css" />
-	{if $local_fancybox}
-		<link href="{$emcBaseDir|unescape:'html'}/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
-		<script type="text/javascript" src="{$emcBaseDir|unescape:'html'}/js/jquery.boxfancy.js"></script>
+	<script type="text/javascript" src="{$baseDirCss|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/js/send.js"></script>
+	<link type="text/css" rel="stylesheet" href="{$baseDirCss|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/css/backend_styles.css" />
+	<link type="text/css" rel="stylesheet" href="{$baseDirCss|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/css/backend_styles.css" />
+	{if !$local_fancybox}
+		<link href="{$emcBaseDir}/views/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
+		<script type="text/javascript" src="{$emcBaseDir}/views/js/jquery.boxfancy.js"></script>
 	{/if}
 	
 	<script type="text/javascript">
@@ -62,7 +62,7 @@
 	{else}
 	{if isset($showErrorMessage) && $showErrorMessage == 1 && $errorType == "order"}
 	<div class="alert alert-danger error">{l s='order shipment failed :' mod='envoimoinscher'}
-		{$errorMessage|escape:'htmlall'}
+		{$errorMessage|escape:'htmlall':'UTF-8'}
 	</div>
 	{/if}
 
@@ -71,7 +71,7 @@
 		{if $orderTodo > 1}<p><a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$nextOrderId}&option=initOrder&token={$token}&mode=skip&previous={$orderId}" class="action_module">{l s='next order' mod='envoimoinscher'}</a></p>{/if}
 	</div>
 	{/if}
-	<h2>{l s='order number :' mod='envoimoinscher'} {$orderId|escape:'htmlall'}</h2>
+	<h2>{l s='order number :' mod='envoimoinscher'} {$orderId|escape:'htmlall':'UTF-8'}</h2>
 	<div class="box-left">
 		{if $isFound}
 		<p><b>{l s='offer information' mod='envoimoinscher'}</b></p>
@@ -88,14 +88,14 @@
 				{l s='order offer not avaliable : pick another one or try later' mod='envoimoinscher'}
 			{/if}
 		</div>
-		<p><b>{l s='client selected offer :' mod='envoimoinscher'} </b> {$orderInfo.name|escape:'htmlall'}</p>
+		<p><b>{l s='client selected offer :' mod='envoimoinscher'} </b> {$orderInfo.name|escape:'htmlall':'UTF-8'}</p>
 		<p class="mt20"><b>{l s='EMC offers :' mod='envoimoinscher'}</b></p>
 		{if isset($showErrorMessage) && $showErrorMessage == 1 && $errorType == "quote"}
 		<div class="alert alert-danger ">
 			{l s='no EMC offer found : error :' mod='envoimoinscher'}
-			{$errorMessage|escape:'htmlall'}
+			{$errorMessage|escape:'htmlall':'UTF-8'}
 			{if $orderTodo <= 1}
-			<p><a href="index.php?controller=AdminEnvoiMoinsCher&option=cancelOrder&token={$token|escape:'htmlall'}" class="action_module">Annuler l'envoi</a></p>
+			<p><a href="index.php?controller=AdminEnvoiMoinsCher&option=cancelOrder&token={$token|escape:'htmlall':'UTF-8'}" class="action_module">Annuler l'envoi</a></p>
 			{/if}
 		</div>
 		{/if}
@@ -116,11 +116,11 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td>{$deliveryInfo.prenom|escape:'htmlall'} {$deliveryInfo.nom|escape:'htmlall'}</td>
-					<td>{$deliveryInfo.adresse|escape:'htmlall'}</td>
-					<td>{$deliveryInfo.code_postal|escape:'htmlall'} {$deliveryInfo.ville|escape:'htmlall'}</td>
-					<td>{$deliveryInfo.email|escape:'htmlall'}</td>
-					<td>{$deliveryInfo.tel|escape:'htmlall'}</td>
+					<td>{$deliveryInfo.prenom|escape:'htmlall':'UTF-8'} {$deliveryInfo.nom|escape:'htmlall':'UTF-8'}</td>
+					<td>{$deliveryInfo.adresse|escape:'htmlall':'UTF-8'}</td>
+					<td>{$deliveryInfo.code_postal|escape:'htmlall':'UTF-8'} {$deliveryInfo.ville|escape:'htmlall':'UTF-8'}</td>
+					<td>{$deliveryInfo.email|escape:'htmlall':'UTF-8'}</td>
+					<td>{$deliveryInfo.tel|escape:'htmlall':'UTF-8'}</td>
 				</tr>
 			</tbody>
 		</table>
@@ -145,14 +145,14 @@
 				<tr id="multiParcelRow">
 					<th><label for="multiParcel">{l s='Multiparcel' mod='envoimoinscher'}</label></th>
 					<td class="paddingTableTd">
-						<input type="text" name="multiParcel" id="multiParcel" value="{$parcelsLength|escape:'htmlall'}" />
-						<div id="errorMultiParcel" class="alert alert-danger error hidden mt10"><img src="{$adminImg|escape:'htmlall'}/forbbiden.gif" alt="nok" />{l s='Multiparcel error explications' mod='envoimoinscher'}
+						<input type="text" name="multiParcel" id="multiParcel" value="{$parcelsLength|escape:'htmlall':'UTF-8'}" />
+						<div id="errorMultiParcel" class="alert alert-danger error hidden mt10"><img src="{$adminImg|escape:'htmlall':'UTF-8'}/forbbiden.gif" alt="nok" />{l s='Multiparcel error explications' mod='envoimoinscher'}
 						</div>
 					</td>
 				</tr>
 				{foreach from=$parcels key=p item=parcel}
-				<tr class="appendRow"><th><label for="parcel{$p|escape:'htmlall'}">{l s='Package' mod='envoimoinscher'} #{$p|escape:'htmlall'}</label></th>
-					<td class="paddingTableTd"><input type="text" name="parcel[]" id="parcel{$p|escape:'htmlall'}" value="{$parcel.poids|escape:'htmlall'}" onblur="javascript: modifWeight();"  /> {l s='kg' mod='envoimoinscher'}</td>
+				<tr class="appendRow"><th><label for="parcel{$p|escape:'htmlall':'UTF-8'}">{l s='Package' mod='envoimoinscher'} #{$p|escape:'htmlall':'UTF-8'}</label></th>
+					<td class="paddingTableTd"><input type="text" name="parcel[]" id="parcel{$p|escape:'htmlall':'UTF-8'}" value="{$parcel.poids|escape:'htmlall':'UTF-8'}" onblur="javascript: modifWeight();"  /> {l s='kg' mod='envoimoinscher'}</td>
 				</tr>
 				{/foreach}
 				{/if}
@@ -161,7 +161,7 @@
 						<label for="weight">{l s='Total weight of the shipment' mod='envoimoinscher'}</label>
 					</th>
 					<td class="paddingTableTd">
-						<input type="text" name="weight" id="weight" value="{$weight|escape:'htmlall'}" class="input-text" /> {l s='kg' mod='envoimoinscher'}
+						<input type="text" name="weight" id="weight" value="{$weight|escape:'htmlall':'UTF-8'}" class="input-text" /> {l s='kg' mod='envoimoinscher'}
 					</td>
 				</tr>
 				<tr>
@@ -191,68 +191,68 @@
 					{foreach from=$offer.output key=m item=mandatory}
 						{if count($mandatory) > 0 && $mandatory.type != "hidden"}
 						<tr>
-							<th>{$mandatory.label|unescape:'html'}</th>
-							<td class="paddingTableTd">{$mandatory.field|unescape:'html'} {$mandatory.helper|unescape:'html'}</td>
+							<th>{$mandatory.label}</th>
+							<td class="paddingTableTd">{$mandatory.field} {$mandatory.helper}</td>
 						</tr>
 						{else} {* Only hidden fields, these values shouldn't be modified *}
-							{$mandatory.field|unescape:'html'}
+							{$mandatory.field}
 						{/if}
 					{/foreach}
 				<tr><th>
 					<label for="collecte">{l s='Pickup date' mod='envoimoinscher'}</label></th>
-					<td class="paddingTableTd"><input type="text" name="collecte" id="collecte" value="{$offer.collection.date|escape:'htmlall'}" class="input-text" />
+					<td class="paddingTableTd"><input type="text" name="collecte" id="collecte" value="{$offer.collection.date|escape:'htmlall':'UTF-8'}" class="input-text" />
 						<p class="note">{l s='format : AAAA-MM-JJ, e.g. 2000-12-26 for 2000 december 26th' mod='envoimoinscher'}</p>
 					</td></tr>
 					{/if}
 					<tr class="changeDest {if (!isset($deliveryInfo.phoneAlert) || !$deliveryInfo.phoneAlert) && !$showDstBlock}hidden{/if}"><th>
 						<label for="dest_tel">{l s='Recipient phone number' mod='envoimoinscher'}</label></th>
-						<td class="paddingTableTd"><input type="text" name="dest_tel" id="dest_tel" value="{$deliveryInfo.tel|escape:'htmlall'}" class="input-text" />
+						<td class="paddingTableTd"><input type="text" name="dest_tel" id="dest_tel" value="{$deliveryInfo.tel|escape:'htmlall':'UTF-8'}" class="input-text" />
 							{if isset($deliveryInfo.phoneAlert)}{$deliveryInfo.phoneAlert}<p class="note">{l s='Your recipient has not informed his phone number. Your phone number has been taken.' mod='envoimoinscher'}</p>{/if}
 						</td>
 					</tr>
 					<tr class="changeDest {if !$showDstBlock}hidden{/if}"><th>
 						<label for="dest_fname">{l s='Recipient first name' mod='envoimoinscher'}</label></th>
-						<td class="paddingTableTd"><input type="text" name="dest_fname" id="dest_fname" value="{$deliveryInfo.prenom|escape:'htmlall'}" class="input-text" />
+						<td class="paddingTableTd"><input type="text" name="dest_fname" id="dest_fname" value="{$deliveryInfo.prenom|escape:'htmlall':'UTF-8'}" class="input-text" />
 						</td>
 					</tr>
 					<tr class="changeDest {if !$showDstBlock}hidden{/if}"><th>
 						<label for="dest_lname">{l s='Recipient last name' mod='envoimoinscher'}</label></th>
-						<td class="paddingTableTd"><input type="text" name="dest_lname" id="dest_lname" value="{$deliveryInfo.nom|escape:'htmlall'}" class="input-text" />
+						<td class="paddingTableTd"><input type="text" name="dest_lname" id="dest_lname" value="{$deliveryInfo.nom|escape:'htmlall':'UTF-8'}" class="input-text" />
 						</td>
 					</tr>
 					<tr class="changeDest {if !$showDstBlock}hidden{/if}"><th>
 						<label for="dest_add">{l s='Recipient address' mod='envoimoinscher'}</label></th>
-						<td class="paddingTableTd"><input type="text" name="dest_add" id="dest_add" value="{$deliveryInfo.adresse|escape:'htmlall'}" class="input-text" />
+						<td class="paddingTableTd"><input type="text" name="dest_add" id="dest_add" value="{$deliveryInfo.adresse|escape:'htmlall':'UTF-8'}" class="input-text" />
 						</td>
 					</tr>
 					<tr class="changeDest {if !$showDstBlock}hidden{/if}"><th>
 						<label for="dest_code">{l s='Recipient zip code' mod='envoimoinscher'}</label></th>
-						<td class="paddingTableTd"><input type="text" name="dest_code" id="dest_code" value="{$deliveryInfo.code_postal|escape:'htmlall'}" class="input-text" />
+						<td class="paddingTableTd"><input type="text" name="dest_code" id="dest_code" value="{$deliveryInfo.code_postal|escape:'htmlall':'UTF-8'}" class="input-text" />
 						</td>
 					</tr>
 					<tr class="changeDest {if !$showDstBlock}hidden{/if}"><th>
 						<label for="dest_city">{l s='Recipient city' mod='envoimoinscher'}</label></th>
-						<td class="paddingTableTd"><input type="text" name="dest_city" id="dest_city" value="{$deliveryInfo.ville|escape:'htmlall'}" class="input-text" />
+						<td class="paddingTableTd"><input type="text" name="dest_city" id="dest_city" value="{$deliveryInfo.ville|escape:'htmlall':'UTF-8'}" class="input-text" />
 						</td>
 					</tr>
 					<tr class="changeDest {if !$showDstBlock}hidden{/if}"><th>
 						<label for="dest_email">{l s='Recipient email' mod='envoimoinscher'}</label></th>
-						<td class="paddingTableTd"><input type="text" name="dest_email" id="dest_email" value="{$deliveryInfo.email|escape:'htmlall'}" class="input-text" />
+						<td class="paddingTableTd"><input type="text" name="dest_email" id="dest_email" value="{$deliveryInfo.email|escape:'htmlall':'UTF-8'}" class="input-text" />
 						</td>
 					</tr> 
 					<tr class="changeDest {if !$showDstBlock}hidden{/if}"><th>
 						<label for="dest_company">{l s='Company name' mod='envoimoinscher'}</label></th>
-						<td class="paddingTableTd"><input type="text" name="dest_company" id="dest_company" value="{$deliveryInfo.societe|escape:'htmlall'}" class="input-text" />
+						<td class="paddingTableTd"><input type="text" name="dest_company" id="dest_company" value="{$deliveryInfo.societe|escape:'htmlall':'UTF-8'}" class="input-text" />
 						</td>
 					</tr> 
 					{if isset($proforma) && $proforma}
 					<tr><th colspan="2"><br /><b>{l s='Information for the proforma invoice generated by EnvoiMoinsCher.com' mod='envoimoinscher'}</b></th></tr>
 					{foreach from=$proformaData key=p item=proforma}  
-					<tr><th><label for="desc_fr_{$p|escape:'htmlall'}">{l s='Item description' mod='envoimoinscher'} #{$p|escape:'htmlall'}</label></th>
+					<tr><th><label for="desc_fr_{$p|escape:'htmlall':'UTF-8'}">{l s='Item description' mod='envoimoinscher'} #{$p|escape:'htmlall':'UTF-8'}</label></th>
 						<td class="paddingTableTd">
-							<p><input type="text" name="desc_fr_{$p|escape:'htmlall'}" id="desc_fr_{$p|escape:'htmlall'}" value="{$proforma.description_fr|escape:'htmlall'}" class="input-text" /> <small>{l s='French' mod='envoimoinscher'}</small></p>
-							<p><input type="text" name="desc_en_{$p|escape:'htmlall'}" id="desc_en_{$p|escape:'htmlall'}" value="{$proforma.description_en|escape:'htmlall'}" class="input-text" /> <small>{l s='English' mod='envoimoinscher'}</small>
-								<a href="#" onclick="traduireDescription('{$proforma.description_fr|escape:'htmlall'}');return false;">{l s='Translate' mod='envoimoinscher'}</a></p> 
+							<p><input type="text" name="desc_fr_{$p|escape:'htmlall':'UTF-8'}" id="desc_fr_{$p|escape:'htmlall':'UTF-8'}" value="{$proforma.description_fr|escape:'htmlall':'UTF-8'}" class="input-text" /> <small>{l s='French' mod='envoimoinscher'}</small></p>
+							<p><input type="text" name="desc_en_{$p|escape:'htmlall':'UTF-8'}" id="desc_en_{$p|escape:'htmlall':'UTF-8'}" value="{$proforma.description_en|escape:'htmlall':'UTF-8'}" class="input-text" /> <small>{l s='English' mod='envoimoinscher'}</small>
+								<a href="#" onclick="traduireDescription('{$proforma.description_fr|escape:'htmlall':'UTF-8'}');return false;">{l s='Translate' mod='envoimoinscher'}</a></p> 
 							</td>
 						</tr>
 						{/foreach}
@@ -274,22 +274,22 @@
 						{foreach from=$offer.insuranceHtml key=m item=mandatory}
 						{if count($mandatory) > 0 && $mandatory.type != "hidden"}
 						<tr class="assuTd {if !$offer.insurance}hidden{/if}"><th>{$mandatory.label}
-						</th><td class="paddingTableTd">{$mandatory.field|unescape:'html'}
-						{$mandatory.helper|unescape:'html'}
+						</th><td class="paddingTableTd">{$mandatory.field}
+						{$mandatory.helper}
 					</td>
 				</tr>
 				{else} {* Only hidden fields, these values shouldn't be modified *}
-				{$mandatory.field|escape:'htmlall'}
+				{$mandatory.field|escape:'htmlall':'UTF-8'}
 				{/if}
 				{/foreach}
 				{/if}
 				<tr>
 					<td class="text_align_center" colspan="2">
 						<input type="hidden" name="opeCode" id="opeCode" value="{if isset($offer.operator.code)}{$offer.operator.code}{/if}" />
-						<input type="hidden" name="dest_country" id="dest_country" value="{$deliveryInfo.pays|escape:'htmlall'}" />
-						<input type="hidden" name="exp_pays" id="exp_pays" value="{$shipperInfo.country|escape:'htmlall'}" />
-						<input type="hidden" name="exp_cp" id="exp_cp" value="{$shipperInfo.postalcode|escape:'htmlall'}" />
-						<input type="hidden" name="exp_city" id="exp_city" value="{$shipperInfo.city|escape:'htmlall'}" />
+						<input type="hidden" name="dest_country" id="dest_country" value="{$deliveryInfo.pays|escape:'htmlall':'UTF-8'}" />
+						<input type="hidden" name="exp_pays" id="exp_pays" value="{$shipperInfo.country|escape:'htmlall':'UTF-8'}" />
+						<input type="hidden" name="exp_cp" id="exp_cp" value="{$shipperInfo.postalcode|escape:'htmlall':'UTF-8'}" />
+						<input type="hidden" name="exp_city" id="exp_city" value="{$shipperInfo.city|escape:'htmlall':'UTF-8'}" />
 						<input type="submit" name="send" id="submitForm" value="{l s='Send' mod='envoimoinscher'}" class="button" />
 					</td>
 				</tr>

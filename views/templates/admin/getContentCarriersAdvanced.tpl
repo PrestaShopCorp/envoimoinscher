@@ -1,5 +1,5 @@
 {**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -26,7 +26,7 @@
 <div class="support-message">
 	<p>{l s='Carrier advanced support message' mod='envoimoinscher'}</p>
 </div>
-<form method="POST" action="{$EMC_link|escape:'htmlall'}&EMC_tabs=advanced_carriers">
+<form method="POST" action="{$EMC_link|escape:'htmlall':'UTF-8'}&EMC_tabs=advanced_carriers">
 	<ul id="menu_tabs">
 		<li class="selected" data-tab="0">{l s='Choice carriers' mod='envoimoinscher'}</li>
 		<li data-tab="1"><u>{l s='Weight settings' mod='envoimoinscher'}</u></li>

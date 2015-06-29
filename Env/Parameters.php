@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -15,13 +15,13 @@
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
- * versions in the future. If you wish to customize this library for your
- * needs please refer to http://www.envoimoinscher.com for more information.
+ * versions in the future. If you wish to customize PrestaShop for your
+ * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
- * International Registred Trademark & Property of EnvoiMoinsCher
+ * International Registred Trademark & Property of PrestaShop SA
  */
 
 class Env_Parameters extends Env_WebService {
@@ -51,7 +51,7 @@ class Env_Parameters extends Env_WebService {
    * @var array
    */
   public $parameters = array();
-	
+
   /** 
    * Public function which receives the parameters list. 
    * @access public
@@ -64,11 +64,11 @@ class Env_Parameters extends Env_WebService {
     $this->setGetParams(array());
     $this->setOptions(array('action' => '/api/v1/parameters'));
     if ($this->doSimpleRequest())
-	{
-		$this->loadParameters();
-		return true;
-	}
-	return false;
+		{
+			$this->loadParameters();
+			return true;
+		}
+		return false;
   }
 
   /** 
@@ -78,12 +78,12 @@ class Env_Parameters extends Env_WebService {
    */
   private function doSimpleRequest()
   {
-    $source = parent::doRequest();	
-	/* Uncomment if ou want to display the XML content */
-	//echo "<textarea>".print_r($source,true)."</textarea>";	
-	/* We make sure there is an XML answer and try to parse it */
+    $source = parent::doRequest();
+		/* Uncomment if ou want to display the XML content */
+		//echo "<textarea>".print_r($source,true)."</textarea>";	
+		/* We make sure there is an XML answer and try to parse it */
     if($source !== false)
-	{
+		{
       parent::parseResponse($source);
       return (count($this->resp_errors_list) == 0);
     }
@@ -128,7 +128,6 @@ class Env_Parameters extends Env_WebService {
 					}
 				}
 				$service_data['parameters'][$parameter_data['code']['fr']] = $parameter_data;
-				
 			}
 			$operator_data['services'][$service_data['code']] = $service_data;
 		}
