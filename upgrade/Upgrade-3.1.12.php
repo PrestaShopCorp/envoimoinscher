@@ -27,7 +27,7 @@
 function upgrade_module_3_1_12($module)
 {
 	//Set default configuration
-	Configuration::updateValue('EMC_INDI',1);
+	Configuration::updateValue('EMC_INDI', 1);
 	return true;
 }
 ?>

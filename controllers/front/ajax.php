@@ -40,10 +40,8 @@ class envoimoinscherajaxModuleFrontController extends ModuleFrontController
 	public function postProcess()
 	{
 		$emc = new Envoimoinscher();
-		$cookie = $emc->getContext()->cookie;
-		$result = null;
 		$option = Tools::getValue('option'); // Get option
-		
+
 		// getModuleLink
 		//$link = new Link();
 		//$admin_link_base = $link->getAdminLink($emc->name,'getModuleLink');
@@ -61,7 +59,7 @@ class envoimoinscherajaxModuleFrontController extends ModuleFrontController
 				break;
 		}
 	}
-	
+
 	public function display()
 	{
 		//ob_end_clean();

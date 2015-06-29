@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -19,7 +19,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  */
@@ -36,10 +36,10 @@
 global $_MODULE;
 $_MODULE = array();
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_7f74918fbc764950d04a34d798bb1f99'] = 'An error occured, this step will not work';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_75676b487fd7f5cc086af41f374a9283'] = 'Please check the form, fields are required.';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_d69eee7b6960970efb2aca31226adec7'] = 'First step done.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_18752dbdab0367c544562139fd653977'] = 'Please check the form, fields are required.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e7c16a4de3515f1fe476a186e5ed6c6b'] = 'Your account information is now complete.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5620b742887f80fcdbce389cc6a55201'] = 'Please switch to offline mode.';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3f34d38e5bdc09dee4283864ee2e71f8'] = 'Second step done.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b1032cdf8924156725417f3d840ad890'] = 'Your shipment details are now complete.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_92e279c5354a40ba6948c8eded549471'] = 'Please choose your shipping type.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6615fbe6f42c55eb3fb4bd26e6493916'] = 'Monday';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_ffa2ff01fdb4bc03dc94afa61d11fbf4'] = 'Tuesday';
@@ -73,7 +73,7 @@ $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_2bd9c0ed00116be1258e0cc6661
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3c78b35502b2693fefdfc51cba3a53a5'] = 'manual';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f8e561d352369dfa062944a0865ca410'] = 'real price';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3c2b37c8fe170986ed7a4c96476371e9'] = 'rate';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_725d35ff70b4b9f7ca86ed981c33f074'] = 'Shipping plugin : 15 negociated carriers';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b103c6c2b1c1aaf9d9614d792bbd954d'] = 'Offer your customers a choice of delivery methods to increase your sales';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_0f30b78a1d392e673e10440155b37c55'] = 'installation :  Impossible to install the plugin because Curl library is not activated. Please check with your webmaster to activate this PHP extension.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_a4cebd5a171b5e9b10faab37953d365c'] = 'Dispatch is actually unavailable.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_d4fdc07829e1a91274b32c0747239997'] = 'Delivery on : {DATE}';
@@ -127,7 +127,7 @@ $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5257af7e2d84e4efe68baf75d41
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_24909e87dc242b9dd539e10609b8b050'] = 'Order not found';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6cf9dfe268dd7ac0df3b63b8b4ebaecf'] = 'Unable to update order\'s status data';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_eaebb329adcb6a498c4f32787aa52606'] = 'Unable to update order\'s tracking data';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_0d89e67085c1ff1d8c6d0b3de5eca1a3'] = 'Uknown push command ';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_0d89e67085c1ff1d8c6d0b3de5eca1a3'] = 'Unknown push command ';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b55db12cbf41df23a6773237500437bd'] = 'EnvoiMoinsCher : shipping cancelled';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_78afe832a877977f8c2f7542933ab57f'] = 'Order\'s state : ';
 
@@ -166,6 +166,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_e6b08888f1c6006a8143e01b11a
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_0cbc6611f5540bd0809a388dc95a615b'] = 'Test';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_49f0e06c2db61075134d0c2f949b0504'] = 'Live';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_0b79795d3efc95b9976c7c5b933afce2'] = 'Presentation';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_706e3cc5f58b3fa27d28779a02b9ef3f'] = 'EnvoiMoinsCher account';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_bb3433544c3111cdf4a144cf61da6d6f'] = 'My Account';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_988d0382f3b85595b44f1fd91ec82738'] = 'Shipping description';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_f4f70727dc34561dfde1a3c529b6205c'] = 'Parameters';
@@ -181,7 +182,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_3b2aee63259f6dc9b9491488447
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_dd1f775e443ff3b9a89270713580a51b'] = 'Previous';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_10ac3d04253ef7e1ddc73e6091c0cd55'] = 'Next';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_87557f11575c0ad78e4e28abedc13b6e'] = 'End';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_7810f6fa46490f0d8fcf0f10c2a8c47f'] = 'Your API key is invalid, check that it matches test or live mode.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_7810f6fa46490f0d8fcf0f10c2a8c47f'] = 'The API keys you have provided are incorrect , please check your e -mail inbox in order to properly enter these.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_ee53a0b7ddd6043de218daaecd195cf2'] = 'Your password is invalid.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_1304d97514c86c34f1efb4e47f1f5195'] = 'Credentials are invalid, please check again.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_a89ed2ebc6db7df1724d7849cc8b236d'] = 'Use of EnvoiMoinsCher plugin needs registration as deferred payment by direct debit. To do so, go to EnvoiMoinsCher website and connect to your account. On preferences tab switch to deferred payment method, You will receive authorization documents to send back to us.';
@@ -190,6 +191,8 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_e268443e43d93dab7ebef303bbe
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_7bf4c26efba17e7a29a7006ca5b77b7f'] = 'and switch to deferred payment method, You will receive authorization documents to send back to us.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_17f0aed422eb04003412e1913dbcf1da'] = 'An error occurred on API query: ';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_f87cd475ae802186bfe1994ad783509f'] = 'Prices are more than one month old, please update them ("Help" tab).';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_4cd475debf6e30bf3d8d2dc9815ee7e3'] = 'Following the module update, please enter your API key test account.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_066ef063451a6e4fe10bb29cba1c2e4b'] = 'Following the module update, please enter your API key production account.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_a4d1f9df55cc0e951116c0a1ae2a8312'] = 'Clear cache';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_21bfc6f0eb0467ad6e832f6115d2f2d2'] = 'Clear offers cache. Use after carrier or product changes.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_154fdb5ae9006e1bff78c54ca6c3425d'] = '';
@@ -218,33 +221,112 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_4ee4bd3e0a295c1e81eb7584c9c
 /*
 	--- getcontentintroduction ---
 */
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_0c189ec74ba0cccaeb500e8f4883dd50'] = 'EnvoiMoinsCher permits you to plug 15 carriers on your website and to save up to -75%% on your shipping cost, with no condition of volume nor contract!';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_50273269620ca594a2d4198c732e6da5'] = 'FedEx, UPS, DHL, TNT, Chronopost, Coliposte, GLS, Mondial Relay, Relais Colis, Colis Privé';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_4c4017e611bdd4b23b215dfe029d021f'] = '... the best carriers in one plugin!';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_bab13b1dbf8e1bfc31dbda5d1d3a14ef'] = 'Manage your expeditions easily from your Prestashop back-office, thanks to EnvoiMoinsCher module';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_596dd0a154dbfcca674f42cb2de90673'] = 'Plug into your website ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_542d188b3f3c0c296c5341a363722bec'] = 'best market carriers one click away!';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_e556b74b0bc9b67ddd275a7a51de849c'] = 'EnvoiMoinsCher plugin gives you access to ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_f8da0f02f8484ec911a6af89176b6498'] = '15 carriers';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_46f96002d0dfa8f54b10fb312ec5d932'] = ', without contract';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_4d58159c6dc97e1100be0deebfc8ce59'] = 'Get ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_35343ea547d78730363fac8d790a6da7'] = 'exclusives negotiated fares up to -75%%';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_9abfb38370216b2a4817c405f403be0a'] = ' off, without condition of volume';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_d7f67ec615cad4747134ed18c5e99d8b'] = 'Give choices to your customers: shipping ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_4ca65a8bdbeae8b6ee400801a8a8f812'] = 'express';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_942b6fd40344ed9e72d41e43d38cdcf7'] = ', shipping ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_106a6c241b8797f52e1e77317b96a201'] = 'at home';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_c75645858a81d4a8af71c63beec75501'] = 'relay point';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_741b91ad331dfd149608e228ac2b9667'] = 'Get your slips in one click';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_4f8bf81e1484954021ef8197332cf002'] = ' from your back-office, including Coliposte';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_5e02c0a9179176a8f190c27644394326'] = 'Get informations about ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_0f805bd9bb958bbe919c7cc8a44e6a6e'] = 'parcel tracking';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_d23f7002f408fc02dcb5176406045b6a'] = ' in your back-office';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_a7ba1a7febc44d2582ffc9947d729c6e'] = '1 dedicated customer service';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_9c976add9f4a3f20cab2ff4690ea43f8'] = ' for after-sales service and ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_dc394c3cfeee25ed03511aa9305dcb6d'] = '1 unique bill';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_11bf9046cf43d1d37b97cc360d004e3b'] = ' not depending on which carriers selected';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_44fc84b80418b7b3044d1e2f03f4c2d3'] = 'Create your free account and get your API key';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_1a7ea81982d3d7b158a3038020c8429b'] = 'Choose from 15 carriers with negotiated prices';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_d925c629b77b27c10313247de57591e9'] = 'Up to 75%';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_4b89617cc3b7961e8562279e3798d4f8'] = ' immediate discount on your shipments';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_5a9de5d875ff3aad885189660bc1597b'] = 'No minimum volume, no contract';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_978b697963cfc5abfced8a4b611977c9'] = '';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_8a1dae93080e2857bc3c9846d9eab0af'] = 'Easy and transparent';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_0376b5725100b401b3cb81195967cf07'] = 'package monitoring';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_a469ea008403df21eed822abc99ea113'] = '1 dedicated customer service team';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_0397f5de3c85f4864abf7adc01d5e7a7'] = ' answering your customers\' needs and ';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_65df5c4b5e64086784a330bc7865a1fd'] = 'one single billing';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_e8e47224c798417884789794c5586cf9'] = ' whichever carriers you choose, ';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_6b4658afd9fd5fa0f1df8e5273f045bd'] = 'let Envoimoinscher handle everything!';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_30fa0cd0bdc06298169b6351c220cec5'] = 'Create your free account';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_3b2aee63259f6dc9b94914884474f8de'] = 'I already have an account';
+
+/*
+	--- getcontentemc ---
+*/
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_2a46fa8b106d01cb9400bae2d1411340'] = 'I would like to install the EnvoiMoinsCher module directly on my E-Commerce site. I will receive my API key upon validation of this form.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_090e8dc5cc9abbbeba047d658c2663ae'] = 'Person to contact';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_2c9b5b15a6d3cc951ca57c65e4966fd3'] = 'Mr';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_7f2a1b59ac1ab6d2d892dbbf4f132c40'] = 'Mrs';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_c03e74d6f3fb706ca749c73debdd81fe'] = 'Surname:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_668a8d8d7ffe5da112b266e46b79b685'] = 'First name:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_8df4f25af6696f34fe2a28588da5e39d'] = 'Occupation:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_4e294ddcc3aa62148bbd8c6a942f98f9'] = '-- Please choose one --';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_70eaa7ec2aa18bbf98bf3e3f52711198'] = 'E-commerce site manager';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_672caf27f5363dc833bda5099775e891'] = 'Developer';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_75ec3e55a77288b4a132f7528619817b'] = 'Agency';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_0f28fe833d21018c7707e5680392c068'] = 'Freelance';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_6311ae17c1ee52b36e68aaf4ad066387'] = 'Other';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_27cf0329257632fc0011abe5b14049f3'] = 'Prestashop version you are using:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_7c19cab2c6ed83a6b15ba7e7b9bf93a3'] = 'Prestashop 1.4';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_b980b5d4e13ed71dc70d8457b05eca50'] = 'Prestashop 1.5';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_7e739623d5cf51084a0b2f9b89fb752a'] = 'Prestashop 1.6';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_4b288c46a3d4930fa41afa9fef707a05'] = 'I don\'t know';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_10a7b83a93bdf71f00d748e196e2551d'] = 'Partner code, if you have one:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_b4d48a88001a5ced95b03f56ab3e6536'] = 'Your site URL:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_6f995931c32d478bd8803343286b4792'] = 'Your email address:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_a91b8c0460a2b5dacadeb25cd53feff9'] = 'Confirm your email address:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_1d55b7898d1909b73956290a34874acc'] = 'Your login';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_5234f1eb46944c908373810af8441a95'] = 'These login details will allow you to log into your EnvoiMoinsCher account';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_051672911a3f1f05efba78a553ef6fe2'] = 'Login:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_189e97d69e42c2e667681d59d446de1f'] = 'Alphanumeric characters only (letter and/or numbers without accents)';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_b341a59d5636ed3d6a819137495b08a0'] = 'Password:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_a7eb1205c936e7686305192ae11ec8f1'] = 'Minimum of 6 characters';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_8bedac1cac1a4bc5a6194f7b68d27f7d'] = 'Confirm the password:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_b9393dbda015f17421aab32826cd8abb'] = 'Your invoice address';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_66d924261e3fc6b1555986d1c29e6239'] = 'Company/Organisation:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_f5c563c2ca9daf56d2ed585204185d87'] = 'Your address:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_3206e4f0140bddd5d5650ce7c3c0433a'] = 'Address 1:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_4ade8f5b99fde6eeeab5a47667656db5'] = 'Address 2:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_f64be5eef68442a8f50cf535b92ad3e4'] = 'Country:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_18325105de95083e4a1d10b78f29c2bc'] = 'State:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_d407bef98bb4f86299d4a9cd60568151'] = 'Postcode:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_bffb711ec36f280459d11dce315da72f'] = 'City:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_20111867ed1071462a3178f54754aec0'] = 'Telephone:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_92c370cef9393d0eed5bf1349554fcf8'] = 'Preferred language of correspondence:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_ad225f707802ba118c22987186dd38e8'] = 'French';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_78463a384a5aa4fad5fa73e2f506ecfc'] = 'English';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_cb5480c32e71778852b08ae1e8712775'] = 'Spanish';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_de3b5029af01cf7c25f8866755ffd873'] = 'Professional account';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_d04e2c1b67f3ef0d475409516b812e8b'] = 'SIRET:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_592b19c2118bde15753557dbb164f2d1'] = 'Registration No. in the country:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_566b0eba5f5e59c4dbbc3e39c9a38a03'] = 'Intra-community VAT No.:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_df9fc88bb784af9673a06ab68d3ede18'] = 'Legal notes';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_56a2c450de544ed0e919a4cad661e481'] = 'I acknowledge having read the';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_fbe123b06729453d40a8ec3986b175f5'] = 'General Terms and Conditions of Sale and of Use of the website EnvoiMoinsCher.com';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_4dc4ec7091509ce4cb8d0265922bbe2e'] = 'and the';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_88ef5b8c9ea69db82fd2c8f991e7d4e4'] = 'General Terms and Conditions of Use of the EnvoiMoinsCher.com API';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_41963ae76ff1ef6bb0b75e885a8ba140'] = 'in full and agree to the terms thereof.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_517086580e95a032290707ca60f8089f'] = 'I wish to receive information regarding EnvoiMoinsCher.com news.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_49066723896ceb46f8a2d0260a1e0b7b'] = 'I would like to receive promotional information from EnvoiMoinsCher.com partners.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_2fdfd506efea08144c0794c32ca8250a'] = 'Create an account';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_1b1d51392e5d008be296742a1e1b9ff0'] = 'Please fill in the following form to receive your API key.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_2a43f8406eb6c10f3f76a60f064e67fb'] = 'Prestashop version';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_71480bbd8a28d07d128ef389826fd426'] = 'Get an API key';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_b42b66495eeccc7f7615b2183e85e5de'] = 'I already have an API key';
+
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3699cdaed9da01d61d863d390b13a33c'] = 'The following errors have occurred:';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5022fa1463220477570cd1d786dbee4a'] = 'Please specify your surname';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_8cbb06ae99d0b574449e8b35a4b114d5'] = 'Please specify your first name';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_63898e74f047e5cda53582d27239a23e'] = 'Please specify your occupation';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9a74ab15d279e9d3bd619556fb3c03cf'] = 'Please specify your email address';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_fdb4db9fad09fb7844943f645db276da'] = 'Please confirm your email address';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_579e28b0f4a08ed8c8e9ca055796c627'] = 'Please verify your email address and its confirmation';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6e3a2bfb7990c25e6d3eef42befe09a3'] = 'Please specify a valid email address';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_54e7d0d7fe99b43d4d612782bca4593c'] = 'Please specify a login';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_d127a065d17f35836e4ccd0d53a48737'] = 'Your login may only contain alphanumerical characters';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_47cf1ec76df83a296b55aa20a77fab0a'] = 'Please enter your password';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_1849ffc8731b5e74ae6157c91ba73575'] = 'Please confirm your password';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_53b84bcd051b27f7278a228d394afb77'] = 'Please verify your password and its confirmation';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_60d3fa1bfd3e77350009e4a716a4209c'] = 'Your password must contain at least 6 characters';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5f6de4c8b1aab9d0471b82cfbfda4b20'] = 'Please specify your company';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b72a8e11a090c12eeb0c1631ae330160'] = 'Please specify your address';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_296761ad4839416252e100e2e0e932a7'] = 'Please specify your postal code';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5df026bcb1c04fa59f66848e57914711'] = 'Please specify your city';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e77486f4f88cb38b0ef7430b4b2dc8ec'] = 'Please specify your telephone number';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_da2591b34e544e4c546f95bc8e8569db'] = 'Please specify a valid phone number';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_aa0d400be875b9aa0be67eb93028cdbd'] = 'Please specify the SIRET (business identification) number';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e2f897f4baf44193322ece6d89daed3e'] = 'Please specify the legal registration or enrolment number in the country';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_40542a71f7fb8a6cbf8d63f43ee7701a'] = 'The SIRET (business identification) number is invalid. Please verify that it contains 14 figures';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_359114fe162e7fae6814fe4662cb623e'] = 'Please check the General Terms of Sale before proceeding';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_11d4e10ba84d58c3b79230072cd11d18'] = 'Your account has been successfully created. You will receive your API key shortly, please check your mail box.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_69a38cf14a63e003e169d81982e6b610'] = 'You will receive your API key shortly, please check your mail box.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_10688f69b3fc295ee7bfa520d589fa2e'] = 'There has been an error sending the request. The server could not respond correctly (error: ';
 
 /*
 	--- getcontentcarriersadvanced ---
@@ -525,9 +607,11 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_051672911a3f1f05efba78a
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_d9ad8c01c69370c0933c10e93335ee9b'] = 'EnvoiMoinsCher.com login.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_b341a59d5636ed3d6a819137495b08a0'] = 'Password:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_4ed5a644b549769e4b4e14bcf01b6cec'] = 'EnvoiMoinsCher.com Password';
-$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_b443dabdbefd9f9710276c8cfd0bc64f'] = 'API key:';
-$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_e075e7f90fb066e50ce99f0cd39022b1'] = 'Key received by mail from EnvoiMoinsCher.com. You just have to copy it on the field. Be careful if key is for Test or Live environment';
-$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_901cda1b056ffdf9b0ea199021c7b315'] = 'Click here to obtain your API key';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_0694ea9bcc18c54f4dd79b468aa664d2'] = 'API key (test):';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_6f3e85d1dbe80c3b319288dd0f67f55c'] = 'API key (production):';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_cb4f754a65b7e8cb5499fc76e10de80c'] = '<strong>Your Test API key</strong> enables you to make test shipment requests via our module. This key must match the <strong>TEST</strong> work environment.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_29b859aaecb012c0ee7d7a6d032a7a01'] = '<strong>Your Production API key</strong> enables you to make real shipment requests via our module. This key must match the <strong>LIVE</strong> work environment.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_0d479c7e8a04481580daafb915cf9a34'] = 'Please check your email for your account information.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_929a59d3a7a633f98494ea92b38860e6'] = 'Pickup address';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_caa5b7a48ce4b1c1492c445446433fb5'] = 'Shipper Civility:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_c0552355b46408e262fc64d4ca9398dc'] = 'Shipper Civility: choose Mr, Mrs or Miss';

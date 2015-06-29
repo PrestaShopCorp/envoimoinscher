@@ -1,5 +1,5 @@
 {**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,29 +18,29 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
 
 {foreach from=$points item=point}
 	<li class="no-list-style">
-		<input type="radio" id="{$point.id|escape:'htmlall'}" name="{$point.input_name|escape:'htmlall'}" value="{$point.code|escape:'htmlall'}"
-		 {if $point.checked}checked="checked" {/if}class="{$point.class|escape:'htmlall'}" onclick="{$point.js|unescape:'html'}" />
-		<b>{$point.name}</b><br /><small>({$point.address|escape:'htmlall'}, {$point.zipcode|escape:'htmlall'} {$point.city|escape:'htmlall'})</small>
+		<input type="radio" id="{$point.id|escape:'htmlall':'UTF-8'}" name="{$point.input_name|escape:'htmlall':'UTF-8'}" value="{$point.code|escape:'htmlall':'UTF-8'}"
+		 {if $point.checked}checked="checked" {/if}class="{$point.class|escape:'htmlall':'UTF-8'}" onclick="{$point.js}" />
+		<b>{$point.name}</b><br /><small>({$point.address|escape:'htmlall':'UTF-8'}, {$point.zipcode|escape:'htmlall':'UTF-8'} {$point.city|escape:'htmlall':'UTF-8'})</small>
 	</li>
 	{if $point.checked}
 		<script type="text/javascript">
 		$(document).ready(function ()
 		{
-		{$point.js|unescape:'html'}
+		{$point.js}
 		});
 		</script>
 	{/if}
 {/foreach}
 
 {foreach from=$inputs item=input}
-	<input type="hidden" name="{$input.name|escape:'htmlall'}" id="{$input.id|escape:'htmlall'}" value="{$input.value|unescape:'html'}"/>
+	<input type="hidden" name="{$input.name|escape:'htmlall':'UTF-8'}" id="{$input.id|escape:'htmlall':'UTF-8'}" value="{$input.value}"/>
 {/foreach}
 
 <!--[if IE]>

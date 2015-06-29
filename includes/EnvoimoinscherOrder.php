@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2014 PrestaShop
+ * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -95,15 +95,14 @@ class EnvoimoinscherOrder
 			array(
 				'user' => $this->order_data['config']['EMC_LOGIN'],
 				'pass' => $this->order_data['config']['EMC_PASS'],
-				'key'  => $this->order_data['config']['EMC_KEY']
+				'key'  => $this->order_data['config']['EMC_KEY_'.$this->order_data['config']['EMC_ENV']]
 			)
 		);
 
-		$offers_orders = $this->model->getOffersOrder();
 		$emc = Module::getInstanceByName('envoimoinscher');
 		$cot_cl->setPlatformParams($emc->ws_name, _PS_VERSION_, $emc->version);
 		$quot_info = array(
-			'delai'        => 'aucun',//$offers_orders[$this->order_data['config']['EMC_ORDER']]['emcValue'],
+			'delai'        => 'aucun',
 			'code_contenu' => $this->order_data['config']['EMC_NATURE'],
 			'module'       => $this->prestashop_config['wsName'],
 			'version'      => $this->prestashop_config['version'],
@@ -152,8 +151,8 @@ class EnvoimoinscherOrder
 		foreach ($this->post_dest_fields as $field => $value)
 		{
 			if (Tools::isSubmit($field))
-			{	
-				if($field == 'dest_tel')
+			{
+				if ($field == 'dest_tel')
 					$dest_array[$value] = EnvoimoinscherHelper::normalizeTelephone(Tools::getValue($field));
 				else
 					$dest_array[$value] = Tools::getValue($field);
@@ -191,7 +190,7 @@ class EnvoimoinscherOrder
 		$url_params = '&key='.$tracking_key.'&order='.$this->order_id;
 		//$shop_domain = Tools::getShopDomain();
 		$url = Tools::getShopDomain(true, true).__PS_BASE_URI__.'index.php?fc=module&module=envoimoinscher&controller=ajax&option=push';
-		
+
 		$quot_info['url_push'] = $url.$url_params;
 
 		$order_object['tmp_quote'] = $quot_info;
