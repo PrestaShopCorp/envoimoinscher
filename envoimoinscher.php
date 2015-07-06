@@ -128,9 +128,9 @@ class Envoimoinscher extends CarrierModule
 		);
 		$this->name = 'envoimoinscher';
 		$this->tab = 'shipping_logistics';
-		$this->version = '3.2.0';
+		$this->version = '3.2.1';
 		$this->author = 'EnvoiMoinsCher';
-		$this->local_version = '3.2.0';
+		$this->local_version = '3.2.1';
 		parent::__construct();
 		$this->page = basename(__FILE__, '.php');
 		$this->displayName = 'EnvoiMoinsCher';
@@ -829,7 +829,7 @@ class Envoimoinscher extends CarrierModule
 		{
 			$this->getContext()->controller->addJquery();
 			$this->getContext()->controller->addJqueryUI('ui.datepicker');
-			$this->getContext()->controller->addCSS($this->_path.'/css/back-office.css?version='.$this->version, 'all');
+			$this->getContext()->controller->addCSS($this->_path.'/views/css/back-office.css?version='.$this->version, 'all');
 		}
 	}
 

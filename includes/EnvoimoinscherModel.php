@@ -1424,7 +1424,7 @@ class EnvoimoinscherModel
 			$tax = $this->db->getRow('SELECT * FROM `'._DB_PREFIX_.'tax` WHERE `rate` = "19.6"');
 			$data['id_tax_rules_group'] = (int)$tax['id_tax'];
 		}
-
+		$old_carrier = DB::getInstance()->ExecuteS('SELECT * FROM '._DB_PREFIX_.'carrier WHERE id_reference = '.$service['ref_carrier'].' ORDER BY id_carrier DESC LIMIT 1');
 		//Set Carrier
 		$carrier = new Carrier((int)$service['id_carrier']);
 
@@ -1453,6 +1453,9 @@ class EnvoimoinscherModel
 		DB::getInstance()->Execute('UPDATE '._DB_PREFIX_.'emc_services
 			 SET id_carrier = '.$carrier_id.', ref_carrier = '.$row[0]['id_reference'].', pricing_es = '.pSQL($data['pricing_es']).'
 			 WHERE id_es = '.pSQL($data['id_es']).'');
+		//update product carrier links
+		DB::getInstance()->Execute('UPDATE '._DB_PREFIX_.'product_carrier
+			 SET id_carrier_reference = '.$row[0]['id_reference'].' WHERE id_carrier_reference = '.$old_carrier[0]['id_reference'] );
 
 		if ((int)$service['id_carrier'] === 0)
 		{
@@ -1501,7 +1504,8 @@ class EnvoimoinscherModel
 			foreach ($zones as $zone)
 				if (count($carrier->getZone((int)$zone['id_zone'])) === 0)
 					$carrier->addZone((int)$zone['id_zone']);
-		Tools::copy(_PS_MODULE_DIR_.$this->module_name.'/views/img/detail_'.Tools::strtolower($service['code_eo']).'.jpg', _PS_IMG_DIR_.'s/'.(int)$carrier_id.'.jpg');
+          //replace Tools::copy() (never do again) by copy()
+          copy(_PS_MODULE_DIR_.$this->module_name.'/views/img/detail_'.Tools::strtolower($service['code_eo']).'.jpg', _PS_IMG_DIR_.'s/'.(int)$carrier_id.'.jpg');
 		return $carrier_id;
 	}
 

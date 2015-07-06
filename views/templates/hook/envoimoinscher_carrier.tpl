@@ -42,12 +42,12 @@ var carrier_translation = {
  <style type="text/css">
 	#mapContainer{
 		display:none;
-		width:80%;
-		height:80%;
+		width:60%;
+		height:60%;
 		position: absolute;
 		top:100px;
 		paddding:10px;
-		left:10%;
+		left:20%;
 		z-index:11111;
 		border:3px solid #000000;
 		background: #FFFFFF;
@@ -59,11 +59,6 @@ var carrier_translation = {
 		height:auto; 
 		padding-right:2%; 
 		margin-top:1%;
-	}
-
-	#mapContainer #map_canva{
-		width:100%; 
-		height:89%;
 	}
 
 	.click-here{
