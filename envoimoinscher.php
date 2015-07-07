@@ -1154,7 +1154,7 @@ class Envoimoinscher extends CarrierModule
 									.(isset($params['filterBy']['recipient'])?'&recipient='.implode('+', $params['filterBy']['recipient']):'');
 		if (isset($params['filterBy']['status']) && is_array($params['filterBy']['status']))
 			foreach ($params['filterBy']['status'] as $key => $value)
-				$filter_url .= '&status[]='.$value;
+				$filter_url .= '&status%5B%5D='.$value;
 
 		// get orders
 		$orders_count = $this->model->getEligibleOrdersCount($params);
