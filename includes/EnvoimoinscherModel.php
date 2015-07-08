@@ -1424,7 +1424,7 @@ class EnvoimoinscherModel
 			$tax = $this->db->getRow('SELECT * FROM `'._DB_PREFIX_.'tax` WHERE `rate` = "19.6"');
 			$data['id_tax_rules_group'] = (int)$tax['id_tax'];
 		}
-		$old_carrier = DB::getInstance()->ExecuteS('SELECT * FROM '._DB_PREFIX_.'carrier WHERE id_reference = '.$service['ref_carrier'].' ORDER BY id_carrier DESC LIMIT 1');
+		$old_carrier = DB::getInstance()->ExecuteS('SELECT * FROM '._DB_PREFIX_.'carrier WHERE id_reference = '.(int)$service['ref_carrier'].' ORDER BY id_carrier DESC LIMIT 1');
 		//Set Carrier
 		$carrier = new Carrier((int)$service['id_carrier']);
 
@@ -1455,7 +1455,7 @@ class EnvoimoinscherModel
 			 WHERE id_es = '.pSQL($data['id_es']).'');
 		//update product carrier links
 		DB::getInstance()->Execute('UPDATE '._DB_PREFIX_.'product_carrier
-			 SET id_carrier_reference = '.$row[0]['id_reference'].' WHERE id_carrier_reference = '.$old_carrier[0]['id_reference'] );
+			 SET id_carrier_reference = '.(int)$row[0]['id_reference'].' WHERE id_carrier_reference = '.(int)$old_carrier[0]['id_reference'] );
 
 		if ((int)$service['id_carrier'] === 0)
 		{

@@ -4291,7 +4291,7 @@ class Envoimoinscher extends CarrierModule
 				return $this->displayError($this->l('The following errors have occurred:').'<ul><li>'.implode('</li><li>', $errors).'</li></ul>');
 			else
 			{
-				$errors = Tools::json_decode($result);
+				$errors = Tools::jsonDecode($result);
 
 				if (1 !== $errors)
 				{
