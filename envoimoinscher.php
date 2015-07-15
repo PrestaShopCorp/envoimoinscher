@@ -128,9 +128,9 @@ class Envoimoinscher extends CarrierModule
 		);
 		$this->name = 'envoimoinscher';
 		$this->tab = 'shipping_logistics';
-		$this->version = '3.2.0';
+		$this->version = '3.2.1';
 		$this->author = 'EnvoiMoinsCher';
-		$this->local_version = '3.2.0';
+		$this->local_version = '3.2.1';
 		parent::__construct();
 		$this->page = basename(__FILE__, '.php');
 		$this->displayName = 'EnvoiMoinsCher';
@@ -829,7 +829,7 @@ class Envoimoinscher extends CarrierModule
 		{
 			$this->getContext()->controller->addJquery();
 			$this->getContext()->controller->addJqueryUI('ui.datepicker');
-			$this->getContext()->controller->addCSS($this->_path.'/css/back-office.css?version='.$this->version, 'all');
+			$this->getContext()->controller->addCSS($this->_path.'/views/css/back-office.css?version='.$this->version, 'all');
 		}
 	}
 
@@ -1154,7 +1154,7 @@ class Envoimoinscher extends CarrierModule
 									.(isset($params['filterBy']['recipient'])?'&recipient='.implode('+', $params['filterBy']['recipient']):'');
 		if (isset($params['filterBy']['status']) && is_array($params['filterBy']['status']))
 			foreach ($params['filterBy']['status'] as $key => $value)
-				$filter_url .= '&status[]='.$value;
+				$filter_url .= '&status%5B%5D='.$value;
 
 		// get orders
 		$orders_count = $this->model->getEligibleOrdersCount($params);
@@ -4293,7 +4293,7 @@ class Envoimoinscher extends CarrierModule
 				return $this->displayError($this->l('The following errors have occurred:').'<ul><li>'.implode('</li><li>', $errors).'</li></ul>');
 			else
 			{
-				$errors = Tools::json_decode($result);
+				$errors = Tools::jsonDecode($result);
 
 				if (1 !== $errors)
 				{
