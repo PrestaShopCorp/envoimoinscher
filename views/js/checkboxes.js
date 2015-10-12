@@ -23,48 +23,38 @@
  * International Registred Trademark & Property of PrestaShop SA
  */
 
- // checkboxes handling
+// checkboxes handling
 function selectDeselectAll(container, ref)
 {
-  var idClass = $(ref).val();
-  $(container).each(function() {
-    if($(ref).hasClass('selectAll')) 
-    {
-      $(this).attr('checked', true); 
+    var idClass = $(ref).val();
+    $(container).each(function () {
+        if ($(ref).hasClass('selectAll')) {
+            $(this).attr('checked', true);
+        } else {
+            $(this).attr('checked', false);
+        }
+    });
+    if ($(ref).hasClass('selectAll')) {
+        $(ref).removeClass('selectAll').addClass('deselectAll');
+        notChecked[idClass] = 0;
+    } else {
+        $(ref).removeClass('deselectAll').addClass('selectAll');
+        notChecked[idClass] = -allElements[idClass];
     }
-    else 
-    {
-      $(this).attr('checked', false);
-    }
-  });
-  if($(ref).hasClass('selectAll')) 
-  {
-    $(ref).removeClass('selectAll').addClass('deselectAll');
-    notChecked[idClass] = 0;
-  }
-  else
-  {
-    $(ref).removeClass('deselectAll').addClass('selectAll');
-    notChecked[idClass] = -allElements[idClass];
-  }
 }
 
 function checkboxClick(ref, allContainer, idClass)
 {
-  if($(ref).attr("checked") == true)
-  {
-    notChecked[idClass]--;
-  }
-  else
-  {
-    notChecked[idClass]++;
-  }
-  var result = "deselect";
-  $(allContainer).removeClass('deselectAll').addClass('selectAll').attr('checked', false);
-  if(notChecked[idClass] == 0) 
-  {
-    result = "select";
-    $(allContainer).addClass('deselectAll').removeClass('selectAll').attr('checked', true);
-  }
-  return result;
+    if ($(ref).attr("checked") == true) {
+        notChecked[idClass]--;
+    } else {
+        notChecked[idClass]++;
+    }
+    var result = "deselect";
+    $(allContainer).removeClass('deselectAll').addClass('selectAll').attr('checked', false);
+    if (notChecked[idClass] == 0) {
+        result = "select";
+        $(allContainer).addClass('deselectAll').removeClass('selectAll').attr('checked', true);
+    }
+    return result;
 }

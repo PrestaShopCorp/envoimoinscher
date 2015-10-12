@@ -26,39 +26,37 @@
 
 function upgrade_module_3_1_10($module)
 {
-	//Set default configuration
-	Configuration::updateValue('EMC_ENABLED_LOGS', 0);
-	$states = OrderState::getOrderStates((int)$module->getContext()->language->id);
-	$states_array = array();
-	foreach ($states as $state)
-		$states_array[] = $state['id_order_state'];
-	Configuration::updateValue('EMC_FILTER_TYPE_ORDER', 'all');	 
-	Configuration::updateValue('EMC_FILTER_STATUS', implode(';', $states_array));
-	Configuration::updateValue('EMC_FILTER_CARRIERS', 'all');
-	Configuration::updateValue('EMC_FILTER_START_DATE', 'all');
+    //Set default configuration
+    Configuration::updateValue('EMC_ENABLED_LOGS', 0);
+    $states = OrderState::getOrderStates((int)$module->getContext()->language->id);
+    $states_array = array();
+    foreach ($states as $state) {
+        $states_array[] = $state['id_order_state'];
+    }
+    Configuration::updateValue('EMC_FILTER_TYPE_ORDER', 'all');
+    Configuration::updateValue('EMC_FILTER_STATUS', implode(';', $states_array));
+    Configuration::updateValue('EMC_FILTER_CARRIERS', 'all');
+    Configuration::updateValue('EMC_FILTER_START_DATE', 'all');
 
-	// Execute the SQL upgrade
-	$sql_file = Tools::file_get_contents(_PS_MODULE_DIR_.'/envoimoinscher/upgrade/3.1.10.sql');
-	$sql_file = str_replace('{PREFIXE}', _DB_PREFIX_, $sql_file);
+    // Execute the SQL upgrade
+    $sql_file = Tools::file_get_contents(_PS_MODULE_DIR_.'/envoimoinscher/upgrade/3.1.10.sql');
+    $sql_file = str_replace('{PREFIXE}', _DB_PREFIX_, $sql_file);
 
-	// Because any merchant can't execute every sql queries in one execute, we have to explode them.
-	$query = explode('-- REQUEST --', $sql_file);
+    // Because any merchant can't execute every sql queries in one execute, we have to explode them.
+    $query = explode('-- REQUEST --', $sql_file);
 
-	Db::getInstance()->execute('START TRANSACTION;');
-	foreach ($query as $q)
-	{
-		if (trim($q) != '' && Db::getInstance()->execute($q) === false)
-		{
-			Db::getInstance()->execute('ROLLBACK;');
-			return false;
-		}
-	}
+    Db::getInstance()->execute('START TRANSACTION;');
+    foreach ($query as $q) {
+        if (trim($q) != '' && Db::getInstance()->execute($q) === false) {
+            Db::getInstance()->execute('ROLLBACK;');
+            return false;
+        }
+    }
 
-	// remove footer hook
-	$module->unregisterHook('footer');
+    // remove footer hook
+    $module->unregisterHook('footer');
 
-	// Validate upgrade
-	Db::getInstance()->execute('COMMIT;');
-	return true;
+    // Validate upgrade
+    Db::getInstance()->execute('COMMIT;');
+    return true;
 }
-?>

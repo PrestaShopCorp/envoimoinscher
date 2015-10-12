@@ -23,13 +23,13 @@
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  */
- 
+
  /*
  * --------  <{ module-name  }prestashop>name-of-file_check-md5-string-parameter   ------- = value
- 
+
  * module-name  : name of the module : 'mod' parameter
  * name-of-file : name of last template file (strtolower, without extension)
- * value = value 
+ * value = value
  */
 
 
@@ -80,6 +80,7 @@ $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_d4fdc07829e1a91274b32c07472
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5e89c1ead63de28f095220159bac9818'] = 'installation : Error with the request : ';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_99f7d66bcedc739e09ede613f42541c9'] = 'installation : Impossible to add EnvoiMoinsCher button in the menu.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_a7bf9e7d8f87cfaf429d875a05ff40ba'] = 'No offers are matching your criteria.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_41cb349244297b2cbd2ede65d7311ddd'] = 'No offers found for your search';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_15e8b81325717ca7a272cc79f4c8a671'] = 'If popup does not show : ';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_7e3ab735e9e6a1029e2b4320fce467f2'] = 'click here';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_768b280c543db9e18c2ad6dda9f92695'] = 'API key';
@@ -94,7 +95,34 @@ $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_42fcd83ba4e643f0bd5604d060f
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_756a461676ababc62eb50311fec26892'] = 'phone number';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_33c1655e63368b5c3f40a39c56bd28b5'] = 'email';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b6e7feadf3c61b73e5accb2188817680'] = 'pickup day';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6fd36599b55d4917bfb6ea4922c803eb'] = 'Quotation - from %1$s %2$s to %3$s %4$s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_acb9d9438d2b87bf739a63b5db1b566b'] = 'Quotation - Cache used';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9d0992358b48c69addd7fa952a587d4d'] = 'Quotation - No carrier activated';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5584739dc9e8f6740f3c587d4169507a'] = 'Error while recovering offers: %1$s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_60c803add0653491953e8dce9296ec3a'] = 'No carrier activated, please activate carriers before making a simulation';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_2d87da7980db4e5da96b108b7a65453b'] = 'Please fill in zip code and city fields in order to make a simulation';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e8f6f8484df712d1671a9823aec9768b'] = 'The shipment platform is currently unavailable';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_548b61cafe792f6a9415b6599b2579f2'] = 'Quotation - no offer found for shipping from %1$s %2$s to %3$s %4$s %5$s, the cart weighs %6$skg';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_7b5e380396d53133abac4c719bb213cb'] = 'No offers found for your delivery address %1$s %2$s, %3$s %4$s %5$s, cart\'s weight is %6$s kg';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f70f675338b49433290164c8a12dd5ee'] = 'Quotation - API tax-exclusive price for %1$s is %2$s€';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9e98d590e96f62a89da70b140d402885'] = 'Quotation - converting price for carrier %1$s to %2$s: %3$s%2$s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_69ce24c2e8727642bf2fdb6ad2164500'] = 'Cart rules must be set to Shipping excluded in order to work properly. Check cart rule %1$s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_eb05b90e87b526804532d793aeb82b14'] = 'Quotation - adding to carrier %1$s additional shipping fees %2$s%3$s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b936fd4ed40db6d6ee8335e0ae948d60'] = 'Quotation - adding to carrier %1$s handling charges %2$s%3$s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_86758b321c6fe07176aef9fce16454e8'] = 'Quotation - carrier %1$s is configured as a free carrier';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3f29496bf8b83ef7f11c67b50a6e4a05'] = 'Quotation - carrier %1$s is set free by cart rule %2$s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_09650cff978fdf21a78387fe00dde690'] = 'Quotation - all carriers free because of cart price';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3beda0c038d2a3ef69d2b2072785722e'] = 'Quotation - all carriers free because of cart weight';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_4623d66ba06a1d42de38d0058e54a199'] = 'Quotation - price range applied to %1$s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_61ce3042979adbbafcf929a2a547d70e'] = 'Quotation - %1$s is removed because of price range configuration';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6897978c2f77006460d9861aeebe634f'] = 'Quotation - carrier %1$s not active for this zone';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_62a8e5ee924be1435573963d8acae503'] = 'Quotation - carrier %1$s is removed because product %2$s is over its configured max weight';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_a8ac69b3ba9fa409c3106a04fa631ef1'] = 'Quotation - carrier %1$s is removed because product %2$s is over its configured max width';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_8cbb08c3b5e37674d8c0191e2f992a26'] = 'Quotation - carrier %1$s is removed because product %2$s is over its configured max depth';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6c924b75ddf879bc47e70418e860b68b'] = 'Quotation - carrier %1$s is removed because product %2$s is over its configured max height';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_c5f5ec7e41ac546e1819ea172bbafaae'] = 'Quotation - carrier %1$s is removed because it is deactivated in warehouse';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5e7da5d682b8bc826fcd13f504315fc8'] = 'Quotation - carrier %1$s is removed because at least one product has it deactivated';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5d89f7c903e5af99eaf7760b88d5191c'] = 'Quotation - adding carrier tax %1$s%2$s to carrier %3$s: %4$s%5$s';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_ed3f0177fb6dedb7f7441cda23e138a9'] = 'EnvoiMoinsCher plugin has to be offline.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f32d5fccdc1903dbadfd314f7a97ca9a'] = 'Error when updating offers : ';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_bd5155b7f37815e4ff73f40250f1fb37'] = 'Update : error when updating available offers: ';
@@ -138,6 +166,7 @@ $_MODULE['<{envoimoinscher}prestashop>familytpl_9461bed8b71377318436990e57106729
 $_MODULE['<{envoimoinscher}prestashop>familytpl_4a544af857a4c3b7a166246080988cb4'] = 'Prices';
 $_MODULE['<{envoimoinscher}prestashop>familytpl_b5a7adde1af5c87d7fd797b6245c2a39'] = 'Description';
 $_MODULE['<{envoimoinscher}prestashop>familytpl_46a2a41cc6e552044816a2d04634545d'] = 'Status';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_7dce122004969d56ae2e0245cb754d35'] = 'Edit';
 $_MODULE['<{envoimoinscher}prestashop>familytpl_03af9a2a72d329b7252b03f823728025'] = 'Dropoff relay point';
 $_MODULE['<{envoimoinscher}prestashop>familytpl_952b938bd85b88d80faacf86439643b0'] = 'Relay point code';
 $_MODULE['<{envoimoinscher}prestashop>familytpl_9af9d05426a7aa3598c60804498d47c1'] = 'Get code';
@@ -174,7 +203,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_e2fc04f579826f1585877c2d03a
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_6d9163f98d9567378655c87b6d0e0eb9'] = 'Advanced Carriers';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_d0384211cbe162db92d24c0d8f563e01'] = 'Offers simulator';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_6a26f548831e6a8c26bfbbd9f6ec61e0'] = 'Help';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_3b9da21ba184c3e6a12546ebd4f8dcb9'] = 'Please switch plugin state to \"Offline\"';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_3b9da21ba184c3e6a12546ebd4f8dcb9'] = 'Please switch plugin state to \'Offline\'';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_104c343635d8507902db2bb804b9b80a'] = 'Changes not saved. Click \"Cancel\" to save or \"Ok\" to close without saving.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_3cfedc660eea9ef51ee72af1ab3ae161'] = 'Are you sure you want to switch the pluggin offline? (EnvoiMoinsCher carriers will not be available)';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_b8f0e8b69496f6a88abff2eab905a5d2'] = 'Carriers';
@@ -393,8 +422,8 @@ $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_636cdbd30635ad7dee957937c69
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_89cd2c49babdc21e3889172c3ef33b77'] = '<b>Advanced carriers</b>, prices are calculated from grid based or parcel weight and size.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_6654c1357367ef216ab5123bcc3368a8'] = 'Because parcel volume cannot be calculated during front-office command time, You must fill correspondence grid Weight/Volume. Thereby, Envoimoinscher&#39;s plugin will take dimensions filled in  correspondence grid appplied to shopping cart weight and will display relevant shipping cost.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_a8dcfa18faf4ca004e8d6b424fdce5fc'] = 'You must personalized your own dimensions and weights in module « Weight Option » tab if you do not want to keep default dimensions.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_645bd591803fc222f29eca86407f9d0b'] = 'How to propose free shiiping with Envoimoinscher plugin ?';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5eae20df80180d4229cdb7acfda2731a'] = '<b>Attention </b>: don&#39;t fill prestashop option « Free shipping starts at » in shipping > preferences tab. Free shipping costs are possible only configuring rates.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_645bd591803fc222f29eca86407f9d0b'] = 'How to offer free shipping with the Envoimoinscher plugin ?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5eae20df80180d4229cdb7acfda2731a'] = '<b>Attention </b>: don&#39;t fill prestashop option « Free shipping starts at » in shipping > preferences tab. Free shipping costs are possible only configuring rates. If you do activate this option, EnvoiMoinsCher carriers non-relevant to the order will appear but will be deactivated in front-office to avoid billing problems.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_890d3769c0e389ffb5cc959b11dd1da0'] = 'Choose <b>« rate » price</b> for the carier,  « Simple Carriers » or « Advanced Carriers » tab. Next, go to <b>  « Shipping > Carriers » and select wanted carrier. Define wanted ranges</b> in « shipping locations and costs » part.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c1416f436f7082e9c11106f30969b7ce'] = '<b>Example</b> : if you want to offer shipping costs for a more than 50€ shopping cart, define 0 to 50€ range with desired shipping cost (5€ as an example), create a second range from 50,01€ à 100 000€ with 0€ shipping cost.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_90921ebf20af7fc504a347d030fcb4f3'] = 'Can I send my parcels if I am doing just-in-time distribution ?';
@@ -414,7 +443,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_17934c413a0e4e23d3185ab2277
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_037ecabea6745aa4c51ef6f386027558'] = 'Often it will be wrong commands from first grid, they are listed in this grid to be corrected and sent later. Then, you will need to go to parcels send informations screen to correct informations. If carrier offer isn\'t available yet, you can select a new carrier offer who will substitute former (Don&#39;t forget to tell your customer).';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_b43031b8d99503165801c7cfccc0666f'] = 'How to send your Envoimoinscher carriers orders one by one ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c3799a3d5b256b30cceff4902d048e5a'] = '<b>Click on « send » on the right end of order line.</b>';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_86fff905a6d92a49de547a1c4e81748f'] = 'A confirmation page is displayed. You don\'t have to fill any others informations. You can if needed modify  datas : dropoff date (if collection offer), order weight, recipient informations ...';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_86fff905a6d92a49de547a1c4e81748f'] = 'A confirmation page is displayed. You don`t have to fill in any other information. You can if needed modify data : dropoff date (if collection offer), order weight, recipient informations...';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_98347d7f2ca93178cfb36112a1757387'] = '<b>Click on « Ship » to finalise shipment.</b>';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_281abdf991e7956ad8f8b2e8c476e429'] = 'In the context of an offer with onsite pickup, the pickup request is automatically forwarded to the carrier.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5d2d48cf44aa1f3a0f83a13df66a7a44'] = '<b>If all shipments are successful, they are filed in the « Previous orders » table and a confirmation message is displayed.</b>';
@@ -671,7 +700,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentsends_50cac7077ee9179e7cb598f319
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_e82f2d302c63bd0619be9deffadda67a'] = 'Careful ! It may lead to different prices between your customer and real shipping price.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_7cb8fb0ac034e8df5967f384715108c5'] = 'All slips will be charged.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_038c9211a2eff68fe1ad4e9d64c21e7d'] = 'Product weight set-up';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_f976e17dca21ab3c6ecc5ccc9ac3c5d2'] = 'Default weight (kg):';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsends_27350971e8065bd6b51ad56c1cce9ecb'] = 'Default weight (%1$s):';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_ebe86682666f2ab3da0843ed3097e4b3'] = 'kg';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_373e86960f4bc931a55ad4054176609b'] = 'You can specify a default weight that will be applied on missing weight product. (product weight is set in Catalog -> Products)';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_5ef56e80e75322746acd2b358a86d469'] = 'Minimal weight:';
@@ -737,7 +766,22 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_5206c388b2df3c5c3e409cc
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_6bf52dd4e979d8a42c579c5b29134b4b'] = 'sent to recipient (Your customer). He will be notified that a parcel has been sent to him. Careful asthis notification is sent by EnvoiMoinsCher and not the carrier.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_599fb8ba75fbb9a51f0bc2b12bc37d91'] = 'Billing mail:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_6b69b11c69ebfc2732d060d958f17f2c'] = 'sent to billing address, as on your EnvoiMoinsCher profile, it permits you to give you your bill for sent orders.';
-
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_3296a48849590207e18fe708dde0c698'] = 'Add to cart shipping cost calculation options';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_cdbd336985d1fa6735db0c42de5765f5'] = 'Use the below options to control calculation when adding to cart or displaying cart.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_c7cf634b678ccec6573a31890e713465'] = 'Whichever option you choose, it will be limited to cart display (which will use the ranges defined for France in carrier edition pages),';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_71fecae1fd64ecede4c949ce4c5d5b7e'] = 'live quotations will always be used on carrier selection';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_1993d6ebc7ed2baacf08ba9ce7bb22e4'] = 'Add to cart options:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_6b5685a28a76052a7e78620ebd8cf374'] = 'Enable quotations for all users';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_7af7317d8ea723a8eb243a033b85d315'] = 'Disable quotations for anonymous users';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_81882fe0eb6854121e336d4ee19fac9b'] = 'Disable quotations for all users';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_bea7895813a4a26d6c7ebde426ab2942'] = 'Enabling quotations for all users will cause \"Add to cart\" action to be slower.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_54accb36bc79fd4daabb41b73c2ff1e9'] = 'Authenticated users will get a live quotation of their cart current content, anonymous users will get a live quotation based on a random address in France.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_5b816bd322d08a3133536babf5661fe2'] = 'Disabling quotations for anonymous users will cause \"Add to cart\" action to be faster for anonymous users only.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_c26275c2e60931adec058cf65dafbb28'] = 'Authenticated users will get a live quotation of their cart current content, anonymous users will get a quotation based on ranges defined for France in the carrier edition page.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_998c4ae9230c85ac5f66c5f471749d2f'] = 'For anonymous users, live quotations will only be shown on carrier selection.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_35b8989793e0f5d2277b6e20617331a4'] = 'Disabling quotations for all users will cause \"Add to cart\" action to be faster.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_b273a61370fd9c6b8d8459ed0f75ad14'] = 'Both authenticated and anonymous users will get a quotation based on ranges defined for France in the carrier edition page.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_0ceb47de4c02f5e8b7368be172620803'] = 'Live quotations will only be shown on carrier selection.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_b2d37ae1cedf42ff874289b721860af2'] = 'Logs';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_6a46073326f43ac74c35dfb05325aee7'] = 'Enable Logs:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_9e9eadc1a66becf7ccd5412ece710ecd'] = 'By selecting the log option, You will receive all errors logs if no carriers found for a specific address, errors during tracking insertion... It can help you to configure the plugin';
@@ -848,6 +892,7 @@ $_MODULE['<{envoimoinscher}prestashop>orders_table_template_5ef0c737746fae2ca90e
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_b9987a246a537f4fe86f1f2e3d10dbdb'] = 'Display';
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_94966d90747b97d1f0f206c98a8b1ac3'] = 'Send';
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_7422ce5bd4ca7fe70580111d456e5457'] = 'No order found';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_1932f12871f1ff622d5ea9901a3ddee8'] = 'Awaiting processing. Possible new trial in 5 minutes.';
 
 /*
 	--- orders_history_table_template ---
@@ -942,6 +987,11 @@ $_MODULE['<{envoimoinscher}prestashop>hookadminorder_b65adc277877c94c30eee7f17a9
 $_MODULE['<{envoimoinscher}prestashop>hookadminorder_e170e3a15923188224c1c2bd1477d451'] = 'parcel';
 
 /*
+	--- hookDisplayBeforeCarrier ---
+*/
+$_MODULE['<{envoimoinscher}prestashop>hookdisplaybeforecarrier_54c6e2beb1577a9dadb495e8d6cb6f15'] = 'This carrier is not available for this order';
+
+/*
 	--- orders ---
 */
 $_MODULE['<{envoimoinscher}prestashop>orders_94ea843837b40535ec608f0c0de771bd'] = 'Your order was successfully shipped';
@@ -1007,6 +1057,8 @@ $_MODULE['<{envoimoinscher}prestashop>send_94966d90747b97d1f0f206c98a8b1ac3'] = 
 $_MODULE['<{envoimoinscher}prestashop>send_384f92bb616556a4edf25a91b2aa814c'] = 'Multi-parcels';
 $_MODULE['<{envoimoinscher}prestashop>send_fad88feaf938901e44b2df83bb2a9631'] = 'Multi-parcels permit to send your command in many parcels instead of one: please indicate parcels number to send for this order filling a number equual or superior to 2. Let this field empty if you send one parcel.';
 $_MODULE['<{envoimoinscher}prestashop>send_209802fb858e2c83205027dbbb5d9e6c'] = 'Parcel';
+$_MODULE['<{envoimoinscher}prestashop>send_ce86a25d5a3fa07d3d86c4a70e763d49'] = 'The order is being processed, please try again in five minutes if necessary.';
+$_MODULE['<{envoimoinscher}prestashop>send_ce86a25d5a3fa07d3d86c4a70e763d49'] = 'Back to the list of commands';
 
 //test
 $_MODULE['<{envoimoinscher}prestashop>tests_f6de629d3dcb7fc240588c2740577616'] = 'EnvoiMoinsCher: shipping cost estimation';
@@ -1028,5 +1080,7 @@ $_MODULE['<{envoimoinscher}prestashop>tests_914419aa32f04011357d3b604a86d7eb'] =
 $_MODULE['<{envoimoinscher}prestashop>tests_b54dcee04ab3f47a21dd2ec9f0f87511'] = 'Price ET';
 $_MODULE['<{envoimoinscher}prestashop>tests_88b79558b512dceed954ac59a5d6cbfb'] = 'Price ATI';
 $_MODULE['<{envoimoinscher}prestashop>tests_b5a7adde1af5c87d7fd797b6245c2a39'] = 'Description';
+
+
 
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9fb35c545e67c47ee00a7bde2bf042a3'] = 'EnvoiMoinsCher is not compatible Prestashop version prior to 1.5.';

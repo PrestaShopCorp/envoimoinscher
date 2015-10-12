@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<module>
-	<name>envoimoinscher</name>
-	<displayName><![CDATA[EnvoiMoinsCher]]></displayName>
-	<version><![CDATA[3.2.1]]></version>
-	<description><![CDATA[Offer your customers a choice of delivery methods to increase your sales]]></description>
-	<author><![CDATA[EnvoiMoinsCher]]></author>
-	<tab><![CDATA[shipping_logistics]]></tab>
-	<is_configurable>1</is_configurable>
-	<need_instance>1</need_instance>
+        <module>
+            <name>envoimoinscher</name>
+            <displayName><![CDATA[EnvoiMoinsCher]]></displayName>
+            <version><![CDATA[3.3.0]]></version>
+<description><![CDATA[Offer your customers a choice of delivery methods to increase your sales]]></description>
+            <author><![CDATA[EnvoiMoinsCher]]></author>
+            <tab><![CDATA[shipping_logistics]]></tab>
+            <is_configurable>1</is_configurable>
+            <need_instance>1</need_instance>
 	<limited_countries></limited_countries>
-</module>
+        </module>

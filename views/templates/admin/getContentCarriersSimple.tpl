@@ -36,7 +36,7 @@
 	{/if}
 	
 	<br />
-	<div class="margin-form">
+	<div class="margin-form submit">
 		<input type="submit" name="btnCarriersSimple" value="{l s='Send' mod='envoimoinscher'}" class="btn btn-default" />
 	</div>
 </form>

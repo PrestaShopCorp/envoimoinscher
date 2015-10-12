@@ -24,11 +24,11 @@
  *}
 
 	{if $local_fancybox}
-		<link href="{$emcBaseDir}/views/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
-		<script type="text/javascript" src="{$emcBaseDir}/views/js/jquery.boxfancy.js"></script>
+		<link href="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
+		<script type="text/javascript" src="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/js/jquery.boxfancy.js"></script>
 	{/if}
 	{if $local_bootstrap}
-		<link href="{$emcBaseDir}/views/css/back-office-15.css" rel="stylesheet" type="text/css" media="all" />
+		<link href="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/css/back-office-15.css" rel="stylesheet" type="text/css" media="all" />
 	{/if}
 	{literal}
 	<style type="text/css">
@@ -46,7 +46,7 @@
 	var ordersIds = new Array();
 	var cartIds = new Array();
 	{foreach from=$orders key=o item=order}
-	{if $order.id_order|in_array:$noAjaxOrderIds}{else} noLabels.push("{$order.ref_emc_eor}"); ordersIds.push("{$order.idOrder}"); cartIds.push("{$order.id_cart}"); labelsToDo++; {/if}
+	{if $order.id_order|in_array:$noAjaxOrderIds}{else} noLabels.push("{$order.ref_emc_eor|escape:'htmlall':'UTF-8'}"); ordersIds.push("{$order.idOrder|escape:'htmlall':'UTF-8'}"); cartIds.push("{$order.id_cart|escape:'htmlall':'UTF-8'}"); labelsToDo++; {/if}
 	{/foreach}
 	var notChecked = new Array();
 	var allElements = new Array();

@@ -26,52 +26,50 @@
 
 function upgrade_module_3_1_7($module)
 {
-	// Remove files
-	array_map('rrmdir', glob(_PS_MODULE_DIR_."\envoimoinscher\views\*.tpl"));
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\views\Admin');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\images');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\tpl');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\js\configuration.js');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\css\_backend_styles.css');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\css\back-office.css.bak');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\AdminEnvoiMoinsCher.php');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\envoimoinscher.png');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\EnvoiMoinsCherHelper.php');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\EnvoiMoinsCherModel.php');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\EnvoiMoinsCherOrder.php');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\get_points.php');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\get_cart_prices.php');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\get_offers_opc.php');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\mondial_relay_update.php');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\put_ope.php');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\lgpl.txt');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\set_point.php');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\suivi13.php');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\tracking.php');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\UPDATE_QUERY.txt');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\override');
-	rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\Env\_WebService.php');
+    // Remove files
+    array_map('rrmdir', glob(_PS_MODULE_DIR_."\envoimoinscher\views\*.tpl"));
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\views\Admin');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\images');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\tpl');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\js\configuration.js');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\css\_backend_styles.css');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\css\back-office.css.bak');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\AdminEnvoiMoinsCher.php');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\envoimoinscher.png');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\EnvoiMoinsCherHelper.php');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\EnvoiMoinsCherModel.php');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\EnvoiMoinsCherOrder.php');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\get_points.php');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\get_cart_prices.php');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\get_offers_opc.php');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\mondial_relay_update.php');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\put_ope.php');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\lgpl.txt');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\set_point.php');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\suivi13.php');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\tracking.php');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\UPDATE_QUERY.txt');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\override');
+    rrmdir(_PS_MODULE_DIR_.'\envoimoinscher\Env\_WebService.php');
 
-	// Execute the SQL upgrade
-	$sql_file = Tools::file_get_contents(_PS_MODULE_DIR_.'/envoimoinscher/upgrade/3.1.7.sql');
-	$sql_file = str_replace('{PREFIXE}', _DB_PREFIX_, $sql_file);
+    // Execute the SQL upgrade
+    $sql_file = Tools::file_get_contents(_PS_MODULE_DIR_.'/envoimoinscher/upgrade/3.1.7.sql');
+    $sql_file = str_replace('{PREFIXE}', _DB_PREFIX_, $sql_file);
 
-	// Because any merchant can't execute every sql queries in one execute, we have to explode them.
-	$query = explode('-- REQUEST --', $sql_file);
+    // Because any merchant can't execute every sql queries in one execute, we have to explode them.
+    $query = explode('-- REQUEST --', $sql_file);
 
-	Db::getInstance()->execute('START TRANSACTION;');
-	foreach ($query as $q)
-	{
-		if (trim($q) != '' && Db::getInstance()->execute($q) === false)
-		{
-			Db::getInstance()->execute('ROLLBACK;');
-			return false;
-		}
-	}
+    Db::getInstance()->execute('START TRANSACTION;');
+    foreach ($query as $q) {
+        if (trim($q) != '' && Db::getInstance()->execute($q) === false) {
+            Db::getInstance()->execute('ROLLBACK;');
+            return false;
+        }
+    }
 
-	// Validate upgrade
-	Db::getInstance()->execute('COMMIT;');
-	return true;
+    // Validate upgrade
+    Db::getInstance()->execute('COMMIT;');
+    return true;
 }
 
 /*
@@ -80,13 +78,15 @@ function upgrade_module_3_1_7($module)
  */
 function rrmdir($dir)
 {
-	if (is_dir($dir))
-	{
-		$files = scandir($dir);
-		foreach ($files as $file)
-		if ($file != '.' && $file != '..') rrmdir("$dir/$file");
-		rmdir($dir);
-	}
-	else if (file_exists($dir)) unlink($dir);
+    if (is_dir($dir)) {
+        $files = scandir($dir);
+        foreach ($files as $file) {
+            if ($file != '.' && $file != '..') {
+                rrmdir("$dir/$file");
+            }
+        }
+        rmdir($dir);
+    } elseif (file_exists($dir)) {
+        unlink($dir);
+    }
 }
-?>

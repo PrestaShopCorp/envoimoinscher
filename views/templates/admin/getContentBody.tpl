@@ -26,9 +26,8 @@
 
 <div class="bootstrap">	
 	{if $local_bootstrap}
-		<link href="{$emcBaseDir}/views/css/back-office-15.css" rel="stylesheet" type="text/css" media="all" />
+		<link href="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/css/back-office-15.css" rel="stylesheet" type="text/css" media="all" />
 	{/if}
-	 
 	 
 	{if isset($missedValues) && count($missedValues)}
 		<div class="bootstrap">
@@ -78,7 +77,7 @@
 		</div>
 		{elseif $error.id === "API error : Invalid account payment method"}
 		<div class="bootstrap">
-			<div class="alert alert-danger error">{l s='the module in production mode requires the activation of deferred payment. to do so, go to preference tab into your' mod='envoimoinscher'} <a href="{$website_url}" target="_blank" alt="Website">{l s='account' mod='envoimoinscher'}</a> {l s='and activate the deferred payment.' mod='envoimoinscher'}</div>
+			<div class="alert alert-danger error">{l s='the module in production mode requires the activation of deferred payment. to do so, go to preference tab into your' mod='envoimoinscher'} <a href="{$website_url|escape:'htmlall':'UTF-8'}" target="_blank" alt="Website">{l s='account' mod='envoimoinscher'}</a> {l s='and activate the deferred payment.' mod='envoimoinscher'}</div>
 		</div>
 		{else}
 		<div class="bootstrap">
@@ -96,10 +95,10 @@
 			<div class="alert alert-warning warn">{l s='Your last offers update is one month old, think about updating them in the "Help" section' mod='envoimoinscher'}</div>
 		</div>
 	{/if}
-		<link href="{$emcBaseDir}/views/css/back-office.css" rel="stylesheet" type="text/css" media="all" />
+		<link href="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/css/back-office.css" rel="stylesheet" type="text/css" media="all" />
 	{if $local_fancybox}
-		<link href="{$emcBaseDir}/views/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
-		<script type="text/javascript" src="{$emcBaseDir}/views/js/jquery.boxfancy.js"></script>
+		<link href="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
+		<script type="text/javascript" src="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/js/jquery.boxfancy.js"></script>
 	{/if}
 
 	<div id="warn-online-message" class="alert alert-warning warn warning {if $EMC_config.EMC_SRV_MODE === 'online'}hidden{/if}" >
@@ -110,7 +109,7 @@
 		{$introduction}
 	</div>*}
 
-	<div class="panel EMC_box">
+	<div class="EMC_box">
 		
 		<div id="EMC_Infos">
 			<div id="emc-infos">
@@ -245,8 +244,8 @@
 	<script type="text/javascript">
 		{literal}
 		var EMC_modify = false;
-
-		$(document).ready(function() {
+    
+		$(document).ready(function() {     
 			$('#cleanCache').click(function() {
 				$('#cacheCleaning').show();
 				$.ajax({
@@ -268,7 +267,7 @@
 				});
 				return false;
 			});
-		});
+    }); 
 		
 		function loadAllCarriers(){
 			$('#carriers_update_result').html("");
@@ -355,18 +354,24 @@
 			if (carrier.parents('tr').hasClass('disabled') === false) {
 				var prices = carrier.parents('tr').find('.price').children('div');
 				var checkbox = carrier.parent('td').find('input');
+        var edit = carrier.parent().parent().find("td.edit .btn-group-action");
+        var disableEdit = carrier.parent().parent().find("td.edit .disable-edit");
 				if (value === 'true') {
 					carrier.parents('tr').find('.parcelPoint').fadeOut();
 					prices.fadeOut();
 					carrier.attr('alt', 'false');
 					checkbox.attr('checked', false);
 					carrier.attr('src', '../img/admin/disabled.gif');
+          edit.addClass("hide");
+          disableEdit.hasClass("hide") ? disableEdit.removeClass("hide") : '';
 				} else {
 					carrier.parents('tr').find('.parcelPoint').fadeIn();
 					prices.fadeIn();
 					carrier.attr('alt', 'true');
 					checkbox.attr('checked', true);
 					carrier.attr('src', '../img/admin/enabled.gif');
+          edit.removeClass('hide');
+          disableEdit.addClass('hide');
 				}
 			}
 		}
@@ -381,10 +386,10 @@
 
 				var EMC_load = false;
 				var currentValueInput = null;
-				var envUrl = "{/literal}{$envUrl}{literal}";
+				var envUrl = "{/literal}{$envUrl|escape:'htmlall':'UTF-8'}{literal}";
 				var changingEnv = false;
 				$(function(){
-					EMCGetContentAjax('{/literal}{$default_tab}{literal}');
+					EMCGetContentAjax("{/literal}{$default_tab|escape:'htmlall':'UTF-8'}{literal}");
 					$("#EMC_Menu > ul > li").click(function(){
 						// cas special de simulation
 						if ($(this).hasClass('simulator')){

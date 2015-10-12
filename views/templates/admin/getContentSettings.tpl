@@ -23,6 +23,15 @@
  * International Registred Trademark & Property of PrestaShop SA
  *}
 
+<script>
+		$(document).ready(function(){
+			$(document).delegate('#EMC_disable_cart','change',function(){
+				$('.EMC_disable_cart_description').hide();
+				$('.EMC_disable_cart_description_'+$(this).val()).show();
+			});
+		})
+</script>
+ 
 <div class="support-message">
 	<p>{l s='Settings support message' mod='envoimoinscher'}</p>
 </div>
@@ -37,7 +46,7 @@
 			<select id="EMC_track_mode" name="EMC_track_mode">
 				{if isset($modes) && $modes && sizeof($modes)}
 					{foreach from=$modes key=m item=mode}
-						<option value="{$m}" {if $EMC_config.EMC_TRACK_MODE == $m}selected="selected"{/if}>{$mode}</option>
+						<option value="{$m|escape:'htmlall':'UTF-8'}" {if $EMC_config.EMC_TRACK_MODE == $m}selected="selected"{/if}>{$mode|escape:'htmlall':'UTF-8'}</option>
 					{/foreach}
 				{/if}
 			</select>
@@ -57,7 +66,7 @@
 				<option value="">-- {l s='Please choose' mod='envoimoinscher'} --</option>
 					{if isset($states) && $states && sizeof($states)}
 						{foreach from=$states item='state'}
-							<option value="{$state.id_order_state}" {if $EMC_config.EMC_CMD == $state.id_order_state}selected="selected"{/if}>{$state.name}</option>
+							<option value="{$state.id_order_state|escape:'htmlall':'UTF-8'}" {if $EMC_config.EMC_CMD == $state.id_order_state}selected="selected"{/if}>{$state.name|escape:'htmlall':'UTF-8'}</option>
 						{/foreach}
 					{/if}
 			</select>
@@ -70,7 +79,7 @@
 				<option value="">-- {l s='Please choose' mod='envoimoinscher'} --</option>
 					{if isset($states) && $states && sizeof($states)}
 						{foreach from=$states item='state'}
-							<option value="{$state.id_order_state}" {if $EMC_config.EMC_ENVO == $state.id_order_state}selected="selected"{/if}>{$state.name}</option>
+							<option value="{$state.id_order_state|escape:'htmlall':'UTF-8'}" {if $EMC_config.EMC_ENVO == $state.id_order_state}selected="selected"{/if}>{$state.name|escape:'htmlall':'UTF-8'}</option>
 						{/foreach}
 					{/if}
 			</select>
@@ -83,7 +92,7 @@
 				<option value="">-- {l s='Please choose' mod='envoimoinscher'} --</option>
 					{if isset($states) && $states && sizeof($states)}
 						{foreach from=$states item='state'}
-							<option value="{$state.id_order_state}" {if $EMC_config.EMC_LIV == $state.id_order_state}selected="selected"{/if}>{$state.name}</option>
+							<option value="{$state.id_order_state|escape:'htmlall':'UTF-8'}" {if $EMC_config.EMC_LIV == $state.id_order_state}selected="selected"{/if}>{$state.name|escape:'htmlall':'UTF-8'}</option>
 						{/foreach}
 					{/if}
 			</select>
@@ -96,7 +105,7 @@
 				<option value="">-- {l s='Please choose' mod='envoimoinscher'} --</option>
 					{if isset($states) && $states && sizeof($states)}
 						{foreach from=$states item='state'}
-							<option value="{$state.id_order_state}" {if $EMC_config.EMC_ANN == $state.id_order_state}selected="selected"{/if}>{$state.name}</option>
+							<option value="{$state.id_order_state|escape:'htmlall':'UTF-8'}" {if $EMC_config.EMC_ANN == $state.id_order_state}selected="selected"{/if}>{$state.name|escape:'htmlall':'UTF-8'}</option>
 						{/foreach}
 					{/if}
 			</select>
@@ -123,11 +132,36 @@
 			<input type="checkbox" name="EMC_mail_bill" id="EMC_mail_bill" class="checkbox" value="1" {if isset($mailConfig.bill) && $mailConfig.bill == "true"}checked="checked"{/if} />
 		</div>
 		<div class="clear both"></div>
-	</fieldset>	
+	</fieldset>
+	<fieldset>
+		<legend>{l s='Add to cart shipping cost calculation options' mod='envoimoinscher'}</legend>
+		<p>{l s='Use the below options to control calculation when adding to cart or displaying cart.' mod='envoimoinscher'}
+		{l s='Whichever option you choose, it will be limited to cart display (which will use the ranges defined for France in carrier edition pages),' mod='envoimoinscher'} <span class="bold">{l s='live quotations will always be used on carrier selection' mod='envoimoinscher'}</span>.</p>
+		<!-- Add to cart options -->
+		<label for="EMC_disable_cart">{l s='Add to cart options:' mod='envoimoinscher'}</label>
+		<div class="margin-form">
+			<select id="EMC_disable_cart" name="EMC_disable_cart">
+        <option value="0" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) == 0}selected{/if}>{l s='Enable quotations for all users' mod='envoimoinscher'}</option>
+        <option value="1" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) == 1}selected{/if}>{l s='Disable quotations for anonymous users' mod='envoimoinscher'}</option>
+        <option value="2" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) == 2}selected{/if}>{l s='Disable quotations for all users' mod='envoimoinscher'}</option>
+			</select>
+			<p>
+				<span class="EMC_disable_cart_description EMC_disable_cart_description_0" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) != 0}style="display:none"{/if}><span class="font-size12 bold">{l s='Enabling quotations for all users will cause Add to cart action to be slower.' mod='envoimoinscher'}</span><br />
+				{l s='Authenticated users will get a live quotation of their cart current content, anonymous users will get a live quotation based on a random address in France.' mod='envoimoinscher'}</span>
+				<span class="EMC_disable_cart_description EMC_disable_cart_description_1" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) != 1}style="display:none"{/if}><span class="font-size12 bold">{l s='Disabling quotations for anonymous users will cause Add to cart action to be faster for anonymous users only.' mod='envoimoinscher'}</span><br />
+				{l s='Authenticated users will get a live quotation of their cart current content, anonymous users will get a quotation based on ranges defined for France in the carrier edition page.' mod='envoimoinscher'}<br/>
+				{l s='For anonymous users, live quotations will only be shown on carrier selection.' mod='envoimoinscher'}</span>
+				<span class="EMC_disable_cart_description EMC_disable_cart_description_2" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) != 2}style="display:none"{/if}><span class="font-size12 bold">{l s='Disabling quotations for all users will cause Add to cart action to be faster.' mod='envoimoinscher'}</span><br />
+				{l s='Both authenticated and anonymous users will get a quotation based on ranges defined for France in the carrier edition page.' mod='envoimoinscher'}<br/>
+				{l s='Live quotations will only be shown on carrier selection.' mod='envoimoinscher'}</span>
+			</p>
+		</div>
+		<div class="clear both"></div>
+	</fieldset>
 	<fieldset>
 		<legend>{l s='Logs' mod='envoimoinscher'}</legend>
-		<!-- Use AXA -->
-		<label for="EMC_use_axa">{l s='Enable Logs:' mod='envoimoinscher'}</label>
+		<!-- Logs -->
+		<label for="EMC_enabled_logs">{l s='Enable Logs:' mod='envoimoinscher'}</label>
 
 		<div class="margin-form add-tooltip" title="{l s='By selecting the log option, You will receive all errors logs if no carriers found for a specific address, errors during tracking insertion... It can help you to configure the plugin' mod='envoimoinscher'}">
 			<input type="checkbox" name="EMC_enabled_logs" id="EMC_enabled_logs" value="1" {if Tools::getValue('EMC_enabled_logs', $EMC_config.EMC_ENABLED_LOGS) == "1"} checked="checked"{/if}/>
@@ -170,7 +204,7 @@
 			<select id="EMC_filter_carriers" name="EMC_filter_carriers">
         <option value="all" {if !isset($EMC_config.EMC_FILTER_CARRIERS) || $EMC_config.EMC_FILTER_CARRIERS == "all"}selected{/if}>{l s='Show all' mod='envoimoinscher'}</option>
 					{foreach from=$enabledCarriers key=k item=v}
-						<option value="{$v['name']}" {if isset($EMC_config.EMC_FILTER_CARRIERS) && $EMC_config.EMC_FILTER_CARRIERS == $v['name']}selected{/if}>{$v['name']}</option>
+						<option value="{$v['name']|escape:'htmlall':'UTF-8'}" {if isset($EMC_config.EMC_FILTER_CARRIERS) && $EMC_config.EMC_FILTER_CARRIERS == $v['name']}selected{/if}>{$v['name']|escape:'htmlall':'UTF-8'}</option>
 					{/foreach}
 				<option value="del" {if isset($EMC_config.EMC_FILTER_CARRIERS) && $EMC_config.EMC_FILTER_CARRIERS == "del"}selected{/if}>{l s='Deleted carriers' mod='envoimoinscher'}</option>
 			</select>
@@ -189,7 +223,7 @@
 		<div class="clear both"></div>
 	</fieldset>
 	<br />
-	<div class="margin-form">
+	<div class="margin-form submit">
 		<input type="submit" name="btnSettings" id="btnSettings" class="btn btn-default" value="{l s='Send' mod='envoimoinscher'}">
 	</div>
 </form>

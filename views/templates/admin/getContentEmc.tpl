@@ -28,10 +28,11 @@
 	<script type="text/javascript" src="{$baseDir|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/js/getContentEmc.js"></script>
 	<script>
 		{if Tools::getValue('contact_etat')}
-			var contact_etat = "{Tools::getValue('contact_etat')}";
+			var contact_etat = "{Tools::getValue('contact_etat')|escape:'htmlall':'UTF-8'}";
 		{/if}
 		var siret_label_fr = "{l s='SIRET:' mod='envoimoinscher'}";
 		var siret_label_world = "{l s='Registration No. in the country:' mod='envoimoinscher'}";
+		token = "{$token|escape:'htmlall':'UTF-8'}";
 	</script>
 	
 	<div class="support-message mb10">
@@ -213,7 +214,7 @@
 			<div class="margin-form">
 				<select name="pz_iso" id="pz_iso">
 					{foreach from=$countries item='country'}
-						<option in-ue={$country.id_zone} value="{$country.iso_code}" {if !Tools::getValue('pz_iso') && $country.iso_code == "FR"} selected="selected" {elseif $country.iso_code == Tools::getValue('pz_iso')} selected="selected" {/if}>{$country.name}</option>
+						<option in-ue={$country.id_zone|escape:'htmlall':'UTF-8'} value="{$country.iso_code|escape:'htmlall':'UTF-8'}" {if !Tools::getValue('pz_iso') && $country.iso_code == "FR"} selected="selected" {elseif $country.iso_code == Tools::getValue('pz_iso')} selected="selected" {/if}>{$country.name|escape:'htmlall':'UTF-8'}</option>
 					{/foreach}
 				</select>
 			</div>

@@ -73,7 +73,7 @@
 		<div class="margin-form add-tooltip" title="{l s='Title of the person sending the commands: choose M, Mrs. or Miss' mod='envoimoinscher'}">
 			{if isset($genders) && sizeof($genders)}
 				{foreach from=$genders item='gender'}
-					<input type="radio" name="EMC_gender"{if Tools::getValue('EMC_gender', $EMC_config.EMC_CIV) == $gender} checked="checked"{/if} value="{$gender}" id="Gender_{$gender}" />
+					<input type="radio" name="EMC_gender"{if Tools::getValue('EMC_gender', $EMC_config.EMC_CIV) == $gender} checked="checked"{/if} value="{$gender|escape:'htmlall':'UTF-8'}" id="Gender_{$gender|escape:'htmlall':'UTF-8'}" />
 					<label for="Gender_{$gender|escape:'htmlall':'UTF-8'}">{l s=$gender mod='envoimoinscher'}</label>
 				{/foreach}
 			{/if}
@@ -163,7 +163,7 @@
 		<div class="margin-form add-tooltip" title="{l s='Time from which you are available for pick packages. Choose a time from the drop-down list (pickups by carriers generally begin at 12:00).' mod='envoimoinscher'}">
 			<select name="EMC_exp_start_pickup" id="EMC_exp_start_pickup">
 				{foreach from=$dispoStart key=d item=dispo}
-					<option value="{$dispo}" {if Tools::getValue('EMC_exp_start_pickup', $EMC_config.EMC_DISPO_HDE) == $dispo}selected="selected"{/if}>{$dispo}</option>
+					<option value="{$dispo|escape:'htmlall':'UTF-8'}" {if Tools::getValue('EMC_exp_start_pickup', $EMC_config.EMC_DISPO_HDE) == $dispo}selected="selected"{/if}>{$dispo|escape:'htmlall':'UTF-8'}</option>
 				{/foreach}
 			</select>
 		</div>
@@ -175,14 +175,14 @@
 		<div class="margin-form add-tooltip" title="{l s='Time from which you are not available for pick packages. Choose a time from the drop-down list (pickups by carriers generally begin at 17:00).' mod='envoimoinscher'}">
 			<select name="EMC_exp_end_pickup" id="EMC_exp_end_pickup">
 				{foreach from=$dispoEnd key=d item=dispo}
-				<option value="{$dispo}" {if Tools::getValue('EMC_exp_end_pickup', $EMC_config.EMC_DISPO_HLE) == $dispo}selected="selected"{/if}>{$dispo}</option>
+				<option value="{$dispo|escape:'htmlall':'UTF-8'}" {if Tools::getValue('EMC_exp_end_pickup', $EMC_config.EMC_DISPO_HLE) == $dispo}selected="selected"{/if}>{$dispo|escape:'htmlall':'UTF-8'}</option>
 				{/foreach}
 			</select>
 		</div>
 		<div class="clear both"></div>
 	</fieldset>
 	<br />
-	<div class="margin-form">
+	<div class="margin-form submit">
 		<input type="submit" name="btnMerchant" value="{l s='Send' mod='envoimoinscher'}" class="btn btn-default" />
 	</div>
 </form>
