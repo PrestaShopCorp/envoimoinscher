@@ -95,7 +95,7 @@
 		</div>
 	</div>
 	<br />
-	<div class="margin-form">
+	<div class="margin-form submit">
 		<input type="submit" name="btnCarriersAdvanced" value="{l s='Send' mod='envoimoinscher'}" class="btn btn-default" />
 	</div>
 </form>

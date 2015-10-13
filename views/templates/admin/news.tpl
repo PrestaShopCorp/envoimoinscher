@@ -1,4 +1,4 @@
-﻿{**
+{**
  * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
@@ -26,7 +26,7 @@
 {if $tab_news|@count > 0}
 	<h4>{l s='Last news :' mod='envoimoinscher'}</h4>
 	<ul>
-		{foreach from=$tab_news item=news}<li class="emc-{$news.type}"><b>{$news.message_short}</b> : {$news.message}</li>{/foreach}
+		{foreach from=$tab_news item=news}<li class="emc-{$news.type|escape:'htmlall':'UTF-8'}"><b>{$news.message_short}</b> : {$news.message}</li>{/foreach}
 	</ul>
 {/if}
 </div>

@@ -1,4 +1,30 @@
+SET FOREIGN_KEY_CHECKS = 0;
+-- REQUEST --
 DROP TABLE IF EXISTS `{PREFIXE}emc_categories`;
+-- REQUEST --
+DROP TABLE IF EXISTS `{PREFIXE}emc_dimensions`;
+-- REQUEST --
+DROP TABLE IF EXISTS `{PREFIXE}emc_documents`;
+-- REQUEST --
+DROP TABLE IF EXISTS `{PREFIXE}emc_operators`;
+-- REQUEST --
+DROP TABLE IF EXISTS `{PREFIXE}emc_orders`;
+-- REQUEST --
+DROP TABLE IF EXISTS `{PREFIXE}emc_orders_tmp`;
+-- REQUEST --
+DROP TABLE IF EXISTS `{PREFIXE}emc_points`;
+-- REQUEST --
+DROP TABLE IF EXISTS `{PREFIXE}emc_services`;
+-- REQUEST --
+DROP TABLE IF EXISTS `{PREFIXE}emc_operators_categories`;
+-- REQUEST --
+DROP TABLE IF EXISTS `{PREFIXE}emc_tracking`;
+-- REQUEST --
+DROP TABLE IF EXISTS `{PREFIXE}emc_cache`;
+-- REQUEST --
+DROP TABLE IF EXISTS `{PREFIXE}emc_cart_tmp`;
+-- REQUEST --
+SET FOREIGN_KEY_CHECKS = 1;
 -- REQUEST --
 CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_categories` (
 	`id_eca` int(11) NOT NULL,
@@ -92,8 +118,6 @@ INSERT INTO `{PREFIXE}emc_categories` (`id_eca`, `emc_categories_id_eca`, `name_
 (70100, 70000, "Bagages, valises, malles"),
 (70200, 70000, "Petit déménagement, cartons, effets personnels");
 -- REQUEST --
-DROP TABLE IF EXISTS `{PREFIXE}emc_dimensions`;
--- REQUEST --
 CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_dimensions` (
 	`id_ed` int(3) NOT NULL AUTO_INCREMENT,
 	`length_ed` int(3) NOT NULL,
@@ -119,8 +143,6 @@ INSERT INTO {PREFIXE}emc_dimensions (`id_ed`, `length_ed`, `width_ed`, `height_e
 (12, 56, 56, 56, 15, 20),
 (13, 57, 57, 57, 20, 50);
 -- REQUEST --
-DROP TABLE IF EXISTS `{PREFIXE}emc_documents`;
--- REQUEST --
 CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_documents` (
 	`id_ed` int(11) NOT NULL AUTO_INCREMENT,
 	`{PREFIXE}orders_id_order` int(10) unsigned NOT NULL,
@@ -131,8 +153,6 @@ CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_documents` (
 	PRIMARY KEY (`id_ed`),
 	KEY `{PREFIXE}orders_id_order` (`{PREFIXE}orders_id_order`)
 ) DEFAULT CHARSET=utf8;
--- REQUEST --
-DROP TABLE IF EXISTS `{PREFIXE}emc_operators`;
 -- REQUEST --
 CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_operators` (
 	`id_eo` int(2) NOT NULL AUTO_INCREMENT,
@@ -166,8 +186,6 @@ INSERT INTO `{PREFIXE}emc_operators` (`id_eo`, `name_eo`, `code_eo`) VALUES
 (22, "Low Cost Express", "LOCO"),
 (23, "Colis Privé", "COPR"),
 (24, "La Poste", "POFR");
--- REQUEST --
-DROP TABLE IF EXISTS `{PREFIXE}emc_orders`;
 -- REQUEST --
 CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_orders` (
 	`{PREFIXE}orders_id_order` int(10) unsigned NOT NULL,
@@ -219,10 +237,9 @@ CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_orders_post` (
 	`{PREFIXE}orders_id_order` int(10) unsigned NOT NULL,
 	`data_eopo` TEXT NOT NULL,
 	`date_eopo` DATETIME NOT NULL,
+	`type`  VARCHAR(20) NULL DEFAULT 'eem',
 	PRIMARY KEY (`{PREFIXE}orders_id_order`)
 ) DEFAULT CHARSET=utf8;
--- REQUEST --
-DROP TABLE IF EXISTS `{PREFIXE}emc_orders_tmp`;
 -- REQUEST --
 CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_orders_tmp` (
 	`{PREFIXE}orders_id_order` int(10) unsigned NOT NULL,
@@ -232,16 +249,12 @@ CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_orders_tmp` (
 	PRIMARY KEY (`{PREFIXE}orders_id_order`)
 ) DEFAULT CHARSET=utf8;
 -- REQUEST --
-DROP TABLE IF EXISTS `{PREFIXE}emc_points`;
--- REQUEST --
 CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_points` (
 	`{PREFIXE}orders_id_order` int(10) unsigned NOT NULL,
 	`point_ep` varchar(10) NOT NULL,
 	`emc_operators_code_eo` char(4) NOT NULL,
 	PRIMARY KEY (`{PREFIXE}orders_id_order`)
 ) DEFAULT CHARSET=utf8;
--- REQUEST --
-DROP TABLE IF EXISTS `{PREFIXE}emc_services`;
 -- REQUEST --
 CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_services` (
 	`id_es` int(3) NOT NULL AUTO_INCREMENT,
@@ -266,34 +279,31 @@ CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_services` (
 ) DEFAULT CHARSET=utf8;
 -- REQUEST --
 INSERT INTO `{PREFIXE}emc_services` (`id_es`, `code_es`, `emc_operators_code_eo`, `label_es`, `desc_es`, `desc_store_es`, `label_store_es`, `price_type_es`, `is_parcel_pickup_point_es`, `is_parcel_dropoff_point_es`, `family_es`, `type_es`, `pricing_es`) VALUES
-(1, "ChronoRelais", "CHRP", "Chrono Relais", "Dépôt en bureau de poste - Livraison en points relais Chronopost en 24h. L'envoi reste à disposition pendant 10 jours.", "Dépôt en bureau de poste - Livraison en points relais Chronopost en 24h. L'envoi reste à disposition pendant 10 jours.", "Chrono Relais", 0, 1, 0, 1, 1, 1),
-(2, "ChronoRelaisEurope", "CHRP", "Chrono Relais Europe", "Dépôt en bureau de poste - Livraison en point relais en 2 à 3 jours, dans certains pays d'Europe", "Dépôt en bureau de poste - livraison en point relais en 2 à 3 jours, dans certains pays d'Europe", "Chrono Relais Europe", 0, 1, 0, 1, 1, 1),
-(3, "Chrono13", "CHRP", "Chrono13", "Dépôt en bureau de poste - Livraison express à domicile, le lendemain (avant 13h), en France.Dépôt en bureau de poste si la livraison rate.", "Livraison express à domicile, le lendemain (avant 13h). Si la livraison rate, dépôt en bureau de poste", "Chrono13", 0, 0, 0, 1, 1, 1),
-(4, "Chrono18", "CHRP", "Chrono18", "Dépôt en bureau de poste - Livraison express à domicile, le lendemain (avant 18h), en France. Dépôt en bureau de poste si la livraison rate.", "Livraison express à domicile, le lendemain (avant 18h). Si la livraison rate, dépôt en bureau de poste", "Chrono18", 0, 0, 0, 1, 1, 1),
-(5, "ChronoInternationalClassic", "CHRP", "Chrono Classic", "Dépôt en bureau de poste - Livraison à domicile en 2 à 4 jours, en Europe.", "Dépôt en bureau de poste - Livraison à domicile en 2 à 4 jours, en Europe.", "Chrono Classic", 0, 0, 0, 1, 1, 1),
-(6, "EASY", "COPR", "Colis Privé EASY", "Livraison à domicile en 2 à 3 jours. En cas d'absence, 2nde présentation ou dépôt en relais. <b>Offre sous conditions de volume.</b>", "Livraison à domicile en 2 à 3 jours. En cas d'absence, 2nde présentation ou dépôt en relais Kiala", "Colis Privé EASY", 0, 0, 0, 1, 1, 1),
-(7, "DomesticExpress", "DHLE", "DHL Domestic Express", "Livraison express à domicile en 24h, en France", "Livraison express à domicile en 24h, en France", "DHL Domestic Express", 0, 0, 0, 2, 2, 1),
-(8, "ExpressWorldwide", "DHLE", "DHL Express Worldwide", "Livraison express à domicile en 24h à 72h, à l'international (hors délai de douanes)", "Livraison express à domicile en 24h à 72h (hors délai de douanes)", "DHL Express Worldwide", 0, 0, 0, 2, 2, 1),
-(9, "InternationalEconomy", "FEDX", "FedEx International Economy", "Livraison à domicile en 5 jours à l'international (hors délai de douanes)", "Livraison à domicile en 5 jours (hors délai de douanes)", "FedEx International Economy", 0, 0, 0, 2, 2, 1),
-(10, "InternationalPriority", "FEDX", "FedEx International Priority", "Livraison express à domicile, en 24h à 48h (hors délai de douanes)", "Livraison express à domicile en 24h à 48h (hors délai de douanes)", "FedEx International Priority", 0, 0, 0, 2, 2, 1),
-(11, "CpourToi", "MONR", "C.pourToi®", "Dépôt en point relais - Livraison en point relais en 3 à 5 jours, en France", "Livraison en point relais en 3 à 5 jours", "C.pourToi®", 0, 1, 1, 1, 1, 1),
-(12, "CpourToiEurope", "MONR", "C.pourToi® - Europe", "Dépôt en point relais - Livraison en point relais en 3 à 6 jours, dans certains pays d'Europe.", "Dépôt en point relais - Livraison en point relais en 3 à 6 jours, dans certains pays d'Europe.", "C.pourToi®", 0, 1, 1, 1, 1, 1),
-(13, "DomicileEurope", "MONR", "Domicile Europe", "Dépôt en point relais - Livraison à domicile en 3 à 6 jours, dans certains pays d'Europe.", "Dépôt en point relais - Livraison à domicile en 3 à 6 jours, dans certains pays d'Europe.", "Mondial Relay Domicile Europe", 0, 0, 1, 1, 2, 1),
-(14, "ColissimoAccess", "POFR", "La Poste Colissimo Access France", "Délai indicatif de 48h en jours ouvrables pour les envois en France métropolitaine. Remise sans signature.", "Livraison à domicile en 48h", "La Poste Colissimo Access France. Remise sans signature.", 0, 0, 0, 1, 1, 1),
-(15, "ColissimoExpert", "POFR", "La Poste Colissimo Expert France", "Délai indicatif de 48h en jours ouvrables pour les envois en France métropolitaine. Remise contre signature.", "Livraison à domicile en 48h", "La Poste Colissimo Expert France. Remise contre signature.", 0, 0, 0, 1, 1, 1),
-(16, "ExpressStandard", "SODX", "Express Standard", "Livraison à domicile en 2 à 3 jours, en France", "Livraison à domicile en 2 à 3 jours", "Express Standard", 0, 0, 0, 1, 1, 1),
-(17, "ExpressStandardInterColisMarch", "SODX", "Inter Express Standard", "Livraison à domicile en 7 à 10 jours, à l'international (hors délai de douanes)", "Livraison à domicile en 7 à 10 jours (hors délai de douanes)", "Inter Express Standard", 0, 0, 0, 2, 2, 1),
-(18, "RelaisColis", "SOGP", "Relais Colis eco", "Dépôt en Relais Colis - Livraison en Relais Colis en 10 jours, en France", "Livraison en Relais Colis en 10 jours", "Relais Colis®", 0, 1, 1, 1, 1, 1),
-(19, "ExpressNational", "TNTE", "13:00 Express", "Livraison express à domicile le lendemain (avant 13h), en France", "Livraison express à domicile le lendemain (avant 13h)", "13:00 Express", 1, 0, 0, 1, 1, 1),
-(20, "EconomyExpressInternational", "TNTE", "Economy Express", "Livraison à domicile en 2 à 5 jours, à l'international (hors délai de douanes)", "Livraison à domicile en 2 à 5 jours (hors délai de douanes)", "Economy Express", 0, 0, 0, 2, 2, 1),
-(21, "ExpressInternationalColis", "TNTE", "Express International", "Livraison à domicile en 1 à 7 jours, à l'international (hors délai de douanes)", "Livraison à domicile en 1 à 7 jours (hors délai de douanes)", "Express International", 0, 0, 0, 2, 2, 1),
-(22, "Standard", "UPSE", "UPS Standard", "Livraison à domicile en 24h à 72h (avant 19h), en France et dans les pays européens", "Livraison à domicile en 24h à 72h (avant 19h)", "UPS Standard", 0, 0, 0, 2, 2, 1),
-(23, "ExpressSaver", "UPSE", "UPS Express Saver", "Livraison à domicile en 72h  (avant 19h), à l'international  (hors délai de douanes)", "Livraison à domicile en 72h (avant 19h, hors délai de douanes)", "UPS Express Saver", 0, 0, 0, 1, 1, 1),
-(24, "StandardAP",	"UPSE",	"UPS Standard Access Point",	"Livraison en point relais en 24h à 72h (avant 19h), en France et dans les pays européens",	"Livraison en point relais en 24h à 72h (avant 19h)",	"UPS Standard Access Point",	0,	1,	0,	2,	2,	1);
+(1, "ChronoRelais", "CHRP", "Chronopost (Chrono Relais)", "Dépôt en bureau de poste - Livraison en point relais en 24h, en France.", "Livraison en point relais en 24h.", "Chronopost (Chrono Relais)", 0, 1, 0, 1, 1, 1),
+(2, "ChronoRelaisEurope", "CHRP", "Chronopost (Chrono Relais Europe)", "Dépôt en bureau de poste - Livraison en point relais en 2 à 3 jours, en France, en Allemagne et en Benelux.", "Livraison en point relais en 2 à 3 jours.", "Chronopost (Chrono Relais Europe)", 0, 1, 0, 1, 3, 1),
+(3, "Chrono13", "CHRP", "Chronopost (Chrono13)", "Dépôt en bureau de poste - Livraison express à domicile, le lendemain avant 13h, en France.", "Livraison express à domicile, le lendemain avant 13h. Dépôt en bureau de poste si la livraison échoue.", "Chronopost (Chrono13)", 0, 0, 0, 1, 1, 1),
+(4, "Chrono18", "CHRP", "Chronopost (Chrono18)", "Dépôt en bureau de poste - Livraison express à domicile, le lendemain avant 18h, en France.", "Livraison express à domicile, le lendemain avant 18h. Dépôt en bureau de poste si la livraison échoue.", "Chronopost (Chrono18)", 0, 0, 0, 1, 1, 1),
+(5, "ChronoInternationalClassic", "CHRP", "Chronopost (Chrono Classic)", "Dépôt en bureau de poste - Livraison à domicile en 2 à 4 jours, en Europe (hors France).", "Livraison à domicile en 2 à 4 jours.", "Chronopost (Chrono Classic)", 0, 0, 0, 1, 2, 1),
+(6, "EASY", "COPR", "Colis Privé (EASY)", "Livraison à domicile en 2 à 3 jours. Offre sous conditions de volume. ", "Livraison à domicile en 2 à 3 jours. En cas d'absence, 2nde présentation ou dépôt en relais.", "Colis Privé (EASY)", 0, 0, 0, 1, 1, 1),
+(7, "DomesticExpress", "DHLE", "DHL (Domestic Express)", "Livraison express à domicile en 24h, en France.", "Livraison express à domicile en 24h, en France.", "DHL (Domestic Express)", 0, 0, 0, 2, 1, 1),
+(8, "ExpressWorldwide", "DHLE", "DHL (Express Worldwide)", "Livraison express à domicile en 24h à 72h, à l'international (hors délai de douanes). ", "Livraison express à domicile en 24h à 72h (hors délai de douanes).", "DHL (Express Worldwide)", 0, 0, 0, 2, 2, 1),
+(9, "InternationalEconomy", "FEDX", "FedEx (International Economy)", "Livraison à domicile en 5 jours, à l'international (hors délai de douanes).", "Livraison à domicile en 5 jours (hors délai de douanes).", "FedEx (International Economy)", 0, 0, 0, 2, 2, 1),
+(10, "InternationalPriorityCC", "FEDX", "FedEx (International Priority)", "Livraison express à domicile, en 24h à 48h, à l'international (hors délai de douanes).", "Livraison express à domicile, en 24h à 48h (hors délai de douanes).", "FedEx (International Priority)", 0, 0, 0, 2, 2, 1),
+(11, "CpourToi", "MONR", "Mondial Relay (C.pourToi®)", "Dépôt en point relais - Livraison en point relais en 3 à 5 jours, en France. ", "Livraison en point relais en 3 à 5 jours.", "Mondial Relay (C.pourToi®)", 0, 1, 1, 1, 1, 1),
+(12, "CpourToiEurope", "MONR", "Mondial Relay (C.pourToi® - Europe)", "Dépôt en point relais - Livraison en point relais en 3 à 6 jours, en Belgique, en Luxembourg et en Espagne.", "Livraison en point relais en 3 à 6 jours.", "Mondial Relay (C.pourToi® - Europe)", 0, 1, 1, 1, 3, 1),
+(13, "DomicileEurope", "MONR", "Mondial Relay (Domicile Europe)", "Dépôt en point relais - Livraison à domicile en 3 à 6 jours, dans certains pays d'Europe (hors France).", "Livraison à domicile en 3 à 6 jours.", "Mondial Relay (Domicile Europe)", 0, 0, 1, 1, 3, 1),
+(14, "ColissimoAccess", "POFR", "La Poste (Colissimo Access France)", "Délai indicatif de 48h en jours ouvrables pour les envois en France métropolitaine. Remise sans signature.", "Livraison à domicile en 48h. Remise sans signature.", "La Poste (Colissimo Access France)", 0, 0, 0, 1, 1, 1),
+(15, "ColissimoExpert", "POFR", "La Poste (Colissimo Expert France)", "Délai indicatif de 48h en jours ouvrables pour les envois en France métropolitaine. Remise contre signature.", "Livraison à domicile en 48h. Remise contre signature.", "La Poste (Colissimo Expert France)", 0, 0, 0, 1, 1, 1),
+(16, "ExpressStandard", "SODX", "Sodexi (Express Standard)", "Livraison à domicile en 2 à 3 jours, en France.", "Livraison à domicile en 2 à 3 jours.", "Sodexi (Express Standard)", 0, 0, 0, 1, 1, 1),
+(17, "ExpressStandardInterColisMarch", "SODX", "Sodexi (Inter Express Standard)", "Livraison à domicile en 7 à 10 jours, à l'international (hors délai de douanes).", "Livraison à domicile en 7 à 10 jours (hors délai de douanes).", "Sodexi (Inter Express Standard)", 0, 0, 0, 2, 2, 1),
+(18, "RelaisColis", "SOGP", "Relais Colis (Eco)", "Dépôt en Relais Colis - Livraison en Relais Colis en 10 jours, en France.", "Livraison en Relais Colis en 10 jours.", "Relais Colis® (Eco)", 0, 1, 1, 1, 1, 1),
+(19, "ExpressNational", "TNTE", "TNT (13:00 Express)", "Livraison express à domicile le lendemain avant 13h, en France.", "Livraison express à domicile le lendemain avant 13h.", "TNT (13:00 Express)", 0, 0, 0, 1, 1, 1),
+(20, "EconomyExpressInternational", "TNTE", "TNT (Economy Express)", "Livraison à domicile en 2 à 5 jours, à l'international (hors délai de douanes).", "Livraison à domicile en 2 à 5 jours (hors délai de douanes).", "TNT (Economy Express)", 0, 0, 0, 2, 2, 1),
+(22, "Standard", "UPSE", "UPS (Standard)", "Livraison à domicile en 24h à 72h (avant 19h), en France et à l'international (hors délai de douanes).", "Livraison à domicile en 24h à 72h (avant 19h)", "UPS (Standard)", 0, 0, 0, 2, 3, 1),
+(23, "ExpressSaver", "UPSE", "UPS (Express Saver)", "Livraison à domicile en 72h avant 19h, en France et à l'international  (hors délai de douanes).", "Livraison à domicile en 72h avant 19h (hors délai de douanes).", "UPS (Express Saver)", 0, 0, 0, 2, 2, 1),
+(24, "StandardAP", "UPSE", "UPS (Standard Access Point)", "Livraison en point relais en 24h à 72h (avant 19h), en France et dans les pays européens.", "Livraison en point relais en 24h à 72h (avant 19h).", "UPS (Standard Access Point)", 0, 1, 0, 2, 3, 1),
+(25, "PackSuiviEurope", "IMXE", "Happy Post (PackSuiviEurope)", "Dépôt en point relais - Livraison à domicile en 3 à 9 jours, en Europe (hors France).", "Livraison à domicile en 3 à 9 jours.", "Happy Post (PackSuiviEurope)", 0, 0, 1, 1, 3, 1);
 
-;
--- REQUEST --
-DROP TABLE IF EXISTS `{PREFIXE}emc_operators_categories`;
 -- REQUEST --
 CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_operators_categories` (
 	`id_eoca` int(11) NOT NULL AUTO_INCREMENT,
@@ -333,8 +343,6 @@ INSERT INTO `{PREFIXE}emc_operators_categories` (id_eo, id_eca) VALUES
 (10, 50420), (10, 50430), (10, 50450), (10, 60100), (10, 60102), (10, 60108), (10, 60110),  (10, 60120),
 (10, 60124), (10, 60129), (10, 60130), (10, 70100), (10, 70200);
 -- REQUEST --
-DROP TABLE IF EXISTS `{PREFIXE}emc_tracking`;
--- REQUEST --
 CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_tracking` (
 	`id_et` int(11) NOT NULL AUTO_INCREMENT,
 	`{PREFIXE}orders_id_order` int(10) unsigned NOT NULL,
@@ -346,21 +354,15 @@ CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_tracking` (
 	KEY `{PREFIXE}orders_id_order` (`{PREFIXE}orders_id_order`)
 ) DEFAULT CHARSET=utf8;
 -- REQUEST --
-DROP TABLE IF EXISTS `{PREFIXE}emc_api_pricing`;
--- REQUEST --
-CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_api_pricing` (
-	`id_ap` VARCHAR(255) NOT NULL,
-	`{PREFIXE}cart_id_cart` int(10) unsigned NOT NULL,
-	`prices_eap` text NOT NULL,
-	`price_eap` float NOT NULL DEFAULT 0,
-	`date_eap` DATETIME NOT NULL,
-	`carriers_eap` TEXT NOT NULL,
-	`treated_eap` TEXT,
-	`free_shipping_eap` INT(1) NOT NULL COMMENT "0 - no, 1 - yes",
-	`point_eap` VARCHAR( 40 ),
-	`order_done_eap` INT(1) NOT NULL COMMENT "0 - not done, 1 - done" DEFAULT 0,
-	`points_eap` TEXT NOT NULL,
-	`date_delivery` TEXT NOT NULL,
-	PRIMARY KEY (`id_ap`)
+CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_cache` (
+	`cache_key` VARCHAR(255) NOT NULL,
+	`cache_data` longtext NOT NULL,
+	`expiration_date` DATETIME NOT NULL,
+	PRIMARY KEY (`cache_key`)
 ) DEFAULT CHARSET=utf8;
-
+-- REQUEST --
+CREATE TABLE IF NOT EXISTS `{PREFIXE}emc_cart_tmp` (
+	`id_cart` int(10) NOT NULL,
+	`selected_point` VARCHAR(40) NOT NULL,
+	PRIMARY KEY (`id_cart`)
+) DEFAULT CHARSET=utf8;

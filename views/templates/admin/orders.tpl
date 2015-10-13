@@ -49,12 +49,12 @@
 	<link type="text/css" rel="stylesheet" href="{$baseDir|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/css/backend_styles.css" />
 
 	{if $local_fancybox}
-		<link href="{$emcBaseDir}/views/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
-		<script type="text/javascript" src="{$emcBaseDir}/views/js/jquery.boxfancy.js"></script>
+		<link href="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
+		<script type="text/javascript" src="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/js/jquery.boxfancy.js"></script>
 	{/if}
 	
 	{if $local_bootstrap}
-		<link href="{$emcBaseDir}/views/css/back-office-15.css" rel="stylesheet" type="text/css" media="all" />
+		<link href="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/css/back-office-15.css" rel="stylesheet" type="text/css" media="all" />
 	{/if}
 
 	<div class="bootstrap">

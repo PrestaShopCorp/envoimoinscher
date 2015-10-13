@@ -23,61 +23,67 @@
  * International Registred Trademark & Property of PrestaShop SA
  */
 
- $(function(){
-	// click on Title
-	$(".openable-title").click(function() 
-	{
-		if ($(this).hasClass("closed")) {
-			//HIDE OTHERS
-			$others = $(".openable-title.opened");
-			$others.next().toggle("fast");
-			$others.removeClass("opened");
-			$others.addClass("closed");
-			$others.children(":first-child").children(":first-child").children(":first-child").attr("src",
-					window.emcBaseDir+"/views/img/arrow_right.png");
-			//SHOW
-			$(this).next().toggle("fast");
-			$(this).addClass("opened");
-			$(this).removeClass("closed");
-			$(this).children(":first-child").children(":first-child").children(":first-child").attr("src",
-					window.emcBaseDir+"/views/img/arrow_down.png");
-		} else {
-			$(this).next().toggle("fast");
-			$(this).addClass("closed");
-			$(this).removeClass("opened");
-			$(this).children(":first-child").children(":first-child").children(":first-child").attr("src",
-					window.emcBaseDir+"/views/img/arrow_right.png");
-		}
-	});
+$(function () {
+    // click on Title
+    $(".openable-title").click(function () {
+        if ($(this).hasClass("closed")) {
+            //HIDE OTHERS
+            $others = $(".openable-title.opened");
+            $others.next().toggle("fast");
+            $others.removeClass("opened");
+            $others.addClass("closed");
+            $others.children(":first-child").children(":first-child").children(":first-child").attr(
+                "src",
+                window.emcBaseDir + "/views/img/arrow_right.png"
+            );
+            //SHOW
+            $(this).next().toggle("fast");
+            $(this).addClass("opened");
+            $(this).removeClass("closed");
+            $(this).children(":first-child").children(":first-child").children(":first-child").attr(
+                "src",
+                window.emcBaseDir + "/views/img/arrow_down.png"
+            );
+        } else {
+            $(this).next().toggle("fast");
+            $(this).addClass("closed");
+            $(this).removeClass("opened");
+            $(this).children(":first-child").children(":first-child").children(":first-child").attr(
+                "src",
+                window.emcBaseDir + "/views/img/arrow_right.png"
+            );
+        }
+    });
 
-	// open the first title
-	$(".openable-title:first-child").next().toggle("fast");
-	$(".openable-title:first-child").addClass("opened");
-	$(".openable-title:first-child").removeClass("closed");
-	$(".openable-title:first-child").children(":first-child").children(":first-child").children(":first-child").attr("src",
-			window.emcBaseDir+"/views/img/arrow_down.png");
+    // open the first title
+    $(".openable-title:first-child").next().toggle("fast");
+    $(".openable-title:first-child").addClass("opened");
+    $(".openable-title:first-child").removeClass("closed");
+    $(".openable-title:first-child").children(":first-child").children(":first-child").children(":first-child").attr(
+        "src",
+        window.emcBaseDir + "/views/img/arrow_down.png"
+    );
 
 
-	// clic on subtitle 
-	$(".subtitle").click(function() 
-	{
-		if ($(this).hasClass("closed")) {
-			//HIDE OTHERS
-			$others = $(".subtitle.opened");
-			$others.next().toggle("fast");
-			$others.removeClass("opened");
-			$others.addClass("closed");
+    // clic on subtitle
+    $(".subtitle").click(function () {
+        if ($(this).hasClass("closed")) {
+            //HIDE OTHERS
+            $others = $(".subtitle.opened");
+            $others.next().toggle("fast");
+            $others.removeClass("opened");
+            $others.addClass("closed");
 
-			//SHOW
-			$(this).next().toggle("fast");
-			$(this).addClass("opened");
-			$(this).removeClass("closed");
+            //SHOW
+            $(this).next().toggle("fast");
+            $(this).addClass("opened");
+            $(this).removeClass("closed");
 
-		} else {
-			$(this).next().toggle("fast");
-			$(this).addClass("closed");
-			$(this).removeClass("opened");
+        } else {
+            $(this).next().toggle("fast");
+            $(this).addClass("closed");
+            $(this).removeClass("opened");
 
-		}
-	});
+        }
+    });
 });

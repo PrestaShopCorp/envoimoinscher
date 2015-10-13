@@ -18,6 +18,6 @@ ALTER TABLE `{PREFIXE}emc_tracking`
 ADD FOREIGN KEY (`{PREFIXE}orders_id_order`)
 REFERENCES `{PREFIXE}orders` (`id_order`) ON DELETE CASCADE ;
 -- REQUEST --
-ALTER TABLE `{PREFIXE}emc_api_pricing`
+ALTER TABLE `{PREFIXE}emc_cart_tmp`
 ADD FOREIGN KEY (`{PREFIXE}cart_id_cart`)
 REFERENCES `{PREFIXE}cart` (`id_cart`) ON DELETE CASCADE ;

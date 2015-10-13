@@ -26,38 +26,35 @@
 
 function upgrade_module_3_2_0($module)
 {
-	delTree(_PS_MODULE_DIR_.'/envoimoinscher/img/');
-	delTree(_PS_MODULE_DIR_.'/envoimoinscher/css/');
-	delTree(_PS_MODULE_DIR_.'/envoimoinscher/js/');
+    delTree(_PS_MODULE_DIR_.'/envoimoinscher/img/');
+    delTree(_PS_MODULE_DIR_.'/envoimoinscher/css/');
+    delTree(_PS_MODULE_DIR_.'/envoimoinscher/js/');
 
-	// Execute the SQL upgrade
-	$sql_file = Tools::file_get_contents(_PS_MODULE_DIR_.'/envoimoinscher/upgrade/3.2.0.sql');
-	$sql_file = str_replace('{PREFIXE}', _DB_PREFIX_, $sql_file);
+    // Execute the SQL upgrade
+    $sql_file = Tools::file_get_contents(_PS_MODULE_DIR_.'/envoimoinscher/upgrade/3.2.0.sql');
+    $sql_file = str_replace('{PREFIXE}', _DB_PREFIX_, $sql_file);
 
-	// Because any merchant can't execute every sql queries in one execute, we have to explode them.
-	$query = explode('-- REQUEST --', $sql_file);
+    // Because any merchant can't execute every sql queries in one execute, we have to explode them.
+    $query = explode('-- REQUEST --', $sql_file);
 
-	Db::getInstance()->execute('START TRANSACTION;');
-	foreach ($query as $q)
-	{
-		if (trim($q) != '' && Db::getInstance()->execute($q) === false)
-		{
-			Db::getInstance()->execute('ROLLBACK;');
-			return false;
-		}
-	}
-	// Validate upgrade
-	Db::getInstance()->execute('COMMIT;');
+    Db::getInstance()->execute('START TRANSACTION;');
+    foreach ($query as $q) {
+        if (trim($q) != '' && Db::getInstance()->execute($q) === false) {
+            Db::getInstance()->execute('ROLLBACK;');
+            return false;
+        }
+    }
+    // Validate upgrade
+    Db::getInstance()->execute('COMMIT;');
 
-	return true;
+    return true;
 }
 
-function delTree($dir) {
-	$files = array_diff(scandir($dir), array('.','..'));
-	foreach ($files as $file)
-	{
-		(is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
-	}
-	return rmdir($dir);
+function delTree($dir)
+{
+    $files = array_diff(scandir($dir), array('.','..'));
+    foreach ($files as $file) {
+        (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
+    }
+    return rmdir($dir);
 }
-?>

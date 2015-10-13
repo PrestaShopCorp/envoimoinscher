@@ -32,22 +32,22 @@
 .configForm tr td select.smallSelect {width:auto;}
 .configForm tr.hiddenRow {display:none;}
 .margin-form {clear:both; padding-left:0px; padding-right:10px;}
-#confGen .configForm li, #confSrv .configForm li {list-style:none; margin-bottom:10px;} 
+#confGen .configForm li, #confSrv .configForm li {list-style:none; margin-bottom:10px;}
 .offersList {float:left;display:inline; }
-.offersList td label {float:none; padding-left:10px;} 
+.offersList td label {float:none; padding-left:10px;}
 #menuTab li {float:left; display:inline; list-style:none; padding:5px;
 background: #EFEFEF; font-weight:bold;}
 #menuTab .selected {background: #FFF6D3; border: 1px solid #CCCCCC; border-bottom:none;}
 .hidden {display:none;}
 #confGen input, #confGen textarea{width:210px;}
 #confGen input.checkbox {width:auto;}
-#offersBody tr td {color: #000000;}
+#offersBody tr td {color: 1000000;}
 #confGen .testForm tr td {width:auto;}
 .nmlLabel {float:none; font-weight:normal; margin-left:5px; font-size:11px;}
 .box-left {width: 49%; margin-right:2%; float:left;}
 .box-right {width: 49%; float:left; display:inline;}
 .formTable tr td {padding:10px 0;}
-.table tr td {color: #000000;}
+.table tr td {color: 1000000;}
 .table td.paddingTableTd {padding-left:10px;}
 .borderBlock {width:250px; float:left; padding:10px; border:1px solid #DFD5C3; margin-right:10px;}
 #modeSrv {margin-bottom:15px;}
@@ -71,12 +71,12 @@ width:100%;
 }
 
 .clearfix{
-	clear: both;
+    clear: both;
 }
 
 #emc-news{
 font-size:15px;
-padding:0 0 20px 0;
+padding:5px 0 20px 0;
 float:right;
 width:50%;
 height:auto;
@@ -90,39 +90,32 @@ height:30px;
 }
 
 #emc-news ul{
-height:170px;
-overflow-y:auto;
 list-style-type:none;
+padding: 0;
 }
 
 #emc-news li {
-margin-left:auto;
-max-width:800px;
-border: 1px solid #999;
-padding:3px 8px;
-margin-bottom:5px;
-border-radius:5px;
-box-shadow: 0 0 11px #999;
+max-width: 800px;
+padding: 8px 8px 8px 20px;
+margin-bottom: 5px;
+padding-left: 20px;
+font-size: 12px;
 }
 
 .emc-alert{
-background-color:#FFEEEE;
+border-left: solid 3px #d99898;
+background-color: #fcf0f0;
+color: #ab6565;
 }
 .emc-info{
-background-color:#EEEEFF;
+border-left: solid 3px #5495b8;
+background-color: #f5faff;
+color: #4e799c;
 }
 .emc-update{
-background-color:#EEFFEE;
-}
-
-.emc-alert b{
-color:red;
-}
-.emc-info b{
-color:blue;
-}
-.emc-update b{
-color:green;
+border-left: solid 3px #b9db9a;
+background-color: #f5fcf2;
+color: #7c8a67;
 }
 
 .alert_size,
@@ -300,8 +293,8 @@ display:none !important;
 }
 
 .btn.btn-default.filter:hover{
-  background:#00aff0;
-  border-color:#008abd !important;
+  background:100aff0;
+  border-color:1008abd !important;
   color:#fff;
   text-shadow:none;
 }
@@ -319,8 +312,6 @@ height:760px !important;
 
 .bootstrap .panel {
 font: 400 12px/1.42857 "Open Sans",Helvetica,Arial,sans-serif;
-background-color: #ebedf4 !important;
-border: 1px solid #ccced7 !important;
 box-sizing: border-box;
 color: #585a69;
 float: left;
@@ -328,14 +319,26 @@ margin: 0 0 10px !important;
 padding: 1em !important;
 width: 100%;
 box-shadow:none !important;
+border: 1px solid #ddd !important;
+background-color: #fafcff !important;
 }
 
+.bootstrap .panel fieldset{
+border: 1px solid #ddd !important;
+background-color: #fafcff !important;  
+}
+
+.bootstrap .table>thead:first-child>tr:first-child>th{
+  text-align: center;
+  background-color: #fff;
+  padding: 15px 0;
+}
 .bootstrap .warn{
 padding-bottom:13px !important;
 }
 
 #ORDERSTABLE, #ORDERSTABLE1{
-	border: 1px solid #ccc;
+    border: 1px solid #ddd;
 }
 
 .table tr th {
@@ -349,11 +352,11 @@ padding-bottom:13px !important;
 
 /* filters design */
 .filters-box{
-	background-color: #ebedf4;
-	border: 1px solid #ccced7 !important;
-	color: #585a69;
-	margin: 0 0 10px 0 !important;
-	padding:13px !important;
+    background-color: #ebedf4;
+    border: 1px solid #ccced7 !important;
+    color: #585a69;
+    margin: 0 0 10px 0 !important;
+    padding:13px !important;
 }
 
 .inline-block{ display: inline-block; }

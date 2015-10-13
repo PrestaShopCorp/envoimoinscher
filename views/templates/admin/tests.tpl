@@ -37,21 +37,21 @@
           <td><label for="product">{l s='Choose a product : ' mod='envoimoinscher'}</label></td>
           <td><select name="product" id="product">
   {foreach from=$products key=p item=product}
-            <option value="{$product.value}" {if isset($postData.product) && $postData.product == $product.value}selected="selected"{/if}>{$product.name}</option>
+            <option value="{$product.value|escape:'htmlall':'UTF-8'}" {if isset($postData.product) && $postData.product == $product.value}selected="selected"{/if}>{$product.name|escape:'htmlall':'UTF-8'}</option>
   {/foreach}
           </select></td>
         </tr>
         <tr>
           <td><label for="fromPostalCode">{l s='Departure zipcode : ' mod='envoimoinscher'}</label></td>
-          <td><input type="text" name="fromPostalCode" id="fromPostalCode" value="{if isset($postData.fromPostalCode) && $postData.fromPostalCode != ""}{$postData.fromPostalCode|escape:'htmlall':'UTF-8'}{else}{$configEmc.EMC_POSTALCODE}{/if}" /></td>
+          <td><input type="text" name="fromPostalCode" id="fromPostalCode" value="{if isset($postData.fromPostalCode) && $postData.fromPostalCode != ""}{$postData.fromPostalCode|escape:'htmlall':'UTF-8'}{else}{$configEmc.EMC_POSTALCODE|escape:'htmlall':'UTF-8'}{/if}" /></td>
         </tr>
         <tr>
           <td><label for="fromCity">{l s='Departure city : ' mod='envoimoinscher'}</label></td>
-          <td><input type="text" name="fromCity" id="fromCity" value="{if isset($postData.fromCity) && $postData.fromCity != ''}{$postData.fromCity|escape:'htmlall':'UTF-8'}{else}{$configEmc.EMC_CITY}{/if}" /></td>
+          <td><input type="text" name="fromCity" id="fromCity" value="{if isset($postData.fromCity) && $postData.fromCity != ''}{$postData.fromCity|escape:'htmlall':'UTF-8'}{else}{$configEmc.EMC_CITY|escape:'htmlall':'UTF-8'}{/if}" /></td>
         </tr>
         <tr>
           <td><label for="fromAddr">{l s='Departure address : ' mod='envoimoinscher'}</label></td>
-          <td><input type="text" name="fromAddr" id="fromAddr" value="{if isset($postData.fromAddr) && $postData.fromAddr != ''}{$postData.fromAddr|escape:'htmlall':'UTF-8'}{else}{$configEmc.EMC_ADDRESS}{/if}" /></td>
+          <td><input type="text" name="fromAddr" id="fromAddr" value="{if isset($postData.fromAddr) && $postData.fromAddr != ''}{$postData.fromAddr|escape:'htmlall':'UTF-8'}{else}{$configEmc.EMC_ADDRESS|escape:'htmlall':'UTF-8'}{/if}" /></td>
         </tr>
         <tr>
           <td><label for="toPostalCode">{l s='Destination\'s zipcode : ' mod='envoimoinscher'}</label></td>
@@ -68,9 +68,9 @@
         <tr>
           <td><label for="toCountry">{l s='Destination\'s country : ' mod='envoimoinscher'}</label></td>
           <td><select name="toCountry" id="toCountry">
-  {foreach from=$countries key=c item=country}
-            <option value="{$country.iso_code}" {if (isset($postData.toCountry) && $postData.toCountry == $country.iso_code) || (!isset($postData.toCountry) && $country.iso_code == 'FR')}selected="selected"{/if}>{$country.name}</option>
-  {/foreach}
+            {foreach from=$countries key=c item=country}
+              <option value="{$country.iso_code|escape:'htmlall':'UTF-8'}" {if (isset($postData.toCountry) && $postData.toCountry == $country.iso_code) || (!isset($postData.toCountry) && $country.iso_code == 'FR')}selected="selected"{/if}>{$country.name|escape:'htmlall':'UTF-8'}</option>
+            {/foreach}
           </select></td>
         </tr>
       </tbody>
@@ -95,10 +95,10 @@
       </tr> 
     {foreach from=$offers key=o item=offer}
       <tr {if $o%2 == 0}class="alt_row"{/if}>
-        <td>{$offer.service.label|escape:'htmlall':'UTF-8'}</td>
-        <td>{$offer.operator.label|escape:'htmlall':'UTF-8'}</td>
-        <td>{$offer.priceHT|escape:'htmlall':'UTF-8'} €</td>
-        <td>{$offer.priceTTC_client|escape:'htmlall':'UTF-8'} €</td>
+        <td>{$offer.service|escape:'htmlall':'UTF-8'}</td>
+        <td>{$offer.operator|escape:'htmlall':'UTF-8'}</td>
+        <td>{$offer.priceHT|escape:'htmlall':'UTF-8'} {$offer.currencySign|escape:'htmlall':'UTF-8'}</td>
+        <td>{$offer.priceTTC|escape:'htmlall':'UTF-8'} {$offer.currencySign|escape:'htmlall':'UTF-8'}</td>
         <td>{$offer.characteristics}</td>
       </tr>
     {/foreach}

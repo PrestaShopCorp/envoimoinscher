@@ -25,22 +25,22 @@
 
 	<script type="text/javascript">
 	{literal}
-	var baseWeight = "{/literal}{$weight}{literal}";
-	var baseHeight = "{/literal}{$dimensions.height_ed}{literal}";
-	var baseLength = "{/literal}{$dimensions.length_ed}{literal}";
-	var baseWidth = "{/literal}{$dimensions.width_ed}{literal}";
-	var orderId = "{/literal}{$orderId}{literal}";
-	var token = "{/literal}{Tools::getValue('token')}{literal}";
-	var emcBaseDir = "{/literal}{$moduleBaseDir}{literal}";
-	var envUrl = "{/literal}{$envUrl}{literal}";
+	var baseWeight = "{/literal}{$weight|escape:'htmlall':'UTF-8'}{literal}";
+	var baseHeight = "{/literal}{$dimensions.height_ed|escape:'htmlall':'UTF-8'}{literal}";
+	var baseLength = "{/literal}{$dimensions.length_ed|escape:'htmlall':'UTF-8'}{literal}";
+	var baseWidth = "{/literal}{$dimensions.width_ed|escape:'htmlall':'UTF-8'}{literal}";
+	var orderId = "{/literal}{$orderId|escape:'htmlall':'UTF-8'}{literal}";
+	var token = "{/literal}{Tools::getValue('token')|escape:'htmlall':'UTF-8'}{literal}";
+	var emcBaseDir = "{/literal}{$moduleBaseDir|escape:'htmlall':'UTF-8'}{literal}";
+	var envUrl = "{/literal}{$envUrl|escape:'htmlall':'UTF-8'}{literal}";
 	{/literal}
 	</script>
 	<script type="text/javascript" src="{$baseDirCss|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/js/send.js"></script>
 	<link type="text/css" rel="stylesheet" href="{$baseDirCss|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/css/backend_styles.css" />
 	<link type="text/css" rel="stylesheet" href="{$baseDirCss|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/css/backend_styles.css" />
 	{if !$local_fancybox}
-		<link href="{$emcBaseDir}/views/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
-		<script type="text/javascript" src="{$emcBaseDir}/views/js/jquery.boxfancy.js"></script>
+		<link href="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
+		<script type="text/javascript" src="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/js/jquery.boxfancy.js"></script>
 	{/if}
 	
 	<script type="text/javascript">
@@ -56,7 +56,13 @@
 	
 	<div class="bootstrap">
 
-	{if $alreadyPassed}
+	{if $isSendLocked}
+		<div class="alert alert-danger error">{l s='The order is being processed, please try again in five minutes if necessary.' mod='envoimoinscher'}
+		</div>
+		<a href="index.php?controller=AdminEnvoiMoinsCher&token={$token|escape:'htmlall':'UTF-8'}" class="action_module btn btn-default">
+			{l s='Back to the list of commands' mod='envoimoinscher'}
+		</a>
+	{elseif $alreadyPassed}
 	<div class="alert alert-danger error">{l s='shipment already send : Contact EMC for more info' mod='envoimoinscher'}
 	</div>
 	{else}
@@ -66,9 +72,9 @@
 	</div>
 	{/if}
 
-	{if $ordersAll > 0}
+	{if isset($ordersAll) && $ordersAll > 0}
 	<div class="path_bar">{include file="$massTemplate" all=$ordersAll done=$ordersDone token=$token}
-		{if $orderTodo > 1}<p><a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$nextOrderId}&option=initOrder&token={$token}&mode=skip&previous={$orderId}" class="action_module">{l s='next order' mod='envoimoinscher'}</a></p>{/if}
+		{if $orderTodo > 1}<p><a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$nextOrderId|escape:'htmlall':'UTF-8'}&option=initOrder&token={$token|escape:'htmlall':'UTF-8'}&mode=skip&previous={$orderId|escape:'htmlall':'UTF-8'}" class="action_module">{l s='next order' mod='envoimoinscher'}</a></p>{/if}
 	</div>
 	{/if}
 	<h2>{l s='order number :' mod='envoimoinscher'} {$orderId|escape:'htmlall':'UTF-8'}</h2>
@@ -138,7 +144,7 @@
 	{if $isFound || (!$isEMCCarrier && !$isFound && $offersNb == 0)}
 	<div id="foundBlock" class="box-right">
 		<p><b>{l s='Required informations' mod='envoimoinscher'}</b></p>
-		<form method="post" action="index.php?controller=AdminEnvoiMoinsCher&id_order={$orderId}&option={if !$isEMCCarrier && !$isFound}editAddress{else}command{/if}&token={$token}" id="mandatory_form">
+		<form method="post" action="index.php?controller=AdminEnvoiMoinsCher&id_order={$orderId|escape:'htmlall':'UTF-8'}&option={if !$isEMCCarrier && !$isFound}editAddress{else}command{/if}&token={$token|escape:'htmlall':'UTF-8'}" id="mandatory_form">
 			<table class="table formTable fullwidth" cellspacing="0">
 				{if $isFound}
 				{if $multiParcel == 1}
@@ -285,7 +291,7 @@
 				{/if}
 				<tr>
 					<td class="text_align_center" colspan="2">
-						<input type="hidden" name="opeCode" id="opeCode" value="{if isset($offer.operator.code)}{$offer.operator.code}{/if}" />
+						<input type="hidden" name="opeCode" id="opeCode" value="{if isset($offer.operator.code)}{$offer.operator.code|escape:'htmlall':'UTF-8'}{/if}" />
 						<input type="hidden" name="dest_country" id="dest_country" value="{$deliveryInfo.pays|escape:'htmlall':'UTF-8'}" />
 						<input type="hidden" name="exp_pays" id="exp_pays" value="{$shipperInfo.country|escape:'htmlall':'UTF-8'}" />
 						<input type="hidden" name="exp_cp" id="exp_cp" value="{$shipperInfo.postalcode|escape:'htmlall':'UTF-8'}" />

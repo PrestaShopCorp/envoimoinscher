@@ -91,7 +91,7 @@
 				<div class="openable-title closed">
 					<div class="title">
 						<p>
-							<img src="{$emcBaseDir}/views/img/arrow_right.png" class="imgSwitchFaq" class="imgSwitchFaq" alt="clic to switch">
+							<img src="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/img/arrow_right.png" class="imgSwitchFaq" class="imgSwitchFaq" alt="clic to switch">
 							{l s='install, activation and test of module' mod='envoimoinscher'}
 						</p>
 					</div><!-- eod  -->
@@ -163,7 +163,7 @@
 				<div class="openable-title closed">
 					<div class="title">
 						<p>
-							<img src="{$emcBaseDir}/views/img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
+							<img src="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
 							{l s='general module configuration' mod='envoimoinscher'}
 						</p>
 					</div><!-- eod  -->
@@ -306,7 +306,7 @@
 				<div class="openable-title closed">
 					<div class="title">
 						<p>
-							<img src="{$emcBaseDir}/views/img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
+							<img src="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
 							{l s='most frequent issues with settings' mod='envoimoinscher' js=1}
 						</p>
 					</div><!-- eod  -->
@@ -424,7 +424,7 @@
 				<div class="openable-title closed">
 					<div class="title">
 						<p>
-							<img src="{$emcBaseDir}/views/img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
+							<img src="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
 							{l s='shipment, tracking and insurance' mod='envoimoinscher' js=1}
 						</p>
 					</div><!-- eod  -->
@@ -845,7 +845,7 @@
 				<div class="openable-title closed">
 					<div class="title">
 						<p>
-							<img src="{$emcBaseDir}/views/img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
+							<img src="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
 							{l s='Updates' mod='envoimoinscher' js=1}
 						</p>
 					</div><!-- eod  -->
@@ -887,7 +887,7 @@
 				<div class="openable-title closed">
 					<div class="title">
 						<p>
-							<img src="{$emcBaseDir}/views/img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
+							<img src="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
 							{l s='Another question?' mod='envoimoinscher'}
 						</p>
 					</div><!-- eod  -->
