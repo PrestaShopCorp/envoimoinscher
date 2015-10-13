@@ -1,0 +1,362 @@
+/**
+ * 2007-2015 PrestaShop
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@prestashop.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade PrestaShop to newer
+ * versions in the future. If you wish to customize PrestaShop for your
+ * needs please refer to http://www.prestashop.com for more information.
+ *
+ * @author    EnvoiMoinsCher <informationapi@boxtale.com>
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
+ * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * International Registred Trademark & Property of PrestaShop SA
+ */
+.infoDoc{font-size:13px;margin:15px 20px;}
+.infoDoc ol{list-style-type:square;}
+.configForm fieldset {margin-bottom:20px; font-size:12px;}
+.configForm tr td {width:550px; padding:5px 0 0 0; vertical-align:top;}
+.configForm tr td.label {width:210px;}
+.configForm tr td.multi,.configForm tr td.multi label {width:150px;}
+.configForm tr td select {width:200px;}
+.configForm tr td select.smallSelect {width:auto;}
+.configForm tr.hiddenRow {display:none;}
+.margin-form {clear:both; padding-left:0px; padding-right:10px;}
+#confGen .configForm li, #confSrv .configForm li {list-style:none; margin-bottom:10px;}
+.offersList {float:left;display:inline; }
+.offersList td label {float:none; padding-left:10px;}
+#menuTab li {float:left; display:inline; list-style:none; padding:5px;
+background: #EFEFEF; font-weight:bold;}
+#menuTab .selected {background: #FFF6D3; border: 1px solid #CCCCCC; border-bottom:none;}
+.hidden {display:none;}
+#confGen input, #confGen textarea{width:210px;}
+#confGen input.checkbox {width:auto;}
+#offersBody tr td {color: 1000000;}
+#confGen .testForm tr td {width:auto;}
+.nmlLabel {float:none; font-weight:normal; margin-left:5px; font-size:11px;}
+.box-left {width: 49%; margin-right:2%; float:left;}
+.box-right {width: 49%; float:left; display:inline;}
+.formTable tr td {padding:10px 0;}
+.table tr td {color: 1000000;}
+.table td.paddingTableTd {padding-left:10px;}
+.borderBlock {width:250px; float:left; padding:10px; border:1px solid #DFD5C3; margin-right:10px;}
+#modeSrv {margin-bottom:15px;}
+#modeSrv * {font-size:13px;}
+fieldset.gris table tr td.first, fieldset.gris table tr td.second {color: #b6b3b3;}
+.chkbox {vertical-align:top;}
+.showBar {display:block !important;}
+
+.dimensions tr td {width:750px; padding:5px 0 0 0; vertical-align:top;}
+#confGen .smallInput {width:30px; margin-right:5px;}
+#confGen .floatAll * {float:left;}
+#confGen .floatAll label {width:auto; margin-right:10px;}
+#confGen .floatAll span {font-size:11px;margin-right:10px; margin-top:4px;}
+#confGen .floatAll span.big {width:15px; font-size:14px; margin-top:1px;}
+
+#order-menu{
+float:left;
+width:auto;
+height:auto;
+width:100%;
+}
+
+.clearfix{
+    clear: both;
+}
+
+#emc-news{
+font-size:15px;
+padding:5px 0 20px 0;
+float:right;
+width:50%;
+height:auto;
+display:block;
+}
+
+#emc-news h4{
+margin:0 0 0 auto;
+max-width:830px;
+height:30px;
+}
+
+#emc-news ul{
+list-style-type:none;
+padding: 0;
+}
+
+#emc-news li {
+max-width: 800px;
+padding: 8px 8px 8px 20px;
+margin-bottom: 5px;
+padding-left: 20px;
+font-size: 12px;
+}
+
+.emc-alert{
+border-left: solid 3px #d99898;
+background-color: #fcf0f0;
+color: #ab6565;
+}
+.emc-info{
+border-left: solid 3px #5495b8;
+background-color: #f5faff;
+color: #4e799c;
+}
+.emc-update{
+border-left: solid 3px #b9db9a;
+background-color: #f5fcf2;
+color: #7c8a67;
+}
+
+.alert_size,
+.default_alert_size{
+  width: 400px;
+}
+
+.text_align_right{
+  text-align:right
+}
+
+.text_align_center{
+  text-align: center;
+}
+
+.floatleft{
+  float: left;
+}
+
+.valigntop{
+  vertical-align: top;
+}
+
+.valignmiddle{
+  vertical-align: middle;
+}
+
+.valignbottom{
+  vertical-align: bottom;
+}
+
+.fullwidth{
+  width: 100%;
+}
+
+.width100
+{
+  width: 100px;
+}
+
+.widthauto-important{
+  width: auto !important;
+}
+
+.font-size10{
+  font-size:10px;
+}
+
+.green_color{
+  color: green;
+}
+
+.red_color{
+  color: red;
+}
+
+/* Margin && padding */
+
+.pt4{
+  padding-top:4px;
+}
+
+.pt19{
+  padding-top:19px;
+}
+
+.pl2{
+  padding-left:2px;
+}
+
+.padding5{
+  padding:5px;
+}
+
+.mt4-important{
+  margin-top:4px !important;
+}
+
+.mt10{
+  margin-top: 10px;
+}
+
+.mt20{
+  margin-top:20px;
+}
+
+.ml5{
+  margin-left:5px;
+}
+
+.ml10{
+  margin-left:10px;
+}
+
+.ml20{
+  margin-left:20px;
+}
+
+.mr5{
+  margin-right: 5px;
+}
+
+.mr10{
+  margin-right: 10px;
+}
+
+.mb4-important{
+  margin-bottom:4px !important;
+}
+
+.mb5{
+  margin-bottom: 15px;
+}
+
+.mb15{
+  margin-bottom: 15px;
+}
+
+.bold{
+  font-weight:bold;
+}
+
+.list-style-square{
+  list-style-type:square;
+}
+
+.no-list-style{
+  list-style-type:square;
+}
+
+.bootstrap .alert{
+padding: 15px;
+margin-bottom: 17px;
+border: 1px solid transparent;
+border-radius: 3px;
+}
+.bootstrap .alert-danger {
+background-color: #f2dede;
+border-color: #ebccd1;
+color: #a94442;
+}
+.bootstrap .alert-success {
+background-color: #dff0d8;
+border-color: #d6e9c6;
+color: #3c763d;
+}
+.bootstrap .alert-warning {
+background-color: #fcf8e3;
+border-color: #faebcc;
+color: #8a6d3b;
+}
+
+.inline-important{
+display:inline !important;
+}
+
+.inline-block{
+display:inline-block;
+}
+
+.block-important{
+display:block !important;
+}
+
+.float-none-important{
+float:none !important;
+}
+
+.ui-datepicker:before{
+display:none !important;
+}
+
+.ui-datepicker:after{
+display:none !important;
+}
+
+.btn.btn-default.filter:hover{
+  background:100aff0;
+  border-color:1008abd !important;
+  color:#fff;
+  text-shadow:none;
+}
+
+.table-action{
+margin-top:2px;
+width:98%;
+}
+
+/* fixed size fancybox */
+/*.fancybox-skin, .fancybox-outer, .fancybox-inner, .fancybox-frame{
+width:1000px !important;
+height:760px !important;
+}*/
+
+.bootstrap .panel {
+font: 400 12px/1.42857 "Open Sans",Helvetica,Arial,sans-serif;
+box-sizing: border-box;
+color: #585a69;
+float: left;
+margin: 0 0 10px !important;
+padding: 1em !important;
+width: 100%;
+box-shadow:none !important;
+border: 1px solid #ddd !important;
+background-color: #fafcff !important;
+}
+
+.bootstrap .panel fieldset{
+border: 1px solid #ddd !important;
+background-color: #fafcff !important;  
+}
+
+.bootstrap .table>thead:first-child>tr:first-child>th{
+  text-align: center;
+  background-color: #fff;
+  padding: 15px 0;
+}
+.bootstrap .warn{
+padding-bottom:13px !important;
+}
+
+#ORDERSTABLE, #ORDERSTABLE1{
+    border: 1px solid #ddd;
+}
+
+.table tr th {
+    background: -moz-linear-gradient(center top , #f9f9f9, #ececec) repeat-x scroll left top #ececec;
+    color: #333;
+    font-size: 13px;
+    padding: 4px 6px;
+    text-align: left;
+    text-shadow: 0 1px 0 #fff;
+}
+
+/* filters design */
+.filters-box{
+    background-color: #ebedf4;
+    border: 1px solid #ccced7 !important;
+    color: #585a69;
+    margin: 0 0 10px 0 !important;
+    padding:13px !important;
+}
+
+.inline-block{ display: inline-block; }

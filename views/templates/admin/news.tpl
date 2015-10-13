@@ -1,4 +1,4 @@
-﻿{**
+{**
  * 2007-2015 PrestaShop
  *
  * NOTICE OF LICENSE
@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -26,7 +26,7 @@
 {if $tab_news|@count > 0}
 	<h4>{l s='Last news :' mod='envoimoinscher'}</h4>
 	<ul>
-		{foreach from=$tab_news item=news}<li class="emc-{$news.type}"><b>{$news.message_short}</b> : {$news.message}</li>{/foreach}
+		{foreach from=$tab_news item=news}<li class="emc-{$news.type|escape:'htmlall':'UTF-8'}"><b>{$news.message_short}</b> : {$news.message}</li>{/foreach}
 	</ul>
 {/if}
 </div>

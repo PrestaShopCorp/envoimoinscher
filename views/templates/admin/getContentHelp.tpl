@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -54,16 +54,16 @@
 					{foreach from=$upgrades item='upgrade' key='u'}
 						<tr>
 							<td class="center">
-								{$upgrade.from|escape:'htmlall'} - {$upgrade.to|escape:'htmlall'}
+								{$upgrade.from|escape:'htmlall':'UTF-8'} - {$upgrade.to|escape:'htmlall':'UTF-8'}
 							</td>
 							<td class="center">
-								{$upgrade.date|escape:'htmlall'}
+								{$upgrade.date|escape:'htmlall':'UTF-8'}
 							</td>
 							<td class="center">
-								{$upgrade.description|unescape:'html'}
+								{$upgrade.description}
 							</td>
 							<td class="center">
-								<a class="button" href="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall'}&option=upgrade&up_id={$u|escape:'htmlall'}" class="action_module">effectuer</a>
+								<a class="button" href="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall':'UTF-8'}&option=upgrade&up_id={$u|escape:'htmlall':'UTF-8'}" class="action_module">effectuer</a>
 							</td>
 						</tr>
 					{/foreach}
@@ -80,7 +80,7 @@
 		</table>
 	{/if}
 	<li class="main-question"><h2>{l s='Carriers update' mod='envoimoinscher'}</h2></li>
-	<p>{l s='Update all the carriers:' mod='envoimoinscher'}<a id="loadAllCarriers" onclick="loadAllCarriers();" class="action_module" rel="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall'}&option=loadAllCarriers">{l s='Update carriers' mod='envoimoinscher'}</a></p>
+	<p>{l s='Update all the carriers:' mod='envoimoinscher'}<a id="loadAllCarriers" onclick="loadAllCarriers();" class="action_module" rel="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall':'UTF-8'}&option=loadAllCarriers">{l s='Update carriers' mod='envoimoinscher'}</a></p>
 	<div id="carriers_update_result"></div>
 	</div>
 	
@@ -91,7 +91,7 @@
 				<div class="openable-title closed">
 					<div class="title">
 						<p>
-							<img src="{$emcBaseDir|unescape:'html'}img/arrow_right.png" class="imgSwitchFaq" class="imgSwitchFaq" alt="clic to switch">
+							<img src="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/img/arrow_right.png" class="imgSwitchFaq" class="imgSwitchFaq" alt="clic to switch">
 							{l s='install, activation and test of module' mod='envoimoinscher'}
 						</p>
 					</div><!-- eod  -->
@@ -163,7 +163,7 @@
 				<div class="openable-title closed">
 					<div class="title">
 						<p>
-							<img src="{$emcBaseDir|unescape:'html'}img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
+							<img src="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
 							{l s='general module configuration' mod='envoimoinscher'}
 						</p>
 					</div><!-- eod  -->
@@ -306,7 +306,7 @@
 				<div class="openable-title closed">
 					<div class="title">
 						<p>
-							<img src="{$emcBaseDir|unescape:'html'}img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
+							<img src="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
 							{l s='most frequent issues with settings' mod='envoimoinscher' js=1}
 						</p>
 					</div><!-- eod  -->
@@ -335,7 +335,7 @@
 										</ul>
 										<p>
 											{l s='Check your logs and contact the technical service' mod='envoimoinscher'}<br/>
-											{l s='Access to your logs:' mod='envoimoinscher'}<a href="{$link->getAdminLink('AdminLogs')|escape:'htmlall'}" target="_blank" class="action_module">logs</a>
+											{l s='Access to your logs:' mod='envoimoinscher'}<a href="{$link->getAdminLink('AdminLogs')|escape:'htmlall':'UTF-8'}" target="_blank" class="action_module">logs</a>
 										</p>
 									</div><!-- eod  -->
 								</div>
@@ -424,7 +424,7 @@
 				<div class="openable-title closed">
 					<div class="title">
 						<p>
-							<img src="{$emcBaseDir|unescape:'html'}img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
+							<img src="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
 							{l s='shipment, tracking and insurance' mod='envoimoinscher' js=1}
 						</p>
 					</div><!-- eod  -->
@@ -845,7 +845,7 @@
 				<div class="openable-title closed">
 					<div class="title">
 						<p>
-							<img src="{$emcBaseDir|unescape:'html'}img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
+							<img src="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
 							{l s='Updates' mod='envoimoinscher' js=1}
 						</p>
 					</div><!-- eod  -->
@@ -887,7 +887,7 @@
 				<div class="openable-title closed">
 					<div class="title">
 						<p>
-							<img src="{$emcBaseDir|unescape:'html'}img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
+							<img src="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/img/arrow_right.png" class="imgSwitchFaq" alt="clic to switch">
 							{l s='Another question?' mod='envoimoinscher'}
 						</p>
 					</div><!-- eod  -->
@@ -910,9 +910,9 @@
 			</div><!-- eod  -->
 		</div>
 	<script>
-		window.emcBaseDir = "{$emcBaseDir|escape:'htmlall'}";
+		window.emcBaseDir = "{$emcBaseDir|escape:'htmlall':'UTF-8'}";
 	</script>
-	<script src="{$emcBaseDir|escape:'htmlall'}js/getcontenthelp.js" type="text/javascript"></script>
+	<script src="{$emcBaseDir|escape:'htmlall':'UTF-8'}views/js/getcontenthelp.js" type="text/javascript"></script>
 	</div>
 
 </fieldset>

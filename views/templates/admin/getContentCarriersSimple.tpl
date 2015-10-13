@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -26,7 +26,7 @@
 <div class="support-message">
 	<p>{l s='Carrier simple support message' mod='envoimoinscher'}</p>
 </div>
-<form method="POST" action="{$EMC_link|escape:'htmlall'}&EMC_tabs=simple_carriers">
+<form method="POST" action="{$EMC_link|escape:'htmlall':'UTF-8'}&EMC_tabs=simple_carriers">
 	
 	{if sizeof($simpleEconomicCarriers)}
 		<fieldset id="EMC_carriers" class="baseForm">
@@ -36,7 +36,7 @@
 	{/if}
 	
 	<br />
-	<div class="margin-form">
+	<div class="margin-form submit">
 		<input type="submit" name="btnCarriersSimple" value="{l s='Send' mod='envoimoinscher'}" class="btn btn-default" />
 	</div>
 </form>

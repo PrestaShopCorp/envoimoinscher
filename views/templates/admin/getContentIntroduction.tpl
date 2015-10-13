@@ -18,26 +18,56 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
-<form method="POST" action="{$EMC_link|escape:'htmlall'}&EMC_tab=merchant">
-	<fieldset id="introduction">
-		<div id="logo_intro"><a href="http://www.envoimoinscher.com"></a></div>
-		<p class="important">{l s='Envoimoinscher lets you plug 15 carriers on your site and save up to 75% on your shipping costs, without requirement of volume or contract!' mod='envoimoinscher'}</p>
-		<p><b>{l s='FedEx, UPS, DHL, TNT, Chronopost, Coliposte, GLS, Mondial Relay, Relais Colis, Colis Privé' mod='envoimoinscher'}</b>{l s='carriers ... the best carriers available via 1 single module!' mod='envoimoinscher'}</p>
-		<p class="important">{l s='Manage your shipments easily from your PrestaShop back office, through the delivery module Envoimoinscher' mod='envoimoinscher'}</p>
-		<ul>
-			<li>{l s='Connect on your website ' mod='envoimoinscher'}<b>{l s='the best carriers in 1 click!' mod='envoimoinscher'}</b></li>
-			<li>{l s='The Envoimoinscher module gives you access to ' mod='envoimoinscher'}<b>{l s='15 carriers' mod='envoimoinscher'}</b>{l s=' accessible without contract' mod='envoimoinscher'}</li>
-			<li>{l s='Enjoy' mod='envoimoinscher'}<b>{l s='negotiated exclusive rates up to 75%' mod='envoimoinscher'}</b>{l s='reduction, irrespective of volume' mod='envoimoinscher'}</li>
-			<li>{l s='Give your customers choice:' mod='envoimoinscher'}<b>{l s='express' mod='envoimoinscher'}</b>{l s=', delivery' mod='envoimoinscher'}<b>{l s='home' mod='envoimoinscher'}</b>{l s=', delivery' mod='envoimoinscher'}<b>{l s='parcel point' mod='envoimoinscher'}</b></li>
-			<li><b>{l s='Generate your slips in 1 click' mod='envoimoinscher'}</b>{l s='from your back office, even for the Post' mod='envoimoinscher'}</li>
-			<li>{l s='Reassemble information' mod='envoimoinscher'}<b>{l s='shipment tracking' mod='envoimoinscher'}</b>{l s='in your backoffice' mod='envoimoinscher'}</li>
-			<li><b>{l s='One dedicated customer service' mod='envoimoinscher'}</b>{l s='for your customer service' mod='envoimoinscher'}<b>{l s='1 single billing' mod='envoimoinscher'}</b>{l s='regardless of the selected carriers' mod='envoimoinscher'}</li>
-		</ul>
-		<p class="important text_align_center mt10"><a target="_blank" href="http://ecommerce.envoimoinscher.com/landing/prestashop/?utm_source=prestashop&utm_medium=partner&utm_campaign=201409_landing">{l s='Create your free account and get your API key' mod='envoimoinscher'}</a></p>
+
+	<form id="introduction" method="POST" action="{$EMC_link|escape:'htmlall':'UTF-8'}&EMC_tab=merchant">
+		<div id="MainBox">
+			<div id="content-wrapper">
+				<div class="box" id="box1">
+				<div class="title">{l s='Choose from 15 carriers with negotiated prices' mod='envoimoinscher'}<div id="logo_intro"><a href="http://www.envoimoinscher.com"></a></div></div>
+					<div class="content">
+						<ul class="iconList s17">
+							<li><span class="orange bold">{l s='Up to 75%' mod='envoimoinscher'}</span>{l s=' immediate discount on your shipments' mod='envoimoinscher'}</li>
+							<li>{l s='Without requirement of volume or contract' mod='envoimoinscher'}</li>
+							<li>{l s='An' mod='envoimoinscher'} <span class="blue bold">{l s='Easy and transparent' mod='envoimoinscher'}</span> {l s='package monitoring' mod='envoimoinscher'}</li>
+							<li><span class="blue bold">{l s='1 dedicated customer service' mod='envoimoinscher'}</span>{l s=' for your SAV and ' mod='envoimoinscher'}<span class="blue bold">{l s='one single billing' mod='envoimoinscher'}</span></br>{l s=' whatever the carriers : ' mod='envoimoinscher'}<span class="orange bold">{l s='Envoimoinscher handles everything!' mod='envoimoinscher'}</span></li>
+						</ul>
+						<hr>
+						<div id="img-operators">
+							<table>
+								<tr>
+									<td class="laposte"></td>
+									<td class="mondialrelay"></td>
+									<td class="relaiscolis"></td>
+									<td class="chronopost"></td>
+									<td class="tnt"></td>
+								</tr>
+								<tr>
+									<td class="ups"></td>
+									<td class="dhl"></td>
+									<td class="fedex"></td>
+									<td class="happypost"></td>
+									<td class="colisprive"></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		<div class="text_align_center mt20"><a href="#" class="btnValid create button-orange text_align_center">{l s='Create your free account' mod='envoimoinscher'}</a><a href="#" class="btnValid button-orange text_align_center ml10p">{l s='I already have an account' mod='envoimoinscher'}</a></div>
+		<input type="hidden" name="choice" value="">
 		<input type="submit" class="hidden" name="btnIntro" value="Suivant">
-	</fieldset>
-</form>
+			<script type="text/javascript">
+				{literal}		
+					$(".btnValid").click(function() {
+						if($(this).hasClass("create")) $('#introduction').find('input[name=choice]').val("create");
+						else $('#introduction').find('input[name=choice]').val("api");
+						$('#introduction').find('input[type=submit]').click();
+					});	
+				{/literal}
+			</script>		 
+		</div>		
+	</form>

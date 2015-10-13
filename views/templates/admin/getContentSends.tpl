@@ -18,11 +18,10 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
-
  <script>
 	$(document).ready(function(){
 		$(document).delegate('.fromto','change',function(){
@@ -34,7 +33,7 @@
 <div class="support-message">
 	<p>{l s='Sends support message' mod='envoimoinscher'}</p>
 </div>
-<form method="POST" action="{$EMC_link|escape:'htmlall'}&EMC_tabs=sends">
+<form method="POST" action="{$EMC_link|escape:'htmlall':'UTF-8'}&EMC_tabs=sends">
 	<fieldset id="EMC_Sends">
 		<legend>{l s='Your sends' mod='envoimoinscher'}</legend>
 		<!-- Type of send -->
@@ -44,7 +43,7 @@
 				<option value="">-- {l s='Please choose' mod='envoimoinscher'} --</option>
 				{if isset($shipTypes) && $shipTypes && sizeof($shipTypes)}
 					{foreach from=$shipTypes item='v'}
-						<option value="{$v}"{if Tools::getValue('EMC_type', $EMC_config.EMC_TYPE) == $v}selected="selected"{/if}>&nbsp;{$v}&nbsp;</option>
+						<option value="{$v|escape:'htmlall':'UTF-8'}"{if Tools::getValue('EMC_type', $EMC_config.EMC_TYPE) == $v}selected="selected"{/if}>&nbsp;{$v|escape:'htmlall':'UTF-8'}&nbsp;</option>
 					{/foreach}
 				{/if}
 			</select>
@@ -57,7 +56,7 @@
 				<option value="">-- {l s='Choose' mod='envoimoinscher'} --</option>
 				{if isset($shipNature) && $shipNature && sizeof($shipNature)}
 					{foreach from=$shipNature item='nature'}
-						<option value="{$nature.id}" {if Tools::getValue('EMC_nature', $EMC_config.EMC_NATURE) == $nature.id}selected="selected"{/if}>&nbsp;{$nature.name}&nbsp;</option>
+						<option value="{$nature.id|escape:'htmlall':'UTF-8'}" {if Tools::getValue('EMC_nature', $EMC_config.EMC_NATURE) == $nature.id}selected="selected"{/if}>&nbsp;{$nature.name|escape:'htmlall':'UTF-8'}&nbsp;</option>
 					{/foreach}
 				{/if}
 			</select>
@@ -78,7 +77,7 @@
 {if $shipWrappingAvailable}
                 <select name="EMC_wrapping" id="EMC_wrapping">
 {foreach from=$shipWrapping key=n item=wrapping}
-                   <option value="{$wrapping.id}" {if $EMC_config.EMC_WRAPPING == $wrapping.id}selected="selected"{/if}>&nbsp;{$wrapping.name}&nbsp;</option>
+                   <option value="{$wrapping.id|escape:'htmlall':'UTF-8'}" {if $EMC_config.EMC_WRAPPING == $wrapping.id}selected="selected"{/if}>&nbsp;{$wrapping.name|escape:'htmlall':'UTF-8'}&nbsp;</option>
 {/foreach}
                 </select>
 {else}
@@ -116,9 +115,9 @@
 				{l s='Weight management products' mod='envoimoinscher'}
 			</legend>
 			<!-- Default Weight -->
-			<label for="EMC_default_weight">{l s='Default weight:' mod='envoimoinscher'}</label>
+			<label for="EMC_default_weight">{l s='Default weight (%1$s):' mod='envoimoinscher' sprintf={$weightUnit}}</label>
 			<div class="margin-form">
-				<input type="text" name="EMC_default_weight" id="EMC_default_weight" value="{Tools::getValue('EMC_default_weight', $EMC_config.EMC_AVERAGE_WEIGHT)|escape:'htmlall'}" />
+				<input type="text" name="EMC_default_weight" id="EMC_default_weight" value="{Tools::getValue('EMC_default_weight', $EMC_config.EMC_AVERAGE_WEIGHT)|escape:'htmlall':'UTF-8'}" />
 				<p class="preference_description">
 					{l s='You can specify the weight that will be applied by default on your product catalog with the "Weight (package)" is not specified on the individual product sheets.' mod='envoimoinscher'}
 				</p>
@@ -138,24 +137,24 @@
 			<legend>{l s='Pickups' mod='envoimoinscher'}</legend>
 			{if isset($pickupConf)}
 				{section name=conf loop=$pickupConf}
-					<label for="pickupDay{$smarty.section.conf.index|escape:'htmlall'}">{l s='Pickup date : D +' mod='envoimoinscher'} <sup class="emc-required">*</sup></label>
+					<label for="pickupDay{$smarty.section.conf.index|escape:'htmlall':'UTF-8'}">{l s='Pickup date : D +' mod='envoimoinscher'} <sup class="emc-required">*</sup></label>
 					<div class="margin-form">
-						<input type="text" name="pickupDay{$smarty.section.conf.index|escape:'htmlall'}" id="pickupDay{$smarty.section.conf.index|escape:'htmlall'}" value="{$pickupConf[conf].j|escape:'htmlall'}" class="pickupDaylist" /> {l s='for orders past between' mod='envoimoinscher'} 
+						<input type="text" name="pickupDay{$smarty.section.conf.index|escape:'htmlall':'UTF-8'}" id="pickupDay{$smarty.section.conf.index|escape:'htmlall':'UTF-8'}" value="{$pickupConf[conf].j|escape:'htmlall':'UTF-8'}" class="pickupDaylist" /> {l s='for orders past between' mod='envoimoinscher'} 
 						<select name="pickupFrom{$smarty.section.conf.index|intval}" class="fromto pickupFrom_date">
 							{if $smarty.section.conf.index == 0}
 								<option value="0" selected="selected">0:00</option>
 							{else}
 								{section name=hor start=0 loop=25 step=1}
-									<option value="{$smarty.section.hor.index|escape:'htmlall'}" class="fromto-{$smarty.section.hor.index}" {if Tools::getValue('pickupFrom'|cat:$smarty.section.conf.index, $pickupConf[conf].from) == $smarty.section.hor.index}selected="selected"{/if}>{$smarty.section.hor.index|escape:'htmlall'}h00</option>
+									<option value="{$smarty.section.hor.index|escape:'htmlall':'UTF-8'}" class="fromto-{$smarty.section.hor.index}" {if Tools::getValue('pickupFrom'|cat:$smarty.section.conf.index, $pickupConf[conf].from) == $smarty.section.hor.index}selected="selected"{/if}>{$smarty.section.hor.index|escape:'htmlall':'UTF-8'}h00</option>
 								{/section}
 							{/if}
 						</select> {l s='and' mod='envoimoinscher'}
-						<select name="pickupTo{$smarty.section.conf.index|escape:'htmlall'}" class="fromto pickupFrom_date">							
+						<select name="pickupTo{$smarty.section.conf.index|escape:'htmlall':'UTF-8'}" class="fromto pickupFrom_date">							
 							{if $smarty.section.conf.index == 1}
 								<option value="24" selected="selected">24:00</option>
 							{else}
 								{section name=hor start=0 loop=25 step=1}
-									<option value="{$smarty.section.hor.index}" class="from fromto-{$smarty.section.hor.index}" {if Tools::getValue('pickupTo'|cat:$smarty.section.conf.index, $pickupConf[conf].to) == $smarty.section.hor.index}selected="selected"{/if}>{$smarty.section.hor.index}h00</option>
+									<option value="{$smarty.section.hor.index|escape:'htmlall':'UTF-8'}" class="from fromto-{$smarty.section.hor.index|escape:'htmlall':'UTF-8'}" {if Tools::getValue('pickupTo'|cat:$smarty.section.conf.index, $pickupConf[conf].to) == $smarty.section.hor.index}selected="selected"{/if}>{$smarty.section.hor.index|escape:'htmlall':'UTF-8'}h00</option>
 								{/section}
 							{/if}
 						</select>
@@ -168,7 +167,7 @@
 			{/if}
 			<label for="labelDate">{l s='Label for delivery date :' mod='envoimoinscher'}</label>
 			<div class="margin-form">
-				<input type="text" name="labelDeliveryDate" id="labelDeliveryDate" value="{$EMC_config.EMC_LABEL_DELIVERY_DATE|escape:'htmlall'}" class="labelDeliveryDate" />
+				<input type="text" name="labelDeliveryDate" id="labelDeliveryDate" value="{$EMC_config.EMC_LABEL_DELIVERY_DATE|escape:'htmlall':'UTF-8'}" class="labelDeliveryDate" />
 				<p class="preference_description">{l s='Specify the delivery date label seen by the client. Example : "Delivery date : {DATE}". Empty label to disable.' mod='envoimoinscher'}</p>
 			</div>
 			<div class="clear both"></div>
@@ -192,7 +191,7 @@
 		
 	{/if}
 	<br />
-	<div class="margin-form">
+	<div class="margin-form submit">
 		<input type="submit" name="btnSends" value="{l s='Send' mod='envoimoinscher'}" class="btn btn-default" />
 	</div>
 </form>

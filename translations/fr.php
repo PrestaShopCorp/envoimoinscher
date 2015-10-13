@@ -19,27 +19,27 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  */
- 
+
  /*
  * --------  <{ module-name  }prestashop>name-of-file_check-md5-string-parameter   ------- = value
- 
+
  * module-name  : name of the module : 'mod' parameter
  * name-of-file : name of last template file (strtolower, without extension)
- * value = value 
+ * value = value
  */
 
 
 global $_MODULE;
 $_MODULE = array();
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_7f74918fbc764950d04a34d798bb1f99'] = 'Une erreur a été rencontré, cette étape ne fonctionnera pas';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_75676b487fd7f5cc086af41f374a9283'] = 'Merci de vérifier votre formulaire, des champs sont requis.';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_d69eee7b6960970efb2aca31226adec7'] = 'La première étape est validée.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_18752dbdab0367c544562139fd653977'] = 'Merci de vérifier votre formulaire, des champs sont requis.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e7c16a4de3515f1fe476a186e5ed6c6b'] = 'Votre compte marchand est configuré.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5620b742887f80fcdbce389cc6a55201'] = 'Merci de passer le module en mode hors ligne';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3f34d38e5bdc09dee4283864ee2e71f8'] = 'La seconde étape est validée.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b1032cdf8924156725417f3d840ad890'] = 'Les détails de vos envois sont configurés.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_92e279c5354a40ba6948c8eded549471'] = 'Merci de choisir le type et la nature de vos envois.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6615fbe6f42c55eb3fb4bd26e6493916'] = 'Lundi';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_ffa2ff01fdb4bc03dc94afa61d11fbf4'] = 'Mardi';
@@ -73,16 +73,18 @@ $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_2bd9c0ed00116be1258e0cc6661
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3c78b35502b2693fefdfc51cba3a53a5'] = 'manuel';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f8e561d352369dfa062944a0865ca410'] = 'le prix réel';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3c2b37c8fe170986ed7a4c96476371e9'] = 'le forfait';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_725d35ff70b4b9f7ca86ed981c33f074'] = 'Module de livraison : 15 transporteurs à tarifs négociés';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b103c6c2b1c1aaf9d9614d792bbd954d'] = 'Proposez à vos clients un choix de modes de livraison pour augmenter vos ventes';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_0f30b78a1d392e673e10440155b37c55'] = 'installation :  Impossible d\'installer le module car l\'extension cURL n\'est pas disponible, voir avec votre webmaster pour l\'activer.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_a4cebd5a171b5e9b10faab37953d365c'] = 'La plate-forme d\'expéditions est actuellement indisponible';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_d4fdc07829e1a91274b32c0747239997'] = 'Livraison prévue : {DATE}';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5e89c1ead63de28f095220159bac9818'] = 'installation : Une erreur d\'installation s\'est produite sur la requête : ';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_99f7d66bcedc739e09ede613f42541c9'] = 'installation : Impossible de rajouter le bouton envoimonscher dans le menu.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_a7bf9e7d8f87cfaf429d875a05ff40ba'] = 'Pas d\'offres correspondant à votre recherche';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_41cb349244297b2cbd2ede65d7311ddd'] = 'Pas d\'offres correspondant à votre recherche';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_15e8b81325717ca7a272cc79f4c8a671'] = 'Si la popup ne s\'affiche pas : ';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_7e3ab735e9e6a1029e2b4320fce467f2'] = 'cliquez ici';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_768b280c543db9e18c2ad6dda9f92695'] = 'la clé API';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_a84aa71f81892ada5586cd01629cf681'] = 'la clé API de test';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9639da9f75f6c896ba877c4af3ab0f4f'] = 'la clé API de production';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e500c00008e06618649bcec6f7126eb1'] = 'le login EnvoiMoinsCher';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9cf4ed5ee75fba112690ad3b2c37ac6a'] = 'le mot de passe EnvoiMoinsCher';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_c8d85a0ae34876f6d1e5a96cb761d3cf'] = 'le prénom';
@@ -94,7 +96,34 @@ $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_42fcd83ba4e643f0bd5604d060f
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_756a461676ababc62eb50311fec26892'] = 'le numéro de téléphone';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_33c1655e63368b5c3f40a39c56bd28b5'] = 'l\'adresse e-mail';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b6e7feadf3c61b73e5accb2188817680'] = 'le jour d\'enlèvement';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6fd36599b55d4917bfb6ea4922c803eb'] = 'Cotation - de %1$s %2$s à %3$s %4$s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_acb9d9438d2b87bf739a63b5db1b566b'] = 'Cotation - Cache utilisé';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9d0992358b48c69addd7fa952a587d4d'] = 'Cotation - Pas de transporteur activé';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5584739dc9e8f6740f3c587d4169507a'] = 'Erreur lors de la cotation : %1$s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_60c803add0653491953e8dce9296ec3a'] = 'Aucun transporteur activé, veuillez activer des transporteurs avant d\'effectuer une simulation';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_2d87da7980db4e5da96b108b7a65453b'] = 'Veuillez remplir tous les champs code postal et ville pour réaliser une simulation';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e8f6f8484df712d1671a9823aec9768b'] = 'La plateforme d\'envoi est actuellement indisponible';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_548b61cafe792f6a9415b6599b2579f2'] = 'Cotation - pas d\'offre trouvée pour l\'envoi de %1$s %2$s à %3$s %4$s %5$s, le panier pèse %6$skg';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_7b5e380396d53133abac4c719bb213cb'] = 'Aucune offre trouvée pour l\'adresse de destination %1$s %2$s, %3$s %4$s %5$s, le poids du panier est de %6$s kg';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f70f675338b49433290164c8a12dd5ee'] = 'Cotation - le prix HT renvoyé par l\'API pour %1$s est %2$s€';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9e98d590e96f62a89da70b140d402885'] = 'Cotation - le prix du transporteur %1$s est converti en %2$s : %3$s%2$s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_69ce24c2e8727642bf2fdb6ad2164500'] = 'Les règles panier doivent être Hors frais de port pour fonctionner correctement. Veuillez vérifier la règle panier %1$s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_eb05b90e87b526804532d793aeb82b14'] = 'Cotation - ajout au transporteur %1$s des frais de port %2$s%3$s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b936fd4ed40db6d6ee8335e0ae948d60'] = 'Cotation - ajout au transporteur %1$s des frais de manutention %2$s%3$s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_86758b321c6fe07176aef9fce16454e8'] = 'Cotation - le transporteur %1$s est configuré gratuit';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3f29496bf8b83ef7f11c67b50a6e4a05'] = 'Cotation - le transporteur %1$s est gratuit à cause de la règle panier %2$s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_09650cff978fdf21a78387fe00dde690'] = 'Cotation - tous les transporteurs sont gratuits à cause du prix du panier';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3beda0c038d2a3ef69d2b2072785722e'] = 'Cotation - tous les transporteurs sont gratuits à cause du poids du panier';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_4623d66ba06a1d42de38d0058e54a199'] = 'Cotation - plage de prix appliquée à %1$s';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_61ce3042979adbbafcf929a2a547d70e'] = 'Cotation - %1$s est retiré conformément à la configuration des plages de prix';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6897978c2f77006460d9861aeebe634f'] = 'Cotation - le transporteur %1$s n\'est pas actif pour cette zone';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_62a8e5ee924be1435573963d8acae503'] = 'Cotation - le transporteur %1$s est retiré car le produit %2$s est au-dessus de son poids maximum';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_a8ac69b3ba9fa409c3106a04fa631ef1'] = 'Cotation - le transporteur %1$s est retiré car le produit %2$s est au-dessus de sa largeur maximale';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_8cbb08c3b5e37674d8c0191e2f992a26'] = 'Cotation - le transporteur %1$s est retiré car le produit %2$s est au-dessus de sa profondeur maximale';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6c924b75ddf879bc47e70418e860b68b'] = 'Cotation - le transporteur %1$s est retiré car le produit %2$s est au-dessus de sa hauteur maximale';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_c5f5ec7e41ac546e1819ea172bbafaae'] = 'Cotation - le transporteur %1$s est retiré car il est désactivé dans l\'entrepôt';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5e7da5d682b8bc826fcd13f504315fc8'] = 'Cotation - le transporteur %1$s est retiré car au moins un des produits l\'a désactivé';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5d89f7c903e5af99eaf7760b88d5191c'] = 'Cotation - la taxe de %1$s%2$s est ajoutée au transporteur %3$s: %4$s%5$s';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_ed3f0177fb6dedb7f7441cda23e138a9'] = 'Votre module doit être en mode hors ligne.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f32d5fccdc1903dbadfd314f7a97ca9a'] = 'Erreur lors de la mise à jour de vos offres : ';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_bd5155b7f37815e4ff73f40250f1fb37'] = 'Mise à jour : Erreur lors de la mise à jour des offres disponible : ';
@@ -139,6 +168,7 @@ $_MODULE['<{envoimoinscher}prestashop>familytpl_9461bed8b71377318436990e57106729
 $_MODULE['<{envoimoinscher}prestashop>familytpl_4a544af857a4c3b7a166246080988cb4'] = 'La restitution des prix';
 $_MODULE['<{envoimoinscher}prestashop>familytpl_b5a7adde1af5c87d7fd797b6245c2a39'] = 'Description';
 $_MODULE['<{envoimoinscher}prestashop>familytpl_46a2a41cc6e552044816a2d04634545d'] = 'Statut';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_7dce122004969d56ae2e0245cb754d35'] = 'Éditer';
 $_MODULE['<{envoimoinscher}prestashop>familytpl_03af9a2a72d329b7252b03f823728025'] = 'Relais de dépôt des colis :';
 $_MODULE['<{envoimoinscher}prestashop>familytpl_952b938bd85b88d80faacf86439643b0'] = 'Code du point relais';
 $_MODULE['<{envoimoinscher}prestashop>familytpl_9af9d05426a7aa3598c60804498d47c1'] = 'Obtenir le code';
@@ -167,6 +197,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_e6b08888f1c6006a8143e01b11a
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_0cbc6611f5540bd0809a388dc95a615b'] = 'Test';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_49f0e06c2db61075134d0c2f949b0504'] = 'Prod.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_0b79795d3efc95b9976c7c5b933afce2'] = 'Présentation';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_706e3cc5f58b3fa27d28779a02b9ef3f'] = 'Compte EnvoiMoinsCher';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_bb3433544c3111cdf4a144cf61da6d6f'] = 'Compte marchand';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_988d0382f3b85595b44f1fd91ec82738'] = 'Description des envois';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_f4f70727dc34561dfde1a3c529b6205c'] = 'Paramètres';
@@ -182,7 +213,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_3b2aee63259f6dc9b9491488447
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_dd1f775e443ff3b9a89270713580a51b'] = 'Précédent';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_10ac3d04253ef7e1ddc73e6091c0cd55'] = 'Suivant';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_87557f11575c0ad78e4e28abedc13b6e'] = 'Terminer';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_7810f6fa46490f0d8fcf0f10c2a8c47f'] = 'La clé API que vous avez fourni est incorrecte, vérifiez bien que celle-ci corresponde à votre environnement de travail (test ou production).';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_7810f6fa46490f0d8fcf0f10c2a8c47f'] = 'Les clés API que vous avez fournies sont incorrectes, veuillez vérifier votre boîte de réception e-mail afin de pouvoir renseigner correctement ces éléments.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_ee53a0b7ddd6043de218daaecd195cf2'] = 'Le mot de passe que vous avez fourni est incorrect.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_1304d97514c86c34f1efb4e47f1f5195'] = 'Les identifiants que vous avez fourni sont incorrects.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_a89ed2ebc6db7df1724d7849cc8b236d'] = 'L\'utilisation du module en production nécessite l\'activation du paiement différé par prélèvement automatique. Pour cela, rendez vous dans l\'onglet préférence de votre espace en compte et activez le paiement différé par prélèvement automatique. Vous recevrez alors les documents à nous renvoyer.';
@@ -191,6 +222,8 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_e268443e43d93dab7ebef303bbe
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_7bf4c26efba17e7a29a7006ca5b77b7f'] = 'et activez le paiement différé par prélèvement automatique. Vous recevrez alors les documents à nous renvoyer.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_17f0aed422eb04003412e1913dbcf1da'] = 'Une erreur a été provoquée lors d\'une requête de l\'API : ';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_f87cd475ae802186bfe1994ad783509f'] = 'Vos offres n\'ont pas été mises à jour depuis plus d\'un mois, pensez à les mettre à jour dans la rubrique "Aide".';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_4cd475debf6e30bf3d8d2dc9815ee7e3'] = 'Suite à la mise à jour du module,  veuillez renseigner votre clé API de test.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_066ef063451a6e4fe10bb29cba1c2e4b'] = 'Suite à la mise à jour du module,  veuillez renseigner votre clé API de production.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_a4d1f9df55cc0e951116c0a1ae2a8312'] = 'Vider le cache';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_21bfc6f0eb0467ad6e832f6115d2f2d2'] = 'Vide le cache des offres, à lancer après modification de vos transporteurs ou de vos articles.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_154fdb5ae9006e1bff78c54ca6c3425d'] = '';
@@ -219,33 +252,113 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_4ee4bd3e0a295c1e81eb7584c9c
 /*
 	--- getcontentintroduction ---
 */
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_0c189ec74ba0cccaeb500e8f4883dd50'] = 'La solution EnvoiMoinsCher vous permet de brancher 15 transporteurs sur votre site et d\'économiser jusqu\'à -75%% sur vos frais de transport, sans condition de volume ni contrat !';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_50273269620ca594a2d4198c732e6da5'] = 'FedEx, UPS, DHL, TNT, Chronopost, Coliposte, GLS, Mondial Relay, Relais Colis, Colis Privé';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_4c4017e611bdd4b23b215dfe029d021f'] = '... les meilleurs transporteurs du marché accessibles via 1 seul module !';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_bab13b1dbf8e1bfc31dbda5d1d3a14ef'] = 'Gérez vos expéditions en toute simplicité depuis votre back-office Prestashop, grâce au module de livraison EnvoiMoinsCher';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_596dd0a154dbfcca674f42cb2de90673'] = 'Branchez sur votre site ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_542d188b3f3c0c296c5341a363722bec'] = 'les meilleurs transporteurs du marché en 1 seul clic !';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_e556b74b0bc9b67ddd275a7a51de849c'] = 'Le module EnvoiMoinsCher vous donne accès à ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_f8da0f02f8484ec911a6af89176b6498'] = '15 transporteurs';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_46f96002d0dfa8f54b10fb312ec5d932'] = ', accessibles sans contrat';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_4d58159c6dc97e1100be0deebfc8ce59'] = 'Bénéficiez de ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_35343ea547d78730363fac8d790a6da7'] = 'tarifs exclusifs négociés jusqu\'à -75%%';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_9abfb38370216b2a4817c405f403be0a'] = ' de réduction, sans condition de volume';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_d7f67ec615cad4747134ed18c5e99d8b'] = 'Donnez du choix à vos clients : livraison ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_4ca65a8bdbeae8b6ee400801a8a8f812'] = 'express';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_942b6fd40344ed9e72d41e43d38cdcf7'] = ', livraison ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_106a6c241b8797f52e1e77317b96a201'] = 'à domicile';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_c75645858a81d4a8af71c63beec75501'] = 'en point relais';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_741b91ad331dfd149608e228ac2b9667'] = 'Générez vos bordereaux en 1 clic';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_4f8bf81e1484954021ef8197332cf002'] = ' depuis votre back-office, même pour la Poste';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_5e02c0a9179176a8f190c27644394326'] = 'Remontez les informations de ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_0f805bd9bb958bbe919c7cc8a44e6a6e'] = 'suivi des colis';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_d23f7002f408fc02dcb5176406045b6a'] = ' dans votre back-office';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_a7ba1a7febc44d2582ffc9947d729c6e'] = '1 service client dédié';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_9c976add9f4a3f20cab2ff4690ea43f8'] = ' pour votre SAV et ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_dc394c3cfeee25ed03511aa9305dcb6d'] = '1 facturation unique';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_11bf9046cf43d1d37b97cc360d004e3b'] = ' quels que soient les transporteurs sélectionnés';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_44fc84b80418b7b3044d1e2f03f4c2d3'] = 'Créez votre compte gratuitement et demandez votre clé API';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_1a7ea81982d3d7b158a3038020c8429b'] = 'Faites votre choix entre 15 transporteurs à prix négociés';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_d925c629b77b27c10313247de57591e9'] = 'Jusqu\'à 75%';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_4b89617cc3b7961e8562279e3798d4f8'] = ' de remise immédiate sur vos envois';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_5a9de5d875ff3aad885189660bc1597b'] = 'Sans condition de volume ni contrat';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_978b697963cfc5abfced8a4b611977c9'] = 'Un';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_8a1dae93080e2857bc3c9846d9eab0af'] = 'suivi de colis';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_0376b5725100b401b3cb81195967cf07'] = 'facile et transparent';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_a469ea008403df21eed822abc99ea113'] = '1 service client dédié';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_0397f5de3c85f4864abf7adc01d5e7a7'] = ' pour votre SAV et ';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_65df5c4b5e64086784a330bc7865a1fd'] = 'une facturation unique';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_e8e47224c798417884789794c5586cf9'] = ' quels que soient les transporteurs : ';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_6b4658afd9fd5fa0f1df8e5273f045bd'] = 'EnvoiMoinsCher s\'occupe de tout!';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_30fa0cd0bdc06298169b6351c220cec5'] = 'Créer un compte gratuitement';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_3b2aee63259f6dc9b94914884474f8de'] = 'J\'ai déja un compte';
+
+/*
+	--- getcontentemc ---
+*/
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_2a46fa8b106d01cb9400bae2d1411340'] = 'Je souhaiterais installer le module EnvoiMoinsCher directement sur mon site E-Commerce. J\'obtiendrai ma clé API après avoir validé ce formulaire.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_090e8dc5cc9abbbeba047d658c2663ae'] = 'Personne à contacter';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_2c9b5b15a6d3cc951ca57c65e4966fd3'] = 'M.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_7f2a1b59ac1ab6d2d892dbbf4f132c40'] = 'Mme';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_c03e74d6f3fb706ca749c73debdd81fe'] = 'Nom :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_668a8d8d7ffe5da112b266e46b79b685'] = 'Prénom :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_8df4f25af6696f34fe2a28588da5e39d'] = 'Profession :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_4e294ddcc3aa62148bbd8c6a942f98f9'] = '-- Veuillez choisir --';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_70eaa7ec2aa18bbf98bf3e3f52711198'] = 'Gérant d\'un site e-commerce';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_672caf27f5363dc833bda5099775e891'] = 'Développeur';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_75ec3e55a77288b4a132f7528619817b'] = 'Agence';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_0f28fe833d21018c7707e5680392c068'] = 'Free-lance';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_6311ae17c1ee52b36e68aaf4ad066387'] = 'Autre';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_27cf0329257632fc0011abe5b14049f3'] = 'Version de Prestashop utilisée :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_7c19cab2c6ed83a6b15ba7e7b9bf93a3'] = 'Prestashop 1.4';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_b980b5d4e13ed71dc70d8457b05eca50'] = 'Prestashop 1.5';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_7e739623d5cf51084a0b2f9b89fb752a'] = 'Prestashop 1.6';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_4b288c46a3d4930fa41afa9fef707a05'] = 'Je ne sais pas';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_10a7b83a93bdf71f00d748e196e2551d'] = 'Code partenaire, si vous en avez un :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_b4d48a88001a5ced95b03f56ab3e6536'] = 'URL de votre site :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_6f995931c32d478bd8803343286b4792'] = 'Votre email :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_a91b8c0460a2b5dacadeb25cd53feff9'] = 'Confirmer l\'email :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_1d55b7898d1909b73956290a34874acc'] = 'Vos identifiants de connexion';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_5234f1eb46944c908373810af8441a95'] = 'Ces identifiants vous permettront de vous connecter à votre compte envoimoinscher';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_051672911a3f1f05efba78a553ef6fe2'] = 'Identifiant :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_189e97d69e42c2e667681d59d446de1f'] = 'Caractères alphanumériques uniquement (lettres et/ou chiffres sans accent)';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_b341a59d5636ed3d6a819137495b08a0'] = 'Mot de passe :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_a7eb1205c936e7686305192ae11ec8f1'] = '6 caractères minimum';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_8bedac1cac1a4bc5a6194f7b68d27f7d'] = 'Confirmer le mot de passe :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_b9393dbda015f17421aab32826cd8abb'] = 'Votre adresse de facturation';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_66d924261e3fc6b1555986d1c29e6239'] = 'Société/Organisation :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_f5c563c2ca9daf56d2ed585204185d87'] = 'Votre addresse :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_3206e4f0140bddd5d5650ce7c3c0433a'] = 'Complément 1 :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_4ade8f5b99fde6eeeab5a47667656db5'] = 'Complément 2 :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_f64be5eef68442a8f50cf535b92ad3e4'] = 'Pays :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_18325105de95083e4a1d10b78f29c2bc'] = 'Etat :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_d407bef98bb4f86299d4a9cd60568151'] = 'Code Postal :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_bffb711ec36f280459d11dce315da72f'] = 'Ville :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_20111867ed1071462a3178f54754aec0'] = 'Téléphone :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_92c370cef9393d0eed5bf1349554fcf8'] = 'Langue de correspondance préférée :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_ad225f707802ba118c22987186dd38e8'] = 'Français';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_78463a384a5aa4fad5fa73e2f506ecfc'] = 'Anglais';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_cb5480c32e71778852b08ae1e8712775'] = 'Espagnol';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_de3b5029af01cf7c25f8866755ffd873'] = 'Compte professionnel';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_d04e2c1b67f3ef0d475409516b812e8b'] = 'SIRET :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_592b19c2118bde15753557dbb164f2d1'] = 'N° d\'enregistrement dans le pays:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_566b0eba5f5e59c4dbbc3e39c9a38a03'] = 'N° TVA intra-communautaire :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_df9fc88bb784af9673a06ab68d3ede18'] = 'Mentions';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_56a2c450de544ed0e919a4cad661e481'] = 'Je reconnais avoir lu le texte des';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_fbe123b06729453d40a8ec3986b175f5'] = 'Conditions Générales de Vente et d\'Utilisation du site EnvoiMoinsCher.com';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_4dc4ec7091509ce4cb8d0265922bbe2e'] = 'et des ';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_88ef5b8c9ea69db82fd2c8f991e7d4e4'] = 'Conditions Générales d’utilisation de l’API EnvoiMoinsCher.com';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_41963ae76ff1ef6bb0b75e885a8ba140'] = 'dans son intégralité et en accepter tous les termes.';
+
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_517086580e95a032290707ca60f8089f'] = 'Je souhaite m\'abonner à la newsletter d\'EnvoiMoinsCher.com et être tenu informé(e) des évolutions des modules e-commerce.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_49066723896ceb46f8a2d0260a1e0b7b'] = 'Je souhaite recevoir les informations commerciales des Partenaires d\'EnvoiMoinsCher.com .';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_2fdfd506efea08144c0794c32ca8250a'] = 'Créer mon compte';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_1b1d51392e5d008be296742a1e1b9ff0'] = 'Veuillez remplir ce formulaire pour recevoir votre clé API.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_2a43f8406eb6c10f3f76a60f064e67fb'] = 'Version de Prestashop';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_71480bbd8a28d07d128ef389826fd426'] = 'Obtenir une clé API';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_b42b66495eeccc7f7615b2183e85e5de'] = 'J\'ai déjà une clé API';
+
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3699cdaed9da01d61d863d390b13a33c'] = 'Les erreurs suivantes se sont produites:';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5022fa1463220477570cd1d786dbee4a'] = 'Veuillez indiquer le nom';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_8cbb06ae99d0b574449e8b35a4b114d5'] = 'Veuillez indiquer le prénom';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_63898e74f047e5cda53582d27239a23e'] = 'Veuillez indiquer votre profession';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9a74ab15d279e9d3bd619556fb3c03cf'] = 'Veuillez indiquer l\'email';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_fdb4db9fad09fb7844943f645db276da'] = 'Veuillez confirmer l\'email';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_579e28b0f4a08ed8c8e9ca055796c627'] = 'Veuillez vérifier l\'adresse email et sa confirmation';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6e3a2bfb7990c25e6d3eef42befe09a3'] = 'Veuillez indiquer un email valide';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_54e7d0d7fe99b43d4d612782bca4593c'] = 'Veuillez indiquer l\'identifiant';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_d127a065d17f35836e4ccd0d53a48737'] = 'Votre identifiant ne doit comporter que des caractères alphanumériques';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_47cf1ec76df83a296b55aa20a77fab0a'] = 'Veuillez indiquer le mot de passe';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_1849ffc8731b5e74ae6157c91ba73575'] = 'Veuillez confirmer le mot de passe';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_53b84bcd051b27f7278a228d394afb77'] = 'Veuillez vérifier le mot de passe et sa confirmation';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_60d3fa1bfd3e77350009e4a716a4209c'] = 'Votre mot de passe doit comporter au moins 6 caractères';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5f6de4c8b1aab9d0471b82cfbfda4b20'] = 'Veuillez indiquer le nom de la société';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b72a8e11a090c12eeb0c1631ae330160'] = 'Veuillez indiquer l\'adresse';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_296761ad4839416252e100e2e0e932a7'] = 'Veuillez indiquer le code potal';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5df026bcb1c04fa59f66848e57914711'] = 'Veuillez indiquer la ville';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e77486f4f88cb38b0ef7430b4b2dc8ec'] = 'Veuillez indiquer un numéro de téléphone';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_da2591b34e544e4c546f95bc8e8569db'] = 'Veuillez indiquer un numéro de téléphone valide';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_aa0d400be875b9aa0be67eb93028cdbd'] = 'Veuillez indiquer le SIRET';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e2f897f4baf44193322ece6d89daed3e'] = 'Veuillez indiquer le N° d\'enregistrement ou d\'inscription légal dans le pays';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_40542a71f7fb8a6cbf8d63f43ee7701a'] = 'Le numéro SIRET est invalide. Merci de vérifier qu\'il comporte 14 chiffres';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_359114fe162e7fae6814fe4662cb623e'] = 'Veuillez valider les Conditions Générales de Vente pour continuer';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_11d4e10ba84d58c3b79230072cd11d18'] = 'Votre compte a été créé. Vous allez recevoir votre clé API, veuillez consulter votre boite email.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_69a38cf14a63e003e169d81982e6b610'] = 'Vous allez recevoir votre clé API, veuillez consulter votre boite email.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_10688f69b3fc295ee7bfa520d589fa2e'] = 'Echec lors de l\'envoi de la requête, le serveur n\'a pas pu répondre correctement (erreur : ';
 
 /*
 	--- getcontentcarriersadvanced ---
@@ -272,7 +385,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentcarrierssimple_9054761d7e0ae94a2
 $_MODULE['<{envoimoinscher}prestashop>getcontentcarrierssimple_94966d90747b97d1f0f206c98a8b1ac3'] = 'Enregistrer';
 
 /*
-	--- getcontenthelp --- 
+	--- getcontenthelp ---
 */
 
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_6c92285fa6d3e827b198d120ea3ac674'] = 'ici';
@@ -313,7 +426,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_89cd2c49babdc21e3889172c3ef
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_6654c1357367ef216ab5123bcc3368a8'] = 'Le volume d&#39;un colis ne pouvant pas être calculé en temps réel lors de la commande en ligne de votre client, vous devez définir au préalable une grille de correspondance Poids/Volume. Ainsi le module prendra en compte la dimension appliquée au poids calculé dans le panier de votre client, et affichera le coût du transport correspondant.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_a8dcfa18faf4ca004e8d6b424fdce5fc'] = 'Vous devez donc personnaliser vos propres dimensions et poids dans l&#39;onglet « Options de poids » dans le module si vous ne souhaitez pas garder les dimensions par défaut.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_645bd591803fc222f29eca86407f9d0b'] = 'Comment proposer la gratuité des transporteurs avec le module EnvoiMoinsCher ?';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5eae20df80180d4229cdb7acfda2731a'] = '<b>Attention </b>: n&#39;activez pas l&#39;option « frais de port gratuit » dans Prestashop. La configuration de la gratuité des transporteurs est possible grâce à la configuration des tranches par transporteur.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5eae20df80180d4229cdb7acfda2731a'] = '<b>Attention </b>: n&#39;activez pas l&#39;option « frais de port gratuit » dans Prestashop. La configuration de la gratuité des transporteurs est possible grâce à la configuration des tranches par transporteur. Si vous activez quand même cette option, les transporteurs EnvoiMoinsCher qui ne seront pas pertinents pour la commande apparaîtront mais seront désactivés en front-office pour éviter les problèmes de facturation.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_890d3769c0e389ffb5cc959b11dd1da0'] = 'Choisissez <b>la restitution des prix au « forfait »</b> pour le transporteur souhaité dans le module, onglet « transporteur simple » ou « transporteur avancé ». Allez ensuite dans <b>l&#39;onglet « Transport > transporteurs » et sélectionnez le transporteur souhaité. Définissez les tranches</b> souhaitées dans la section « destinations d&#39;expédition et coûts ».';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c1416f436f7082e9c11106f30969b7ce'] = '<b>Par exemple</b> : si vous souhaitez offrir les frais de port pour un transporteur au dessus de 50€ de panier, définissez la plage 0 à 50€ avec le frais de port souhaité (par exemple 5€) et créez une deuxième plage de 50,01€ à 100 000€ avec 0€ de frais de port.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_90921ebf20af7fc504a347d030fcb4f3'] = 'Puis-je expédier mes colis si je fonctionne en flux tendu ?';
@@ -526,9 +639,12 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_051672911a3f1f05efba78a
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_d9ad8c01c69370c0933c10e93335ee9b'] = 'Login de votre compte EnvoiMoinsCher.com.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_b341a59d5636ed3d6a819137495b08a0'] = 'Mot de passe :';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_4ed5a644b549769e4b4e14bcf01b6cec'] = 'Mot de passe de votre compte EnvoiMoinsCher.com';
-$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_b443dabdbefd9f9710276c8cfd0bc64f'] = 'Clé API :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_0694ea9bcc18c54f4dd79b468aa664d2'] = 'Clé API (test) :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_6f3e85d1dbe80c3b319288dd0f67f55c'] = 'Clé API (production) :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_cb4f754a65b7e8cb5499fc76e10de80c'] = '<strong>Votre clé API de test</strong> vous permet de déclencher des demandes d\'envoi factices via le module. Cette clé doit correspondre à l\'environnement de travail <strong>TEST</strong>.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_29b859aaecb012c0ee7d7a6d032a7a01'] = '<strong>Votre clé API de production</strong> vous permet de déclencher des commandes réelles de livraison. Cette clé doit correspondre à l\'environnement de travail <strong>PROD</strong>.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_e075e7f90fb066e50ce99f0cd39022b1'] = 'Clé que vous avez reçue par mail de la part d’EnvoiMoinsCher.com. Il suffit de la recopier dans le champ prévu à cet effet. Attention, cette clé doit correspondre à l’environnement de travail choisi : test ou production ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_901cda1b056ffdf9b0ea199021c7b315'] = 'Cliquez ici pour obtenir votre clé API';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_0d479c7e8a04481580daafb915cf9a34'] = 'Veuillez vérifier votre boîte de réception e-mail afin de pouvoir renseigner les informations concernant votre compte.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_929a59d3a7a633f98494ea92b38860e6'] = 'Adresse d\'enlèvement';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_caa5b7a48ce4b1c1492c445446433fb5'] = 'Civilité de l\'expéditeur :';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_c0552355b46408e262fc64d4ca9398dc'] = 'Civilité de la personne qui expédie les commandes : choisissez M, Mme ou Melle';
@@ -556,7 +672,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_0a680daca4a811b034fe4ba
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_fb51391ad50fe16b352b1224df00efa4'] = 'Début de disponibilité pour l\'enlèvement :';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_abc5c723b566a610e7386e75e90637fd'] = 'Heure à partir de laquelle vous êtes disponible pour les enlèvements de colis. Choisissez une heure dans la liste déroulante (les enlèvements effectués par les transporteurs commencent en général à partir de 12h00).';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_b23893418f07a99b0431b3b38b4aba15'] = 'Fin de disponibilité pour l\'enlèvement :';
-$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_0063dd0595a3b64532e1bf40b353d763'] = 'Heure à partir de laquelle vous n’êtes plus disponible pour les enlèvements de colis. Choisissez une heure dans la liste déroulante (les enlèvements effectués par les transporteurs commencent en général à partir de 17h00). ';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_0063dd0595a3b64532e1bf40b353d763'] = 'Heure à partir de laquelle vous n’êtes plus disponible pour les enlèvements de colis. Choisissez une heure dans la liste déroulante (les enlèvements effectués par les transporteurs se terminent en général à partir de 17h00). ';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_c46c42e3f3a786f83fcce8552018dc77'] = 'Votre Relais Colis® de dépôt de colis :';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_1f9c56ec5a454f4c2ed9857354364db8'] = 'Pour choisir votre Relais Colis®, copiez-collez le code du point de proximité de votre choix (par exemple : K1168, K1161, K1170).';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_773ad4fbeb0584783f02353b3edccaa7'] = 'Récupérer le code';
@@ -588,7 +704,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentsends_50cac7077ee9179e7cb598f319
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_e82f2d302c63bd0619be9deffadda67a'] = 'Attention ! Il pourra y avoir une différence de prix par rapport au tarif payé par votre acheteur.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_7cb8fb0ac034e8df5967f384715108c5'] = 'Tous les bordereaux vous seront facturés.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_038c9211a2eff68fe1ad4e9d64c21e7d'] = 'Gestion des poids de produits';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_f976e17dca21ab3c6ecc5ccc9ac3c5d2'] = 'Poids par défaut (kg) :';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsends_27350971e8065bd6b51ad56c1cce9ecb'] = 'Poids par défaut (%1$s) :';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_ebe86682666f2ab3da0843ed3097e4b3'] = 'kg';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_373e86960f4bc931a55ad4054176609b'] = 'Vous pouvez spécifier le poids qui s\'appliquera par défaut sur les produits de votre catalogue dont le champ \"Poids (colis)\" n\'est pas renseigné sur les fiches produits correspondantes';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_5ef56e80e75322746acd2b358a86d469'] = 'Le poids minimal :';
@@ -654,7 +770,22 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_5206c388b2df3c5c3e409cc
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_6bf52dd4e979d8a42c579c5b29134b4b'] = 'envoyé au destinataire (votre acheteur), ce mail informe le destinataire qu’un envoi va lui être prochainement livré. Attention cette notification est expédiée et signée par EnvoiMoinsCher et non par le transporteur';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_599fb8ba75fbb9a51f0bc2b12bc37d91'] = 'Mail avec la facture :';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_6b69b11c69ebfc2732d060d958f17f2c'] = 'envoyé à l\'adresse mail de facturation, choisie dans votre profil EnvoiMoinsCher, ce mail permet de fournir la facture des envois que vous avez effectués.';
-
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_3296a48849590207e18fe708dde0c698'] = 'Options de calcul des tarifs lors de l\'ajout au panier';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_cdbd336985d1fa6735db0c42de5765f5'] = 'Utilisez les options ci-dessous pour contrôler le calcul des tarifs lors de l\'ajout au panier ou son affichage.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_c7cf634b678ccec6573a31890e713465'] = 'Quelque soit l\'option que vous choisissez, celle-ci sera limitée à l\'affichage du panier (qui utilisera les forfaits définis pour la France dans les pages d\'édition des transporteurs),';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_71fecae1fd64ecede4c949ce4c5d5b7e'] = 'les tarifs seront toujours calculés lors de l\'affichage du choix des transporteurs';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_1993d6ebc7ed2baacf08ba9ce7bb22e4'] = 'Options d\'ajout au panier:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_6b5685a28a76052a7e78620ebd8cf374'] = 'Activer le calcul des tarifs pour tous les utilisateurs';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_7af7317d8ea723a8eb243a033b85d315'] = 'Désactiver le calcul des tarifs pour les utilisateurs anonymes';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_81882fe0eb6854121e336d4ee19fac9b'] = 'Désactiver le calcul des tarifs pour tous les utilisateurs';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_bea7895813a4a26d6c7ebde426ab2942'] = 'Activer le calcul des tarifs pour tous les utilisateurs ralentira l\'ajout au panier.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_54accb36bc79fd4daabb41b73c2ff1e9'] = 'Pour les utilisateurs authentifiés, le calcul des tarifs sera effectué ; pour les utilisateurs anonymes, le calcul des tarifs sera effectué, basé sur une adresse en France choisie au hasard.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_5b816bd322d08a3133536babf5661fe2'] = 'Désactiver le calcul des tarifs pour les utilisateurs anonymes accélèrera l\'ajout au panier pour les utilisateurs anonymes seulement.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_c26275c2e60931adec058cf65dafbb28'] = 'Pour les utilisateurs authentifiés, le calcul des tarifs sera effectué ; pour les utilisateurs anonymes, le tarif sera basé sur les tranches définies pour la France dans la page d\'édition des transporteurs.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_998c4ae9230c85ac5f66c5f471749d2f'] = 'Pour les utilisateurs anonymes, les vrais tarifs n\'apparaîtront que lors de la sélection du transporteur.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_35b8989793e0f5d2277b6e20617331a4'] = 'Désactiver le calcul des tarifs pour tous les utilisateurs accélèrera l\'ajout au panier.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_b273a61370fd9c6b8d8459ed0f75ad14'] = 'Pour les utilisateurs authentifiés et anonymes, le tarif sera basé sur les tranches définies pour la France dans la page d\'édition des transporteurs.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_0ceb47de4c02f5e8b7368be172620803'] = 'Les vrais tarifs n\'apparaîtront que lors de la sélection du transporteur.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_b2d37ae1cedf42ff874289b721860af2'] = 'Logs';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_6a46073326f43ac74c35dfb05325aee7'] = 'Activer les logs :';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_9e9eadc1a66becf7ccd5412ece710ecd'] = 'En activant cette option, vous recevrez tous les logs du module Envoimoinscher, si il n\'y a pas de transporteurs trouvé, s\'il y a une erreur de tracking ... Cela peut vous aider à configurer le module';
@@ -765,6 +896,7 @@ $_MODULE['<{envoimoinscher}prestashop>orders_table_template_5ef0c737746fae2ca90e
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_b9987a246a537f4fe86f1f2e3d10dbdb'] = 'Afficher';
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_94966d90747b97d1f0f206c98a8b1ac3'] = 'Expédier';
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_7422ce5bd4ca7fe70580111d456e5457'] = 'Pas de commande trouvée';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_1932f12871f1ff622d5ea9901a3ddee8'] = 'En attente de traitement. Nouvel essai possible dans 5 minutes.';
 
 /*
 	--- orders_history_table_template ---
@@ -860,6 +992,11 @@ $_MODULE['<{envoimoinscher}prestashop>hookadminorder_b65adc277877c94c30eee7f17a9
 $_MODULE['<{envoimoinscher}prestashop>hookadminorder_e170e3a15923188224c1c2bd1477d451'] = 'colis';
 
 /*
+	--- hookDisplayBeforeCarrier ---
+*/
+$_MODULE['<{envoimoinscher}prestashop>hookdisplaybeforecarrier_54c6e2beb1577a9dadb495e8d6cb6f15'] = 'Ce transporteur n\'est pas disponible pour cette commande';
+
+/*
 	--- orders ---
 */
 $_MODULE['<{envoimoinscher}prestashop>orders_94ea843837b40535ec608f0c0de771bd'] = 'La commande de livraison a été correctement passée';
@@ -925,6 +1062,8 @@ $_MODULE['<{envoimoinscher}prestashop>send_94966d90747b97d1f0f206c98a8b1ac3'] = 
 $_MODULE['<{envoimoinscher}prestashop>send_384f92bb616556a4edf25a91b2aa814c'] = 'Multi-colis';
 $_MODULE['<{envoimoinscher}prestashop>send_fad88feaf938901e44b2df83bb2a9631'] = 'Le multi-colis permet d\'expédier la commande en plusieurs colis au lieu d\'un seul : veuillez indiquer le nombre de colis à expédier pour cette commande en saisissant un chiffre supérieur ou égal à 2. Si la commande doit être envoyée en 1 seul colis, laissez la case vide.';
 $_MODULE['<{envoimoinscher}prestashop>send_209802fb858e2c83205027dbbb5d9e6c'] = 'Colis';
+$_MODULE['<{envoimoinscher}prestashop>send_ce86a25d5a3fa07d3d86c4a70e763d49'] = 'La commande est en cours de traitement, Veuillez réessayer à nouveau dans cinq minutes si nécessaire.';
+$_MODULE['<{envoimoinscher}prestashop>send_c0660f2994f604945e396aba14fafc53'] = 'Retour à la liste des commandes';
 
 //test
 $_MODULE['<{envoimoinscher}prestashop>tests_f6de629d3dcb7fc240588c2740577616'] = 'EnvoiMoinsCher : estimation des frais de port';

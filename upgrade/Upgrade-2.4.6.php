@@ -1,6 +1,6 @@
 <?php
 /**
- * 2007-2015 PrestaShop
+ * 2007-2014 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -19,33 +19,29 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2014 PrestaShop SA / 2011-2014 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  */
 
 function upgrade_module_2_4_6($module)
 {
-	// Execute the SQL upgrade
-	$sql_file = Tools::file_get_contents(_PS_MODULE_DIR_.'/envoimoinscher/upgrade/2.4.6.sql');
-	$sql_file = str_replace('{PREFIXE}', _DB_PREFIX_, $sql_file);
+    // Execute the SQL upgrade
+    $sql_file = Tools::file_get_contents(_PS_MODULE_DIR_.'/envoimoinscher/upgrade/2.4.6.sql');
+    $sql_file = str_replace('{PREFIXE}', _DB_PREFIX_, $sql_file);
 
-	// Because any merchant can't execute every sql queries in one execute, we have to explode them.
-	$query = explode('-- REQUEST --', $sql_file);
+    // Because any merchant can't execute every sql queries in one execute, we have to explode them.
+    $query = explode('-- REQUEST --', $sql_file);
 
-	Db::getInstance()->execute('START TRANSACTION;');
-	foreach ($query as $q)
-	{
-		if (trim($q) != '' && Db::getInstance()->execute($q) === false)
-		{
-			Db::getInstance()->execute('ROLLBACK;');
-			return false;
-		}
-	}
+    Db::getInstance()->execute('START TRANSACTION;');
+    foreach ($query as $q) {
+        if (trim($q) != '' && Db::getInstance()->execute($q) === false) {
+            Db::getInstance()->execute('ROLLBACK;');
+            return false;
+        }
+    }
 
-	// Validate upgrade
-	Db::getInstance()->execute('COMMIT;');
-	return true;
+    // Validate upgrade
+    Db::getInstance()->execute('COMMIT;');
+    return true;
 }
-
-?>

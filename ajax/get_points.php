@@ -19,15 +19,15 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  */
 
-require_once(realpath(dirname(__FILE__).'/../../../config/defines.inc.php'));
-require_once(_PS_MODULE_DIR_.'/../config/config.inc.php');
-require_once(_PS_MODULE_DIR_.'/../init.php');
-require_once(_PS_MODULE_DIR_.'/envoimoinscher/envoimoinscher.php');
+require_once(realpath(dirname(__FILE__) . '/../../../config/defines.inc.php'));
+require_once(_PS_MODULE_DIR_ . '/../config/config.inc.php');
+require_once(_PS_MODULE_DIR_ . '/../init.php');
+require_once(_PS_MODULE_DIR_ . '/envoimoinscher/envoimoinscher.php');
 
 $emc = new Envoimoinscher();
 $emc->getPoints();

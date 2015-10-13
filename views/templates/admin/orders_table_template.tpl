@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -27,11 +27,11 @@
 		<fieldset class="filters-box filters">
 			<div class="inline-block valigntop mr5">
 				<label class="widthauto-important float-none-important">{l s='ID' mod='envoimoinscher'}</label>
-				<input type="text" name="filter_id_order" class="widthauto-important" size="4" {if isset($filters.filter_id_order)}value={$filters.filter_id_order}{/if}>
+				<input type="text" name="filter_id_order" class="widthauto-important" size="4" {if isset($filters.filter_id_order)}value={$filters.filter_id_order|escape:'htmlall':'UTF-8'}{/if}>
 			</div>
 			<div class="inline-block valigntop mr5">
 				<label class="widthauto-important float-none-important">{l s='Keyword' mod='envoimoinscher'}</label>
-				<input type="text" name="recipient" class="widthauto-important" placeholder="{l s='Recipient name or email' mod='envoimoinscher'}" size="30" {if isset($filters.recipient)}value="{' '|implode:$filters.recipient}"{/if}>
+				<input type="text" name="recipient" class="widthauto-important" placeholder="{l s='Recipient name or email' mod='envoimoinscher'}" size="30" {if isset($filters.recipient)}value="{' '|implode:$filters.recipient|escape:'htmlall':'UTF-8'}"{/if}>
 			</div>
 			<div class="inline-block valigntop mr5">
 				<label class="widthauto-important float-none-important">{l s='Order type' mod='envoimoinscher'}</label>
@@ -47,13 +47,13 @@
 				<label class="widthauto-important float-none-important">{l s='Status' mod='envoimoinscher'}</label>
 				<select name="status[]" class="widthauto-important" multiple size=3>
 					{foreach from=$states key=k item=v}
-						<option value="{$v['id_order_state']|escape:'htmlall'}" 
+						<option value="{$v['id_order_state']|escape:'htmlall':'UTF-8'}" 
 						{if (isset($filters.status) && $v['id_order_state']|in_array:$filters.status)}selected
 						{elseif !isset($filters.status)}
 							{if $v['id_order_state'] == $defaultStatus}selected
 							{/if}
 						{/if}
-						>{$v['name']|escape:'htmlall'}</option>
+						>{$v['name']|escape:'htmlall':'UTF-8'}</option>
 					{/foreach}
 				</select>
 				<div class="widthauto-important font-size10 pl2">{l s='Use ctrl clic to select multiple values' mod='envoimoinscher'}</div>
@@ -63,7 +63,7 @@
 				<select name="carriers" class="widthauto-important">
 					<option value="all" {if !isset($filters.carriers) || $filters.carriers == "all"}selected{/if}>{l s='Show all' mod='envoimoinscher'}</option>
 					{foreach from=$enabledCarriers key=k item=v}
-						<option value="{$v['name']}" {if isset($filters.carriers) && $filters.carriers == $v['name']}selected{/if}>{$v['name']}</option>
+						<option value="{$v['name']|escape:'htmlall':'UTF-8'}" {if isset($filters.carriers) && $filters.carriers == $v['name']}selected{/if}>{$v['name']|escape:'htmlall':'UTF-8'}</option>
 					{/foreach}
 					<option value="del" {if isset($filters.carriers) && $filters.carriers == "del"}selected{/if}>{l s='Deleted carriers' mod='envoimoinscher'}</option>
 				</select>
@@ -71,13 +71,13 @@
 			<div class="inline-block valigntop mr5">
 				<label class="widthauto-important float-none-important">{l s='Date' mod='envoimoinscher'}</label>
 				<div class="input-group fixed-width-md">
-					<input type="text" class="filter date-input form-control datepicker start_order_date" name="start_order_date" placeholder="{l s='From' mod='envoimoinscher'}" {if isset($filters.start_order_date)}value={$filters.start_order_date|date_format:"%Y-%m-%d"}{/if}>
+					<input type="text" class="filter date-input form-control datepicker start_order_date" name="start_order_date" placeholder="{l s='From' mod='envoimoinscher'}" {if isset($filters.start_order_date)}value={$filters.start_order_date|date_format:"%Y-%m-%d"|escape:'htmlall':'UTF-8'}{/if}>
 					<span class="input-group-addon">
 						<i class="icon-calendar"></i>
 					</span>
 				</div>
 				<div class="input-group pt4 fixed-width-md">
-					<input type="text" class="filter date-input form-control datepicker end_order_date" name="end_order_date" placeholder="{l s='To' mod='envoimoinscher'}" {if isset($filters.end_order_date)}value={$filters.end_order_date|date_format:"%Y-%m-%d"}{/if}>
+					<input type="text" class="filter date-input form-control datepicker end_order_date" name="end_order_date" placeholder="{l s='To' mod='envoimoinscher'}" {if isset($filters.end_order_date)}value={$filters.end_order_date|date_format:"%Y-%m-%d"|escape:'htmlall':'UTF-8'}{/if}>
 					<span class="input-group-addon">
 						<i class="icon-calendar"></i>
 					</span>
@@ -94,7 +94,7 @@
         <button class="btn btn-default filter no-filter">
 					{l s='All orders' mod='envoimoinscher'}
 				</button>
-        <div class="font-size10 pl2">{l s="You can change default filter settings on the" mod='envoimoinscher'}<a href="{$configPage|escape:'htmlall'}">{l s="EnvoiMoinsCher module configuration page" mod='envoimoinscher'}</a>.</div>
+        <div class="font-size10 pl2">{l s='You can change default filter settings on the' mod='envoimoinscher'}<a href="{$configPage|escape:'htmlall':'UTF-8'}">{l s='EnvoiMoinsCher module configuration page' mod='envoimoinscher'}</a>.</div>
 			</div>
 		</fieldset>
 	</div>
@@ -158,18 +158,20 @@
 				</thead>
 				<tbody>
 				{foreach from=$orders key=o item=order}
-					<tr id="row-{$order.idOrder|escape:'htmlall'}">
+					<tr id="row-{$order.idOrder|escape:'htmlall':'UTF-8'}">
 						<td class="text-center">
-							<span id="checkbox-{$order.idOrder}" class="{if $order.generated_ed == "0"}hidden{/if}"><input type="checkbox" 
-								{if !isset($filters) || !isset($filters.type_order) || $filters.type_order == "all"}
-								{else}checked="checked" 
+							<span id="checkbox-{$order.idOrder|escape:'htmlall':'UTF-8'}" class="{if $order.generated_ed == "0"}hidden{/if}">
+								<input type="checkbox"
+								{if $order.isSendLocked == true}disabled
+								{elseif !isset($filters) || !isset($filters.type_order) || $filters.type_order == "all"}
+								{else}checked="checked"
 								{/if}
-							name="orders[]" id="order-{$order.idOrder|escape:'htmlall'}" value="{$order.idOrder|escape:'htmlall'}" /></span>
+							name="orders[]" id="order-{$order.idOrder|escape:'htmlall':'UTF-8'}" value="{$order.idOrder|escape:'htmlall':'UTF-8'}" /></span>
 						</td>
-						<td class="text-center">{$order.idOrder|escape:'htmlall'}</td>
-						<td class="text-center">{$order.toFirstname|escape:'htmlall'}</td>
-						<td class="text-center">{$order.toLastname|escape:'htmlall'}</td>
-						<td class="text-center">{$order.email|escape:'htmlall'}</td>
+						<td class="text-center">{$order.idOrder|escape:'htmlall':'UTF-8'}</td>
+						<td class="text-center">{$order.toFirstname|escape:'htmlall':'UTF-8'}</td>
+						<td class="text-center">{$order.toLastname|escape:'htmlall':'UTF-8'}</td>
+						<td class="text-center">{$order.email|escape:'htmlall':'UTF-8'}</td>
 						<td class="text-center">
 							{if $order.external_module_name != "envoimoinscher"}
 								<span class="">{l s='Other' mod='envoimoinscher'}</span>
@@ -179,21 +181,25 @@
 						</td>
 						{if $test_error == true}
 							<td>
-								{if $order.errors_eoe != ""}
-									<span class="red_color">{l s='Errors' mod='envoimoinscher'} : {$order.errors_eoe|escape:'htmlall'}</span>
+								{if $order.isSendLocked == true}
+									<span class="red_color">{l s='Awaiting processing. Possible new trial in 5 minutes' mod='envoimoinscher'}</span>
+								{elseif $order.errors_eoe != ""}
+									<span class="red_color">{l s='Errors' mod='envoimoinscher'} : {$order.errors_eoe|escape:'htmlall':'UTF-8'}</span>
 								{/if}
 							</td>
 						{/if}
-						<td>{$order.name|escape:'htmlall'}</td>
-						<td class="text-right">{$order.total_shipping|escape:'htmlall'}&nbsp;{$order.sign|escape:'htmlall'}</td>
-						<td class="text-right">{$order.total_paid|escape:'htmlall'}&nbsp;{$order.sign|escape:'htmlall'}</td>
-						<td>{if isset($order.carrierName)}{$order.carrierName}{/if}</td>
-						<td>{if isset($order.order_date_add)}{$order.order_date_add}{/if}</td>
-						<td class="text-center"><a target="_blank" href="index.php?controller=AdminOrders&id_order={$order.idOrder|escape:'htmlall'}&vieworder&token={$tokenOrder|escape:'htmlall'}" class="btn btn-default action_module"><i class="icon-file-text"></i> {l s='Display' mod='envoimoinscher'}</a></td>
+						<td>{$order.name|escape:'htmlall':'UTF-8'}</td>
+						<td class="text-right">{$order.total_shipping|escape:'htmlall':'UTF-8'}&nbsp;{$order.sign|escape:'htmlall':'UTF-8'}</td>
+						<td class="text-right">{$order.total_paid|escape:'htmlall':'UTF-8'}&nbsp;{$order.sign|escape:'htmlall':'UTF-8'}</td>
+						<td>{if isset($order.carrierName)}{$order.carrierName|escape:'htmlall':'UTF-8'}{/if}</td>
+						<td>{if isset($order.order_date_add)}{$order.order_date_add|escape:'htmlall':'UTF-8'}{/if}</td>
+						<td class="text-center"><a target="_blank" href="index.php?controller=AdminOrders&id_order={$order.idOrder|escape:'htmlall':'UTF-8'}&vieworder&token={$tokenOrder|escape:'htmlall':'UTF-8'}" class="btn btn-default action_module"><i class="icon-file-text"></i> {l s='Display' mod='envoimoinscher'}</a></td>
 						<td class="text-center">
-							<a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$order.idOrder|escape:'htmlall'}&option=send&token={$token|escape:'htmlall'}" class="action_module btn btn-default">
+							{if $order.isSendLocked == false}
+							<a href="index.php?controller=AdminEnvoiMoinsCher&id_order={$order.idOrder|escape:'htmlall':'UTF-8'}&option=send&token={$token|escape:'htmlall':'UTF-8'}" class="action_module btn btn-default">
 								<i class="icon-truck"></i> {l s='Send' mod='envoimoinscher'}
 							</a>
+							{/if}
 						</td>
 					</tr>
 				{/foreach}

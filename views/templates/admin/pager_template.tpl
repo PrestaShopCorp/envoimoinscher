@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2014 EnvoiMoinsCher
+ * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -26,17 +26,17 @@
 <p class="text_align_center">
 	<span>{l s='Pagination' mod='envoimoinscher'} :</span>
 	{if $pager.before|@count gt 0}
-		<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}=1{if isset($filterUrl)}{$filterUrl}{/if}"><img class="valignmiddle" src="../img/admin/list-prev2.gif" /></a>
+		<a href="{$pager.url|escape:'htmlall':'UTF-8'}&token={$token|escape:'htmlall':'UTF-8'}&{$pager.tag|escape:'htmlall':'UTF-8'}=1{if isset($filterUrl)}{$filterUrl}{/if}"><img class="valignmiddle" src="../img/admin/list-prev2.gif" /></a>
 	{/if}
 	{foreach from=$pager.before key=p item=page}
-	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$page|escape:'htmlall'}{if isset($filterUrl)}{$filterUrl}{/if}" class="action_module mr5">{$page}</a>
+	<a href="{$pager.url|escape:'htmlall':'UTF-8'}&token={$token|escape:'htmlall':'UTF-8'}&{$pager.tag|escape:'htmlall':'UTF-8'}={$page|escape:'htmlall':'UTF-8'}{if isset($filterUrl)}{$filterUrl}{/if}" class="action_module mr5">{$page}</a>
 	{/foreach}
-	<span class="bold mr5">{$pager.actual|escape:'htmlall'}</span>
+	<span class="bold mr5">{$pager.actual|escape:'htmlall':'UTF-8'}</span>
 	{foreach from=$pager.after key=p item=page}
-	<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$page|escape:'htmlall'}{if isset($filterUrl)}{$filterUrl}{/if}" class="action_module mr5">{$p}</a>
+	<a href="{$pager.url|escape:'htmlall':'UTF-8'}&token={$token|escape:'htmlall':'UTF-8'}&{$pager.tag|escape:'htmlall':'UTF-8'}={$page|escape:'htmlall':'UTF-8'}{if isset($filterUrl)}{$filterUrl}{/if}" class="action_module mr5">{$p}</a>
 	{/foreach}
 	{if $pager.after|@count gt 0}
-		<a href="{$pager.url|escape:'htmlall'}&token={$token|escape:'htmlall'}&{$pager.tag|escape:'htmlall'}={$pager.last|escape:'htmlall'}{if isset($filterUrl)}{$filterUrl}{/if}"><img class="valignmiddle" src="../img/admin/list-next2.gif" /></a>
+		<a href="{$pager.url|escape:'htmlall':'UTF-8'}&token={$token|escape:'htmlall':'UTF-8'}&{$pager.tag|escape:'htmlall':'UTF-8'}={$pager.last|escape:'htmlall':'UTF-8'}{if isset($filterUrl)}{$filterUrl}{/if}"><img class="valignmiddle" src="../img/admin/list-next2.gif" /></a>
 	{/if}
 </p>
 {/if}
