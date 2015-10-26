@@ -271,7 +271,7 @@ class EnvoimoinscherOrder
 
         $order_object = $this->getOrderObject();
         // Set 20 seconds timeout
-        $order_object['object']->setTimeout(10000);
+        $order_object['object']->setTimeout(20000);
         $order_passed = $order_object['object']->makeOrder($order_object['tmp_quote'], true);
 
         $mass_order = false;

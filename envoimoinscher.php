@@ -130,9 +130,9 @@ class Envoimoinscher extends CarrierModule
         );
         $this->name = 'envoimoinscher';
         $this->tab = 'shipping_logistics';
-        $this->version = '3.3.1';
+        $this->version = '3.3.2';
         $this->author = 'EnvoiMoinsCher';
-        $this->local_version = '3.3.1';
+        $this->local_version = '3.3.2';
         parent::__construct();
         $this->page = basename(__FILE__, '.php');
         $this->displayName = 'EnvoiMoinsCher';
@@ -317,7 +317,7 @@ class Envoimoinscher extends CarrierModule
         $remove_tables = 'SET FOREIGN_KEY_CHECKS = 0; DROP TABLE IF EXISTS ' . implode(',', $tables);
 
         $remove_configs = 'DELETE FROM ' . _DB_PREFIX_ . 'configuration
-				WHERE name LIKE "EMC_%"; SET FOREIGN_KEY_CHECKS = 1';
+        WHERE name LIKE "EMC_%"; SET FOREIGN_KEY_CHECKS = 1';
 
         return DB::getInstance()->execute($remove_tables) && DB::getInstance()->execute($remove_configs);
     }
@@ -1099,6 +1099,7 @@ class Envoimoinscher extends CarrierModule
                     $offers = $this->applyRatePrice($offers, $cart_tmp->id);
 
                     // set first carrier as default carrier for cart rule calculation
+                    reset($offers);
                     $firstOffer = current($offers);
                     $firstOfferCarrierId = $this->model->getCarrierIdByCode(
                         $firstOffer['service']['code'],
@@ -1721,7 +1722,7 @@ class Envoimoinscher extends CarrierModule
         $order_stats = $emc_order->getStats();
         $helper = new EnvoimoinscherHelper;
         $config = $helper->configArray($this->model->getConfigData());
-        $data = $this->model->prepareOrderInfo($order_id, $config, true);
+        $data = $this->model->prepareOrderInfo($order_id, $config, true, false);
 
         if ($data['is_dp'] == 1) {
             $url = Envoimoinscher::getMapByOpe(
@@ -1989,15 +1990,20 @@ class Envoimoinscher extends CarrierModule
                 );
                 Db::getInstance()->autoExecute(_DB_PREFIX_ . 'carrier', $data, 'INSERT');
                 $lang_data['id_carrier'] = (int)Db::getInstance()->Insert_ID();
+                DB::getInstance()->Execute('UPDATE ' . _DB_PREFIX_ . 'carrier SET
+                id_reference = '. $lang_data['id_carrier'] .' WHERE id_carrier = '.$lang_data['id_carrier']);
                 Db::getInstance()->autoExecute(_DB_PREFIX_ . 'carrier_lang', $lang_data, 'INSERT');
                 // prestashop standard ...
                 $carrier = array('id_carrier' => (int)$lang_data['id_carrier'], 'id_group' => 0);
                 Db::getInstance()->autoExecute(_DB_PREFIX_ . 'carrier_group', $carrier, 'INSERT');
                 $rows[0]['id_carrier'] = $lang_data['id_carrier'];
 
-                DB::getInstance()->Execute('UPDATE ' . _DB_PREFIX_ . 'emc_services
-        SET id_carrier = ' . (int)$lang_data['id_carrier'] . '
-        WHERE id_es = ' . (int)$rows[0]['id_es'] . '');
+                DB::getInstance()->Execute(
+                    'UPDATE ' . _DB_PREFIX_ . 'emc_services
+                    SET id_carrier = ' . (int)$lang_data['id_carrier'] . ',
+                    ref_carrier = ' . (int)$lang_data['id_carrier'] . '
+                    WHERE id_es = ' . (int)$rows[0]['id_es'] . ''
+                );
 
             }
             // update carrier for this order
@@ -2008,7 +2014,6 @@ class Envoimoinscher extends CarrierModule
                 'id_order = ' . (int)$order_id
             );
         }
-
         $admin_link_base = $this->link->getAdminLink('AdminEnvoiMoinsCher');
         Tools::redirectAdmin($admin_link_base . '&option=send&id_order=' . $order_id);
     }
@@ -2319,7 +2324,7 @@ class Envoimoinscher extends CarrierModule
         // if option disable cart is enabled and address is not set, return default rate
         $controller = $this->getContext()->controller;
         $controller_php_self = property_exists($controller, 'php_self') ? $controller->php_self : false;
-        
+
         if ((int)Configuration::get('EMC_DISABLE_CART') == 2 &&
           ($controller_php_self == "index") ||
           ($controller_php_self == "cart") ||
@@ -2375,10 +2380,10 @@ class Envoimoinscher extends CarrierModule
           'module' => $this->ws_name,
           'version' => $this->local_version
         );
-        
-      
+
+
           $offers = $this->getQuote($from, $to, $parcels, $params, false, true);
-      
+
 
         // Store relay points and delivery date for display
         $points = array();
@@ -2408,13 +2413,16 @@ class Envoimoinscher extends CarrierModule
         $deliveryCode = $helper->getDeliveryDateCode($cart->id);
         $this->model->setCache($deliveryCode, $delivery_dates);
 
+        // get cart rules (which use a code) if there is any
+        $cart_rules_in_cart = $helper->getCartRules($cart->id);
+
         // cache offers override for a few seconds because PS calls this function for each carrier separately
-        $offerProcessedCode = $helper->getOfferProcessedCode($offers, $cart->id);
+        $offerProcessedCode = $helper->getOfferProcessedCode($offers, $cart->id, $cart_rules_in_cart);
         if (!$this->model->getCache($offerProcessedCode)) {
 
             if (count($offers) != 0) {
                 // uncomment to see in logs why carriers don't show in front
-                // (fonction is useless here because PS excludes carrier beforehand)
+                // (fonction is useless here because PS excludes carriers beforehand)
                 // $offers = $this->psCarriersExclude($offers, $cart->id);
 
                 // convert price from euro to default currency if necessary
@@ -2590,6 +2598,7 @@ class Envoimoinscher extends CarrierModule
           'PS_WEIGHT_UNIT',
           'EMC_ENABLED_LOGS'
         ));
+        $helper = new EnvoimoinscherHelper;
 
         // check if there are additional costs (configured on products, calculated in cart)
         $additionalCost = 0;
@@ -2600,12 +2609,7 @@ class Envoimoinscher extends CarrierModule
         // get carriers set free because of cart rules
         // code taken from Prestashop Cart.php class. May differ depending on PS version...
         $cart_rules = CartRule::getCustomerCartRules($cart->id_lang, $cart->id_customer, true, true, false, $cart);
-        $result = Db::getInstance('SELECT * FROM '._DB_PREFIX_.'cart_cart_rule WHERE id_cart='.$cart->id);
-        $cart_rules_in_cart = array();
-
-        foreach ($result as $row) {
-            $cart_rules_in_cart[] = $row['id_cart_rules'];
-        }
+        $cart_rules_in_cart = $helper->getCartRules($cart->id);
 
         $total_products_wt = $cart->getOrderTotal(true, Cart::ONLY_PRODUCTS);
         $total_products = $cart->getOrderTotal(false, Cart::ONLY_PRODUCTS);
@@ -2631,36 +2635,31 @@ class Envoimoinscher extends CarrierModule
             }
 
             if ($cart_rule['free_shipping'] && $cart_rule['carrier_restriction']
-              && $cart_rule['minimum_amount'] <= $total_price) {
+              && $cart_rule['minimum_amount'] <= $total_price &&
+              (in_array((int)$cart_rule['id_cart_rule'], $cart_rules_in_cart) || $cart_rule['code'] == "")) {
                 $cr = new CartRule((int)$cart_rule['id_cart_rule']);
-                $context = Context::getContext();
-                if (!$context->cart) {
-                    $context = $context->cloneContext();
-                    $context->cart = $cart;
-                }
-                if (Validate::isLoadedObject($cr) && $cr->checkValidity(
-                    $context,
-                    in_array((int)$cart_rule['id_cart_rule'], $cart_rules_in_cart),
-                    false,
-                    false
-                )) {
-                    $carriers = $cr->getAssociatedRestrictions('carrier', true, false);
-                    if (is_array($carriers) && count($carriers) && isset($carriers['selected'])) {
-                        foreach ($carriers['selected'] as $carrier) {
-                            if (isset($carrier['id_carrier']) && $carrier['id_carrier']) {
-                                $free_carriers_rules[] = (int)$carrier['id_carrier'];
-                            }
+                $carriers = $cr->getAssociatedRestrictions('carrier', true, false);
+                if (is_array($carriers) && count($carriers) && isset($carriers['selected'])) {
+                    foreach ($carriers['selected'] as $carrier) {
+                        if (isset($carrier['id_carrier']) && $carrier['id_carrier']) {
+                            $free_carriers_rules[] = array('id_carrier' => (int)$carrier['id_carrier'],
+                              'id_cart_rule' => $cart_rule['id_cart_rule']
+                            );
                         }
                     }
                 }
-            } elseif ($cart_rule['free_shipping'] && $cart_rule['minimum_amount'] <= $total_price) {
+            } elseif ($cart_rule['free_shipping'] && $cart_rule['minimum_amount'] <= $total_price
+              && (in_array((int)$cart_rule['id_cart_rule'], $cart_rules_in_cart) || $cart_rule['code'] == "")) {
                 // in case no carrier has been selected, all must be set free
                 foreach ($offers as $key => $offer) {
                     $carrierId = $this->model->getCarrierIdByCode(
                         $offer['service']['code'],
                         $offer['operator']['code']
                     );
-                    $free_carriers_rules[] = (int)$carrierId;
+                    $free_carriers_rules[] = array(
+                                                    'id_carrier'   => (int)$carrierId,
+                                                    'id_cart_rule' => $cart_rule['id_cart_rule']
+                                                  );
                 }
             }
         }
@@ -2698,7 +2697,6 @@ class Envoimoinscher extends CarrierModule
                 }
                 $offers[$key]['price']['tax-exclusive'] += (float)$configuration['PS_SHIPPING_HANDLING'];
             }
-
             // check if carrier is set free
             if (isset($carrier->is_free) && $carrier->is_free) {
                 if ((int)Configuration::get('EMC_ENABLED_LOGS') == 1) {
@@ -2710,18 +2708,19 @@ class Envoimoinscher extends CarrierModule
                 }
                 $offers[$key]['price']['tax-exclusive'] = 0;
             }
-
             // check if carrier is free because of cart rules
-            if (array_search($carrierId, $free_carriers_rules) !== false) {
-                if ((int)Configuration::get('EMC_ENABLED_LOGS') == 1) {
-                    $message = sprintf(
-                        $this->l('Quotation - carrier %1$s is set free by cart rule %2$s'),
-                        $offer['operator']['code'] . '_' .$offer['service']['code'],
-                        array_search($carrierId, $free_carriers_rules)
-                    );
-                    Logger::addLog('[ENVOIMOINSCHER][' . time() . '] ' . $message, 1);
+            foreach ($free_carriers_rules as $free_carriers_rule) {
+                if (array_search($carrierId, $free_carriers_rule) !== false) {
+                    if ((int)Configuration::get('EMC_ENABLED_LOGS') == 1) {
+                        $message = sprintf(
+                            $this->l('Quotation - carrier %1$s is set free by cart rule %2$s'),
+                            $offer['operator']['code'] . '_' .$offer['service']['code'],
+                            $free_carriers_rule['id_cart_rule']
+                        );
+                        Logger::addLog('[ENVOIMOINSCHER][' . time() . '] ' . $message, 1);
+                    }
+                    $offers[$key]['price']['tax-exclusive'] = 0;
                 }
-                $offers[$key]['price']['tax-exclusive'] = 0;
             }
         }
 
@@ -3849,7 +3848,7 @@ class Envoimoinscher extends CarrierModule
 
         // Get cache
         $pricingCode = EnvoimoinscherHelper::getPricingCode($from, $to, $parcels, $params, $curlMulti);
-        
+
         if ($cache) {
             $offers = $this->model->getCache($pricingCode);
             if ($offers !== false) {

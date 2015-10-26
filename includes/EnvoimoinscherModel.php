@@ -69,7 +69,7 @@ class EnvoimoinscherModel
     public $id_address;
     /* delivery address*/
     public $address = array();
-    
+
     public function __construct($db, $module)
     {
         $this->db = $db;
@@ -295,7 +295,8 @@ class EnvoimoinscherModel
     {
         Db::getInstance()->execute('SET SESSION SQL_BIG_SELECTS = 1');
 
-        $sql = 'SELECT *, o.date_add AS order_date_add, oc.id_carrier AS carrierId,
+        $sql = 'SELECT osl.name, c.external_module_name, o.total_paid, o.total_shipping, cr.email,
+         d.generated_ed, er.errors_eoe,   o.date_add AS order_date_add, oc.id_carrier AS carrierId,
          c.name AS carrierName, cur.sign,
          o.id_order AS idOrder, SUBSTRING(a.firstname, 1, 1) AS firstNameShort,
          a.firstname AS toFirstname, a.lastname AS toLastname,
@@ -603,11 +604,13 @@ class EnvoimoinscherModel
      * @access public
      * @param int $order_id Id of order.
      * @param array $config Configuration data.
-     * @param bool $init first display 
+     * @param bool $init first display
+     * @param bool $active if carrier returned must be active
      * @return array List with data used to quotation and shipping order.
      */
-    public function prepareOrderInfo($order_id, $config, $init = false)
+    public function prepareOrderInfo($order_id, $config, $init = false, $active = false)
     {
+        $active = $active ? 'AND  c.active = 1 AND c.deleted = 0' : '';
         $sql = 'SELECT o.id_cart, o.total_products_wt AS totalOrder, o.total_products, o.total_shipping,
          c.id_carrier AS carrierId, c.name, c.external_module_name,
          a.firstname, a.lastname, a.address1, a.address2, a.postcode, a.city, a.company,
@@ -633,7 +636,7 @@ class EnvoimoinscherModel
        LEFT JOIN ' . _DB_PREFIX_ . 'order_detail od
          ON od.id_order = o.id_order
        LEFT JOIN ' . _DB_PREFIX_ . 'emc_services es
-         ON es.ref_carrier = c.id_reference AND c.active = 1 AND c.deleted = 0
+         ON es.ref_carrier = c.id_reference '. $active .'
        LEFT JOIN ' . _DB_PREFIX_ . 'emc_operators eo
          ON eo.code_eo = es.emc_operators_code_eo
        LEFT JOIN ' . _DB_PREFIX_ . 'emc_points ep
@@ -1681,7 +1684,7 @@ class EnvoimoinscherModel
             if ($current['company'] != '' && Configuration::get('EMC_INDI') != 1) {
                 $type = 'entreprise';
             }
-            
+
             $this->address = array(
                 'prenom' => $current['firstname'],
                 'nom' => $current['lastname'],
@@ -1694,9 +1697,9 @@ class EnvoimoinscherModel
                 'id_zone' => $current['id_zone'],
                 'type' => $type,
             );
-            
+
             return $this->address;
-            
+
         } else {
             return array();
         }
@@ -2009,17 +2012,9 @@ class EnvoimoinscherModel
         $zones = Zone::getZones(true);    //Gel all zones enabled
         $emc = Module::getInstanceByName('envoimoinscher');
 
-        /*
-        //get 19.6% tax id
-        if (!isset($data['id_tax_rules_group'])) {
-            $tax = $this->db->getRow('SELECT * FROM `' . _DB_PREFIX_ . 'tax` WHERE `rate` = "19.6"');
-            $data['id_tax_rules_group'] = (int)$tax['id_tax'];
-        }
-        */
-
         $old_carrier = DB::getInstance()->ExecuteS(
-            'SELECT * FROM ' . _DB_PREFIX_ . 'carrier WHERE id_reference = ' . (int)$service['ref_carrier'] .
-            ' ORDER BY id_carrier DESC LIMIT 1'
+            'SELECT * FROM ' . _DB_PREFIX_ . 'carrier WHERE name = "' . $service['label_es'] .
+            '" ORDER BY id_carrier DESC LIMIT 1'
         );
 
         //Set Carrier
@@ -2045,6 +2040,10 @@ class EnvoimoinscherModel
         if ($carrier->save() === false) {
             return false;
         }
+        /* copy old carriers datas if it's a new carier, not an update */
+        if (isset($old_carrier[0]['id_reference']) && $old_carrier[0]['deleted'] == 1) {
+            $carrier->copyCarrierData($old_carrier[0]['id_carrier']);
+        }
 
         //Get carrier id and ref
         $carrier_id = (int)$carrier->id;
@@ -2052,28 +2051,11 @@ class EnvoimoinscherModel
             'SELECT * FROM ' . _DB_PREFIX_ .
             'carrier WHERE deleted = 0 AND id_carrier = ' . $carrier_id
         );
-
         DB::getInstance()->Execute(
             'UPDATE ' . _DB_PREFIX_ . 'emc_services
             SET id_carrier = ' . $carrier_id . ', ref_carrier = ' . $row[0]['id_reference'] . ', pricing_es = ' .
             pSQL($data['pricing_es']) . ' WHERE id_es = ' . pSQL($data['id_es']) . ''
         );
-
-        //update product carrier links
-        $referenceRow = array();
-        if (isset($old_carrier[0]['id_reference'])) {
-            $referenceRow = Db::getInstance()->executes(
-                'SELECT id_carrier_reference FROM ' . _DB_PREFIX_ .'product_carrier
-                WHERE id_carrier_reference = '.(int)$old_carrier[0]['id_reference']
-            );
-        }
-
-        if (!empty($referenceRow)) {
-            DB::getInstance()->Execute(
-                'UPDATE ' . _DB_PREFIX_ . 'product_carrier SET id_carrier_reference = ' . (int)$row[0]['id_reference'] .
-                ' WHERE id_carrier_reference = ' . (int)$old_carrier[0]['id_reference']
-            );
-        }
 
         if ((int)$service['id_carrier'] === 0) {
             $groups = Group::getGroups((int)$emc->getContext()->language->id);

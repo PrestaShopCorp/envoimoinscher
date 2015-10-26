@@ -600,14 +600,34 @@ class EnvoimoinscherHelper
      * @access public
      * @param $offers : array of offers
      * @param $cartId : cart id
+     * @param $cart_rules_in_cart : cart rules
      * @return string Primary key.
      */
-    public static function getOfferProcessedCode($offers, $cartId)
+    public static function getOfferProcessedCode($offers, $cartId, $cart_rules_in_cart)
     {
         $code = serialize($offers);
         $code .= $cartId;
+        $code .= serialize($cart_rules_in_cart);
 
         return "offer_processed_".sha1($code);
+    }
+
+    /**
+     * Get cart rules (only those which use a code).
+     * @access public
+     * @param $cartId : cart id
+     * @param $cart_rules_in_cart : cart rules
+     * @return array $cart_rules_in_cart composed of cart rules id.
+     */
+    public function getCartRules($cartId)
+    {
+        $result = Db::getInstance()->ExecuteS('SELECT * FROM '._DB_PREFIX_.'cart_cart_rule WHERE id_cart='.$cartId);
+        $cart_rules_in_cart = array();
+        foreach ($result as $row) {
+            $cart_rules_in_cart[] = $row['id_cart_rule'];
+        }
+
+        return $cart_rules_in_cart;
     }
 
     public function setFields($key, $value)
