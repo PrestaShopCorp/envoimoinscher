@@ -22,13 +22,49 @@
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  */
+/* change event associated to next step button to prevent carrier without relay point  */
+function changeEventValidate(){	
+	/* TimeOut to execute this function if next steps buttons aren't visible */
+	setInterval(function() {// this code is executed every 500 milliseconds, stopped by clearInterval
+			if(!$('#HOOK_PAYMENT a').attr("href")) {
+
+			}else{
+				$("#HOOK_PAYMENT a, [name='processCarrier']").each(function(){
+					this.onclick = false;
+					$(this).unbind("click");
+				});
+				$("#HOOK_PAYMENT a, [name='processCarrier']").click(function(event) {
+						event.preventDefault();
+						validateNextScreen($(this), this.nodeName);				
+				});
+				clearInterval();
+			}
+	}, 500);
+}
+$(document).ready(function(){
+	/* initialize variable next step buttons  to prevent carrier without relay point */
+	$("#HOOK_PAYMENT a, [name='processCarrier']").each(function(){
+		this.onclick = false;
+		$(this).unbind("click");
+	});	
+	//changeEventValidate();
+	$("[name='cgv']").click(function(){
+		if($(this).is(":checked")){
+			changeEventValidate();
+		}
+	});
+});
 
 if (typeof carrierWithPoints == "undefined") {
     /**
      * Calls page to get the list of availables parcel points.
      */
     function selectPoint(ref, link, operator, address)
-    {
+    {				
+				$("#HOOK_PAYMENT a, [name='processCarrier']").click(function(event) {
+						event.preventDefault();
+						validateNextScreen($(this), this.nodeName);				
+				});
         $('#id_carrier' + ref + address).attr('checked', 'checked');
         // make offset
         var arr = $(link).offset();
@@ -195,6 +231,7 @@ if (typeof carrierWithPoints == "undefined") {
         var splited = ref.val().split(',');
         var value = splited[0];
         if (carrierWithPoints.indexOf(";" + value + ";") !== -1 && pointsLoadingWasDone.indexOf(";" + value + ";") === -1) {
+						$(".list_points_loaded").hide(600);
             pointsLoadingWasDone = pointsLoadingWasDone + ";" + value + ";";
             var itemParent = $(ref).parents(".delivery_option_radio");
             if (itemParent.length == 0) {
@@ -207,8 +244,9 @@ if (typeof carrierWithPoints == "undefined") {
                 '</div>'
             );
             selectPoint(value, ref, 'MONR', idAddress);
-            //alert(carrier_translation.before_continue_select_pickup_point);
         } else {
+						$(".list_points_loaded").not(document.getElementById("points" + value + idAddress)).hide(600);						
+						$('#points' + value + idAddress+'.list_points_loaded').show(600);						
             return 'shown';
         }
     }

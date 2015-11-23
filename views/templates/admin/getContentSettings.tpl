@@ -134,26 +134,25 @@
 		<div class="clear both"></div>
 	</fieldset>
 	<fieldset>
-		<legend>{l s='Add to cart shipping cost calculation options' mod='envoimoinscher'}</legend>
-		<p>{l s='Use the below options to control calculation when adding to cart or displaying cart.' mod='envoimoinscher'}
-		{l s='Whichever option you choose, it will be limited to cart display (which will use the ranges defined for France in carrier edition pages),' mod='envoimoinscher'} <span class="bold">{l s='live quotations will always be used on carrier selection' mod='envoimoinscher'}</span>.</p>
+		<legend>{l s='Add to cart shipping cost estimation' mod='envoimoinscher'}</legend>
+		<p>{l s='When your client adds an item to the cart, the shipping costs displayed will be:' mod='envoimoinscher'}</p>
 		<!-- Add to cart options -->
-		<label for="EMC_disable_cart">{l s='Add to cart options:' mod='envoimoinscher'}</label>
+		<label for="EMC_disable_cart"></label>
 		<div class="margin-form">
-			<select id="EMC_disable_cart" name="EMC_disable_cart">
-        <option value="0" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) == 0}selected{/if}>{l s='Enable quotations for all users' mod='envoimoinscher'}</option>
-        <option value="1" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) == 1}selected{/if}>{l s='Disable quotations for anonymous users' mod='envoimoinscher'}</option>
-        <option value="2" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) == 2}selected{/if}>{l s='Disable quotations for all users' mod='envoimoinscher'}</option>
-			</select>
+			<div class="margin-form add-tooltip" title="{l s='These are the shipping costs estimated before your client gets to the shipping option selection form.' mod='envoimoinscher'}">
+        <select id="EMC_disable_cart" name="EMC_disable_cart">
+                  <option value="2" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) == 2}selected{/if}>{l s='based on an estimation only' mod='envoimoinscher'}</option>
+                  <option value="1" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) == 1}selected{/if}>{l s='quoted for authenticated users, but estimated for anonymous users' mod='envoimoinscher'}</option>
+                  <option value="0" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) == 0}selected{/if}>{l s='quoted using client information currently available' mod='envoimoinscher'}</option>
+        </select>
+      </div>
 			<p>
-				<span class="EMC_disable_cart_description EMC_disable_cart_description_0" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) != 0}style="display:none"{/if}><span class="font-size12 bold">{l s='Enabling quotations for all users will cause Add to cart action to be slower.' mod='envoimoinscher'}</span><br />
-				{l s='Authenticated users will get a live quotation of their cart current content, anonymous users will get a live quotation based on a random address in France.' mod='envoimoinscher'}</span>
-				<span class="EMC_disable_cart_description EMC_disable_cart_description_1" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) != 1}style="display:none"{/if}><span class="font-size12 bold">{l s='Disabling quotations for anonymous users will cause Add to cart action to be faster for anonymous users only.' mod='envoimoinscher'}</span><br />
-				{l s='Authenticated users will get a live quotation of their cart current content, anonymous users will get a quotation based on ranges defined for France in the carrier edition page.' mod='envoimoinscher'}<br/>
-				{l s='For anonymous users, live quotations will only be shown on carrier selection.' mod='envoimoinscher'}</span>
-				<span class="EMC_disable_cart_description EMC_disable_cart_description_2" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) != 2}style="display:none"{/if}><span class="font-size12 bold">{l s='Disabling quotations for all users will cause Add to cart action to be faster.' mod='envoimoinscher'}</span><br />
-				{l s='Both authenticated and anonymous users will get a quotation based on ranges defined for France in the carrier edition page.' mod='envoimoinscher'}<br/>
-				{l s='Live quotations will only be shown on carrier selection.' mod='envoimoinscher'}</span>
+        <span class="EMC_disable_cart_description EMC_disable_cart_description_2" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) != 2}style="display:none"{/if}><span id="disable_cart_important">{l s='Add to cart action will be faster.' mod='envoimoinscher'}</span><br />
+        {l s='Shipping costs will be estimated based on ranges defined for France in the' mod='envoimoinscher'} <a href="{$link->getAdminLink('AdminCarriers')|escape:'htmlall':'UTF-8'}">{l s='carrier edition page.' mod='envoimoinscher'}</a> {l s='Live quotations will only be used on the carrier selection page.' mod='envoimoinscher'}</span>
+        <span class="EMC_disable_cart_description EMC_disable_cart_description_1" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) != 1}style="display:none"{/if}>{l s='Anonymous users will get a quotation based on ranges defined for France in the' mod='envoimoinscher'} <a href="{$link->getAdminLink('AdminCarriers')|escape:'htmlall':'UTF-8'}">{l s='carrier edition page.' mod='envoimoinscher'}</a><br />
+				{l s='Live quotations will only be used on the carrier selection page.' mod='envoimoinscher'}</span>
+				<span class="EMC_disable_cart_description EMC_disable_cart_description_0" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) != 0}style="display:none"{/if}>{l s='Anonymous users will get a live quotation based on a random address in France.' mod='envoimoinscher'}<br />
+				{l s='This option can cause Add to cart action to be slower.' mod='envoimoinscher'}</span>
 			</p>
 		</div>
 		<div class="clear both"></div>
