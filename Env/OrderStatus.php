@@ -48,7 +48,7 @@ class EnvOrderStatus extends EnvWebService
      */
     public function getOrderInformations($reference)
     {
-        $this->setOptions(array('action' => '/api/v1/order_status/' . $reference . '/informations'));
+        $this->setOptions(array('action' => 'api/v1/order_status/' . $reference . '/informations'));
         $this->doStatusRequest();
     }
 

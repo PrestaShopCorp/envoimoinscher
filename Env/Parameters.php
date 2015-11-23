@@ -58,7 +58,7 @@ class EnvParameters extends EnvWebService
     public function getParameters()
     {
         $this->setGetParams(array());
-        $this->setOptions(array('action' => '/api/v1/parameters'));
+        $this->setOptions(array('action' => 'api/v1/parameters'));
         if ($this->doSimpleRequest()) {
             $this->loadParameters();
             return true;

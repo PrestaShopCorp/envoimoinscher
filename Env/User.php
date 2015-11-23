@@ -43,7 +43,7 @@ class EnvUser extends EnvWebService
      */
     public function getPartnership()
     {
-        $this->setOptions(array('action' => '/api/v1/partnership'));
+        $this->setOptions(array('action' => 'api/v1/partnership'));
         $this->setPartnership();
     }
 
@@ -54,7 +54,7 @@ class EnvUser extends EnvWebService
      */
     public function getEmailConfiguration()
     {
-        $this->setOptions(array('action' => '/api/v1/emails_configuration'));
+        $this->setOptions(array('action' => 'api/v1/emails_configuration'));
         $this->setEmailConfiguration();
     }
 
@@ -68,7 +68,7 @@ class EnvUser extends EnvWebService
      */
     public function postEmailConfiguration($params)
     {
-        $this->setOptions(array('action' => '/api/v1/emails_configuration'));
+        $this->setOptions(array('action' => 'api/v1/emails_configuration'));
         $this->param = $params;
         $this->setPost();
         $this->setEmailConfiguration();

@@ -113,7 +113,7 @@ class EnvoimoinscherOrder
             'code_contenu' => $this->order_data['config']['EMC_NATURE'],
             'module' => $this->prestashop_config['wsName'],
             'version' => $this->prestashop_config['version'],
-            'type_emballage.emballage' => Configuration::get('EMC_WRAPPING'),
+            'type_emballage.emballage' => EnvoimoinscherModel::getConfig('EMC_WRAPPING'),
             'partnership' => $this->model->getPartnership()
         );
         $cot_cl->setEnv(Tools::strtolower($this->order_data['config']['EMC_ENV']));
@@ -139,7 +139,7 @@ class EnvoimoinscherOrder
             )
         );
         $dest_type = $this->order_data['delivery']['type'];
-        if ((int)Configuration::get('EMC_INDI') == 1) {
+        if ((int)EnvoimoinscherModel::getConfig('EMC_INDI') == 1) {
             $dest_type = 'particulier';
         }
 
@@ -230,7 +230,7 @@ class EnvoimoinscherOrder
                     $proforma_post[$i]['poids'] = 0.001;
                 }
                 $proforma_post[$i]['poids'] = EnvoimoinscherHelper::normalizeToKg(
-                    Configuration::get('PS_WEIGHT_UNIT'),
+                    EnvoimoinscherModel::getConfig('PS_WEIGHT_UNIT'),
                     $proforma_post[$i]['poids']
                 );
                 // $proforma_weight = already in kg (proformaPost is converted every time)

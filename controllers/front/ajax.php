@@ -61,7 +61,6 @@ class EnvoimoinscherAjaxModuleFrontController extends ModuleFrontController
 
     public function display()
     {
-        //ob_end_clean();
         echo $this->result;
         //die();
     }

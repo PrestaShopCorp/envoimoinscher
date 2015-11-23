@@ -58,7 +58,7 @@ class EnvContentCategory extends EnvWebService
      */
     public function getCategories()
     {
-        $this->setOptions(array('action' => '/api/v1/content_categories'));
+        $this->setOptions(array('action' => 'api/v1/content_categories'));
         $this->doCatRequest();
     }
 
@@ -69,7 +69,7 @@ class EnvContentCategory extends EnvWebService
      */
     public function getContents()
     {
-        $this->setOptions(array('action' => '/api/v1/contents'));
+        $this->setOptions(array('action' => 'api/v1/contents'));
         $this->doConRequest();
     }
 
