@@ -26,24 +26,12 @@
 
 class EnvoimoinscherHelper
 {
-
     /**
      * Fields used to generate mandatory form
      * @access protected
      * @var array
      */
     protected $fields = array(
-        'colis.description' => array(
-            'type' => 'input',
-            'maxlength' => '255',
-            'helper' => ''
-        ),
-        'colis.valeur' => array(
-            'type' => 'input',
-            'maxlength' => '10',
-            'helper' => ''
-        ),
-
         'civilite' => array(
             'helper' => '',
             'type' => array(
@@ -162,7 +150,7 @@ class EnvoimoinscherHelper
      * @access proteced
      * @var array
      */
-    protected $config_keys = array('EMC_LOGIN', 'EMC_PASS', 'EMC_KEY_TEST', 'EMC_KEY_PROD', 'EMC_ENV',
+    public static $config_keys = array('EMC_LOGIN', 'EMC_PASS', 'EMC_KEY_TEST', 'EMC_KEY_PROD', 'EMC_ENV',
         'EMC_TYPE', 'EMC_NATURE', 'EMC_CIV', 'EMC_FNAME', 'EMC_LNAME', 'EMC_COMPANY',
         'EMC_ADDRESS', 'EMC_COMPL', 'EMC_POSTALCODE', 'EMC_CITY', 'EMC_TEL', 'EMC_MAIL',
         'EMC_PICKUP', 'EMC_MODE', 'EMC_ORDER', 'EMC_RELAIS_SOGP', 'EMC_RELAIS_MONR',
@@ -173,7 +161,8 @@ class EnvoimoinscherHelper
         'EMC_MASS', 'EMC_PICKUP_F1', 'EMC_PICKUP_F2', 'EMC_PICKUP_J1', 'EMC_PICKUP_J2',
         'EMC_PICKUP_T1', 'EMC_PICKUP_T2', 'EMC_PP_CHRP_CHRONORELAIS', 'EMC_PP_MONR_CPOURTOI',
         'EMC_PP_MONR_CPOURTOIEUROPE', 'EMC_PP_SOGP_RELAISCOLIS', 'EMC_SRV_MODE', 'EMC_WRAPPING',
-        'EMC_PARTNERSHIP');
+        'EMC_PARTNERSHIP','EMC_FILTER_STATUS','EMC_FILTER_TYPE_ORDER0','EMC_FILTER_CARRIERS',
+        'EMC_FILTER_START_DATE','EMC_FILTER_TYPE_ORDER', 'EMC_DISABLE_CART', 'EMC_ENABLED_LOGS');
 
 
     /**
@@ -253,6 +242,25 @@ class EnvoimoinscherHelper
     protected $pass_phrase = 'T+sGKCHeRddqiGb+tot/q2hzGRh5oP3GlB1NEMHEGTw=';
 
     /**
+     * Constructor to set additional fields that needs to be prefixed with parcel type.
+     * @var string emc_type, default is colis
+     */
+    public function __construct($emc_type = 'colis')
+    {
+        $this->fields[$emc_type.'.description'] = array(
+            'type' => 'input',
+            'maxlength' => '255',
+            'helper' => ''
+        );
+
+        $this->fields[$emc_type.'.valeur'] = array(
+            'type' => 'input',
+            'maxlength' => '10',
+            'helper' => ''
+        );
+    }
+
+    /**
      * Gets random value to generate the tracking uniq key.
      * @param array $data List of parameters taken to generate the ticket.
      * @return string String of value used in the token.
@@ -322,22 +330,22 @@ class EnvoimoinscherHelper
      * @return array List with new values.
      */
     public function configArray($array)
-    {
+    { /*
         $config = array();
-        foreach ($this->config_keys as $v) {
+        foreach (self::$config_keys as $v) {
             $config[$v] = '';
         }
 
         foreach ($array as $value) {
             $config[$value['name']] = $value['value'];
         }
-
         if (!isset($config['EMC_NO_FREESHIP']) || trim($config['EMC_NO_FREESHIP']) == '') {
             $config['EMC_NO_FREESHIP'] = array();
         } else {
             $config['EMC_NO_FREESHIP'] = Tools::jsonDecode($config['EMC_NO_FREESHIP'], true);
         }
-        return $config;
+        */
+        return $array;
     }
 
     /**
@@ -434,9 +442,9 @@ class EnvoimoinscherHelper
         return $cot_cl->getReasons($this->proforma);
     }
 
-    public function getConfigKeys()
+    public static function getConfigKeys()
     {
-        return $this->config_keys;
+        return self::config_keys;
     }
 
     public function getTablesNames()
@@ -519,7 +527,7 @@ class EnvoimoinscherHelper
      */
     public static function normalizeToKg($unit, $weight)
     {
-        switch(Tools::strtolower($unit)) {
+        switch (Tools::strtolower($unit)) {
             case 'g':
                 $weight = $weight / 1000;
                 break;
@@ -600,14 +608,35 @@ class EnvoimoinscherHelper
      * @access public
      * @param $offers : array of offers
      * @param $cartId : cart id
+     * @param $cart_rules_in_cart : cart rules
      * @return string Primary key.
      */
-    public static function getOfferProcessedCode($offers, $cartId)
+    public static function getOfferProcessedCode($offers, $cartId, $cart_rules_in_cart)
     {
         $code = serialize($offers);
         $code .= $cartId;
+        $code .= serialize($cart_rules_in_cart);
 
         return "offer_processed_".sha1($code);
+    }
+
+    /**
+     * Get cart rules (only those which use a code).
+     * @access public
+     * @param $cartId : cart id
+     * @param $cart_rules_in_cart : cart rules
+     * @return array $cart_rules_in_cart composed of cart rules id.
+     */
+    public function getCartRules($cartId)
+    {
+        $result = Db::getInstance()->ExecuteS('SELECT * FROM 
+				'._DB_PREFIX_.'cart_cart_rule WHERE id_cart='.(int)$cartId);
+        $cart_rules_in_cart = array();
+        foreach ($result as $row) {
+            $cart_rules_in_cart[] = $row['id_cart_rule'];
+        }
+
+        return $cart_rules_in_cart;
     }
 
     public function setFields($key, $value)
