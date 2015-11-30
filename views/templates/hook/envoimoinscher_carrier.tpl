@@ -60,7 +60,8 @@ var carrier_translation = {
 			if(typeof $(nextStepButton).attr("onclick") != "undefined" && $(nextStepButton).attr("onclick") != ""){
 				eval($(nextStepButton).attr("onclick"));
 			}else if($(nextStepButton).attr("type") == "submit"){
-				$(nextStepButton).closest("form").submit();
+				$(nextStepButton).unbind("click" );
+				$(nextStepButton).trigger( "click" );
 			}else{
 				window.location = $(nextStepButton).attr("href");
 			}

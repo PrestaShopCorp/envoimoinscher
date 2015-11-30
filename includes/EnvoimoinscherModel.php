@@ -440,8 +440,7 @@ class EnvoimoinscherModel
             //by order type
             switch ($params['filterBy']['type_order']) {
                 case '0':
-                    $sql .= ' AND c.external_module_name = "envoimoinscher"
-                      AND (er.errors_eoe = "" OR er.errors_eoe is NULL)';
+                    $sql .= ' AND c.external_module_name = "envoimoinscher"';
                     break;
                 case '1':
                     $sql .= ' AND c.external_module_name != "envoimoinscher"
