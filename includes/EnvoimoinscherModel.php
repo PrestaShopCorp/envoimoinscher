@@ -234,7 +234,7 @@ class EnvoimoinscherModel
         );
 
         $default_config = Configuration::getMultiple(EnvoimoinscherHelper::$config_keys, null, 0, 0);
-        array_walk($default_config, 'self::fillConfig', $shop_config);
+        array_walk($default_config, 'EnvoimoinscherModel::fillConfig', $shop_config);
         return $default_config;
     }
 
@@ -440,7 +440,8 @@ class EnvoimoinscherModel
             //by order type
             switch ($params['filterBy']['type_order']) {
                 case '0':
-                    $sql .= ' AND c.external_module_name = "envoimoinscher"';
+                    $sql .= ' AND c.external_module_name = "envoimoinscher"
+                      AND (er.errors_eoe = "" OR er.errors_eoe is NULL)';
                     break;
                 case '1':
                     $sql .= ' AND c.external_module_name != "envoimoinscher"
@@ -713,7 +714,7 @@ class EnvoimoinscherModel
          es.emc_operators_code_eo AS emc_operators_code_eo, es.is_parcel_pickup_point_es,
          es.is_parcel_dropoff_point_es, es.code_es,
          CONCAT_WS("_", es.emc_operators_code_eo, es.code_es) AS offerCode,
-         ct.selected_point
+         ep.point_ep, ct.selected_point
        FROM ' . _DB_PREFIX_ . 'orders o
        LEFT JOIN ' . _DB_PREFIX_ . 'order_carrier oc
          ON oc.id_order = o.id_order
@@ -938,7 +939,7 @@ class EnvoimoinscherModel
             'disponibilite.HDE' => $config['EMC_DISPO_HDE'],
             'disponibilite.HLE' => $config['EMC_DISPO_HLE'],
             'depot.pointrelais' => $default_point,
-            'retrait.pointrelais' => $row[0]['selected_point'],
+            'retrait.pointrelais' => $row[0]['point_ep'],
             'type_emballage.emballage' => $config['EMC_WRAPPING'],
             $config['EMC_TYPE'] . '.description' => implode(',', $products_desc),
             $config['EMC_TYPE'] . '.valeur' => $order_value,
@@ -1402,7 +1403,12 @@ class EnvoimoinscherModel
      */
     public function insertOrderFromPush($order_id)
     {
-        $data = $this->getPostData($order_id, "timeout");
+        $type = 'eem';
+        $data = $this->getPostData($order_id);
+        if (empty($data['delivery'])) {
+            $data = $this->getPostData($order_id, 'timeout');
+            $type = 'timeout';
+        }
         if (isset($data['order'][0])) {
             $emc = Module::getInstanceByName('envoimoinscher');
             $cookie = $emc->getContext()->cookie;
@@ -1471,7 +1477,7 @@ class EnvoimoinscherModel
                 'DELETE FROM ' . _DB_PREFIX_ . 'emc_orders_errors WHERE ' . _DB_PREFIX_ . 'orders_id_order = ' .
                 (int)$order_id . ''
             );
-            $this->removeTemporaryPost($order_id, 'timeout');
+            $this->removeTemporaryPost($order_id, $type);
         }
     }
 
@@ -2509,7 +2515,7 @@ class EnvoimoinscherModel
                     $emc_ref = urldecode(Tools::getValue('emc_reference'));
                     $ope_ref = urldecode(Tools::getValue('carrier_reference'));
                     //Insert order
-                    if ($emc_ref != '' && $this->orderWithTimeoutError($order)) {
+                    if ($emc_ref != '') {
                         $this->insertOrderFromPush($order);
                     }
                     $documents = array();
@@ -2529,7 +2535,6 @@ class EnvoimoinscherModel
                     if (Tools::isSubmit('b13a')) {
                         $documents['b13a'] = urldecode(Tools::getValue('b13a'));
                     }
-
                     $return = $this->updateStatus($order, $emc_ref, $ope_ref, $documents);
                     if ($return === false) {
                         $error_message = $emc->l('Unable to update order\'s status data');

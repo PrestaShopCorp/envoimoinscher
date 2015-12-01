@@ -110,7 +110,7 @@ class EnvWebService
     public $xpath = null;
 
     /**
-     * cUrl Timeout
+     * curl Timeout
      * @access public
      * @var int
      */

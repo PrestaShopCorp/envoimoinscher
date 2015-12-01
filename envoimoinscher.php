@@ -76,7 +76,6 @@ class Envoimoinscher extends CarrierModule
      * Limit is here to avoid the timeouts.
      * @var int
      */
-
     const MAX_LIMIT_FOR_MULTISHIPPING = 2;
 
     public $id_carrier;
@@ -282,9 +281,15 @@ class Envoimoinscher extends CarrierModule
         // remove emc carriers
         $remove_emc_carriers = 'UPDATE `' . _DB_PREFIX_ . 'carrier` set deleted = 1 where external_module_name = "' .
           $this->name . '"';
-        // remove envoimoinscher admin tab
-        $remove_emc_tab = 'DELETE  FROM '. _DB_PREFIX_ .'tab WHERE class_name = "AdminEnvoiMoinsCher"';
 
+        $remove_emc_tab = true;
+        $id_tab = (int)Tab::getIdFromClassName('AdminEnvoiMoinsCher');
+        if ($id_tab)
+        {
+            $tab = new Tab($id_tab);
+            $remove_emc_tab = $tab->delete();
+        }       
+        
         // If execution doesn't work
         if ($this->tablesRollback() === false ||
             parent::uninstall() === false ||
@@ -1288,7 +1293,7 @@ class Envoimoinscher extends CarrierModule
             $page = (int)Tools::getValue('p');
         }
 
-        $per_page = 20;
+        $per_page = 100;
         $limits = array();
 
         $pager = new Pager(array(
@@ -1557,7 +1562,7 @@ class Envoimoinscher extends CarrierModule
 
         // set pager
         $page = 1;
-        $per_page = 20;
+        $per_page = 100;
         $all_pages = $count_query[0]['allCmd'];
         if (Tools::isSubmit('p')) {
             $page = (int)Tools::getValue('p');
@@ -2024,7 +2029,7 @@ class Envoimoinscher extends CarrierModule
                 Db::getInstance()->autoExecute(_DB_PREFIX_ . 'carrier', $data, 'INSERT');
                 $lang_data['id_carrier'] = (int)Db::getInstance()->Insert_ID();
                 DB::getInstance()->Execute('UPDATE ' . _DB_PREFIX_ . 'carrier SET
-                id_reference = '. $lang_data['id_carrier'] .' WHERE id_carrier = '.$lang_data['id_carrier']);
+                id_reference = '. $lang_data['id_carrier'] .' WHERE id_carrier = '.(int)$lang_data['id_carrier']);
                 Db::getInstance()->autoExecute(_DB_PREFIX_ . 'carrier_lang', $lang_data, 'INSERT');
                 // prestashop standard ...
                 $carrier = array('id_carrier' => (int)$lang_data['id_carrier'], 'id_group' => 0);
@@ -3646,7 +3651,7 @@ class Envoimoinscher extends CarrierModule
         $controller = $this->getContext()->controller;
         if (property_exists($controller, 'php_self') &&
         ($controller->php_self == "order-opc" || ($controller->php_self == "order" && $controller->step == 2) )) {
-            $this->getContext()->controller->addJs('https://maps.google.com/maps/api/js');
+            $this->getContext()->controller->addJs('https://maps.google.com/maps/api/js?sensor=false');
         }
         return $this->display(__FILE__, '/views/templates/hook/header_hook.tpl');
     }
