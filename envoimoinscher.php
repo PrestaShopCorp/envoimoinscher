@@ -284,12 +284,11 @@ class Envoimoinscher extends CarrierModule
 
         $remove_emc_tab = true;
         $id_tab = (int)Tab::getIdFromClassName('AdminEnvoiMoinsCher');
-        if ($id_tab)
-        {
+        if ($id_tab) {
             $tab = new Tab($id_tab);
             $remove_emc_tab = $tab->delete();
-        }       
-        
+        }
+
         // If execution doesn't work
         if ($this->tablesRollback() === false ||
             parent::uninstall() === false ||
