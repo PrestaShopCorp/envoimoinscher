@@ -36,7 +36,7 @@
 	<tbody>
 		{if isset($offers) && $offers && sizeof($offers)}
 			{foreach from=$offers key=o item=offer}
-				{assign var="defaultPP" value="{Configuration::get(strtoupper('EMC_PP_'|cat:substr($offer.offerCode,-25)))|escape:'htmlall':'UTF-8'}"}
+				{assign var="defaultPP" value="{EnvoimoinscherModel::getConfig(strtoupper('EMC_PP_'|cat:substr($offer.offerCode,-25)))|escape:'htmlall':'UTF-8'}"}
 				<tr class="{if in_array($offer.id_eo, $operators)} disabled{/if}">
 					<td class="offer">
 						<label for="offer{$offer.id_es|escape:'htmlall':'UTF-8'}">

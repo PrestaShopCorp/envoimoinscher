@@ -74,7 +74,7 @@ class EnvCountry extends EnvWebService
      */
     public function getCountries()
     {
-        $this->setOptions(array('action' => '/api/v1/countries'));
+        $this->setOptions(array('action' => 'api/v1/countries'));
         $this->doCtrRequest();
     }
 

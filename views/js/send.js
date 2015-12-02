@@ -105,6 +105,9 @@ $(document).ready(function () {
                     'parcels_h': parcel_h_lines,
                     'parcels_l': parcel_l_lines,
                     'parcels_w': parcel_w_lines,
+                    'height': $('#height').val(),
+                    'width': $('#width').val(),
+                    'length': $('#length').val(),
                     'insurance': $('#insurance').attr("checked")
                 },
                 success: function (res) {

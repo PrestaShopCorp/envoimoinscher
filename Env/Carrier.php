@@ -52,7 +52,7 @@ class EnvCarrier extends EnvWebService
      */
     public function getCarriers()
     {
-        $this->setOptions(array('action' => '/api/v1/carriers'));
+        $this->setOptions(array('action' => 'api/v1/carriers'));
         $this->doCarrierRequest();
     }
 

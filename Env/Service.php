@@ -29,7 +29,7 @@ class EnvService extends EnvCarrier
      */
     public function getServices()
     {
-        $this->setOptions(array('action' => '/api/v1/services'));
+        $this->setOptions(array('action' => 'api/v1/services'));
         $this->doServicesRequest();
     }
 
@@ -70,7 +70,7 @@ class EnvService extends EnvCarrier
         if (isset($this->carriers[$code]['services'])) {
             return $this->carriers[$code]['services'];
         }
-        $this->setOptions(array('action' => '/api/v1/carrier/' . $code . '/services'));
+        $this->setOptions(array('action' => 'api/v1/carrier/' . $code . '/services'));
         $this->doServicesRequest();
     }
 

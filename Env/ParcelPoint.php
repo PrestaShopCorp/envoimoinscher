@@ -75,7 +75,7 @@ class EnvParcelPoint extends EnvWebService
     public function getParcelPoint($type = '', $code = '', $country = 'FR')
     {
         if (in_array($type, $this->types)) {
-            $this->setOptions(array('action' => '/api/v1/' . $type . '/' . $code . '/' . $country . '/informations'));
+            $this->setOptions(array('action' => 'api/v1/' . $type . '/' . $code . '/' . $country . '/informations'));
             $this->doSimpleRequest($type);
         } else {
             $this->resp_error = true;

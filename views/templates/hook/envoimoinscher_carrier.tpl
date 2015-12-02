@@ -22,7 +22,6 @@
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
-
 <script type="text/javascript">
 /*
 * We need text translation for external js
@@ -39,38 +38,37 @@ var carrier_translation = {
 };
 </script>
 
- <style type="text/css">
-	#mapContainer{
-		display:none;
-		width:60%;
-		height:60%;
-		position: absolute;
-		top:100px;
-		paddding:10px;
-		left:20%;
-		z-index:11111;
-		border:3px solid #000000;
-		background: #FFFFFF;
-	}
-
-	#mapContainer p{
-		width:98%;
-		text-align:right;
-		height:auto;
-		padding-right:2%;
-		margin-top:1%;
-	}
-
-	.click-here{
-		text-decoration: underline;
-		font-weight : bold;
-		color: #333;
-	}
-</style>
-
 <script type="text/javascript" src="{$baseDir|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/js/carrier.js"></script>
 <link type="text/css" rel="stylesheet" href="{$baseDir|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/css/carrier.css" />
-<script type="text/javascript">
+<script type="text/javascript">	
+	
+	/* function to block submit payment/next step form if relay point unchecked */
+	function validateNextScreen(nextStepButton, type){
+		/* check if operator checked need relay point */
+		var opeChecked = $('input[name="delivery_option['+idAddressParams+']"]:checked').val().replace(",", "");
+		var pointChecked = $('input.point'+opeChecked+idAddress+':checked').val();
+		if(carrierWithPoints.indexOf(";"+opeChecked+";") !== -1 && (""+pointChecked == "undefined" || pointChecked == ""))
+		{
+			/* send an alert message if relay unchecked */
+			if(lookForPoints($('input[name="delivery_option['+idAddressParams+']"]:checked')) == 'shown')
+			{
+				alert(carrier_translation.before_continue_select_pickup_point);
+				return false;
+			}
+		}else{
+			/* happen old events attached to payment/next step buttons */
+			if(typeof $(nextStepButton).attr("onclick") != "undefined" && $(nextStepButton).attr("onclick") != ""){
+				eval($(nextStepButton).attr("onclick"));
+			}else if($(nextStepButton).attr("type") == "submit"){
+				$(nextStepButton).unbind("click" );
+				$(nextStepButton).trigger( "click" );
+			}else{
+				window.location = $(nextStepButton).attr("href");
+			}
+			return true;
+		}
+	}
+
 	/* fix 1.5 */
   if(typeof idAddressParams == "undefined") {
 		var idAddressParams = "{$id_address_params|escape:'htmlall':'UTF-8'}";
@@ -122,19 +120,6 @@ var carrier_translation = {
 			// hack to avoid to hide extra carrier when prestashop natif carriers don't have offers
 			$('#noCarrierWarning').hide();
 			$('#carrierTable').show();
-			// don't pass to next screen when parcel point is not choosen - one page checkout mode
-			 jQuery("#HOOK_PAYMENT, [name='processCarrier']").click(function() {
-			 var opeChecked = $('input[name="delivery_option['+idAddressParams+']"]:checked').val().replace(",", "");
-			 var pointChecked = $('input.point'+opeChecked+idAddress+':checked').val();
-				 if(carrierWithPoints.indexOf(";"+opeChecked+";") !== -1 && (""+pointChecked == "undefined" || pointChecked == ""))
-			 {
-					if(lookForPoints($('input[name="delivery_option['+idAddressParams+']"]:checked')) == 'shown')
-					{
-						alert(carrier_translation.before_continue_select_pickup_point);
-					}
-					return false;
-			 }
-			 } );
 		});
   }
   else if(orderProcess == "order-opc") {
@@ -171,7 +156,7 @@ var carrier_translation = {
 			// prevent of displaying JavaScript's alert twice on standard order mode
 			if(orderProcess != "order-opc")
 			{
-				$('input[name="delivery_option['+idAddressParams+']"]').change(function() {
+				$(document).delegate("change", "input[name='delivery_option['+idAddressParams+']']", function() {
 					lookForPoints($(this));
 				});
 			}

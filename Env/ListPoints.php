@@ -68,7 +68,7 @@ class EnvListPoints extends EnvWebService
     {
         $this->param = $infos;
         $this->setGetParams(array());
-        $this->setOptions(array('action' => '/api/v1/' . $ope . '/listpoints'));
+        $this->setOptions(array('action' => 'api/v1/' . $ope . '/listpoints'));
         $this->doListRequest();
     }
 

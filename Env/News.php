@@ -48,7 +48,7 @@ class EnvNews extends EnvWebService
         $this->param['channel'] = $channel;
         $this->param['version'] = $version;
         $this->setGetParams(array());
-        $this->setOptions(array('action' => '/api/v1/news'));
+        $this->setOptions(array('action' => 'api/v1/news'));
         if ($this->doSimpleRequest()) {
             $this->getNews();
             return true;

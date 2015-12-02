@@ -98,7 +98,6 @@ class AdminEnvoiMoinsCherController extends ModuleAdminController
 
             case 'downloadLabels':
                 // to display labels correctly, we have to clean buffer
-                ob_end_clean();
                 $emc->downloadLabels();
                 break;
 

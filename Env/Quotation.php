@@ -252,7 +252,7 @@ class EnvQuotation extends EnvWebService
     {
         $this->param = array_merge($this->param, $quot_info);
         $this->setGetParams(array());
-        $this->setOptions(array('action' => '/api/v1/cotation'));
+        $this->setOptions(array('action' => 'api/v1/cotation'));
 
         return $this->doSimpleRequest();
     }
@@ -275,7 +275,7 @@ class EnvQuotation extends EnvWebService
     public function getQuotationMulti()
     {
         $this->setGetParamsMulti(array());
-        $this->setOptionsMulti(array('action' => '/api/v1/cotation'));
+        $this->setOptionsMulti(array('action' => 'api/v1/cotation'));
         return $this->doSimpleRequestMulti();
     }
 
@@ -558,7 +558,7 @@ class EnvQuotation extends EnvWebService
             $quot_info['assurance.selected'] = false;
         }
         $this->param = array_merge($this->param, $quot_info);
-        $this->setOptions(array('action' => '/api/v1/order'));
+        $this->setOptions(array('action' => 'api/v1/order'));
         $this->setPost();
 
         if ($this->doSimpleRequest() && !$this->resp_error) {
