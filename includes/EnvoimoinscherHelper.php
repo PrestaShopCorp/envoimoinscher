@@ -160,9 +160,9 @@ class EnvoimoinscherHelper
         'EMC_TRACK_MODE', 'EMC_ASSU', 'EMC_INDI', 'EMC_LABEL_DELIVERY_DATE', 'EMC_LAST_CARRIER_UPDATE',
         'EMC_MASS', 'EMC_PICKUP_F1', 'EMC_PICKUP_F2', 'EMC_PICKUP_J1', 'EMC_PICKUP_J2',
         'EMC_PICKUP_T1', 'EMC_PICKUP_T2', 'EMC_PP_CHRP_CHRONORELAIS', 'EMC_PP_MONR_CPOURTOI',
-        'EMC_PP_MONR_CPOURTOIEUROPE', 'EMC_PP_SOGP_RELAISCOLIS', 'EMC_SRV_MODE', 'EMC_WRAPPING',
-        'EMC_PARTNERSHIP','EMC_FILTER_STATUS','EMC_FILTER_TYPE_ORDER0','EMC_FILTER_CARRIERS',
-        'EMC_FILTER_START_DATE','EMC_FILTER_TYPE_ORDER', 'EMC_DISABLE_CART', 'EMC_ENABLED_LOGS');
+        'EMC_PP_MONR_CPOURTOIEUROPE', 'EMC_PP_SOGP_RELAISCOLIS', 'EMC_PP_IMXE_PACKSUIVIEUROPE',
+        'EMC_SRV_MODE', 'EMC_WRAPPING', 'EMC_PARTNERSHIP','EMC_FILTER_STATUS', 'EMC_FILTER_TYPE_ORDER',
+        'EMC_FILTER_CARRIERS','EMC_FILTER_START_DATE', 'EMC_DISABLE_CART', 'EMC_ENABLED_LOGS');
 
 
     /**
@@ -630,7 +630,7 @@ class EnvoimoinscherHelper
     public function getCartRules($cartId)
     {
         $result = Db::getInstance()->ExecuteS('SELECT * FROM 
-				'._DB_PREFIX_.'cart_cart_rule WHERE id_cart='.(int)$cartId);
+        '._DB_PREFIX_.'cart_cart_rule WHERE id_cart='.(int)$cartId);
         $cart_rules_in_cart = array();
         foreach ($result as $row) {
             $cart_rules_in_cart[] = $row['id_cart_rule'];

@@ -608,7 +608,7 @@ class EnvoimoinscherModel
         );
 
         // option < 100g
-        if ($weight != 0 && $weight < 0.1 && $weight >= 0 && (int)self::getConfig('EMC_WEIGHTMIN') == 1) {
+        if ($weight != 0 && $weight < 0.1 && (int)self::getConfig('EMC_WEIGHTMIN') == 1) {
             $weight = 0.1;
         }
 
@@ -763,6 +763,10 @@ class EnvoimoinscherModel
                         self::getConfig('PS_WEIGHT_UNIT'),
                         $product['cart_quantity'] * (float)$config['EMC_AVERAGE_WEIGHT']
                     );
+                }
+                // option < 100g
+                if ((float)$product_weight != 0 && (float)$product_weight < 0.1 && EnvoimoinscherModel::getConfig('EMC_WEIGHTMIN')) {
+                    (float)$product_weight = 0.1;
                 }
 
                 $u = 0;
