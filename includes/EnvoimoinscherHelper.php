@@ -415,7 +415,7 @@ class EnvoimoinscherHelper
             $source = explode('/', $info['source']);
             if ($source[0] == 'this') {
                 $params = isset($info['params']) ? (array)$info['params'] : array();
-                $options = $this->$source[1]($params, Tools::safeOutput($order_page));
+                $options = $this->{$source[1]}($params, Tools::safeOutput($order_page));
                 foreach ($options as $o => $option) {
                     $selected = '';
                     if ($o == Tools::safeOutput($default)) {
