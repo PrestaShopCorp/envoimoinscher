@@ -1,5 +1,5 @@
 {**
- * 2007-2015 PrestaShop
+ * 2007-2016 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
+ * @copyright 2007-2016 PrestaShop SA / 2011-2016 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -35,8 +35,8 @@
 		<div class="tab">
 			{if sizeof($advancedExpressCarriers)}
 				<fieldset id="EMC_carriers" class="baseForm">
-					<legend>{l s='Express offers' mod='envoimoinscher'}</legend>
-					{include file="$familTableTpl" offers=$advancedExpressCarriers disableServices=$disableServices}
+					<legend>{l s='CARRIERS : dimensional weight pricing' mod='envoimoinscher'}</legend>
+					{include file="$familTableTpl" carriersByType=$advancedExpressCarriers disableServices=$disableServices titleCount=$titleCount carrierControllerUrl=$carrierControllerUrl}
 				</fieldset>
 			{/if}
 		</div>

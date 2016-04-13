@@ -1,5 +1,5 @@
 /**
- * 2007-2015 PrestaShop
+ * 2007-2016 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
+ * @copyright 2007-2016 PrestaShop SA / 2011-2016 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  */
@@ -65,7 +65,6 @@ $(document).ready(function () {
 
     $('#submitForm').click(function () {
 
-
         if ($('#weight').val() != baseWeight ||
             $('#height').val() != baseHeight ||
             $('#width').val() != baseWidth ||
@@ -94,7 +93,7 @@ $(document).ready(function () {
             baseLength = $('#length').val();
             baseHeight = $('#height').val();
             modified = false;
-            $('#offerTable').html("Recherche des offres...");
+            $('#offerTable').html(multiparcelTranslation.search);
             $.ajax({
                 url: "index.php?controller=AdminEnvoiMoinsCher&id_order=" + orderId + "&option=getOffersNewWeight&token=" + token,
                 type: 'POST',
@@ -112,7 +111,8 @@ $(document).ready(function () {
                 },
                 success: function (res) {
                     var content = $(res).find("#tableContent").html();
-                    if ("" + content != "null" && "" + content != "undefined") {
+                    content += $(res).find("#otherOffers").html();
+                    if ("" + content != "null" && "" + content != "undefined" && "" + content != "NaN" && "" + content != "0") {
                         $('#offerTable').html(content);
                     } else {
                         $('#foundBlock').remove();
@@ -128,6 +128,13 @@ $(document).ready(function () {
     });
 
     $("#multiParcel").trigger("blur");
+    
+    $(document).delegate('#submitChangeCarrier', 'click', function(){
+        var offerCode = $('#changeCarrier').val();
+        if (offerCode != "") {
+            window.location = "index.php?controller=AdminEnvoiMoinsCher&id_order=" + orderId + "&option=replace&code="+ offerCode +"&token=" + token;
+        }
+    });
 
 });
 
@@ -174,23 +181,49 @@ function makeParcels()
     $("#multiParcel").val(nr);
     var weight = parseFloat($("#weight").val());
     var weightByField = roundFloat(parseFloat(weight / nr), 2);
+    /* round in case it's < 0.1kg */
+    if (weightByField < 0.1) {
+        weightByField = 0.1;
+    }
     for (var i = nr; i > 0; i--) {
         var htmlRow = '<tr class="appendRowParcels">' +
-            '<th><label for="parcel_w_' + i + '">Poids #' + i + '</label></th>' +
-            '<td class="paddingTableTd"><input type="text" name="parcel_w_' + i + '" id="parcel_w_' + i + '" value="' + weightByField + '" onblur="javascript: modifWeight();" /> kg</td>' +
+            '<th><label for="parcel_w_' + i + '">' + multiparcelTranslation.weight + ' #' + i + '</label></th>' +
+            '<td class="paddingTableTd"><input type="text" name="parcel_w_' + i + '" id="parcel_w_' + i + '" value="' + weightByField + '" onblur="javascript: modifWeight();" /> '+ multiparcelTranslation.kg;
+        if (weightByField == 0.1) {
+            htmlRow += '<p class="note">' + multiparcelTranslation.rounded + '</p>';
+        } 
+        htmlRow += '</td>' +
             '</tr><tr class="appendRowParcels">' +
-            '<th><label for="parcel_d_' + i + '">Largeur #' + i + '</label></th>' +
-            '<td class="paddingTableTd"><input type="text" name="parcel_d_' + i + '" id="parcel_d_' + i + '" value="" onblur="javascript: modifWeight();" /> cm</td>' +
+            '<th><label for="parcel_d_' + i + '">' + multiparcelTranslation.width + ' #' + i + '</label></th>' +
+            '<td class="paddingTableTd"><input type="text" name="parcel_d_' + i + '" id="parcel_d_' + i + '" class="multiparcel_dim" value="" onblur="javascript: modifWeight();" /> '+ multiparcelTranslation.cm +'</td>' +
             '</tr><tr class="appendRowParcels">' +
-            '<th><label for="parcel_l_' + i + '">Longueur #' + i + '</label></th>' +
-            '<td class="paddingTableTd"><input type="text" name="parcel_l_' + i + '" id="parcel_l_' + i + '" value="" onblur="javascript: modifWeight();" /> cm</td>' +
+            '<th><label for="parcel_l_' + i + '">' + multiparcelTranslation.length + ' #' + i + '</label></th>' +
+            '<td class="paddingTableTd"><input type="text" name="parcel_l_' + i + '" id="parcel_l_' + i + '" class="multiparcel_dim" value="" onblur="javascript: modifWeight();" /> '+ multiparcelTranslation.cm +'</td>' +
             '</tr><tr class="appendRowParcels">' +
-            '<th><label for="parcel_h_' + i + '">Hauteur #' + i + '</label></th>' +
-            '<td class="paddingTableTd"><input type="text" name="parcel_h_' + i + '" id="parcel_h_' + i + '" value="" onblur="javascript: modifWeight();" /> cm</td>' +
+            '<th><label for="parcel_h_' + i + '">' + multiparcelTranslation.height + ' #' + i + '</label></th>' +
+            '<td class="paddingTableTd"><input type="text" name="parcel_h_' + i + '" id="parcel_h_' + i + '" class="multiparcel_dim" value="" onblur="javascript: modifWeight();" /> '+ multiparcelTranslation.cm +'</td>' +
             '</tr>';
         $("#multiParcelRow").after(htmlRow);
     }
+    
+    /* refresh total weight if weight by field has been rounded */
+    if (weightByField == 0.1) {
+        modifWeight();
+    }
     modified = true;
+    
+    /* check for modifications on dimensions as carrier must be checked if those are changed as well */
+    var tmp_val = '';
+    $('.multiparcel_dim')
+    .focus(function(){
+        tmp_val = $(this).val();
+    })
+    .blur(function(){
+        if($(this).val() != tmp_val) {
+            modified = true;
+        }
+    });
+    
 }
 
 function modifWeight()
@@ -199,6 +232,10 @@ function modifWeight()
     var nr = parseInt($("#multiParcel").val());
     for (var i = nr; i > 0; i--) {
         weightSum = weightSum + roundFloat(parseFloat($("#parcel_w_" + i).val()), 2);
+    }
+    /* hide warning message if no longer necessary */
+    if(weightSum > 0.1) {
+        $("#weight+.note").hide();
     }
     $("#weight").val(roundFloat(weightSum, 2));
 }

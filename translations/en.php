@@ -38,6 +38,7 @@ $_MODULE = array();
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_7f74918fbc764950d04a34d798bb1f99'] = 'An error occured, this step will not work';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_18752dbdab0367c544562139fd653977'] = 'Please check the form, fields are required.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e7c16a4de3515f1fe476a186e5ed6c6b'] = 'Your account information is now complete.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_41d1bd60dbe16fde05e4918a868afa20'] = 'Your API keys have been successfully generated.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5620b742887f80fcdbce389cc6a55201'] = 'Please switch to offline mode.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b1032cdf8924156725417f3d840ad890'] = 'Your shipment details are now complete.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_92e279c5354a40ba6948c8eded549471'] = 'Please choose your shipping type.';
@@ -47,7 +48,7 @@ $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e20cc117cffa66a275236375b1f
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_034aeb157aa666e96211a4a5a500eadb'] = 'Thursday';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_83c6805b2eb4106918405dc1b0025565'] = 'Friday';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3e5e29a0561a00d75fd0f7e0629c735d'] = 'Saturday';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_aa000ae9279dd26963556dd6b51543b6'] = 'Sunday';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b98d2a40dd06f41cafae6d75afd6bb23'] = 'Sunday';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_c6e375801363283b487066e05bd21897'] = 'January';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_ffdf3f1b9c9d8d704364328a91ce607a'] = 'February';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_96bdcec50e56cf00cf05bd2e543b35cf'] = 'March';
@@ -73,19 +74,21 @@ $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_2bd9c0ed00116be1258e0cc6661
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3c78b35502b2693fefdfc51cba3a53a5'] = 'manual';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f8e561d352369dfa062944a0865ca410'] = 'real price';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3c2b37c8fe170986ed7a4c96476371e9'] = 'rate';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b1c47e7ee47eb43c33c143807f26cda8'] = 'Boxtale';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_7c34be83e725d67b8684df6764d0a18b'] = 'http:\/\/www.boxtale.com';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b103c6c2b1c1aaf9d9614d792bbd954d'] = 'Offer your customers a choice of delivery methods to increase your sales';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_0f30b78a1d392e673e10440155b37c55'] = 'installation :  Impossible to install the plugin because Curl library is not activated. Please check with your webmaster to activate this PHP extension.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_a4cebd5a171b5e9b10faab37953d365c'] = 'Dispatch is actually unavailable.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_d4fdc07829e1a91274b32c0747239997'] = 'Delivery on : {DATE}';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5e89c1ead63de28f095220159bac9818'] = 'installation : Error with the request : ';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_99f7d66bcedc739e09ede613f42541c9'] = 'installation : Impossible to add EnvoiMoinsCher button in the menu.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_99f7d66bcedc739e09ede613f42541c9'] = 'installation : Impossible to add Boxtale button in the menu.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_a7bf9e7d8f87cfaf429d875a05ff40ba'] = 'No offers are matching your criteria.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_41cb349244297b2cbd2ede65d7311ddd'] = 'No offers found for your search';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_15e8b81325717ca7a272cc79f4c8a671'] = 'If popup does not show : ';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_7e3ab735e9e6a1029e2b4320fce467f2'] = 'click here';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_768b280c543db9e18c2ad6dda9f92695'] = 'API key';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e500c00008e06618649bcec6f7126eb1'] = 'EnvoiMoinsCher login';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9cf4ed5ee75fba112690ad3b2c37ac6a'] = 'EnvoiMoinsCher password';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e500c00008e06618649bcec6f7126eb1'] = 'Boxtale login';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9cf4ed5ee75fba112690ad3b2c37ac6a'] = 'Boxtale password';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_c8d85a0ae34876f6d1e5a96cb761d3cf'] = 'name';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_04dc8a9a55d5b75fd3e217de3077f5c3'] = 'surname';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_c8c98814fc9946310964b26bd97b9bad'] = 'company';
@@ -123,20 +126,131 @@ $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6c924b75ddf879bc47e70418e86
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_c5f5ec7e41ac546e1819ea172bbafaae'] = 'Quotation - carrier %1$s is removed because it is deactivated in warehouse';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5e7da5d682b8bc826fcd13f504315fc8'] = 'Quotation - carrier %1$s is removed because at least one product has it deactivated';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5d89f7c903e5af99eaf7760b88d5191c'] = 'Quotation - adding carrier tax %1$s%2$s to carrier %3$s: %4$s%5$s';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_ed3f0177fb6dedb7f7441cda23e138a9'] = 'EnvoiMoinsCher plugin has to be offline.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_ed3f0177fb6dedb7f7441cda23e138a9'] = 'Boxtale plugin has to be offline.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f32d5fccdc1903dbadfd314f7a97ca9a'] = 'Error when updating offers : ';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_bd5155b7f37815e4ff73f40250f1fb37'] = 'Update : error when updating available offers: ';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f573b1b9110d8f464986a5cca5c2b7da'] = 'Mandatory relay point not selected for cart %s';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_c31d2d07c5a39907661491d44010c9de'] = 'Error when getting EnvoiMoinsCher offers: ';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_c31d2d07c5a39907661491d44010c9de'] = 'Error when getting Boxtale offers: ';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9af9d05426a7aa3598c60804498d47c1'] = 'Get code';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_691b6b067df3aa0f956807d382dd6d60'] = 'You should create an account or retrieve API keys before you can use this module.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_c086b9dc2907d07637791157625eba05'] = 'Your order has not weight, please check your products.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_d32ca51d4bb60a88b9d1111db1802fcc'] = 'BOXTALE';
 
 /*
 	--- EnvoimoinscherModel ---
 */
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f2fec375f998c3672dbe827082941c99'] = 'Economic offers';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9054761d7e0ae94a279fe80d27c53dac'] = 'Express offers';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b1c47e7ee47eb43c33c143807f26cda8'] = 'EnvoiMoinsCher';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_914419aa32f04011357d3b604a86d7eb'] = 'Carrier';
+
+/*
+	--- Wrapping types ---
+*/
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_35b63bafd2f341499d75431204e34022'] = 'Box';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_d70188f9e47cbdf2c73e82661025bcd1'] = 'Tube';
+
+/*
+	--- Shipping types ---
+*/
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e170e3a15923188224c1c2bd1477d451'] = 'Parcel';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e5cac14f7dfa7133f1db6c802004c199'] = 'Bulky parcel';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_fddaedee7ccbffbea6949d25fd59d6d7'] = 'Pallet';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_299a866d8c08b377de29454b49d2817a'] = 'Envelope';
+
+/*
+	--- Categories ---
+*/
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_d51dbcca02851f0a28355d1160bac723'] = 'Books and documents';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_8723f05a6155ab33fcb91328b98fe60b'] = 'Food and perishables';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_88c61ac25a3c53857ec7f8ce7bf4fd93'] = 'Products';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_8e4cf982160f59500d9d94c07ea8a388'] = 'Clothing and accessories';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_58bf206835d02068ac5a5ad529147c74'] = 'Equipment and appliances';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_52fc4a389f3d684e593927088b36cf6e'] = 'Furniture and decoration';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_8953b2e4f1e9b6ccf255bf9a0a375b63'] = 'Personal belongings, gifts';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5011061bf58b1905247a19ebe4d87966'] = 'Sports and leisure items';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_a7b948abea572f5aea0e859c1ee6e0be'] = 'Electronic devices, audiovisual equipment etc.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b7d9bbc654b4c93645de1ee46c8123d7'] = 'Well-being and healthcare products: creams, oils, appliances etc.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e4759bbb6911c1ed4dc26c30fc5344c8'] = 'Creative leisure-related items, materials, arts and crafts equipement etc.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f4b90e39a90e5c73a6c7dcb09195bc42'] = 'Cultural products: books, games, CDs, DVDs etc.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f72be2bcd30acf450693ceb5be8d55fe'] = 'Childcare-related items, toys, items for children etc.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_c8c24435539713c05c37ba22b76f817d'] = 'Clothing/fashion accessories';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_ce22bb4fc6706a5acd19b41a1637deb9'] = 'Camping and fishing items';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_a54f0192c4585acade37de7fd610fb37'] = 'Sporting apparel (excluding clothing)';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_1bc92486ec5958d939019924893b2d03'] = 'Other devices and equipment';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_8e1b199f2a5d7fd1232f45fb57e0311f'] = 'Other fragile objects and sculptures';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_926339261542ad872cdfb8ae2c1f0451'] = 'Luggage, suitcases, trunks';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_a46318ecd2fa181588a7e4609c6e6fdf'] = 'Costume jewellery';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e5fb0c06784d1f975a0fb56e91cd8673'] = 'Jewellery, precious objects';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_34fdee3b0c7387f790957cea9343a838'] = 'Plane tickets';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_93e7a949d35e3ffe4db16b6c2d93146b'] = 'Alcoholic beverages';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_ecb208f74e92c5cc1004618aea1eac12'] = 'Non-alcoholic beverages';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_11e3d79a06ec62f9e5fa277048f147d0'] = 'Gifts, corporate gifts';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_78a18e9195cc7512265457e5f91c8bb1'] = 'Catalogues, annual reports';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_434f992f921c68b48700d1a1df9767a0'] = 'Shoes';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b7bc3f4a04d80b79ff57301663a0f2e1'] = 'Chemicals, drugs, cleaning products';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b7fe332289d73ddade61c5a9e85ad6b8'] = 'Cosmetics, well-being products';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_34b7004e1bef53bedce31037d7bdd547'] = 'Internal company mail';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_4bab492b4b17636f9ca0f05a182a1116'] = 'Leather, skins, leather goods';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_0edc139d7b5c0bc1ca2f76f0fbef2c2f'] = 'Non-perishable foodstuffs';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3160e9364b4e5c7c8e83ebc7823cf13c'] = 'Tender documents';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_bed50231f855867402cafbbee2df71b9'] = 'Printed documents';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_a800e2e05dbe441d435530898eceff52'] = 'Promotional materials';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_83f4d714ab6933056bac5fca0ef87607'] = 'Documents without commercial value';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_453ed9a817efed0e2580ca90ed81a380'] = 'Household electrical goods';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_0901244e35cc6dcccbc8b005dcbfd3e7'] = 'Household electrical goods';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_642201846f0345edcec827de274c76fd'] = 'Labels, stickers';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_2b4b4492b4329d5d16cad1c8149fdbfc'] = 'Office supplies, stationery, refills';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_a77fbfa195676b50052497925c0bb7f4'] = 'IT, high-tech and fixed-line telephony equipment';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6a1efe8086a35ef7e3b423cb4a127b08'] = 'Musical instruments and accessories';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3f567e3a0defa80323eea865a6bc8ab7'] = 'Newspapers';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_27c3df5b1e332f4d101cb9d8c5202ff4'] = 'Lamps, lighting';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5aaa7da2305cc6332064346a8f47a8ce'] = 'Computer printouts';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_753d33d11a9294e3445f89f738ca567b'] = 'Books';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_857f2fa584e62db7fae420392d41546e'] = 'Magazines, journals';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_d9e5acfeab9a1c8e188cdebbccced956'] = 'Technical manuals';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9ab2f1671d06850df2dec376e9033d57'] = 'Heating and boiler equipment';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_dd098ac11dcafab2a3c627f46dfac413'] = 'Laboratory, optical and measuring equipment';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_da2c9c8fd89b777cd74942d8e46fa6df'] = 'Electrical equipment, transformers, cables';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_d12b38b8909238ab0f829fa2ce4fe5ce'] = 'Medical equipment';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_1ec467ba60a1d32101b61c49770ab645'] = 'Old (antique) furniture';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9845a663b668580ed00dd5616b48f3a8'] = 'Home furniture';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_dac05cbce3e4f07327bcfe3031712946'] = 'Office furniture';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_2584e7c2654e0097074d9d2d7a504b85'] = 'Dismantled and packaged furniture';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_91189ff0aa99e4556463dbbd083813ec'] = 'Watches, timepieces (excluding jewellery)';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_8e937075abc3225f21a95dabf38b2678'] = 'Engines';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f8d06df9bb1693a43ccd533a94b82778'] = 'Motor cycles, scooters';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6c755e78dce5f2718e286144c4665818'] = 'Works of art and paintings of low value';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_44c9781c82c183b0ebef168e3338cc4a'] = 'Works of art and paintings of low value';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f99165e169d95e09cc608d9dc36314db'] = 'Listed objects or paintings, collectible items, mirrors, windows';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_56f995bf22109a71d73cd0194957c7a6'] = 'Tooling, tools, DIY equipment';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_2d52b00177df7d9dc342b7aabe7986ad'] = 'Perfumes';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_88b137d6e8b0cb37e5bdcae2b0efbd11'] = 'Passports';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_bbc85a83ef5434a5ef6f538c0929c47f'] = 'Templates';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_7c82fb315aef9d58f9fb2f524673327d'] = 'Small-scale removals, boxes, personal effects';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_4d978ae568f997e911a1d2b5b1d96db0'] = 'Small household electrical goods, small domestic appliances';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e448008d73c9944ce2a296451a0657da'] = 'Pharmaceuticals, medications';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_60f29105809dd00564bab5739b97085e'] = 'Photographs';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_0a56ef9688f1e9006a57f3a9863daa6e'] = 'Spare parts and accessories (auto)';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_8e9ec8c55409abafd64ec01c2ffa046f'] = 'Spare parts and accessories (other)';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_0dbcdf5562744167625fc40d9754337d'] = 'Plans, designs';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_4302446a03bed2101c46ba8f15daf58c'] = 'Plants, flowers, seeds';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_102c2c3fbcc4e40b68234c505f2b9a43'] = 'Plumbing equipment, plastic tubes';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_efd9c36451ea56bf43de910a95cdbf13'] = 'Fresh and perishable produce';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_2286a275748070e6d994fc44aa246141'] = 'Refrigerated products';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_136573274dfafd1b805d4000ce5f25cc'] = 'Frozen products';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_970b00adf5e7548e5882d6100a7aae9a'] = 'Business proposals';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6b2ad8ec4c6f0b34139d19343bbbb37c'] = 'Hardware, valves, locks';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9dcfacf0380314bd2bd864a383d8577b'] = 'X-rays';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_810860887ef95beac3809a83812d7656'] = 'Toilets, glasses, crystal glassware, dishware, ornaments';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3d1d3729c4d01b34b48830c6d9e7280e'] = 'Digital media, CD, DVD';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b6a28548235fb2044f5ce7aeb1cc19f9'] = 'Tobacco';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b8298d9dd05854c0868799102edc505b'] = 'Carpets';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_2d104de30ed8cec63d5ee73e965f7852'] = 'Mobile telephony and accessories';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_01913328faf1e33d4e1efeda495aa0af'] = 'Televisions, computer screens';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_24d5178d426937ef581b7fe39269607e'] = 'Fabrics, new clothes';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_2f4cca00e44b49bf85bc8bd0a711692b'] = 'Linens, curtains, sheets';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_2ec4eb981a0829fb82e3f89424ea7584'] = 'Bicycles, non-motorised cycles';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_76dfdd03e31301dcdbe635f98d4d71d6'] = 'Used clothes';
 
 /*
 	--- tracking ---
@@ -145,7 +259,7 @@ $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b828e2179123712015faeb6f20d
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_eaf97ffd7bf47b8c3fded575192e8a0b'] = 'Error when inserting order tracking informations.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3dca8fabede34bd01070b836bd5ecf3e'] = '. Command not found. IP address: ';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_09cd87c25b730ba6961afe08e34b0648'] = 'Error when inserting order tracking informations %1$s. Order not found. IP address: %2$s';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_ed1265feb8df537d6b2fb15a74c5fe6d'] = 'EnvoiMoinsCher : shipping cancelled';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_ed1265feb8df537d6b2fb15a74c5fe6d'] = 'Boxtale: shipping cancelled';
 
 /*
 	--- push ---
@@ -156,24 +270,62 @@ $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_24909e87dc242b9dd539e10609b
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6cf9dfe268dd7ac0df3b63b8b4ebaecf'] = 'Unable to update order\'s status data';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_eaebb329adcb6a498c4f32787aa52606'] = 'Unable to update order\'s tracking data';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_0d89e67085c1ff1d8c6d0b3de5eca1a3'] = 'Unknown push command ';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b55db12cbf41df23a6773237500437bd'] = 'EnvoiMoinsCher : shipping cancelled';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_b55db12cbf41df23a6773237500437bd'] = 'Boxtale: shipping cancelled';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_78afe832a877977f8c2f7542933ab57f'] = 'Order\'s state : ';
+
+/*
+	--- proforma translations ---
+*/
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e70b59714528d5798b1c8adaf0d0ed15'] = 'Sale';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9ab776b93b3c6bbb67f4545371814423'] = 'Repair';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_e70c4df10ef0983b9c8c31bd06b2a2c3'] = 'Return';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_a0ec3b461abf4bc16ad615481260140e'] = 'Present, gift';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_5e8ff9bf55ba3508199d22e984129be6'] = 'Sample, model';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_0be5a6c82893ecaa8bb29bd36831e457'] = 'Personal use';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_21f64da1e5792c8295b964d159a14491'] = 'Inter-company documents';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_795f3202b17cb6bc3d4b771d8c6c9eaf'] = 'Other';
+
+/*
+	--- front relay map translations ---
+*/
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_d98a07f84921b24ee30f86fd8cd85c3c'] = 'from';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_01b6e20344b68835c5ed1ddedf20d531'] = 'to';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_944ba223a5c1b5f4b495708e7cd5ee37'] = 'monday';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_1a31a6f65cc993ff6bd9a5b85f0520b0'] = 'tuesday';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_aae446086f8e81194ed115b566bf2e3d'] = 'wednesday';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_c395246f710b0e2c86b7ed82f7f56ce3'] = 'thursday';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_f6f7fec07f372b7bd5eb196bbca0f3f4'] = 'friday';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_6036c3d913f49f28f35d734589840310'] = 'saturday';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_787c74a2e618a696e34e025adda33ad3'] = 'sunday';
 
 /*
 	--- familytpl ---
 */
-$_MODULE['<{envoimoinscher}prestashop>familytpl_9461bed8b71377318436990e57106729'] = 'Offers';
-$_MODULE['<{envoimoinscher}prestashop>familytpl_4a544af857a4c3b7a166246080988cb4'] = 'Prices';
-$_MODULE['<{envoimoinscher}prestashop>familytpl_b5a7adde1af5c87d7fd797b6245c2a39'] = 'Description';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_ee5c5839980b47f1893220655a3de0fb'] = 'Pickup point';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_37bd034e34812e313d31cd7f2c910ed9'] = 'On-site standard';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_b144fa061545497bebee8c414efc99a9'] = 'Express';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_914419aa32f04011357d3b604a86d7eb'] = 'Carrier';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_6bb24468956384c482a8b5a901fb6383'] = 'Offer';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_9841bdc50c4226cb6ec5db76494249e6'] = 'Coverage';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_5be0fabaab8bf9ac47226a4afec82698'] = 'Departure';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_12007e1d59f4d09c87dbe2c438256244'] = 'Destination';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_8f497c1a3d15af9e0c215019f26b887d'] = 'Delay';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_3601146c4e948c32b6424d2c0a7f0118'] = 'Price';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_66545888890e9abcbfa01282d0f97bc1'] = 'Real price: the price automatically calculated on boxtale.com.';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_8a5810dc315151cf64ef99fe2665df58'] = 'Fixed price: the price fixed by yourself on the Carriers edition page.';
 $_MODULE['<{envoimoinscher}prestashop>familytpl_46a2a41cc6e552044816a2d04634545d'] = 'Status';
 $_MODULE['<{envoimoinscher}prestashop>familytpl_7dce122004969d56ae2e0245cb754d35'] = 'Edit';
-$_MODULE['<{envoimoinscher}prestashop>familytpl_03af9a2a72d329b7252b03f823728025'] = 'Dropoff relay point';
-$_MODULE['<{envoimoinscher}prestashop>familytpl_952b938bd85b88d80faacf86439643b0'] = 'Relay point code';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_11aedd0e432747c2bcd97b82808d24a0'] = 'FR';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_f2e6e3b9bff59f293f0e9019a1ecabc5'] = 'EU';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_beaf3f30067cbde80b264c6bdabfcb29'] = 'INTER';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_dfdf794e6bb777cc867314586514366d'] = 'On-site delivery';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_32cc185e71354f25ef3158738f46a03b'] = 'Dropoff point';
 $_MODULE['<{envoimoinscher}prestashop>familytpl_9af9d05426a7aa3598c60804498d47c1'] = 'Get code';
 $_MODULE['<{envoimoinscher}prestashop>familytpl_61cdb772d5dbe21f12ecc2b1edb19102'] = 'Disabled for %s';
 $_MODULE['<{envoimoinscher}prestashop>familytpl_cf8d8c4ae490db09b35d084c6ec68074'] = 'No offers now';
-$_MODULE['<{envoimoinscher}prestashop>familytpl_e63873cb44af91d69c026754c40060b0'] = 'Real price';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_7f80fcc452c2f1ed2bb51b39d0864df1'] = 'Real';
 $_MODULE['<{envoimoinscher}prestashop>familytpl_dcb66ff6e4a2517ade22183779939c9d'] = 'Rate';
+$_MODULE['<{envoimoinscher}prestashop>familytpl_7dce122004969d56ae2e0245cb754d35'] = 'Edit';
 
 /*
 	--- table_send ---
@@ -195,17 +347,17 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_e6b08888f1c6006a8143e01b11a
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_0cbc6611f5540bd0809a388dc95a615b'] = 'Test';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_49f0e06c2db61075134d0c2f949b0504'] = 'Live';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_0b79795d3efc95b9976c7c5b933afce2'] = 'Presentation';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_706e3cc5f58b3fa27d28779a02b9ef3f'] = 'EnvoiMoinsCher account';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_706e3cc5f58b3fa27d28779a02b9ef3f'] = 'Boxtale account';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_bb3433544c3111cdf4a144cf61da6d6f'] = 'My Account';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_988d0382f3b85595b44f1fd91ec82738'] = 'Shipping description';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_f4f70727dc34561dfde1a3c529b6205c'] = 'Parameters';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_e2fc04f579826f1585877c2d03aa82b6'] = 'Simple Carriers';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_6d9163f98d9567378655c87b6d0e0eb9'] = 'Advanced Carriers';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_d0384211cbe162db92d24c0d8f563e01'] = 'Offers simulator';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_fe4c6a5e7bd6793b37370e4e46daf998'] = 'Advanced settings';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_ac11cac1f97a83c777a992e8552170b8'] = 'Weight-based carriers';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_e5e83474dac55d91c033ff80f6c87328'] = 'Size and weight based carriers';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_6cba3ff05344ecfe2f069133772bc1d4'] = 'Rates simulator';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_6a26f548831e6a8c26bfbbd9f6ec61e0'] = 'Help';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_3b9da21ba184c3e6a12546ebd4f8dcb9'] = 'Please switch plugin state to \'Offline\'';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_104c343635d8507902db2bb804b9b80a'] = 'Changes not saved. Click \"Cancel\" to save or \"Ok\" to close without saving.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_3cfedc660eea9ef51ee72af1ab3ae161'] = 'Are you sure you want to switch the pluggin offline? (EnvoiMoinsCher carriers will not be available)';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_3cfedc660eea9ef51ee72af1ab3ae161'] = 'Are you sure you want to switch the pluggin offline? (Boxtale carriers will not be available)';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_b8f0e8b69496f6a88abff2eab905a5d2'] = 'Carriers';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_3b2aee63259f6dc9b94914884474f8de'] = 'I already have an account!';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_dd1f775e443ff3b9a89270713580a51b'] = 'Previous';
@@ -214,8 +366,10 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_87557f11575c0ad78e4e28abedc
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_7810f6fa46490f0d8fcf0f10c2a8c47f'] = 'The API keys you have provided are incorrect , please check your e -mail inbox in order to properly enter these.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_ee53a0b7ddd6043de218daaecd195cf2'] = 'Your password is invalid.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_1304d97514c86c34f1efb4e47f1f5195'] = 'Credentials are invalid, please check again.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_a89ed2ebc6db7df1724d7849cc8b236d'] = 'Use of EnvoiMoinsCher plugin needs registration as deferred payment by direct debit. To do so, go to EnvoiMoinsCher website and connect to your account. On preferences tab switch to deferred payment method, You will receive authorization documents to send back to us.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_7634de5c46ff160765231b8220985c01'] = 'Due to your payment method you cannot go Live. You must be registered as deferred payment first. To do so, go to EnvoiMoinsCher website and connect to your';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_692ea56aa69a22987fb85722efc35a97'] = 'Boxtale plugin can be activated only if the deferred payment by direct debit was chosen at';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_86f752357936b10ced8aaa7b1385ff96'] = 'boxtale.com';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_b42624f77027516f93878fea6d6576d8'] = '=> sign in => Profile / Preferences.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_7634de5c46ff160765231b8220985c01'] = 'Due to your payment method you cannot go Live. You must be registered as deferred payment first. To do so, go to Boxtale website and connect to your';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_e268443e43d93dab7ebef303bbe9642f'] = 'account';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_7bf4c26efba17e7a29a7006ca5b77b7f'] = 'and switch to deferred payment method, You will receive authorization documents to send back to us.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_17f0aed422eb04003412e1913dbcf1da'] = 'An error occurred on API query: ';
@@ -224,16 +378,14 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_4cd475debf6e30bf3d8d2dc9815
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_066ef063451a6e4fe10bb29cba1c2e4b'] = 'Following the module update, please enter your API key production account.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_a4d1f9df55cc0e951116c0a1ae2a8312'] = 'Clear cache';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_21bfc6f0eb0467ad6e832f6115d2f2d2'] = 'Clear offers cache. Use after carrier or product changes.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_154fdb5ae9006e1bff78c54ca6c3425d'] = '';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_5142943bdd139d539bca8c25f2695214'] = '';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_55876228853abf632dec9346a4f372ec'] = 'SETUP GUIDE';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_d948ff95570cf84c8bc231cac2af276a'] = 'SHIPPING GUIDE';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_97155b426b5847fa8aeab705f9e56ada'] = 'Careful: some fields are missing, EnvoiMoinsCher plugin cannot work correctly. Missing fields:';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_eb8f14ece28c601be624df87f37bd059'] = 'Credentials invalid. EnvoiMoinsCher plugin will not work.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_97155b426b5847fa8aeab705f9e56ada'] = 'Careful: some fields are missing, Boxtale plugin cannot work correctly. Missing fields:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_eb8f14ece28c601be624df87f37bd059'] = 'Credentials invalid. Boxtale plugin will not work.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_e4ac074b99fc50cf5764913d41b8391b'] = 'This plugin version does not work with the option Multi-Shipping, shipping prices will not be displayed on front-office.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_e60263ac381ae4a9ad460a5c706b9b5a'] = 'Settings have been updated';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_09bcaeba46bf6556640282cba67cdaae'] = 'When finished updating your settings, do not forget to switch EnvoiMoinsCher to "Online" mode.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentbody_eda9366ef302374befc11a02421f1e07'] = 'EnvoiMoinsCher: settings';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_09bcaeba46bf6556640282cba67cdaae'] = 'When finished updating your settings, do not forget to switch Boxtale to "Online" mode.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_eda9366ef302374befc11a02421f1e07'] = 'Boxtale: settings';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_edd4cbfb9eef5f81aaaa18995f64794d'] = 'Version';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_04e4b303033cc980c0ee8539098faf96'] = 'To start please fill all the tabs, starting with "My Account".';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_886bfbe1c26341727df9c31a123a701b'] = 'Once set-up, switch to "Online" mode to view the carriers on front-office';
@@ -246,11 +398,13 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentbody_40efafdd3594167b80a64bec8f8
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_82a50aeb0a5d1d1a04c420ac77057af9'] = 'offer(s) updates:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_d03408d14b6ea85242765278bb5da928'] = 'Error when receiving carrier list:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentbody_4ee4bd3e0a295c1e81eb7584c9cc1526'] = 'deleted offer(s):';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_d0b7bc539d64cbdac6d89c71131b13d7'] = 'See rates';
+$_MODULE['<{envoimoinscher}prestashop>getcontentbody_0db7fd53b89548d5f60845cc181c75d4'] = 'You need to fill in correct account information before you can use the module.';
 
 /*
 	--- getcontentintroduction ---
 */
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_1a7ea81982d3d7b158a3038020c8429b'] = 'Choose from 15 carriers with negotiated prices';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_e7cd845b700abfc888625d321cddbcac'] = 'Your all-in-one shipping provider';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_d925c629b77b27c10313247de57591e9'] = 'Up to 75%';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_4b89617cc3b7961e8562279e3798d4f8'] = ' immediate discount on your shipments';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_5a9de5d875ff3aad885189660bc1597b'] = 'No minimum volume, no contract';
@@ -261,14 +415,15 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_a469ea008403df21eed
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_0397f5de3c85f4864abf7adc01d5e7a7'] = ' answering your customers\' needs and ';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_65df5c4b5e64086784a330bc7865a1fd'] = 'one single billing';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_e8e47224c798417884789794c5586cf9'] = ' whichever carriers you choose, ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_6b4658afd9fd5fa0f1df8e5273f045bd'] = 'let Envoimoinscher handle everything!';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_6b4658afd9fd5fa0f1df8e5273f045bd'] = 'let Boxtale handle everything!';
+$_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_d0b7bc539d64cbdac6d89c71131b13d7'] = 'See rates';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_30fa0cd0bdc06298169b6351c220cec5'] = 'Create your free account';
 $_MODULE['<{envoimoinscher}prestashop>getcontentintroduction_3b2aee63259f6dc9b94914884474f8de'] = 'I already have an account';
 
 /*
 	--- getcontentemc ---
 */
-$_MODULE['<{envoimoinscher}prestashop>getcontentemc_2a46fa8b106d01cb9400bae2d1411340'] = 'I would like to install the EnvoiMoinsCher module directly on my E-Commerce site. I will receive my API key upon validation of this form.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_2a46fa8b106d01cb9400bae2d1411340'] = 'I would like to install the Boxtale module directly on my E-Commerce site. I will receive my API key upon validation of this form.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_090e8dc5cc9abbbeba047d658c2663ae'] = 'Person to contact';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_2c9b5b15a6d3cc951ca57c65e4966fd3'] = 'Mr';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_7f2a1b59ac1ab6d2d892dbbf4f132c40'] = 'Mrs';
@@ -291,7 +446,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentemc_b4d48a88001a5ced95b03f56ab3e
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_6f995931c32d478bd8803343286b4792'] = 'Your email address:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_a91b8c0460a2b5dacadeb25cd53feff9'] = 'Confirm your email address:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_1d55b7898d1909b73956290a34874acc'] = 'Your login';
-$_MODULE['<{envoimoinscher}prestashop>getcontentemc_5234f1eb46944c908373810af8441a95'] = 'These login details will allow you to log into your EnvoiMoinsCher account';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_5234f1eb46944c908373810af8441a95'] = 'These login details will allow you to log into your Boxtale account';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_051672911a3f1f05efba78a553ef6fe2'] = 'Login:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_189e97d69e42c2e667681d59d446de1f'] = 'Alphanumeric characters only (letter and/or numbers without accents)';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_b341a59d5636ed3d6a819137495b08a0'] = 'Password:';
@@ -317,12 +472,13 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentemc_592b19c2118bde15753557dbb164
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_566b0eba5f5e59c4dbbc3e39c9a38a03'] = 'Intra-community VAT No.:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_df9fc88bb784af9673a06ab68d3ede18'] = 'Legal notes';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_56a2c450de544ed0e919a4cad661e481'] = 'I acknowledge having read the';
-$_MODULE['<{envoimoinscher}prestashop>getcontentemc_fbe123b06729453d40a8ec3986b175f5'] = 'General Terms and Conditions of Sale and of Use of the website EnvoiMoinsCher.com';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_fbe123b06729453d40a8ec3986b175f5'] = 'General Terms and Conditions of Sale and of Use of the website Boxtale.com';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_c402ece4d98a9df0a7d6775a34b02759'] = 'http://www.boxtale.com/cgv.html';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_4dc4ec7091509ce4cb8d0265922bbe2e'] = 'and the';
-$_MODULE['<{envoimoinscher}prestashop>getcontentemc_88ef5b8c9ea69db82fd2c8f991e7d4e4'] = 'General Terms and Conditions of Use of the EnvoiMoinsCher.com API';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_88ef5b8c9ea69db82fd2c8f991e7d4e4'] = 'General Terms and Conditions of Use of the Boxtale.com API';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_41963ae76ff1ef6bb0b75e885a8ba140'] = 'in full and agree to the terms thereof.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentemc_517086580e95a032290707ca60f8089f'] = 'I wish to receive information regarding EnvoiMoinsCher.com news.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentemc_49066723896ceb46f8a2d0260a1e0b7b'] = 'I would like to receive promotional information from EnvoiMoinsCher.com partners.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_517086580e95a032290707ca60f8089f'] = 'I wish to receive information regarding Boxtale.com news.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentemc_49066723896ceb46f8a2d0260a1e0b7b'] = 'I would like to receive promotional information from Boxtale.com partners.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_2fdfd506efea08144c0794c32ca8250a'] = 'Create an account';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_1b1d51392e5d008be296742a1e1b9ff0'] = 'Please fill in the following form to receive your API key.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentemc_2a43f8406eb6c10f3f76a60f064e67fb'] = 'Prestashop version';
@@ -355,7 +511,7 @@ $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_40542a71f7fb8a6cbf8d63f43ee
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_359114fe162e7fae6814fe4662cb623e'] = 'Please check the General Terms of Sale before proceeding';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_11d4e10ba84d58c3b79230072cd11d18'] = 'Your account has been successfully created. You will receive your API key shortly, please check your mail box.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_69a38cf14a63e003e169d81982e6b610'] = 'You will receive your API key shortly, please check your mail box.';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_10688f69b3fc295ee7bfa520d589fa2e'] = 'There has been an error sending the request. The server could not respond correctly (error: ';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_3d44df1839e2e5b6d699c060629c91cb'] = 'There has been an error sending the request. The server could not respond correctly. Please contact our technical assistance at informationAPI@boxtale.com (error: ';
 
 /*
 	--- getcontentcarriersadvanced ---
@@ -364,9 +520,10 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentcarriersadvanced_82705dcb9eb0d2f
 $_MODULE['<{envoimoinscher}prestashop>getcontentcarriersadvanced_2232250ee32be99d57dc00cf482287f4'] = 'Pick your carriers';
 $_MODULE['<{envoimoinscher}prestashop>getcontentcarriersadvanced_d8190d914e7bb70c72b7a5d96f4af21b'] = 'Weights option';
 $_MODULE['<{envoimoinscher}prestashop>getcontentcarriersadvanced_f2fec375f998c3672dbe827082941c99'] = 'Economic offers';
-$_MODULE['<{envoimoinscher}prestashop>getcontentcarriersadvanced_9054761d7e0ae94a279fe80d27c53dac'] = 'Express offers';
+$_MODULE['<{envoimoinscher}prestashop>getcontentcarriersadvanced_ad40204f0f328a6cd5659de6ea8781d8'] = 'CARRIERS : weight-based pricing';
+$_MODULE['<{envoimoinscher}prestashop>getcontentcarriersadvanced_ee997e0926d5480c2c780b354b040839'] = 'CARRIERS : dimensional weight pricing';
 $_MODULE['<{envoimoinscher}prestashop>getcontentcarriersadvanced_ab2bc85aa5a5806d1317873d58c99b06'] = 'On this page, you can customize maximum size of your parcel by weights bracket. Dimensions are one of the primary criteria for shipping attribution. Enter most common dimensions to get realistic prices.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentcarriersadvanced_95587963a159ed05c0139afdd77bba18'] = 'Without customization, the defaults dimensions provided by EnvoiMoinsCher are used.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentcarriersadvanced_95587963a159ed05c0139afdd77bba18'] = 'Without customization, the defaults dimensions provided by Boxtale are used.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentcarriersadvanced_21e81327576ab5c9f333398512fa96d6'] = 'Weight';
 $_MODULE['<{envoimoinscher}prestashop>getcontentcarriersadvanced_47567b23e2b68a57eb084b0a5a7ee969'] = 'Max length';
 $_MODULE['<{envoimoinscher}prestashop>getcontentcarriersadvanced_ef1265421cedf443045d942b2730f3e3'] = 'Max width';
@@ -377,8 +534,8 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentcarriersadvanced_94966d90747b97d
 	--- getcontentcarrierssimple ---
 */
 $_MODULE['<{envoimoinscher}prestashop>getcontentcarrierssimple_0b7e45ea49b6311d30e27046203ed362'] = 'These carriers allow you to send your parcel without dimensional weight. The weight is only used to calculate the shipping cost within the maximum size allowed by each carrier.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentcarrierssimple_f2fec375f998c3672dbe827082941c99'] = 'Economic offers';
-$_MODULE['<{envoimoinscher}prestashop>getcontentcarrierssimple_9054761d7e0ae94a279fe80d27c53dac'] = 'Express offers';
+$_MODULE['<{envoimoinscher}prestashop>getcontentcarrierssimple_ad40204f0f328a6cd5659de6ea8781d8'] = 'CARRIERS : weight-based pricing';
+$_MODULE['<{envoimoinscher}prestashop>getcontentcarrierssimple_ee997e0926d5480c2c780b354b040839'] = 'CARRIERS : dimensional weight pricing';
 $_MODULE['<{envoimoinscher}prestashop>getcontentcarrierssimple_94966d90747b97d1f0f206c98a8b1ac3'] = 'Save';
 
 /*
@@ -396,12 +553,15 @@ $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e5c105ee58cc0de0c4941bb159e
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_8afe2f6fd563e96aab3eef01e75e5e91'] = 'I have an error in production environment : "Invalid account payment method" what should i do?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_61fb2dac6d4114df558ed291416d9e6b'] = '<b>You have to enable the deferred payment to use the module in production environment.</b>';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_675c1c3e4f86449b43ef760dc3a3ed6b'] = 'You can enable the deferred payment, to do so, go to your account in preference section or contact us at the folowing address: ';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_aa6021c991bc990f0328687c9cc6598c'] = 'compta@boxtale.com';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_cbbb59b9b2bca6bc421a83d17dd01431'] = 'You must give us your login, iban and a debit authorisation.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_bf8de457ecf44c68ea87646ad7eb5c6d'] = 'The folowing error displayed « Error : Contact our billing service », what sould i do?';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2fab69989656cfc50fc3d70082fba0a4'] = '<b>that error is about paiement issue. You may have reach your maximum outstanding. </b>Contact our accountancy service at:';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2fab69989656cfc50fc3d70082fba0a4'] = '<b>that error is about paiement issue. You may have reach your maximum outstanding. </b>Contact our accountancy service at: ';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2deef408a7f10af4b7b081690987aff6'] = 'Module general configuration';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_0ebe4ebd22232e6a3222abb200b1c956'] = 'How to configure « My Account » section?';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_dd46597b02dc8377cd6e602bd0b6f427'] = 'Your credentials are those the EnvoiMoinsCher web';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_dd46597b02dc8377cd6e602bd0b6f427'] = 'Your credentials are those the Boxtale web';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_af126829f14642d693bac25314ebdf08'] = 'http://www.boxtale.com/';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_f92c132e4e3b634351cb21b26ff18e26'] = 'www.boxtale.com';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_713e174863bfead191b7b9e792b4416b'] = 'It allow you to login to your account. The api key is a key provided by our technical service.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5a04539de1fd5e68bf2d8412cec29dcc'] = '<b>At first choose the test key</b> to test your configuration.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_d21026dcdec91239c48903c1071e24a4'] = '<b>Once configuration and test ready, you can use you production api key.</b>';
@@ -414,60 +574,61 @@ $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_fe29993590c0323a4932c9649f7
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_04f4c266f544dbd6aeacadf5020bb6bd'] = 'The packaging type do must not be empty if you chose at least one Colissimo offer. If you ship by mailing tubes, each parcel chipped would add 6€.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_658fdcc72b95d960649e1fbd7015246d'] = 'How to configure « Carriers » section?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_6850103a7124d9e791d47625273dd932'] = 'Choose your carriers in the list. If a carrier is enabled, it wiil appear in front-office. You have to chose if you want real price or rate.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_dc78d91d53a00adca7ecb67f1809e296'] = '<b>The real price</b>: the front office shipping cost will be the EnvoiMoinsCher.com one, without modification, your carriers are ready.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_dc78d91d53a00adca7ecb67f1809e296'] = '<b>The real price</b>: the front office shipping cost will be the Boxtale.com one, without modification, your carriers are ready.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e58a408316900f5ca0cb14a9f060206c'] = '<b>The rate</b>: front-office shipping costs will be those you defined.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_7e2f8fdcedff32a47e66670951275e35'] = 'To set your rate, go into shipment prestashop section, EnvoiMoinsCher and define your own grid depending of the price and weight of your cart.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_7e2f8fdcedff32a47e66670951275e35'] = 'To set your rate, go into shipment prestashop section, Boxtale and define your own grid depending of the price and weight of your cart.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_8e253d72bcac5d56668ccc85b5d8ea95'] = 'What is the difference between simple and advanced carriers? how to configure advanced carriers?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_636cdbd30635ad7dee957937c69a7487'] = '<b>Simple carriers</b>, prices are calculated from grid based on parcel weight.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_89cd2c49babdc21e3889172c3ef33b77'] = '<b>Advanced carriers</b>, prices are calculated from grid based or parcel weight and size.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_6654c1357367ef216ab5123bcc3368a8'] = 'Because parcel volume cannot be calculated during front-office command time, You must fill correspondence grid Weight/Volume. Thereby, Envoimoinscher&#39;s plugin will take dimensions filled in  correspondence grid appplied to shopping cart weight and will display relevant shipping cost.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_6654c1357367ef216ab5123bcc3368a8'] = 'Because parcel volume cannot be calculated during front-office command time, You must fill correspondence grid Weight/Volume. Thereby, Boxtale&#39;s plugin will take dimensions filled in  correspondence grid appplied to shopping cart weight and will display relevant shipping cost.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_a8dcfa18faf4ca004e8d6b424fdce5fc'] = 'You must personalized your own dimensions and weights in module « Weight Option » tab if you do not want to keep default dimensions.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_645bd591803fc222f29eca86407f9d0b'] = 'How to offer free shipping with the Envoimoinscher plugin ?';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5eae20df80180d4229cdb7acfda2731a'] = '<b>Attention </b>: don&#39;t fill prestashop option « Free shipping starts at » in shipping > preferences tab. Free shipping costs are possible only configuring rates. If you do activate this option, EnvoiMoinsCher carriers non-relevant to the order will appear but will be deactivated in front-office to avoid billing problems.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_645bd591803fc222f29eca86407f9d0b'] = 'How to offer free shipping with the Boxtale plugin ?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5eae20df80180d4229cdb7acfda2731a'] = '<b>Attention </b>: don&#39;t fill prestashop option « Free shipping starts at » in shipping > preferences tab. Free shipping costs are possible only configuring rates. If you do activate this option, Boxtale carriers non-relevant to the order will appear but will be deactivated in front-office to avoid billing problems.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_890d3769c0e389ffb5cc959b11dd1da0'] = 'Choose <b>« rate » price</b> for the carier,  « Simple Carriers » or « Advanced Carriers » tab. Next, go to <b>  « Shipping > Carriers » and select wanted carrier. Define wanted ranges</b> in « shipping locations and costs » part.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c1416f436f7082e9c11106f30969b7ce'] = '<b>Example</b> : if you want to offer shipping costs for a more than 50€ shopping cart, define 0 to 50€ range with desired shipping cost (5€ as an example), create a second range from 50,01€ à 100 000€ with 0€ shipping cost.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_90921ebf20af7fc504a347d030fcb4f3'] = 'Can I send my parcels if I am doing just-in-time distribution ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_b7291ba0803aaff33c1f2a579a316f01'] = '<b>Just-in-time distribution is possible.</b> Plugin distinguish customer command from shipping order himself, ordered when you click « send ». So, When a customer will order on your website, You will need to « Send » when parcel will be ready.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_06750acf8426d67f8a8a05399465e537'] = 'Frequently encountered problems during plugin configuration';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_05be32ff926c8114bf5973e26dca34ca'] = 'Selected offers do not appear.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_46722e5956bda571d84d8ba924eda2f8'] = 'How do I get differents prices between my back-office and EnvoiMoinsCher website ?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_46722e5956bda571d84d8ba924eda2f8'] = 'How do I get differents prices between my back-office and Boxtale website ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_d8b126d9f6ceefa09958ce3f4122dcff'] = 'Plugin return ET prices by default. You must <b>configure VAT in Prestashop.</b> Thus, go to carriers tab to modify VAT.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_ecb8b2e3be50706e45464a1ffec691d5'] = 'Parcel shipping, tracking and insurance';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_fb793042cb3b421b87798a33de85fc20'] = 'Where do I send my orders ?';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_202edf2edf94445b4e655c036f7f7d53'] = 'Go to <b> « shipping » tab and click « EnvoiMoinsCher ».</b>';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_202edf2edf94445b4e655c036f7f7d53'] = 'Go to <b> « shipping » tab and click « Boxtale ».</b>';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e69c2fafff124002622fa0e0ff767c9c'] = 'How to read command grid ?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5c8ea9f93062cb5becd24198f5a74a90'] = 'Three grids are displayed :';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_ef9568a670b7b789aa245466bd15e080'] = '<b>Orders with Envoimoinscher&#39;s carrier selected</b>: An EnvoiMoinsCher carrier has been selected for these by your customer.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2d1a7ee1a20811a3ab58773e31994c26'] = '<b>Orders without Envoimoinscher&#39;s carrier selected</b>: your customer did not choose an EnvoiMoinsCher carrier for these. If you wish to use an Envoimoinscher carrier you will need to select a Carrier before sending each of those. You will always need to go to parcels send informations screen before.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_ef9568a670b7b789aa245466bd15e080'] = '<b>Orders with Boxtale&#39;s carrier selected</b>: A Boxtale carrier has been selected for these by your customer.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2d1a7ee1a20811a3ab58773e31994c26'] = '<b>Orders without Boxtale&#39;s carrier selected</b>: your customer did not choose a Boxtale carrier for these. If you wish to use a Boxtale carrier you will need to select a Carrier before sending each of those. You will always need to go to parcels send informations screen before.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_17934c413a0e4e23d3185ab227764b54'] = '<b>Incomplete orders</b> (missing informations) <b>invalid </b>(ex : wrong recipient phone number).<br/> Thes are orders where informations are missing (shipping offer choosed by your customer is not available yet) or validations errors (wrong recipient phone number, etc).<br/>';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_037ecabea6745aa4c51ef6f386027558'] = 'Often it will be wrong commands from first grid, they are listed in this grid to be corrected and sent later. Then, you will need to go to parcels send informations screen to correct informations. If carrier offer isn\'t available yet, you can select a new carrier offer who will substitute former (Don&#39;t forget to tell your customer).';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_b43031b8d99503165801c7cfccc0666f'] = 'How to send your Envoimoinscher carriers orders one by one ?';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c3799a3d5b256b30cceff4902d048e5a'] = '<b>Click on « send » on the right end of order line.</b>';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_b43031b8d99503165801c7cfccc0666f'] = 'How to send your Boxtale carriers orders one by one ?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c3799a3d5b256b30cceff4902d048e5a'] = 'Click on « send » on the right end of order line.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_86fff905a6d92a49de547a1c4e81748f'] = 'A confirmation page is displayed. You don`t have to fill in any other information. You can if needed modify data : dropoff date (if collection offer), order weight, recipient informations...';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_98347d7f2ca93178cfb36112a1757387'] = '<b>Click on « Ship » to finalise shipment.</b>';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_98347d7f2ca93178cfb36112a1757387'] = 'Click on « Ship » to finalise shipment.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_281abdf991e7956ad8f8b2e8c476e429'] = 'In the context of an offer with onsite pickup, the pickup request is automatically forwarded to the carrier.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5d2d48cf44aa1f3a0f83a13df66a7a44'] = '<b>If all shipments are successful, they are filed in the « Previous orders » table and a confirmation message is displayed.</b>';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5d2d48cf44aa1f3a0f83a13df66a7a44'] = 'If all shipments are successful, they are filed in the « Previous orders » table and a confirmation message is displayed.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_266c529f84ea599b1405c83320675e99'] = 'If any problem occurs with one or more shipments, they will be filed in the « Invalid or incomplete orders » table so that you can correct them and trigger them later.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_84991c9189c680ce279faf4d63d24dd7'] = 'How to ship your orders in bulk with EnvoiMoinsCher carriers selected?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_84991c9189c680ce279faf4d63d24dd7'] = 'How to ship your orders in bulk with Boxtale carriers selected?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_a8ceb89bdce1d8c57f9eabcf48ed977d'] = 'Select on the left side the orders you want to ship.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_84b394dfb20a8d36069de6d7425551a6'] = '<b>Click on « Check orders and ship » or « Ship without checking » depending on your preference.</b>';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_84b394dfb20a8d36069de6d7425551a6'] = 'Click on « Check orders and ship » or « Ship without checking » depending on your preference.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_0ff8b1eee8ee71d7e6fe6ff600fc3d39'] = 'A block at the top of the page informs you of the shipments handling (processed and in progess shipments). At any time you can exit and stop the mass shipment clicking on « Cancel the remaining shipments » in this block.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_701afe848086a213d87824336d5200a3'] = 'Prices returned to my client do not match those I have configured.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_7a71174359829f7790bd0a3fb11a158d'] = 'How to ship your orders without an EnvoiMoinsCher carrier selected?';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_286084f95637df8c460f9daf32014a03'] = 'You can select EnvoiMoinsCher carriers deals to replace the offer chosen by your customer.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_74a777189e073c8b89ba8f2e16445cf7'] = 'Go to the Orders tab, Shipping subtab, « Orders without EnvoiMoinsCher carrier selected » list';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_7a71174359829f7790bd0a3fb11a158d'] = 'How to ship your orders without a Boxtale carrier selected?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_286084f95637df8c460f9daf32014a03'] = 'You can select Boxtale carriers deals to replace the offer chosen by your customer.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_74a777189e073c8b89ba8f2e16445cf7'] = 'Go to the Orders tab, Shipping subtab, « Orders without Boxtale carrier selected » list';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_ecb254045711649fe22fcd7f554b9715'] = 'Select the order you want to ship';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_8e7a284cb562fde9ee05d3e9c5e136b0'] = 'Click « Send » on orders without EnvoiMoinsCher carrier selected';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_034868575b86fff366cb25f23d3fa847'] = 'Choose the desired EnvoiMoinscher carrier clicking « Replace with this offer »';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_8e7a284cb562fde9ee05d3e9c5e136b0'] = 'Click « Send » on orders without Boxtale carrier selected';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_034868575b86fff366cb25f23d3fa847'] = 'Choose the desired Boxtale carrier clicking « Replace with this offer »';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_ee2a8be46e8fd27a88706545d7a43426'] = 'Confirm the shipment on the next screen and click on « Send »';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_bfe6340090f3f4438271ecd7dbc35b90'] = 'How to use multi-parcel?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_7f462acc49f1376660ef09b68f7fdce1'] = 'You can choose to ship some orders in several parcels instead of one. The multi-parcel shipping takes place in 2 stages:';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_ca8f57c8166ea105a6ab3e88598c8135'] = 'Configure the module to enable the multi-parcel alternative for your shipments';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_994d8909a6306cf877c36cc7f4d15455'] = 'Check for each order the multi-parcel box if you want the option activated';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_8879dcb5708f2dd876951fdc7566e8b3'] = 'Configure the module (step 1)';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_77c8bcc37fc454dc9a2829854d64edbd'] = 'Multi-parcel will be available provided that <b>the available option is checked</b> in the « Shipping description » tab of your EnvoiMoinsCher module configuration.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_77c8bcc37fc454dc9a2829854d64edbd'] = 'Multi-parcel will be available provided that the available option is checked in the « Shipping description » tab of your Boxtale module configuration.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_a3e2ccb97c41262c4dbc4ddd00929301'] = 'Selection of multi-parcel for every order (step 2)';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5366e4450e852ed2c54032cebe514f18'] = '<b>Multi-parcel is available every time you go through the shipment verification screen.</b> Multi-parcel has to be indicated in the « Obligatory informations » block.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_510373779123c10d17dd7dfe223b09c9'] = 'Multi-parcel is available every time you go through the shipment verification screen.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_103288ded64f4136e8cdded2ec9704a1'] = 'Multi-parcel has to be indicated in the "Obligatory informations" block.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_4db2ac9039eeff37570287480a46df84'] = 'To use multi-parcel: fill in the box a number greater than or equal to 2 to indicate in how many parcels the order has to be shipped.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_d3971a91c1b283bb4dbc6c813fb3733d'] = 'The order total weight will be split according to the number of listed parcels (for instance: the total weight of your order is 30 kg. You indicated 3 parcels. Each parcel will then weigh 10 kg.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_9ec3a126e17192c7b0e460e10c5b8853'] = 'If necessary, you can change the weight of each parcel if it does not suit you. Dimensions applied to these parcels will be recovered from the dimensions table that we highly recommend you to customize. The price will then be updated and presented. You can either confirm shipping several parcels or revert to a single parcel shipment.';
@@ -477,64 +638,65 @@ $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_83384dc9945fdf9ada6d6b9428e
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_921d6c3ad23f8820e762422c7ddc21cb'] = 'An issued slip is charged, whether used or not. (for instance, 2 slips for 1 parcel in the end = 2 issued slips).';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_fa1eb8aaa46f236154dcc912a423f1b4'] = 'What are the specifics for sending abroad?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_4d834bd6dc0ff2fd1cc8c105bfc84c47'] = 'For shipments abroad, you must declare the contents of your shipment in both French and English.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_02d0c6edaa26038e038a2b6508762dc0'] = 'For the <em>French description</em>, EnvoiMoinsCher <b>automatically takes the name of the product(s)of the order,</b> from your catalogue.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_6af0d19437897649ae8e5fa156be81d8'] = 'For the <em>English description</em>, you can use <b>the « Translate » link. A Google traduction will be suggested.</b>';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_02d0c6edaa26038e038a2b6508762dc0'] = 'For the French description, Boxtale <b>automatically takes the name of the product(s)of the order,</b> from your catalogue.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_6af0d19437897649ae8e5fa156be81d8'] = 'For the English description, you can use the "Translate" link. A Google traduction will be suggested.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2af45960db0a678ed7f610f117b1d46e'] = 'Notes';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_df1d867fc5d562c85edd28cf2c64229c'] = 'For shipments abroad, the module does not block shipments if the content description is not translated to English. Please keep an eye on the translations.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_4c6e6184add527641c6ec79fd18ea183'] = 'You must attach to your package a commercial invoice in 5 copies for all international shipments (outside the EU).';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_bf54504ba025be44b5e47ad9ab61ffbb'] = 'Any specific documentation related to a special country or product is your responsibility.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c7ff7cff9a0fc55048050338801af736'] = 'How can I download my shipment slips?';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_a89d98153e11a30f8e772ac66c48aea5'] = 'You have three options to save your shipment slips: from Prestashop, by email, or in your EnvoiMoinsCher account, in « My shipments » category.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_102e1d99cfdfdcc458bef649e6216830'] = '<em>In Prestashop</em>';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_633663db2e17013bc5546bc649344cf0'] = 'Go to « Orders » tab, « EnvoiMoinsCher » subtab then to  « Previous orders ». To download a slip: click on « Download slip ». To download many slips at once: select the orders you want to download by checking the box and click on « Download slips ».';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_78dff771ce5a3edbaaff7daa0f809ca5'] = '<em>By email</em>';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_18df04d6e7b217fe7db5cf6c4cb2c1c3'] = 'You can choose to receive the shipment slips by email. This can be either set up in your EnvoiMoinsCher account, or in the Prestashop configuration « Settings » tab.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_ccb4a846a98d08ab83b7fecaf15d58b3'] = '<em>From you EnvoiMoinsCher account, « My shipments » category</em>';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_a89d98153e11a30f8e772ac66c48aea5'] = 'You have three options to save your shipment slips: from Prestashop, by email, or in your Boxtale account, in « My shipments » category.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_102e1d99cfdfdcc458bef649e6216830'] = 'In Prestashop';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_633663db2e17013bc5546bc649344cf0'] = 'Go to « Orders » tab, « Boxtale » subtab then to  « Previous orders ». To download a slip: click on « Download slip ». To download many slips at once: select the orders you want to download by checking the box and click on « Download slips ».';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_78dff771ce5a3edbaaff7daa0f809ca5'] = 'By email';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_18df04d6e7b217fe7db5cf6c4cb2c1c3'] = 'You can choose to receive the shipment slips by email. This can be either set up in your Boxtale account, or in the Prestashop configuration « Settings » tab.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_ccb4a846a98d08ab83b7fecaf15d58b3'] = 'From you Boxtale account, « My shipments » category';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_fe268464bd8a508b3bba58b13870a6d3'] = 'I tried to ship my order but I got an error. My shipped orders do not appear in the orders history.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_50e8cb7cd7a9c79f84d7dcb8889dbf81'] = 'Orders which could not be shipped are displayed at the bottom of the page in the <b>« Invalid or incomplete orders » list.</b>';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_50e8cb7cd7a9c79f84d7dcb8889dbf81'] = 'Orders which could not be shipped are displayed when selecting <b>Invalid or incomplete orders</b> type.';
 
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_ab1a3cbe44e40f384846d162a8ade8d1'] = 'My slip does not generate itself after shipment.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_be0009bc815d8b6ed339e8c366bdc47a'] = 'After sending a EnvoiMoinsCher order, a link to the slip will appear in the list of sent parcels.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_be0009bc815d8b6ed339e8c366bdc47a'] = 'After sending a Boxtale order, a link to the slip will appear in the list of sent parcels.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_10d3736077a9583d7b9b7c79bc2e0d04'] = 'If ever this link is still being generated, here are the questions you have to ask yourself:';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_ba95e0324a75a5cc9e44c50540d7f0d0'] = 'Did I wait long enough?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_11ad2eb2210c32a08f74805e5948e0e9'] = 'Depending on the carrier, generation can take up to 5 minutes, so you have to wait a bit.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_fdc396bc05e401d74764b845d220fa4d'] = 'Am I in a test environment?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_043a8f9a2ead93fc2435aba6b015260f'] = 'If this is the case, the order was not accepted and the slips will not generate themselves.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_6aedf25b783e1b6c6c8227ad0ba21fa9'] = 'If your order was real, you have to first enter the production environment (top left of this page: « Environment ») and re-place your order on our website, do not forget to log into your account for the order to be added to your bill.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e95f8e2080657e7f9c87f39e35220f28'] = 'Click here to access EnvoiMoinsCher website.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c6786e49ab8d1e3b47aa1b935ba4e0d1'] = 'Contact technical service informationAPI@envoimoinscher.com stating your problem and an access to your back office (url, login, password) to accelerate the resolution of your problem.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_4b522378205274961ec00a7008672552'] = 'http://www.boxtale.com';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_889bd97eb6a5ce9266b7a9a64efd7cd5'] = 'Click here to access Boxtale website';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c6786e49ab8d1e3b47aa1b935ba4e0d1'] = 'Contact technical service informationAPI@boxtale.com stating your problem and an access to your back office (url, login, password) to accelerate the resolution of your problem.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_834e8f70aa9848563f4a32c9e8a9c8be'] = 'A response will be made ​​as soon as possible.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_0d1cb9515ed302577065f09324ee27bc'] = 'How to track my shipment?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_bb0b210c23613239d9ed282d4f6114cf'] = 'How to set up shipment tracking for my customers?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e10a706c9c8dcdc4d2849b60e8c04993'] = 'The configuration of shipment tracking takes place in 2 stages:';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_4143bbaf091de066099b80fb305712ab'] = 'Configure your EnvoiMoinsCher module for choosing the tracking number';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_4143bbaf091de066099b80fb305712ab'] = 'Configure your Boxtale module for choosing the tracking number';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_450b98d3ae26a4206e21eb46ebe3482e'] = 'Fill in the URL tracking numbers for every carrier';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c5506f9010abdc9205b2438d9a1db3cf'] = 'Configure your module (step 1)';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_78f24f945e8ba7beb903f690f98fc9d0'] = 'It is important to configure the module to choose the type of tracking number desired.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_0444eea4ab44b01d13e41fe3019e3ed6'] = 'Go to « Settings ».';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_ab39bdd1ab840645d58ca2ec1493b75a'] = 'Two choices are available: display the « EnvoiMoinsCher » tracking number or the « Carrier » tracking number.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_ab39bdd1ab840645d58ca2ec1493b75a'] = 'Two choices are available: display the « Boxtale » tracking number or the « Carrier » tracking number.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_33e2655996b66c1a6cd643ada5e3a40c'] = 'We advise you to choose as a type of tracking number « carrier » so that your customer can track the parcel online through the carrier&#39;s website.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2b5da96278a4d38b34993573a237df83'] = 'The information will be more apparent to your client.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_1de99b2d80051c5b4ccc9aac76d0976e'] = 'Configure the carrier tracking URLs (step 2)';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_7475c3169a314326b3a77c7ed2e3548b'] = 'Secondly you will have to configure the carrier tracking URLs.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_60be709d333311244c9a668e2568321a'] = 'Go to the « Delivery » tab then the « Carrierv subtab.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_3770674fe1397a8baaf970cc3bb307f1'] = 'Fill the « tracking URL » box with the corresponding URL.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_a94974b46efb81dec2db99b31caae4cb'] = 'Carrier tracking URLs with EnvoiMoinsCher module (for information)';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_a94974b46efb81dec2db99b31caae4cb'] = 'Carrier tracking URLs with Boxtale module (for information)';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_a75c3eb11ad4a0fff9e664971c2a2c91'] = 'Note: These URLs are provided for information only and can be changed without notice.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_fdc5917187600a4d1c868777c51b46a1'] = 'Where can I find the tracking number of my shipments?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2acdd3b122488b663e84925ed5689d61'] = 'For the buyer:';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_850b5e489f77f039b544a8c1c5a88b15'] = 'the buyer will have access to the link in the customer area on your website (to configure in Prestashop).';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_7221b27be1842d1296890321082d836b'] = 'For the seller:';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_ce134424cbbd2472a5b12b157f373ff6'] = 'in the module shipment history, click on « track the shipment » in the last column of the table.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_49131f93f807aff90e6780ea1afd291c'] = 'You can also track the shipment from your account on EnvoiMoinsCher.com.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_49131f93f807aff90e6780ea1afd291c'] = 'You can also track the shipment from your account on Boxtale.com.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_f6ce27538da24e2107bae20a3d10d3de'] = 'How to insure my shipments Ad Valorem?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_b006ae326d0b0e283cc6f3e61db71eb1'] = 'The configuration for the shipments insurance takes place in 2 steps:';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_be9022114037301b8c0d6c13ceb74f6c'] = 'Configure your Envoimoinscher module to enable the ability to insure its shipments';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_be9022114037301b8c0d6c13ceb74f6c'] = 'Configure your Boxtale module to enable the ability to insure its shipments';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e0c54d9397b413290e8319b92bf98f60'] = 'Check insurance on every order you want to insure';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_b0a038346355f1f4aa71dde1c7e63545'] = 'Yet, your orders will still have the carrier contractual insurance.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e74f81f0ae0331d7bc8263f45c742bef'] = 'For the conditions of compensation, see the carriers Terms & Conditions on the partner carriers page.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e74f81f0ae0331d7bc8263f45c742bef'] = 'For the conditions of compensation, see the carriers "Terms & Conditions" on the partner carriers page.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c5506f9010abdc9205b2438d9a1db3cf'] = 'Configure your module (step 1)';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_ed18cbe5e46cfd1e41921931ab6cbb44'] = 'Insurance will only be available if you check the option in the configuration of your EnvoiMoinsCher module in the « Shipping description » tab.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_ed18cbe5e46cfd1e41921931ab6cbb44'] = 'Insurance will only be available if you check the option in the configuration of your Boxtale module in the « Shipping description » tab.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_0c76bc7d6893c26209101a0621754d95'] = 'Check the box when sending the order (step 2)';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c6f576d8765e681f0384d59ef5119aca'] = 'Make sure when you send the order that « Insure this shipping » is checked if you want to insure your shipment.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_b24717e815ed6e85111ff9e43a30c5eb'] = 'The charged price is automatically recalculated at the top of the page.';
@@ -546,7 +708,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_f5257e1eec70f3304a2cdd6e064
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_12c565ca494b876a6622bc45e463d7a0'] = 'The update does not affect your configuration: settings, carriers . . .';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_37b9997beb76169752a5663d79f78a19'] = 'Can I benefit from new carrier offers available through updates?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_b127099c71415d532da3a26ed73eb041'] = 'Yes.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_17b7c41006edc92890983c75145967e7'] = 'If you do not find an answer to your questions in this FAQ, please contact our technical support by explaining your problem to the following address informationapi@envoimoinscher.com.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_17b7c41006edc92890983c75145967e7'] = 'If you do not find an answer to your questions in this FAQ, please contact our technical support by explaining your problem to the following address informationapi@boxtale.com.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_1bc8d01c4dfaa872ba663048c484fa04'] = 'Please provide us a superadmin access (url, login, password) so we can have a look at your back office.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2ef4ee853064a6ba1cdf1fa05173bfa9'] = 'To do so, go to the Prestashop Administration tab, Employees and click on « Add an employee ».';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_6ae609ecb7f55d9b21e5b631050c3f4f'] = 'Help and Update';
@@ -564,7 +726,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_06df33001c1d7187fdd81ea1f5b
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_3444fdb5d426430f49af2949d736a192'] = 'No update now';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_6a26f548831e6a8c26bfbbd9f6ec61e0'] = 'Help';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_7f94eb81ecfe807b7cf10a8b7c044342'] = 'Frequently asked questions';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_40fac7a4bd26c192505dacc43493ef55'] = 'To install and configure EnvoiMoinsCher plugin follow ';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_40fac7a4bd26c192505dacc43493ef55'] = 'To install and configure Boxtale plugin follow ';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_55876228853abf632dec9346a4f372ec'] = 'documentation';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_d7b83b82540dd856636f5834d32f67a6'] = 'If you have any problem, we advise you check first';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_53075bbae7e3590835d21f20a8da88f0'] = 'log page';
@@ -574,32 +736,32 @@ $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_376786119ef4f697fb706ee7a32
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_20d5ae96602cc38bd25c657a1c00c1f1'] = 'By phone:';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c3cfe6926eb07bdbd2e4492e3047761a'] = 'Technical service:';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_349e382f0296df50626840c9b78ee735'] = 'Please fill all required fields';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_07db5022d338b285303756bf93f699f3'] = 'Where can I find help to configure EnvoiMoinsCher plugin';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_07db5022d338b285303756bf93f699f3'] = 'Where can I find help to configure Boxtale plugin';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_154fdb5ae9006e1bff78c54ca6c3425d'] = 'A documentation is available to configure the plugin: ';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5142943bdd139d539bca8c25f2695214'] = 'A documentation is also available for shipping: ';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_d948ff95570cf84c8bc231cac2af276a'] = 'shipping';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_d91d0c7900f95d659afaf7a24c1a31f8'] = 'You can contact technical help by mail at informationapi@envoimoinscher.com but check documentation before.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_d91d0c7900f95d659afaf7a24c1a31f8'] = 'You can contact technical help by mail at informationapi@boxtale.com but check documentation before.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_11bd04e87454e394531e588060f4fdc8'] = 'Can I test my plugin before activation on front-office';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_cc0b86ba6115a80bc7ec78b94a04d59c'] = 'Simulation page leads you to check carrier offers for a product: ';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_73699677bd8b78e71ea35e7b54be1deb'] = 'Offers that I chose are not shown';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_aa1d3fb77faecb270f3876e3d642e3bb'] = 'If when making order in front-office no offers are found, ask yourself the following questions:';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e571329278c2aaf471bb41035b1701f7'] = 'Is the plugin online?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_146a8ac7ced910a469961678040968be'] = 'If not, your plugin must be online to work in front-office. If your settings are done, clicking on \"Online\" on the top left to switch.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_0c3ff77dc4d7c6ee71f41da06930b8f0'] = 'Are my EnvoiMoinsCher credentials correct?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_0c3ff77dc4d7c6ee71f41da06930b8f0'] = 'Are my Boxtale credentials correct?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_4c3a689efd04fb1d4b7e6f653d1f7dd1'] = 'If true, an error message is displayed on the top of the page.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5c30cea08ff2bdcf919c5de22cc2a6ee'] = 'Is there any recent settings changes on my carriers?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_165050391b40524d5d9921f680698dfc'] = 'If true, changes may not have been taken into account, clear cache (top left of the page) should solve the problem.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_b8bdb352fdd815f9f7418f139dbc2ce6'] = 'Have my product a fill weight (in Catalog -> Products -> Edit -> Shipping)?';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_87b000ba6c126f0ea8dcc044f156f2fc'] = 'EnvoiMoinsCher plugin cannot show shipping cost for weightless product but you can fill default weight for your products in "Shipping description" tab.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_54f7fca5d538d1e9f2f2e3a67cc8cb6d'] = 'Is EnvoiMoinsCher plugin activated?';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_87b000ba6c126f0ea8dcc044f156f2fc'] = 'Boxtale plugin cannot show shipping cost for weightless product but you can fill default weight for your products in "Shipping description" tab.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_54f7fca5d538d1e9f2f2e3a67cc8cb6d'] = 'Is Boxtale plugin activated?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_a5ee8fbd6f56add40e04bce7398c78da'] = 'You can check in plugin list';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_dea606020ef9b6ffc60198088f8dc1f7'] = 'Is my front-office account address valid?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2d24c5ba00cc6b1b0577e6e1e8fc579f'] = 'Your address may not be recognized. You can test with a simple addresse like 75002 / Paris / France / rue de la paix.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e4f2a5370b5653658778005a59a4c335'] = 'You do not see any offers? There is certainly details in log (beginning by "[ENVOIMOINSCHER]"). Contact technical service (informationAPI@envoimoinscher.com) with the messages to help resolve your issue. A response will be given within 24 hours.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e4f2a5370b5653658778005a59a4c335'] = 'You do not see any offers? There is certainly details in log (beginning by "[BOXTALE]"). Contact technical service (informationAPI@boxtale.com) with the messages to help resolve your issue. A response will be given within 24 hours.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c7a9711ebce1a0ef420699f6dbb6dbb9'] = 'Click here to access your logs: ';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_42c5c6df7d58d8e75a32bf2148983e4d'] = 'Price does not correspond to what I configure.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_423ce067749bbbe3530e0c8cf6fc84b6'] = 'If on a front-office command EnvoiMoinsCher carrier prices do not match what I configure. Ask yourself next questions.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_448a46781993b4d059dde60383325ad0'] = 'Are you using "real price" (price proided by Envoimoinscher) for carriers:';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_423ce067749bbbe3530e0c8cf6fc84b6'] = 'If on a front-office command Boxtale carrier prices do not match what I configure. Ask yourself next questions.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_448a46781993b4d059dde60383325ad0'] = 'Are you using "real price" (price provided by Boxtale) for carriers:';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_7d3c22f72179c00f2e84a2877f36bc46'] = 'Is product weight / volume correct?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_01d040b0bdb0e12126850b1afd70393a'] = 'Price is calculated according to product\'s weight and volume (advanced carriers only), so check if product weight (in Catalog -> Products -> Edit -> Shipping) is correct and in good weight unit. If no weight is indicated, check default weight in "Shipping description" tab. Finally, for advanced carrier you must configure weight / volume matching table in "Advanced Carriers" tab.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c637a8677c71c9720a856c2f7c202cbd'] = 'If you set "flat rates" on your carriers:';
@@ -607,7 +769,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_fd2d25fb24d5a19f95538146fee
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_1b55814f3f8233ebf3657e4eb25c78b8'] = 'To use your price configuration, you have to specify your carriers in "rates" mode on "Simples carriers" and "Advanced Carriers" tab.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_12a29be76cd9033641c18b927806e016'] = 'Are my ranges well-set?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_122a271ec8ad61e0881bd1bde7612520'] = 'Is the price what you indicate in your weight/price ranges? (Shipping -> Carriers  -> Edit) Check that ranges are correct.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2aee1c96bddcf897b821d09e107be08f'] = 'Your rates is still wrong? Contact our technical service (informationAPI@envoimoinscher) sending a backoffice access to get a solution quickly. We will respond through 24 hours.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2aee1c96bddcf897b821d09e107be08f'] = 'Your rates is still wrong? Contact our technical service (informationAPI@boxtale.com) sending a backoffice access to get a solution quickly. We will respond through 24 hours.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_c3b0b604abfb9a350d244e1eb887b522'] = 'Relay points do not appear';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_88e3db595c2b230d8553f801af39fe18'] = 'If your carrier appear without relay point, ask yourself following questions:';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_be6d7c4fdae93d4ae2d43ebbb7b8026f'] = 'Am I using a personalized theme? ';
@@ -616,14 +778,14 @@ $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_252326fc237811bc3cf2ee0c02e
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2a097705a8e3a45d204e3ac2e6c792e5'] = 'Our module does not take in charge this option. As a matter of fact relay points are deactivated if this option is activated. We advise you to change to rates prices to be able to offer shipping cost to your customers. (A null price rates is enough).';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_782a7eeae1402f2ea88497cfa4cfd18b'] = 'Is there a relay point close to my destination address?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_9b004befe1bb4a111143913c508c561d'] = 'Even if rare, sometimes no relay point is available for a province. To be sure write a simple address like  75002 / Paris / France / rue de la paix.';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_228ed76edd298514990cc1b679fc52b4'] = 'Your relay point still does not appear? Contact our technical service (informationAPI@envoimoinscher) sending a backoffice access to get a solution quickly. We will respond through 24 hours.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_228ed76edd298514990cc1b679fc52b4'] = 'Your relay point still does not appear? Contact our technical service (informationAPI@boxtale.com) sending a backoffice access to get a solution quickly. We will respond through 24 hours.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_5741ceb5ecc370599a79ab29727a8edb'] = 'I cannot download my slip after order shipping?';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_82782d529ec83c09dfc3d892dc86d38c'] = 'After EnvoiMoinsCher order shipping, a link to download your slip should appear in the shipped orders list. If this link does not appear, here are questions to ask yourself:';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_82782d529ec83c09dfc3d892dc86d38c'] = 'After Boxtale order shipping, a link to download your slip should appear in the shipped orders list. If this link does not appear, here are questions to ask yourself:';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_e723a5a7980fdba0de9c7254cf66db6e'] = 'Did I wait enough time?';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_46195a5b27e3967e318bcee302fa0f63'] = 'Depending on carriers, slip creation can take 5 minutes, You must sometimes wait a bit.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_4bca038cdde2f92997bdb4108d382085'] = 'Am I in the test Environment?';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2946b4aaf998509aad67e9bec809a20c'] = 'If true, order has not been done and slip will not generate. If it was a real order, you have to switch to production mode (top left of this page: "Environment") and order again on our website, Do not forget to connect to your account to get the order on your bill. Click here to access EnvoiMoinsCher website:';
-$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_236b2d6be1145873a68c73a05f0cf473'] = 'Your slip still does not appear? Contact technical service (informationAPI@envoimoinscher.com) indicating backoffice message to solve your problem. A response will be given as soon as possible.';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_2946b4aaf998509aad67e9bec809a20c'] = 'If true, order has not been done and slip will not generate. If it was a real order, you have to switch to production mode (top left of this page: "Environment") and order again on our website, Do not forget to connect to your account to get the order on your bill. Click here to access Boxtale website:';
+$_MODULE['<{envoimoinscher}prestashop>getcontenthelp_236b2d6be1145873a68c73a05f0cf473'] = 'Your slip still does not appear? Contact technical service (informationAPI@boxtale.com) indicating backoffice message to solve your problem. A response will be given as soon as possible.';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_138dfc67b7698890ff87c06110cc6796'] = 'Others Questions, we are available: ';
 $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_787263aaceab5c2ab4f8b36a05e5cb21'] = 'Any other question?';
 
@@ -632,25 +794,25 @@ $_MODULE['<{envoimoinscher}prestashop>getcontenthelp_787263aaceab5c2ab4f8b36a05e
 */
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_349e382f0296df50626840c9b78ee735'] = 'API account';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_55c088f8dde8e94f034ce7b41d7a91c2'] = 'API account';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_2fdfd506efea08144c0794c32ca8250a'] = 'Create an account';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_051672911a3f1f05efba78a553ef6fe2'] = 'Login:';
-$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_d9ad8c01c69370c0933c10e93335ee9b'] = 'EnvoiMoinsCher.com login.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_d9ad8c01c69370c0933c10e93335ee9b'] = 'Boxtale.com login.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_b341a59d5636ed3d6a819137495b08a0'] = 'Password:';
-$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_4ed5a644b549769e4b4e14bcf01b6cec'] = 'EnvoiMoinsCher.com Password';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_4ed5a644b549769e4b4e14bcf01b6cec'] = 'Boxtale.com Password';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_0694ea9bcc18c54f4dd79b468aa664d2'] = 'API key (test):';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_6f3e85d1dbe80c3b319288dd0f67f55c'] = 'API key (production):';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_cb4f754a65b7e8cb5499fc76e10de80c'] = '<strong>Your Test API key</strong> enables you to make test shipment requests via our module. This key must match the <strong>TEST</strong> work environment.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_29b859aaecb012c0ee7d7a6d032a7a01'] = '<strong>Your Production API key</strong> enables you to make real shipment requests via our module. This key must match the <strong>LIVE</strong> work environment.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_0d479c7e8a04481580daafb915cf9a34'] = 'Please check your email for your account information.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_929a59d3a7a633f98494ea92b38860e6'] = 'Pickup address';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_caa5b7a48ce4b1c1492c445446433fb5'] = 'Shipper Civility:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_c0552355b46408e262fc64d4ca9398dc'] = 'Shipper Civility: choose Mr, Mrs or Miss';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_69691c7bdcc3ce6d5d8a1361f22d04ac'] = 'Mr.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_4a3bc04657d9e1aaa46b506613da44cc'] = 'Mrs';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_e7ddb7cd777b59610b220bcfa80bd95f'] = 'Miss';
-$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_64fff509d1dbbc6d611ff330ca924ddd'] = 'Shipper surname:';
-$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_35cfb0d841148cefdd0e9706d72947df'] = 'Shipper surname ';
-$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_908256a7feb4ba4759aec212cba3fcbf'] = 'Shipper Name:';
-$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_60f4588153cb6e66439474f94396ed80'] = 'Shipper name ';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_64fff509d1dbbc6d611ff330ca924ddd'] = 'Shipper first name:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_35cfb0d841148cefdd0e9706d72947df'] = 'Shipper first name ';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_908256a7feb4ba4759aec212cba3fcbf'] = 'Shipper last name:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_60f4588153cb6e66439474f94396ed80'] = 'Shipper last name ';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_5e5f0a863cd129317037e3def37b4097'] = 'Company:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_ba0f4afe8a2b0ac9578a301c066ae286'] = 'Parcel pickup company name';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_2bf1d5fae1c321d594fdedf05058f709'] = 'Address:';
@@ -662,7 +824,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_dd5a24c77b4d0bb0111d387
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_673ae02fffb72f0fe68a66f096a01347'] = 'Phone number:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_27a88d9a6e2f3e3e3e24cf58f44ea760'] = 'Shipper\'s phone number (Deliverer may contact you)';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_6a1e265f92087bb6dd18194833fe946b'] = 'Email:';
-$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_c1b2e6fba1bb6a49cead7e58c401418f'] = 'Shipper\'s Email (EMC or carriers may contact your for your shipping)';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_c1b2e6fba1bb6a49cead7e58c401418f'] = 'Shipper\'s Email (Boxtale or carriers may contact your for your shipping)';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_4c5207a85f89871137fcb0f04a4a74e8'] = 'Additional Address informations:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_0a680daca4a811b034fe4ba29465d29a'] = 'Floor, code, ...';
 $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_fb51391ad50fe16b352b1224df00efa4'] = 'Pickup availability starting hour:';
@@ -681,38 +843,29 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_94966d90747b97d1f0f206c
 */
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_e5065895b9d0b603e422eca14e6c9499'] = 'Please describe your activity and your shipping details. We advise you to fill weight on each of your products instead of default weight.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_65164281395667de54ffe6f144f96a6c'] = 'Your shippings';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_c06d1a711d6f9cc510d3adaee0a00520'] = 'Shippings type:';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_3bce39926dae64caa0a0dd1c0f0db293'] = '- Envelope is less than 3kg.  - A parcel is less than 70 kg. Express offers, accepts only parcels less than 30 kg.  - Bulk is for objects that do not fit standard weight / dimensions and standard package.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_4293bbcd95a38b4da545b4a245610dbb'] = 'Please choose';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_e63837d52af41b44ae156953c90e6ae0'] = 'Shipping nature:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_6930cd18c4690be0e21e34b504d66452'] = 'You must indicate the nature of your shipping. This information is mandatory for carriers, choose the more accurate label for your shipping\'s nature in the list. If you check "Apply for parcel description", the label will be used for all your shipping descriptions (This information will be sent to carriers). This information will appear on sending page. You can modify this in formation at this step before validate form. Do not check if you would rather fill a description for every product (information registered in your products catalog)';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_9d6a8a66d170d9ded125e88d0af058e4'] = 'Packing type:';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_341cdf06c4b26677017a0df809399f32'] = 'Packing type is mandatory for Colissimo offers, extra charges may apply';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_8a8d442aff2d2c05f3cab0e3a21ad5da'] = 'Fill your EnvoiMoinsCher Id before choosing';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsends_8a8d442aff2d2c05f3cab0e3a21ad5da'] = 'Fill your Boxtale Id before choosing';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_961f2247a2070bedff9f9cd8d64e2650'] = 'Choose';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_041624b942fa1c95084c411de7a3704b'] = 'Apply for parcel description.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_060ab0de698be424baa57dd211ad29c4'] = 'Information given to carrier(s), choose the most accurate label. ';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_994147ceae00c7e21c17a9576b1ff3d3'] = 'If checked, you apply chosen label for all your shipping content descriptions (In place of products name).';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_84aaf4edb06ccaac72de4625774e76f7'] = 'Individual customer:';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_edab885a8b0261e3651c24111431d377'] = 'Checking this option, all your customers will be considered as individual. It means they will all have access to dedicated relay points offers.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_a5f943aaa72f754b4112e07fce87037e'] = 'Use multi-shipping';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_50cac7077ee9179e7cb598f319677f38'] = 'Send a command into several parcels instead of one.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_e82f2d302c63bd0619be9deffadda67a'] = 'Careful ! It may lead to different prices between your customer and real shipping price.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_7cb8fb0ac034e8df5967f384715108c5'] = 'All slips will be charged.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_038c9211a2eff68fe1ad4e9d64c21e7d'] = 'Product weight set-up';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_27350971e8065bd6b51ad56c1cce9ecb'] = 'Default weight (%1$s):';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_ebe86682666f2ab3da0843ed3097e4b3'] = 'kg';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_373e86960f4bc931a55ad4054176609b'] = 'You can specify a default weight that will be applied on missing weight product. (product weight is set in Catalog -> Products)';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_5ef56e80e75322746acd2b358a86d469'] = 'Minimal weight:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_5f7d7bb6518a99cd055d70de608b3226'] = 'Apply 100g weight to under 100g products';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_7c3ae55ca01d951591910247dabc738e'] = 'Pick-ups';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_f9c3c4489eddf88048f72a44ca48dfdd'] = 'Pick-ups date: D +';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_924a0fa8eb89747ddbf0ca91d765a499'] = 'for orders between';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_be5d5d37542d75f93a87094459f76678'] = 'And';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_10fbe05a37154805ef0ff44d9f1ae0c1'] = 'Define how many days between order and pick-up date.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsends_065ab3a28ca4f16f55f103adc7d0226f'] = 'Delivery';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsends_b9d80616ba5c4f51589e5ad57ccec169'] = 'Departure date:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsends_8fd59df4c86571e12cd508aceb6bdb92'] = 'D +';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsends_7190dd120566d03e0a6219623f82ab73'] = 'for orders submitted before';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsends_938aaacdc2df3209b24ae7bfcd934dc0'] = 'for orders submitted after';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsends_369bfee7b27ddeb43516b7f95b67d006'] = 'Please specify how many days it will take for the parcel to be shipped after the order is submitted (parcel drop-off date/on-site collection).';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_eaff1bdf24fcffe0e14e29a1bff51a12'] = 'Insurance';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_72b4513c5ad8e066ec10e09f3d9ed862'] = 'Use AXA insurance:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_91dc7118a50cee823b97091bdb5a1161'] = 'By selecting declared value insurance, I declare to know that ';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsends_63d848b345c6aaaf48f4b7d85ebe06b8'] = 'http://www.boxtale.com/faq/131-all-about-ad-valorem-insurance.html';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_e41f1b42203f47f3eb6578d8b48821ca'] = 'insurance AXA contract to declared value notice';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_d9bbcd57bef5dc79a68808a0b4bcb08e'] = 'Attention, package insufficiency and maladjustment are excluded risks of AXA warranty, take care of overprotect  your parcel.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_413230d6fc13b1679d086c98602d6cdb'] = 'Insurance is avalaible only without these options "Mass order: without checking shipments".';
@@ -729,23 +882,35 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentsends_6d9163f98d9567378655c87b6d
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_b1fc79ec48fc72c2e44126470c77ec14'] = 'Carriers bellow use parcels\' weight and dimensions to calculate shipping cost.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_b3a18ac139b9bd358c1e051326c7c647'] = 'That\'s why we advise you to personalize parcels dimensions.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_166536aa9f0d8c2019385ed9f0324157'] = 'You will benefit of a more accurate billing without surprises.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_2aa635f8f7524ee65568df5b19dc7181'] = 'Real price: prices given directly from EnvoiMoinsCher, no need to set anything else.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsends_2aa635f8f7524ee65568df5b19dc7181'] = 'Real price: prices given directly from Boxtale, no need to set anything else.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_783f614d26462fbe591abcf6a0f856fc'] = 'Rates: Shipping costs based on your prices/weight ranges.(Shipping -> Carriers -> Edit).';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_a093c77721ce0c4756d942da1bbe957f'] = 'For more details see our documentation.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_d95db1e10c12dd7af1d94be3ccddc10e'] = 'Parcel dimensions customization';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_ab2bc85aa5a5806d1317873d58c99b06'] = 'This page lets you customize maximum sizes of your parcels by weight ranges. These settings will impact shipping costs. Enter most common dimensions to get realistic prices.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_95587963a159ed05c0139afdd77bba18'] = 'Without customization, default dimensions made by EnvoiMoinsCher will be used.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsends_95587963a159ed05c0139afdd77bba18'] = 'Without customization, default dimensions made by Boxtale will be used.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_21e81327576ab5c9f333398512fa96d6'] = 'Weight up to';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_47567b23e2b68a57eb084b0a5a7ee969'] = 'Max length';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_ef1265421cedf443045d942b2730f3e3'] = 'Max width';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_59e6f571553908093b8310e13e85fcfd'] = 'Max height';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsends_ad57bbeb7f28ab8e04e1e4cb086e0949'] = 'Labbel for delivery date:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsends_d3837bee45a5dbe7e4abba87922cf3f9'] = 'Label for delivery date:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsends_72b22069efe431026607f7326bda01d9'] = 'You can customize delivery date front-office message. Example: "Delivery planned on: {DATE}". Leave the field empty hides the delivery date';
 
 /*
 	--- getcontentsettings ---
 */
-$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_36993a66164593cee7247d107467d01c'] = 'We advise you to use carrier\'s website tracking number instead of EnvoiMoinsCher website tracking number. It will be easier for your customer get tracking details.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_e744ae5ff1db45c76911ee834b7fafcd'] = 'Multi-shipping';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_c06d1a711d6f9cc510d3adaee0a00520'] = 'Shippings type:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_3bce39926dae64caa0a0dd1c0f0db293'] = '- Envelope is less than 3kg.  - A parcel is less than 70 kg. Express offers, accepts only parcels less than 30 kg.  - Bulk is for objects that do not fit standard weight / dimensions and standard package.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_4293bbcd95a38b4da545b4a245610dbb'] = 'Please choose';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_9d6a8a66d170d9ded125e88d0af058e4'] = 'Packing type:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_341cdf06c4b26677017a0df809399f32'] = 'Packing type is mandatory for Colissimo offers, extra charges may apply';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_84aaf4edb06ccaac72de4625774e76f7'] = 'Individual customer:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_edab885a8b0261e3651c24111431d377'] = 'Checking this option, all your customers will be considered as individual. It means they will all have access to dedicated relay points offers.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_a5f943aaa72f754b4112e07fce87037e'] = 'Use multi-shipping';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_50cac7077ee9179e7cb598f319677f38'] = 'Send a command into several parcels instead of one.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_e82f2d302c63bd0619be9deffadda67a'] = 'Careful ! It may lead to different prices between your customer and real shipping price.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_7cb8fb0ac034e8df5967f384715108c5'] = 'All slips will be charged.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_36993a66164593cee7247d107467d01c'] = 'We advise you to use carrier\'s website tracking number instead of Boxtale website tracking number. It will be easier for your customer get tracking details.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_6f104c768095f6be37db7794a3dfea4e'] = 'Tracking number';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_39d6634edce406da51faf4e7cb5dd413'] = 'Tracking number type:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_786af482938de8255ffaab533c22a70a'] = 'Choose which type of tracking number to use in tracking url on your carriers card.';
@@ -759,13 +924,13 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_86d529523078ff7f0c691cc
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_4a0e57c0ba2d4c4050fa9dba01fa6791'] = 'Choose order status on front-office and back-office after delivery. Our advice « Delivered »';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_7b78bfb34119e771fda7bf002d1f84ff'] = 'Canceled order status:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_7cb5854710e687790bb31bb60e98d992'] = 'Choose order status on front-office and back-office after cancellation. Our advice « Canceled »';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_693fff1d5e117a7bc002250ae18d30b9'] = 'Mails to send / receive';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_0b30f360d69d3f4f3cac2e95c7ea717d'] = 'Slip mail:';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_127048bf7e24732cf30a02da6e104735'] = 'Sent to sender (You). This mail contain shipping instructions slip(s).';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_5206c388b2df3c5c3e409ccb7e9cd8a3'] = 'Recipient notification mail:';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_6bf52dd4e979d8a42c579c5b29134b4b'] = 'sent to recipient (Your customer). He will be notified that a parcel has been sent to him. Careful asthis notification is sent by EnvoiMoinsCher and not the carrier.';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_599fb8ba75fbb9a51f0bc2b12bc37d91'] = 'Billing mail:';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_6b69b11c69ebfc2732d060d958f17f2c'] = 'sent to billing address, as on your EnvoiMoinsCher profile, it permits you to give you your bill for sent orders.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_693fff1d5e117a7bc002250ae18d30b9'] = 'Mails to send / receive';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_0b30f360d69d3f4f3cac2e95c7ea717d'] = 'Slip mail:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_127048bf7e24732cf30a02da6e104735'] = 'Sent to sender (You). This mail contain shipping instructions slip(s).';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_5206c388b2df3c5c3e409ccb7e9cd8a3'] = 'Recipient notification mail:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_6bf52dd4e979d8a42c579c5b29134b4b'] = 'sent to recipient (Your customer). He will be notified that a parcel has been sent to him. Careful asthis notification is sent by Boxtale and not the carrier.';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_599fb8ba75fbb9a51f0bc2b12bc37d91'] = 'Billing mail:';
+$_MODULE['<{envoimoinscher}prestashop>getcontentmerchant_6b69b11c69ebfc2732d060d958f17f2c'] = 'sent to billing address, as on your Boxtale profile, it permits you to give you your bill for sent orders.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_a38649e0ab03b25eefd3d3680b22a47e'] = 'Add to cart shipping cost estimation';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_2dfd193b4f5824d420b55e97c98c6201'] = 'These are the shipping costs estimated before your client gets to the shipping option selection form.';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_cd964f939a79fea92e67eb4028b132f1'] = 'When your client adds an item to the cart, the shipping costs displayed will be:';
@@ -786,8 +951,8 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_9e9eadc1a66becf7ccd5412
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_8b8a2d9414fb12e43eba1ca1967a08d1'] = 'Default filter settings for orders pending shipment table';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_bec2929a066e5fec15276fcc2aa28cfb'] = 'Order type:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_eb92025cb8c66f1850c13a9b602a1856'] = 'Show all';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_4c046142d123c9845630d5e130c4ca23'] = 'EnvoiMoinsCher orders';
-$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_31d9e809d013d7957adb349b38f30981'] = 'Non EnvoiMoinsCher orders';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_4c046142d123c9845630d5e130c4ca23'] = 'Boxtale orders';
+$_MODULE['<{envoimoinscher}prestashop>getcontentsettings_31d9e809d013d7957adb349b38f30981'] = 'Non Boxtale orders';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_5cead4b84ff46817d33e0b29b83e963f'] = 'Invalid or incomplete orders';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_24a23d787190f2c4812ff9ab11847a72'] = 'Status:';
 $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_f8617a92ba0a0a4eabee724eab7c9f48'] = 'Carrier:';
@@ -806,7 +971,7 @@ $_MODULE['<{envoimoinscher}prestashop>getcontentsettings_94966d90747b97d1f0f206c
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_carrier_95ece57d76394225df3f3cd9de049f00'] = 'Sorry, no relay point found for this zone.\nYou can expand research modifying your delivery address.';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_carrier_799e206bc31adb0a84bfc1cc8d30e2ca'] = 'Please choose a delivery relay point. You can see relay points on ';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_carrier_fd04cc467298489f784b6245d53f9e26'] = 'this map';
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_carrier_5e4d4eb92b194915378f99c3d98f8483'] = 'Select a point';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_carrier_5e4d4eb92b194915378f99c3d98f8483'] = 'Select this point';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_carrier_5b72bb34f71de8f958de0e790464cda4'] = 'Please select your relay point to continue';
 $_MODULE['<{envoimoinscher}prestashop>envoimoinscher_carrier_19818d797c079e879ca8e252acde02cc'] = 'Close X';
 
@@ -836,6 +1001,9 @@ $_MODULE['<{envoimoinscher}prestashop>offerstable_cb5ec10ec389f98986bac7573809e6
 $_MODULE['<{envoimoinscher}prestashop>offerstable_5aa398affefb9a94a4fb7664bd5e9591'] = 'ATI Price';
 $_MODULE['<{envoimoinscher}prestashop>offerstable_3b6284bb4744c6bbf89dc0712dd129d6'] = 'Collect date';
 $_MODULE['<{envoimoinscher}prestashop>offerstable_0c4f82ac8c388cb72b1ba684f10fa098'] = 'Delivery date';
+$_MODULE['<{envoimoinscher}prestashop>offerstable_495b4bc2d50c5d9dee8818a1eb7fed8d'] = 'Change offer';
+$_MODULE['<{envoimoinscher}prestashop>offerstable_e514361e3a08d04efcb6a49a60c7b4dd'] = 'tax-excl.';
+$_MODULE['<{envoimoinscher}prestashop>offerstable_7100b9075643d7bacee9b7725bfc1b17'] = 'No other offer available';
 
 /*
 	--- orders_history ---
@@ -858,8 +1026,8 @@ $_MODULE['<{envoimoinscher}prestashop>orders_table_template_220f3d3750583b9db485
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_c7dd744861f63b6520c77e904f61e15a'] = 'Recipient\'s name or email';
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_464bf5481eb364ce5fe120922562d5d3'] = 'Order type';
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_eb92025cb8c66f1850c13a9b602a1856'] = 'Show all';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_4c046142d123c9845630d5e130c4ca23'] = 'EnvoiMoinsCher orders';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_31d9e809d013d7957adb349b38f30981'] = 'Non EnvoiMoinsCher orders';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_4c046142d123c9845630d5e130c4ca23'] = 'Boxtale orders';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_31d9e809d013d7957adb349b38f30981'] = 'Non Boxtale orders';
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_5cead4b84ff46817d33e0b29b83e963f'] = 'Invalid or incomplete orders';
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_cecd99f29c9767659cfeaba3cec8092a'] = 'Mass order will only be available if';
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_0a4b05c8cdb7a80cd0450792f34e8280'] = 'you select a type.';
@@ -874,7 +1042,7 @@ $_MODULE['<{envoimoinscher}prestashop>orders_table_template_d7778d0c64b6ba21494c
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_53d1adb6768b24251b16e8d453e45133'] = 'Reset to default filter';
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_a081c9610c122ca2d1fe29935930f908'] = 'All orders';
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_9e76af287aebcea9bd1624df1f2821c0'] = 'You can change default filter settings on the ';
-$_MODULE['<{envoimoinscher}prestashop>orders_table_template_fa45e69411da3b5b3f34ed3545c0e07e'] = 'EnvoiMoinsCher module configuration page';
+$_MODULE['<{envoimoinscher}prestashop>orders_table_template_fa45e69411da3b5b3f34ed3545c0e07e'] = 'Boxtale module configuration page';
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_20db0bfeecd8fe60533206a2b5e9891a'] = 'First name';
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_8d3f5eff9c40ee315d452392bed5309b'] = 'Last name';
 $_MODULE['<{envoimoinscher}prestashop>orders_table_template_ce8ae9da5b7cd6c3df2929543a9af92d'] = 'Email';
@@ -915,7 +1083,7 @@ $_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_ec53a8c4f07b
 $_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_7657e1e56bcec31d9f670a1464eb0497'] = 'Real price (ATI)';
 $_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_d21b12927fddc132b7b242f229bd81d0'] = 'Customer price (ATI)';
 $_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_4733fcda19c0c7f47ce8fd0e17c2b12a'] = 'Total (ATI)';
-$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_909268b4fbf2b5502e1db980cb325e34'] = 'EMC reference';
+$_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_909268b4fbf2b5502e1db980cb325e34'] = 'Boxtale reference';
 $_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_4ac985c8346e43cf95e930805d55d74a'] = 'Carrier (offer)';
 $_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_4a32ad9f54d2af781026b05382b79be8'] = 'Order card';
 $_MODULE['<{envoimoinscher}prestashop>orders_history_table_template_004bf6c9a40003140292e97330236c53'] = 'Action';
@@ -971,7 +1139,7 @@ $_MODULE['<{envoimoinscher}prestashop>tracking_b1bff0a827eff3ee3b933527b3db153a'
 /*
 	--- upgrade ---
 */
-$_MODULE['<{envoimoinscher}prestashop>upgrade_acfdd815909d032984aa04ad335d28e1'] = 'EnvoiMoinsCher: update';
+$_MODULE['<{envoimoinscher}prestashop>upgrade_acfdd815909d032984aa04ad335d28e1'] = 'Boxtale: update';
 $_MODULE['<{envoimoinscher}prestashop>upgrade_0236a3de225c715816d03c53961e328e'] = 'Update failed';
 $_MODULE['<{envoimoinscher}prestashop>upgrade_1670684fd3b2b467a2ece76fba710325'] = 'Update successful';
 $_MODULE['<{envoimoinscher}prestashop>upgrade_55f3a0f4e9394161252cff812dfb632e'] = 'Back to configuration page';
@@ -994,23 +1162,24 @@ $_MODULE['<{envoimoinscher}prestashop>hookdisplaybeforecarrier_54c6e2beb1577a9da
 $_MODULE['<{envoimoinscher}prestashop>orders_94ea843837b40535ec608f0c0de771bd'] = 'Your order was successfully shipped';
 $_MODULE['<{envoimoinscher}prestashop>orders_96b116411ff302f22c09644cdb93e0e3'] = 'Orders pending shipment';
 $_MODULE['<{envoimoinscher}prestashop>orders_155e6be09457fa3f7777dc6abc8a8156'] = 'Here is a list of your orders pending shipment:';
-$_MODULE['<{envoimoinscher}prestashop>orders_8fe3884634bd36464cf0e7ecbd2cc89b'] = 'EnvoiMoinsCher orders: you can send those right way. If you want to use multi-shipping on a command, you must send it manually clicking "send" (last column). Processed orders will be displayed on the "Previous order(s)" tab (if they don\'t, try refreshing the page).';
-$_MODULE['<{envoimoinscher}prestashop>orders_c5bcb595b9b4eb89f3589a19325e8585'] = 'Other carriers: if you wish to send some with our plugin you will have to select a EnvoiMoinsCher carrier for every order before sending.';
+$_MODULE['<{envoimoinscher}prestashop>orders_8fe3884634bd36464cf0e7ecbd2cc89b'] = 'Boxtale orders: you can send those right way. If you want to use multi-shipping on a command, you must send it manually clicking "send" (last column). Processed orders will be displayed on the "Previous order(s)" tab (if they don\'t, try refreshing the page).';
+$_MODULE['<{envoimoinscher}prestashop>orders_c5bcb595b9b4eb89f3589a19325e8585'] = 'Other carriers: if you wish to send some with our plugin you will have to select a Boxtale carrier for every order before sending.';
 $_MODULE['<{envoimoinscher}prestashop>orders_7a578ab19312b2dea0fdf07d7ca1c63a'] = 'Invalid or incomplete orders: you must complete or correct them to be able to send them. You will be redirected to the information check screen upon sending. If the offer is not available yet, you will be able to select a new offer to replace the previous one (do not forget to tell your customer).';
 
 /*
 	--- send ---
 */
-$_MODULE['<{envoimoinscher}prestashop>send_fb7bcdfddbea87ab01268b3acd596e5f'] = 'Order done for this command. Any questions, contact EnvoiMoinsCher customer service +33 (0)1 75 77 37 97.';
+$_MODULE['<{envoimoinscher}prestashop>send_fb7bcdfddbea87ab01268b3acd596e5f'] = 'Order done for this command. Any questions, contact Boxtale customer service +33 (0)1 75 77 37 97.';
 $_MODULE['<{envoimoinscher}prestashop>send_12fe44c155b765dc2e8b457cb8989389'] = 'Order could not be sent. An error occurred:';
 $_MODULE['<{envoimoinscher}prestashop>send_1030403a75563ce8b718cc2b23e6cba5'] = 'Go to next order';
 $_MODULE['<{envoimoinscher}prestashop>send_dcefc38b1420f932b430e80dccbd48d4'] = 'Order n°';
 $_MODULE['<{envoimoinscher}prestashop>send_8886cf808dc9872f8c66f036f98cdb38'] = 'Offer informations';
-$_MODULE['<{envoimoinscher}prestashop>send_39c115c9d1d1bcb54183aa7a794c3d15'] = 'Offer chosen by your customer is not an EnvoiMoinsCher plugin offer. This page permits you to replace it by EnvoiMoinsCher offer: select below from these EnvoiMoinsCher offer to ship this command with (do not forget to tell your customer).';
+$_MODULE['<{envoimoinscher}prestashop>send_39c115c9d1d1bcb54183aa7a794c3d15'] = 'Offer chosen by your customer is not an Boxtale plugin offer. This page permits you to replace it by Boxtale offer: select below from these Boxtale offer to ship this command with (do not forget to tell your customer).';
 $_MODULE['<{envoimoinscher}prestashop>send_b1469f72d871977c84a2a25575bede69'] = 'Chosen offer by you customer is not available yet. You can select another one, or try later (do not forget to tell your customer) or try later.';
+$_MODULE['<{envoimoinscher}prestashop>send_5034d40d7058503aac284e7c5abe1443'] = 'Cancel shipping';
 $_MODULE['<{envoimoinscher}prestashop>send_9bd95ffd582f070c2b830e88083abbfb'] = 'Customer selected offer:';
-$_MODULE['<{envoimoinscher}prestashop>send_66f4b91c03ac3b3869733481c2f70081'] = 'EnvoiMoinsCher offers';
-$_MODULE['<{envoimoinscher}prestashop>send_7ec50738fa58064854d49efa9fc7fc91'] = 'No EnvoiMoinsCher offers found. An error occurred:';
+$_MODULE['<{envoimoinscher}prestashop>send_66f4b91c03ac3b3869733481c2f70081'] = 'Boxtale offers';
+$_MODULE['<{envoimoinscher}prestashop>send_7ec50738fa58064854d49efa9fc7fc91'] = 'No Boxtale offers found. An error occurred:';
 $_MODULE['<{envoimoinscher}prestashop>send_294c8dc88292c7821455382f5013f52f'] = 'Recipient informations';
 $_MODULE['<{envoimoinscher}prestashop>send_49ee3087348e8d44e1feda1917443987'] = 'Surname Name';
 $_MODULE['<{envoimoinscher}prestashop>send_dd7bf230fde8d4836917806aff6a6b27'] = 'Address';
@@ -1023,6 +1192,8 @@ $_MODULE['<{envoimoinscher}prestashop>send_af19bf37f6786441e0c0ea0bd7b61a48'] = 
 $_MODULE['<{envoimoinscher}prestashop>send_7f955c790c8020edf2d30cd480aa485c'] = 'without error';
 $_MODULE['<{envoimoinscher}prestashop>send_b259a48123f7dd5a7bb121ffc48d1a0f'] = 'here what to do';
 $_MODULE['<{envoimoinscher}prestashop>send_3ce14ab13fe4b82a2ac37cb4a3406de1'] = 'Connect to your account';
+$_MODULE['<{envoimoinscher}prestashop>send_af126829f14642d693bac25314ebdf08'] = 'http://www.boxtale.com/';
+$_MODULE['<{envoimoinscher}prestashop>send_f92c132e4e3b634351cb21b26ff18e26'] = 'www.boxtale.com';
 $_MODULE['<{envoimoinscher}prestashop>send_5c905c717e03ca27801067c64a673522'] = 'Check if order did not pass.';
 $_MODULE['<{envoimoinscher}prestashop>send_e00156fade7f1baac984c37b197de43c'] = 'If your order passed, do not send another time the parcel, contact our customer service on +33 (0)1 75 77 37 97 who will help solve the problem on your prestashop.';
 $_MODULE['<{envoimoinscher}prestashop>send_faa85de9b14d3586ccc0920262ba7e12'] = 'Obligatory informations';
@@ -1030,8 +1201,13 @@ $_MODULE['<{envoimoinscher}prestashop>send_43e117abb5a9d39435e1bdfb63301157'] = 
 $_MODULE['<{envoimoinscher}prestashop>send_0950e64eb887782980eff2e0e00b9dff'] = 'Total shipping width';
 $_MODULE['<{envoimoinscher}prestashop>send_8f05f6d7c47466fc5bbc397dc0f8cf6f'] = 'Total shipping length';
 $_MODULE['<{envoimoinscher}prestashop>send_f51ea27cf0d08068481a69a11bebb128'] = 'Total shipping height';
+$_MODULE['<{envoimoinscher}prestashop>send_8c489d0946f66d17d73f26366a4bf620'] = 'Weight';
+$_MODULE['<{envoimoinscher}prestashop>send_eec6c4bdbd339edf8cbea68becb85244'] = 'Height';
+$_MODULE['<{envoimoinscher}prestashop>send_ba2a9c6c8c77e03f83ef8bf543612275'] = 'Length';
+$_MODULE['<{envoimoinscher}prestashop>send_32954654ac8fe66a1d09be19001de2d4'] = 'Width';
 $_MODULE['<{envoimoinscher}prestashop>send_820eb5b696ea2a657c0db1e258dc7d81'] = 'cm';
 $_MODULE['<{envoimoinscher}prestashop>send_ebe86682666f2ab3da0843ed3097e4b3'] = 'kg';
+$_MODULE['<{envoimoinscher}prestashop>send_a7e918bcb0279332b62ed6b39d0d8ca3'] = 'Parcel weight below 0.1kg is rounded to 0.1kg due to carrier restrictions.';
 $_MODULE['<{envoimoinscher}prestashop>send_3b6284bb4744c6bbf89dc0712dd129d6'] = 'Pick-up Date';
 $_MODULE['<{envoimoinscher}prestashop>send_fd7e927e7cefc9d1013e4c4bc15779a7'] = 'Format: AAAA-MM-JJ, as an example 2000-12-26 for 26 December 2000';
 $_MODULE['<{envoimoinscher}prestashop>send_f776589b13f2f7e96c2d366b48ef00f4'] = 'Recipient phone number';
@@ -1043,7 +1219,7 @@ $_MODULE['<{envoimoinscher}prestashop>send_ffc2b659b733bb9515a2e353f40ca3a5'] = 
 $_MODULE['<{envoimoinscher}prestashop>send_690c33d7ebf175d1f6402a8d5f415f75'] = 'Recipient city';
 $_MODULE['<{envoimoinscher}prestashop>send_094fbac209fb6a573fef67a0f2ff72aa'] = 'Recipient email';
 $_MODULE['<{envoimoinscher}prestashop>send_c281f92b77ba329f692077d23636f5c9'] = 'Recipient company';
-$_MODULE['<{envoimoinscher}prestashop>send_de6e1be179fde5481a66ee1ec9d9508f'] = 'Proforma invoice Informations, (produced by EnvoiMoinsCher.com)';
+$_MODULE['<{envoimoinscher}prestashop>send_de6e1be179fde5481a66ee1ec9d9508f'] = 'Proforma invoice Informations, (produced by Boxtale.com)';
 $_MODULE['<{envoimoinscher}prestashop>send_72f353170d7448746582602abc351a7f'] = 'Product description';
 $_MODULE['<{envoimoinscher}prestashop>send_ad225f707802ba118c22987186dd38e8'] = '(in French)';
 $_MODULE['<{envoimoinscher}prestashop>send_78463a384a5aa4fad5fa73e2f506ecfc'] = '(en English)';
@@ -1056,13 +1232,14 @@ $_MODULE['<{envoimoinscher}prestashop>send_fad88feaf938901e44b2df83bb2a9631'] = 
 $_MODULE['<{envoimoinscher}prestashop>send_209802fb858e2c83205027dbbb5d9e6c'] = 'Parcel';
 $_MODULE['<{envoimoinscher}prestashop>send_ce86a25d5a3fa07d3d86c4a70e763d49'] = 'The order is being processed, please try again in five minutes if necessary.';
 $_MODULE['<{envoimoinscher}prestashop>send_ce86a25d5a3fa07d3d86c4a70e763d49'] = 'Back to the list of commands';
+$_MODULE['<{envoimoinscher}prestashop>send_41a93dda19bfa4fe53fb1a10b83f478d'] = 'Looking for carriers...';
 
 //test
-$_MODULE['<{envoimoinscher}prestashop>tests_f6de629d3dcb7fc240588c2740577616'] = 'EnvoiMoinsCher: shipping cost estimation';
+$_MODULE['<{envoimoinscher}prestashop>tests_f6de629d3dcb7fc240588c2740577616'] = 'Boxtale: shipping cost estimation';
 $_MODULE['<{envoimoinscher}prestashop>tests_56ad3e798908ad65b030c4fec4035797'] = 'Simulation page allow you to make a quotation according to the characteristics of your parcel';
 $_MODULE['<{envoimoinscher}prestashop>tests_f65a6a3eb9c64435930748d6bc92bd23'] = 'Prices and offers are displayed as seen by the client.';
 
-$_MODULE['<{envoimoinscher}prestashop>tests_f6de629d3dcb7fc240588c2740577616'] = 'EnvoiMoinsCher: shipping cost estimation';
+$_MODULE['<{envoimoinscher}prestashop>tests_f6de629d3dcb7fc240588c2740577616'] = 'Boxtale: shipping cost estimation';
 $_MODULE['<{envoimoinscher}prestashop>tests_b468db1764634c045423cd779663923b'] = 'Choose a product: ';
 $_MODULE['<{envoimoinscher}prestashop>tests_46bb5114675d18118e1c8bcec9f31405'] = 'Departure zip code: ';
 $_MODULE['<{envoimoinscher}prestashop>tests_44f45c29ebddccf5ea0bfe87a2b412b5'] = 'Departure city: ';
@@ -1080,4 +1257,6 @@ $_MODULE['<{envoimoinscher}prestashop>tests_b5a7adde1af5c87d7fd797b6245c2a39'] =
 
 
 
-$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9fb35c545e67c47ee00a7bde2bf042a3'] = 'EnvoiMoinsCher is not compatible Prestashop version prior to 1.5.';
+$_MODULE['<{envoimoinscher}prestashop>envoimoinscher_9fb35c545e67c47ee00a7bde2bf042a3'] = 'Boxtale is not compatible Prestashop version prior to 1.5.';
+
+return $_MODULE;

@@ -1,5 +1,5 @@
 {**
- * 2007-2015 PrestaShop
+ * 2007-2016 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
+ * @copyright 2007-2016 PrestaShop SA / 2011-2016 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -32,16 +32,16 @@
 	</style>
 	{/literal}
 	<script type="text/javascript">
-	var token = "{$token|escape:'htmlall':'UTF-8'}";
-	var tries = 0;
-	var withCheck = "{$withCheck|escape:'htmlall':'UTF-8'}";
-	var massOrderPassed = "{$massOrderPassed|escape:'htmlall':'UTF-8'}";
-	var orderActionUrl = "index.php?controller=AdminEnvoiMoinsCher&option=initOrder&do=1&token={$token|escape:'htmlall':'UTF-8'}";
-	var orderResultUrl = "index.php?controller=AdminEnvoiMoinsCher&option=initOrder&results=1&token={$token|escape:'htmlall':'UTF-8'}";
-	var ordersDone = 0;
-	var notChecked = 0;
-	var allElements = {$ordersCount|escape:'htmlall':'UTF-8'};
-	var ordersTodo = {$ordersTodo|escape:'htmlall':'UTF-8'};
+        var token = "{$token|escape:'htmlall':'UTF-8'}";
+        var tries = 0;
+        var withCheck = "{$withCheck|escape:'htmlall':'UTF-8'}";
+        var massOrderPassed = "{$massOrderPassed|escape:'htmlall':'UTF-8'}";
+        var orderActionUrl = "index.php?controller=AdminEnvoiMoinsCher&option=initOrder&do=1&token={$token|escape:'htmlall':'UTF-8'}";
+        var orderResultUrl = "index.php?controller=AdminEnvoiMoinsCher&option=initOrder&results=1&token={$token|escape:'htmlall':'UTF-8'}";
+        var ordersDone = 0;
+        var notChecked = 0;
+        var allElements = {$ordersCount|escape:'htmlall':'UTF-8'};
+        var ordersTodo = {$ordersTodo|escape:'htmlall':'UTF-8'};
 	</script>
 	<script type="text/javascript" src="{$baseDir|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/js/checkboxes.js"></script>
 	<script type="text/javascript" src="{$baseDir|escape:'htmlall':'UTF-8'}modules/envoimoinscher/views/js/ordersSend.js"></script>
@@ -52,7 +52,7 @@
 		<link href="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/css/jquery.fancybox.css" rel="stylesheet" type="text/css" media="all" />
 		<script type="text/javascript" src="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/js/jquery.boxfancy.js"></script>
 	{/if}
-	
+
 	{if $local_bootstrap}
 		<link href="{$emcBaseDir|escape:'htmlall':'UTF-8'}/views/css/back-office-15.css" rel="stylesheet" type="text/css" media="all" />
 	{/if}

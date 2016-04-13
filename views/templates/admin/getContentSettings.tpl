@@ -1,5 +1,5 @@
 {**
- * 2007-2015 PrestaShop
+ * 2007-2016 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
+ * @copyright 2007-2016 PrestaShop SA / 2011-2016 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -32,104 +32,133 @@
 		})
 </script>
  
-<div class="support-message">
-	<p>{l s='Settings support message' mod='envoimoinscher'}</p>
-</div>
 <form method="POST" action="{$EMC_link|escape:'htmlall':'UTF-8'}&EMC_tabs=settings">
+    <fieldset>
+        <legend>
+			{l s='Multi-shipping' mod='envoimoinscher'}
+		</legend>
+		<!-- Type of send -->
+		<!--label for="EMC_type" class="mt5">{l s='Type of send:' mod='envoimoinscher'} <sup class="emc-required">*</sup></label>
+		<div class="margin-form add-tooltip" title="{l s='- A fold is usually a shell whose weight does not exceed 3kg. <br />- Typically a package is a cardboard box or timber whose weight does not exceed 70 kg. But to express tenders, the package must be less than 30 kg.<br /> - The compact is therefore an object dimensions make it difficult standard packaging: furniture, objects of home or office, appliances, etc.. It requires several packages for example, but the characteristics of the command does not correspond to this type of shipment, no EMC offers will be displayed on your shop.' mod='envoimoinscher'}">
+			<select name="EMC_type" id="EMC_type">
+				<option value="">-- {l s='Please choose' mod='envoimoinscher'} --</option>
+				{if isset($shipTypes) && $shipTypes && sizeof($shipTypes)}
+					{foreach from=$shipTypes key='k' item='v'}
+						<option value="{$k|escape:'htmlall':'UTF-8'}"{if Tools::getValue('EMC_type', $EMC_config.EMC_TYPE) == $k}selected="selected"{/if}>&nbsp;{$v|escape:'htmlall':'UTF-8'}&nbsp;</option>
+					{/foreach}
+				{/if}
+			</select>
+		</div>
+		<div class="clear both"></div-->
+        <!-- Wrapping type -->
+		<!-- label for="EMC_wrapping" class="mt5">{l s='Wrapping type:' mod='envoimoinscher'} <sup class="emc-required">*</sup></label>
+		<div class="margin-form add-tooltip" title="{l s='You must specify the wrapping of your parcels' mod='envoimoinscher'}">
+            {if $shipWrappingAvailable}
+                <select name="EMC_wrapping" id="EMC_wrapping">
+                    {foreach from=$shipWrapping key=n item=wrapping}
+                        <option value="{$wrapping.id|escape:'htmlall':'UTF-8'}" {if $EMC_config.EMC_WRAPPING == $wrapping.id}selected="selected"{/if}>&nbsp;{$wrapping.name|escape:'htmlall':'UTF-8'}&nbsp;</option>
+                    {/foreach}
+                </select>
+            {else}
+                <p>{l s='No wrapping available' mod='envoimoinscher'}</p>
+                <input type="hidden" name="shipWrapping" id="shipWrapping" value=""></input>
+            {/if}
+		</div>
+		<div class="clear both"></div -->
+        <!-- Customer individual -->
+        <input type="hidden" name="EMC_indiv" id="EMC_indiv" value="1" />
+        <!--
+        <label for="EMC_indiv">{l s='Customers individual:' mod='envoimoinscher'}</label>
+        <div class="margin-form">
+            <input type="checkbox" name="EMC_indiv" id="EMC_indiv" value="1" {if Tools::getValue('EMC_indiv', $EMC_config.EMC_INDI) == "1"} checked="checked"{/if}/>
+            <p class="preference_description">
+                {l s='By selecting this option, all your customers will be treated as individuals. This means that they will see offers reserved for special relay.' mod='envoimoinscher'}
+            </p>
+        </div>
+        <div class="clear both"></div>
+        -->
+        <!-- Multi Package -->
+        <label for="EMC_multiparcel">{l s='Use multi-package' mod='envoimoinscher'}</label>
+        <div class="margin-form">
+            <input type="checkbox" name="EMC_multiparcel" id="EMC_multiparcel" {if Tools::getValue('EMC_multiparcel', $EMC_config.EMC_MULTIPARCEL) == "on"} checked="checked"{/if}>
+            <p class="preference_description">
+                {l s='You can choose to send some commands in several parcels instead of one.' mod='envoimoinscher'} <br />
+                {l s='Caution! There may be a difference in price compared to the price paid by your buyer.' mod='envoimoinscher'} <br />
+                {l s='All vouchers will be charged.' mod='envoimoinscher'}
+            </p>
+        </div>
+    </fieldset>
 	<fieldset id="EMC_optional">
 		<legend>
 			{l s='Track number' mod='envoimoinscher'}
 		</legend>
-		<!-- Follow type -->
+		<!-- Tracking -->
 		<label for="EMC_track_mode">{l s='Type followed:' mod='envoimoinscher'}</label>
 		<div class="margin-form">
-			<select id="EMC_track_mode" name="EMC_track_mode">
-				{if isset($modes) && $modes && sizeof($modes)}
-					{foreach from=$modes key=m item=mode}
-						<option value="{$m|escape:'htmlall':'UTF-8'}" {if $EMC_config.EMC_TRACK_MODE == $m}selected="selected"{/if}>{$mode|escape:'htmlall':'UTF-8'}</option>
-					{/foreach}
-				{/if}
-			</select>
-			<p class="preference_description">
-				{l s='Choose what kind of tracking number must be taken and used for tracking URL that you defined on the carrier sheets.' mod='envoimoinscher'}
-			</p>
-		</div>
+            <div class="margin-form add-tooltip" title="{l s='Settings support message' mod='envoimoinscher'}">
+                <select id="EMC_track_mode" name="EMC_track_mode">
+                    {if isset($modes) && $modes && sizeof($modes)}
+                        {foreach from=$modes key=m item=mode}
+                            <option value="{$m|escape:'htmlall':'UTF-8'}" {if $EMC_config.EMC_TRACK_MODE == $m}selected="selected"{/if}>{$mode|escape:'htmlall':'UTF-8'}</option>
+                        {/foreach}
+                    {/if}
+                </select>
+            </div>
+            <p class="preference_description">
+                {l s='Choose what kind of tracking number must be taken and used for tracking URL that you defined on the carrier sheets.' mod='envoimoinscher'}
+            </p>
+        </div>
 	</fieldset>
 	<fieldset>
 		<legend>
 			{l s='Status' mod='envoimoinscher'}
 		</legend>
 		<!-- CMD -->
-		<label for="EMC_cmd">{l s='State of the order placed:' mod='envoimoinscher'} <sup class="emc-required">*</sup></label>
+		<label for="EMC_cmd">{l s='State of the order placed:' mod='envoimoinscher'}</label>
 		<div class="margin-form add-tooltip" title="{l s='Choose the status that the command should display (both on your back office and your e-commerce site) when you trigger an order to shipment from EMC (when you placed the order for delivery). We recommend that you \'Preparation in progress\' ..' mod='envoimoinscher'}">
 			<select name="EMC_cmd" id="EMC_cmd">
-				<option value="">-- {l s='Please choose' mod='envoimoinscher'} --</option>
-					{if isset($states) && $states && sizeof($states)}
-						{foreach from=$states item='state'}
-							<option value="{$state.id_order_state|escape:'htmlall':'UTF-8'}" {if $EMC_config.EMC_CMD == $state.id_order_state}selected="selected"{/if}>{$state.name|escape:'htmlall':'UTF-8'}</option>
-						{/foreach}
-					{/if}
+                {if isset($states) && $states && sizeof($states)}
+                    {foreach from=$states item='state'}
+                        <option value="{$state.id_order_state|escape:'htmlall':'UTF-8'}" {if $EMC_config.EMC_CMD == $state.id_order_state}selected="selected"{/if}>{$state.name|escape:'htmlall':'UTF-8'}</option>
+                    {/foreach}
+                {/if}
 			</select>
 		</div>
 		<div class="clear both"></div>
 		<!-- Send -->
-		<label for="EMC_envo">{l s='State of the order sent:' mod='envoimoinscher'} <sup class="emc-required">*</sup></label>
+		<label for="EMC_envo">{l s='State of the order sent:' mod='envoimoinscher'}</label>
 		<div class="margin-form add-tooltip" title="{l s='Choose the status that the command should display (both on your back office and your e-commerce site) when the package has been removed. We recommend \'Out for Delivery\'.' mod='envoimoinscher'}">
 			<select name="EMC_envo" id="EMC_envo">
-				<option value="">-- {l s='Please choose' mod='envoimoinscher'} --</option>
-					{if isset($states) && $states && sizeof($states)}
-						{foreach from=$states item='state'}
-							<option value="{$state.id_order_state|escape:'htmlall':'UTF-8'}" {if $EMC_config.EMC_ENVO == $state.id_order_state}selected="selected"{/if}>{$state.name|escape:'htmlall':'UTF-8'}</option>
-						{/foreach}
-					{/if}
+                {if isset($states) && $states && sizeof($states)}
+                    {foreach from=$states item='state'}
+                        <option value="{$state.id_order_state|escape:'htmlall':'UTF-8'}" {if $EMC_config.EMC_ENVO == $state.id_order_state}selected="selected"{/if}>{$state.name|escape:'htmlall':'UTF-8'}</option>
+                    {/foreach}
+                {/if}
 			</select>
 		</div>
 		<div class="clear both"></div>
 		<!-- Delivery -->
-		<label for="EMC_liv">{l s='State of the order delivered:' mod='envoimoinscher'} <sup class="emc-required">*</sup></label>
+		<label for="EMC_liv">{l s='State of the order delivered:' mod='envoimoinscher'}</label>
 		<div class="margin-form add-tooltip" title="{l s='Choose the status that the command should display (both on your back office and your e-commerce site) when the consignment has been delivered. We recommend \'Delivered\'.' mod='envoimoinscher'}">
 			<select name="EMC_liv" id="EMC_liv">
-				<option value="">-- {l s='Please choose' mod='envoimoinscher'} --</option>
-					{if isset($states) && $states && sizeof($states)}
-						{foreach from=$states item='state'}
-							<option value="{$state.id_order_state|escape:'htmlall':'UTF-8'}" {if $EMC_config.EMC_LIV == $state.id_order_state}selected="selected"{/if}>{$state.name|escape:'htmlall':'UTF-8'}</option>
-						{/foreach}
-					{/if}
+                {if isset($states) && $states && sizeof($states)}
+                    {foreach from=$states item='state'}
+                        <option value="{$state.id_order_state|escape:'htmlall':'UTF-8'}" {if $EMC_config.EMC_LIV == $state.id_order_state}selected="selected"{/if}>{$state.name|escape:'htmlall':'UTF-8'}</option>
+                    {/foreach}
+                {/if}
 			</select>
 		</div>
 		<div class="clear both"></div>
 		<!-- Cancel -->
-		<label for="EMC_ann">{l s='State of the order canceled:' mod='envoimoinscher'} <sup class="emc-required">*</sup></label>
+		<label for="EMC_ann">{l s='State of the order canceled:' mod='envoimoinscher'}</label>
 		<div class="margin-form add-tooltip" title="{l s='Choose the status that the command should display (both on your back office and your e-commerce site) when sending order was canceled. We recommend \'Cancelled\'.' mod='envoimoinscher'}">
 			<select name="EMC_ann" id="EMC_ann">
-				<option value="">-- {l s='Please choose' mod='envoimoinscher'} --</option>
-					{if isset($states) && $states && sizeof($states)}
-						{foreach from=$states item='state'}
-							<option value="{$state.id_order_state|escape:'htmlall':'UTF-8'}" {if $EMC_config.EMC_ANN == $state.id_order_state}selected="selected"{/if}>{$state.name|escape:'htmlall':'UTF-8'}</option>
-						{/foreach}
-					{/if}
+                {if isset($states) && $states && sizeof($states)}
+                    {foreach from=$states item='state'}
+                        <option value="{$state.id_order_state|escape:'htmlall':'UTF-8'}" {if $EMC_config.EMC_ANN == $state.id_order_state}selected="selected"{/if}>{$state.name|escape:'htmlall':'UTF-8'}</option>
+                    {/foreach}
+                {/if}
 			</select>
-		</div>
-		<div class="clear both"></div>
-	</fieldset>
-	<fieldset>
-		<legend>{l s='Messages you want to send or receive' mod='envoimoinscher'}</legend>
-		<!-- Mail label -->
-		<label for="EMC_mail_label">{l s='Mail the slip:' mod='envoimoinscher'}</label>
-		<div class="margin-form add-tooltip" title="{l s='sent to the sender (ie you), this email contains the instructions and shipping or packing slips' mod='envoimoinscher'}">
-			<input type="checkbox" name="EMC_mail_label" id="EMC_mail_label" class="checkbox" value="1" {if isset($mailConfig.label) && $mailConfig.label == "true"}checked="checked"{/if}/>
-		</div>
-		<div class="clear both"></div>
-		<!-- Mail label -->
-		<label for="EMC_mail_notif">{l s='Mail notification to the receiver:' mod='envoimoinscher'}</label>
-		<div class="margin-form add-tooltip" title="{l s='sent to the recipient (your buyer), this mail informs the recipient that he will soon be sending delivered. Warning, this notification is sent and signed by Envoimoinscher and not by the carrier' mod='envoimoinscher'}">
-			<input type="checkbox" name="EMC_mail_notif" id="EMC_mail_notif" class="checkbox" value="1" {if isset($mailConfig.notification) && $mailConfig.notification == "true"}checked="checked"{/if} />
-		</div>
-		<div class="clear both"></div>
-		<!-- Mail label -->
-		<label for="EMC_mail_bill">{l s='Mail with invoice:' mod='envoimoinscher'}</label>
-		<div class="margin-form add-tooltip" title="{l s='sent to the email billing selected in your profile Envoimoinscher address, email can provide the invoice for items that you have made.' mod='envoimoinscher'}">
-			<input type="checkbox" name="EMC_mail_bill" id="EMC_mail_bill" class="checkbox" value="1" {if isset($mailConfig.bill) && $mailConfig.bill == "true"}checked="checked"{/if} />
 		</div>
 		<div class="clear both"></div>
 	</fieldset>
@@ -140,16 +169,16 @@
 		<label for="EMC_disable_cart"></label>
 		<div class="margin-form">
 			<div class="margin-form add-tooltip" title="{l s='These are the shipping costs estimated before your client gets to the shipping option selection form.' mod='envoimoinscher'}">
-        <select id="EMC_disable_cart" name="EMC_disable_cart">
-                  <option value="2" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) == 2}selected{/if}>{l s='based on an estimation only' mod='envoimoinscher'}</option>
-                  <option value="1" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) == 1}selected{/if}>{l s='quoted for authenticated users, but estimated for anonymous users' mod='envoimoinscher'}</option>
-                  <option value="0" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) == 0}selected{/if}>{l s='quoted using client information currently available' mod='envoimoinscher'}</option>
-        </select>
-      </div>
+                <select id="EMC_disable_cart" name="EMC_disable_cart">
+                    <option value="2" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) == 2}selected{/if}>{l s='based on an estimation only' mod='envoimoinscher'}</option>
+                    <option value="1" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) == 1}selected{/if}>{l s='quoted for authenticated users, but estimated for anonymous users' mod='envoimoinscher'}</option>
+                    <option value="0" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) == 0}selected{/if}>{l s='quoted using client information currently available' mod='envoimoinscher'}</option>
+                </select>
+            </div>
 			<p>
-        <span class="EMC_disable_cart_description EMC_disable_cart_description_2" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) != 2}style="display:none"{/if}><span id="disable_cart_important">{l s='Add to cart action will be faster.' mod='envoimoinscher'}</span><br />
-        {l s='Shipping costs will be estimated based on ranges defined for France in the' mod='envoimoinscher'} <a href="{$link->getAdminLink('AdminCarriers')|escape:'htmlall':'UTF-8'}">{l s='carrier edition page.' mod='envoimoinscher'}</a> {l s='Live quotations will only be used on the carrier selection page.' mod='envoimoinscher'}</span>
-        <span class="EMC_disable_cart_description EMC_disable_cart_description_1" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) != 1}style="display:none"{/if}>{l s='Anonymous users will get a quotation based on ranges defined for France in the' mod='envoimoinscher'} <a href="{$link->getAdminLink('AdminCarriers')|escape:'htmlall':'UTF-8'}">{l s='carrier edition page.' mod='envoimoinscher'}</a><br />
+                <span class="EMC_disable_cart_description EMC_disable_cart_description_2" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) != 2}style="display:none"{/if}><span id="disable_cart_important">{l s='Add to cart action will be faster.' mod='envoimoinscher'}</span><br />
+                {l s='Shipping costs will be estimated based on ranges defined for France in the' mod='envoimoinscher'} <a href="{$link->getAdminLink('AdminCarriers')|escape:'htmlall':'UTF-8'}">{l s='carrier edition page.' mod='envoimoinscher'}</a> {l s='Live quotations will only be used on the carrier selection page.' mod='envoimoinscher'}</span>
+                <span class="EMC_disable_cart_description EMC_disable_cart_description_1" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) != 1}style="display:none"{/if}>{l s='Anonymous users will get a quotation based on ranges defined for France in the' mod='envoimoinscher'} <a href="{$link->getAdminLink('AdminCarriers')|escape:'htmlall':'UTF-8'}">{l s='carrier edition page.' mod='envoimoinscher'}</a><br />
 				{l s='Live quotations will only be used on the carrier selection page.' mod='envoimoinscher'}</span>
 				<span class="EMC_disable_cart_description EMC_disable_cart_description_0" {if Tools::getValue('EMC_disable_cart', $EMC_config.EMC_DISABLE_CART) != 0}style="display:none"{/if}>{l s='Anonymous users will get a live quotation based on a random address in France.' mod='envoimoinscher'}<br />
 				{l s='This option can cause Add to cart action to be slower.' mod='envoimoinscher'}</span>

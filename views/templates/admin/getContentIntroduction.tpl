@@ -1,5 +1,5 @@
 {**
- * 2007-2015 PrestaShop
+ * 2007-2016 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
+ * @copyright 2007-2016 PrestaShop SA / 2011-2016 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -27,7 +27,7 @@
         <div id="MainBox">
             <div id="content-wrapper">
                 <div class="box" id="box1">
-                <div class="title">{l s='Choose from 15 carriers with negotiated prices' mod='envoimoinscher'}<div id="logo_intro"><a href="http://www.envoimoinscher.com"></a></div></div>
+                <div class="title">{l s='Your all-in-one shipping provider' mod='envoimoinscher'}<div id="logo_intro"><a href="http://www.envoimoinscher.com"></a></div></div>
                     <div class="content">
                         <ul class="iconList s17">
                             <li><span class="orange bold">{l s='Up to 75%' mod='envoimoinscher'}</span>{l s=' immediate discount on your shipments' mod='envoimoinscher'}</li>
@@ -37,30 +37,32 @@
                         </ul>
                         <hr>
                         <div id="img-operators">
-                            <table>
-                                <tr>
-                                    <td class="laposte"></td>
-                                    <td class="mondialrelay"></td>
-                                    <td class="relaiscolis"></td>
-                                    <td class="chronopost"></td>
-                                    <td class="tnt"></td>
-                                </tr>
-                            </table>
-                            <table>
-                                <tr>
-                                    <td class="ups"></td>
-                                    <td class="dhl"></td>
-                                    <td class="fedex"></td>
-                                    <td class="happypost"></td>
-                                </tr>
-                            </table>
+                            <ul>
+                                <li class="laposte"><div></div></li>
+                                <li class="mondialrelay"><div></div></li>
+                                <li class="relaiscolis"><div></div></li>
+                                <li class="chronopost"><div></div></li>
+                                <li class="tnt"><div></div></li>
+                            </ul>
+                            <ul>
+                                <li class="ups"><div></div></li>
+                                <li class="dhl"><div></div></li>
+                                <li class="fedex"><div></div></li>
+                                <li class="happypost"><div></div></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        <div class="text_align_center mt20"><a href="#" class="btnValid create button-orange text_align_center">{l s='Create your free account' mod='envoimoinscher'}</a><a href="#" class="btnValid button-orange text_align_center ml10p">{l s='I already have an account' mod='envoimoinscher'}</a></div>
-        <input type="hidden" name="choice" value="">
-        <input type="submit" class="hidden" name="btnIntro" value="Suivant">
+            <div class="text_align_center fullwidth mt20">
+                <a href="http://ecommerce.envoimoinscher.com/tarifs/?utm_source=prestashop&utm_medium=Referral&utm_campaign=20160412_TarifsPrestaShop" class="button-orange text_align_center" target="_blank">{l s='See rates' mod='envoimoinscher'}</a>
+                <div class="w5p d-inline-block"></div>
+                <a href="#" class="btnValid create button-orange text_align_center">{l s='Create your free account' mod='envoimoinscher'}</a>
+                <div class="w5p d-inline-block"></div>
+                <a href="#" class="btnValid button-orange text_align_center">{l s='I already have an account' mod='envoimoinscher'}</a>
+            </div>
+            <input type="hidden" name="choice" value="">
+            <input type="submit" class="hidden" name="btnIntro" value="Suivant">
             <script type="text/javascript">
                 {literal}
                     $(".btnValid").click(function() {

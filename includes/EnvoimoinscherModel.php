@@ -66,10 +66,6 @@ class EnvoimoinscherModel
     /* Track */
     const TRACK_EMC_TYPE = 1;
     const TRACK_OPE_TYPE = 2;
-    /* delivery id_address */
-    public $id_address;
-    /* delivery address*/
-    public $address = array();
 
     public function __construct($db, $module)
     {
@@ -97,6 +93,7 @@ class EnvoimoinscherModel
 
             $lib = new EnvUser(array('user' => $login, 'pass' => $pass, 'key' => $key));
             $lib->setEnv(Tools::strtolower($env));
+            $lib->setLocale(Context::getContext()->language->language_code);
             $lib->getPartnership();
 
             $partnership = $lib->partnership;
@@ -125,6 +122,7 @@ class EnvoimoinscherModel
 
         $lib = new EnvNews(array('user' => $login, 'pass' => $pass, 'key' => $key));
         $lib->setEnv(Tools::strtolower($env));
+        $lib->setLocale(Context::getContext()->language->language_code);
         $lib->loadNews($platform, $version);
 
         return $lib->news;
@@ -160,10 +158,11 @@ class EnvoimoinscherModel
         }
 
         // get a quotation for the params
-        //$date = new DateTime();
         $lib = new EnvParameters(array('user' => $login, 'pass' => $pass, 'key' => $key));
         $lib->setPlatformParams($platform, _PS_VERSION_, $version);
         $lib->setEnv(Tools::strtolower($env));
+        $lib->setLocale(Context::getContext()->language->language_code);
+
         $lib->getParameters();
 
         $params = $lib->parameters;
@@ -181,10 +180,11 @@ class EnvoimoinscherModel
     public function getApiErrorCode($message)
     {
         $error_list = array(
-            'access_denied - invalid API key' => 'API error : Invalid API key',
-            'access_denied - invalid user password' => 'API error : Invalid password',
+            'access_denied - API key' => 'API error : Invalid API key',
+            'access_denied - Password is incorrect' => 'API error : Invalid password',
+            'access_denied - Login or password' => 'API error : Invalid login',
             'access_denied - wrong credentials' => 'API error : Wrong credentials',
-            'access_denied - Invalid account payment method' => 'API error : Invalid account payment method',
+            'access_denied - Invalid payment method' => 'API error : Invalid account payment method',
         );
 
         foreach ($error_list as $err => $id) {
@@ -209,6 +209,49 @@ class EnvoimoinscherModel
             self::$id_shop = (int)Shop::getContextShopID(true);
         }
     }
+
+    /**
+     * Gets API keys from server and updates them
+     * @acces public
+     * @return void
+     */
+    public static function getAPIkeys()
+    {
+        $config = self::getConfigData();
+
+        require_once(_PS_MODULE_DIR_ . 'envoimoinscher/Env/WebService.php');
+        require_once(_PS_MODULE_DIR_ . 'envoimoinscher/Env/User.php');
+
+        $user = new EnvUser(
+            array(
+                'user' => $config['EMC_LOGIN'],
+                'pass' => $config['EMC_PASS'],
+                'key' => ''
+            )
+        );
+        $user->setEnv(Tools::strtolower($config['EMC_ENV']));
+        $user->setLocale(Context::getContext()->language->language_code);
+
+        $user->getUserDetails();
+        if (isset($user->user_configuration['api_key_test']) && $user->user_configuration['api_key_test'] != ""
+            && isset($user->user_configuration['api_key_prod']) && $user->user_configuration['api_key_prod'] != "") {
+            self::updateConfig('EMC_KEY_TEST', $user->user_configuration['api_key_test']);
+            self::updateConfig('EMC_KEY_PROD', $user->user_configuration['api_key_prod']);
+            return true;
+        } else {
+            if (isset($user->user_configuration['api_key_test']) && $user->user_configuration['api_key_test'] != "") {
+                self::updateConfig(
+                    'EMC_KEY_TEST',
+                    pSQL($user->user_configuration['api_key_test'])
+                );
+            }
+            if (isset($user->user_configuration['api_key_prod']) && $user->user_configuration['api_key_prod'] != "") {
+                self::updateConfig('EMC_KEY_PROD', pSQL($user->user_configuration['api_key_prod']));
+            }
+            return false;
+        }
+    }
+
     /**
      * Gets configuration data for the module.
      * @access public
@@ -223,7 +266,7 @@ class EnvoimoinscherModel
            AND id_shop ="'.self::$id_shop.'"'
         );
         */
-
+        
         self::computeShopId();
 
         $shop_config = Configuration::getMultiple(
@@ -277,9 +320,10 @@ class EnvoimoinscherModel
         self::computeShopId();
         $shop_config = Configuration::getMultiple($array, null, self::$id_shop_group, self::$id_shop);
         $default_config = Configuration::getMultiple($array, null, 0, 0);
-        array_walk($default_config, 'self::fillConfig', $shop_config);
+        array_walk($default_config, 'EnvoimoinscherModel::fillConfig', $shop_config);
         return $default_config;
     }
+
     /**
      * Update EMC configuration
      * @string key configuration name
@@ -290,12 +334,20 @@ class EnvoimoinscherModel
     public static function updateConfig($key, $values)
     {
         if (!self::getConfig($key, null, 0, 0) || $key == 'EMC_USER') {
-            Configuration::updateValue($key, $values, false, 0, 0);
+            return Configuration::updateValue($key, $values, false, 0, 0);
         }
-        Configuration::updateValue($key, $values, false, self::$id_shop_group, self::$id_shop);
-        return true;
+        return Configuration::updateValue($key, $values, false, self::$id_shop_group, self::$id_shop);
     }
 
+    /**
+     * Get active languages for the shop
+     * @access public
+     * @return array
+     */
+    public static function getLanguages()
+    {
+        return Language::getLanguages(true, self::$id_shop, false);
+    }
 
     /**
      * Gets EnvoiMoinsCher's offers.
@@ -303,7 +355,7 @@ class EnvoimoinscherModel
      * @param string $where Query clause.
      * @return array List with offers.
      */
-    public function getOffers($type = false, $family = false, $where = false)
+    public function getOffers($family = false, $where = false)
     {
         $query = '
      SELECT *, es.`pricing_es`, CONCAT_WS("_", es.emc_operators_code_eo, es.code_es) AS `offerCode`
@@ -313,10 +365,6 @@ class EnvoimoinscherModel
      LEFT JOIN `' . _DB_PREFIX_ . 'carrier` c
      ON c.`id_reference` = es.`ref_carrier` AND c.`deleted` = 0 AND c.`external_module_name` = "envoimoinscher"
      WHERE 1';
-
-        if ($type !== false && Validate::isInt($type)) {
-            $query .= ' AND es.`type_es` = "' . (int)$type . '" ';
-        }
 
         // Get By family
         if ($family !== false && Validate::isInt($family)) {
@@ -335,13 +383,64 @@ class EnvoimoinscherModel
     }
 
     /**
-     * Get offers by Family
+     * Get EnvoiMoinsCher's offers to display in module config
      * @param    [type] $family [description]
      * @return [type]                 [description]
      */
     public function getOffersByFamily($family = false)
     {
-        return $this->getOffers(false, $family);
+        $query = '
+        SELECT *, es.`pricing_es`, CONCAT_WS("_", es.emc_operators_code_eo, es.code_es) AS `offerCode`
+        FROM `' . _DB_PREFIX_ . 'emc_services` es
+        JOIN `' . _DB_PREFIX_ . 'emc_operators` eo
+        ON eo.`code_eo` = es.`emc_operators_code_eo`
+        LEFT JOIN `' . _DB_PREFIX_ . 'carrier` c
+        ON c.`id_reference` = es.`ref_carrier` AND c.`deleted` = 0 AND c.`external_module_name` = "envoimoinscher"
+        WHERE 1';
+
+        // Get By family
+        if ($family !== false && Validate::isInt($family)) {
+            $query .= ' AND es.`family_es` = "' . (int)$family . '" ';
+        }
+        $query .= '
+        GROUP BY es.`id_es`';
+
+        $offers = $this->db->ExecuteS($query);
+
+        $lang = Context::getContext()->language->language_code;
+        for ($i = 0; $i < count($offers); $i++) {
+            $offers[$i]["desc_store_es"] = EnvoimoinscherHelper::getTranslation($offers[$i]["details_es"], $lang);
+            $offers[$i]["label_store_es"] = EnvoimoinscherHelper::getTranslation($offers[$i]["label_store_es"], $lang);
+            $offers[$i]["srv_name_fo_es"] = EnvoimoinscherHelper::getTranslation($offers[$i]["srv_name_fo_es"], $lang);
+            $offers[$i]["zone_restriction_es"] =
+              EnvoimoinscherHelper::getTranslation($offers[$i]["zone_restriction_es"], $lang);
+            $offers[$i]["delivery_due_time_es"] =
+              EnvoimoinscherHelper::getTranslation($offers[$i]["delivery_due_time_es"], $lang);
+            $offers[$i]["pickup_place_es"] =
+              EnvoimoinscherHelper::getTranslation($offers[$i]["pickup_place_es"], $lang);
+            $offers[$i]["dropoff_place_es"] =
+              EnvoimoinscherHelper::getTranslation($offers[$i]["dropoff_place_es"], $lang);
+            $offers[$i]["details_es"] = EnvoimoinscherHelper::getTranslation($offers[$i]["details_es"], $lang);
+        }
+
+        // alphabetical sort on carrier name first
+        $carriersAlpha = array();
+        $i = 0; // add index to prevent having carriers with the same name for sorting
+        foreach ($offers as $carrier) {
+            $carriersAlpha[$carrier["srv_name_fo_es"].' '.$carrier["label_store_es"].' '.$i] = $carrier;
+            $i++;
+        }
+        ksort($carriersAlpha);
+
+        // index carrier by type
+        $carriersByType = array();
+
+        foreach ($carriersAlpha as $carrier) {
+            $carriersByType[$carrier['delivery_type_es']][] = $carrier;
+        }
+        ksort($carriersByType);
+
+        return $carriersByType;
     }
 
     public static function getOperatorsForType($type)
@@ -386,6 +485,7 @@ class EnvoimoinscherModel
      */
     public function getEligibleOrders($params, $limits = '')
     {
+        
         Db::getInstance()->execute('SET SESSION SQL_BIG_SELECTS = 1');
 
         $sql = 'SELECT osl.name, c.external_module_name, o.total_paid, o.total_shipping, cr.email,
@@ -403,7 +503,8 @@ class EnvoimoinscherModel
        LEFT JOIN ' . _DB_PREFIX_ . 'order_carrier oc
          ON oc.id_order = o.id_order
        LEFT JOIN ' . _DB_PREFIX_ . 'carrier c
-         ON c.id_carrier = oc.id_carrier
+         ON (c.id_carrier = oc.id_carrier AND oc.id_carrier IS NOT NULL) 
+         OR (c.id_carrier = o.id_carrier AND oc.id_carrier IS NULL)
        LEFT JOIN ' . _DB_PREFIX_ . 'carrier_lang cl
          ON cl.id_carrier = c.id_carrier
        JOIN ' . _DB_PREFIX_ . 'address a
@@ -523,10 +624,11 @@ class EnvoimoinscherModel
        FROM ' . _DB_PREFIX_ . 'emc_orders eo
        JOIN ' . _DB_PREFIX_ . 'orders o
          ON o.id_order = eo.' . _DB_PREFIX_ . 'orders_id_order
-       JOIN ' . _DB_PREFIX_ . 'carrier c
-         ON c.id_carrier = o.id_carrier
-       JOIN ' . _DB_PREFIX_ . 'carrier_lang cl
-         ON cl.id_carrier = c.id_carrier
+        LEFT JOIN ' . _DB_PREFIX_ . 'order_carrier oc
+         ON oc.id_order = o.id_order
+        JOIN ' . _DB_PREFIX_ . 'carrier c
+         ON (c.id_carrier = oc.id_carrier AND oc.id_carrier IS NOT NULL) 
+         OR (c.id_carrier = o.id_carrier AND oc.id_carrier IS NULL)
        JOIN ' . _DB_PREFIX_ . 'address a
          ON a.id_address = o.id_address_delivery
        JOIN ' . _DB_PREFIX_ . 'customer cr
@@ -547,8 +649,7 @@ class EnvoimoinscherModel
        LEFT JOIN ' . _DB_PREFIX_ . 'order_state_lang osl
          ON osl.id_order_state = oh.id_order_state AND osl.id_lang = ' . (int)$params['lang'] . '
        WHERE eo.ref_emc_eor != ""
-       AND c.external_module_name = "envoimoinscher"
-       AND cl.id_lang = ' . (int)$params['lang'] . ' ';
+       AND c.external_module_name = "envoimoinscher" ';
 
         if ('' != $params['filters']) {
             $sql .= $params['filters'] . ' ';
@@ -606,12 +707,10 @@ class EnvoimoinscherModel
             self::getConfig('PS_WEIGHT_UNIT'),
             $this->getCartWeightRaw($cartId)
         );
-
-        // option < 100g
-        if ($weight != 0 && $weight < 0.1 && (int)self::getConfig('EMC_WEIGHTMIN') == 1) {
+        // if shipping weight < 100g weight is set to 100g
+        if ($weight != 0 && $weight < 0.1) {
             $weight = 0.1;
         }
-
         return $weight;
     }
 
@@ -703,8 +802,9 @@ class EnvoimoinscherModel
      */
     public function prepareOrderInfo($order_id, $config, $init = false, $active = false)
     {
+        /* the BINARY in the request is here to solve some encoding issues */
         $active = $active ? 'AND  c.active = 1 AND c.deleted = 0' : '';
-        $sql = 'SELECT o.id_cart, o.total_products_wt AS totalOrder, o.total_products, o.total_shipping,
+        $sql = 'SELECT o.id_order, o.id_cart, o.total_products_wt AS totalOrder, o.total_products, o.total_shipping,
          c.id_carrier AS carrierId, c.name, c.external_module_name,
          a.firstname, a.lastname, a.address1, a.address2, a.postcode, a.city, a.company,
          a.phone, a.phone_mobile, a.other,
@@ -719,7 +819,8 @@ class EnvoimoinscherModel
        LEFT JOIN ' . _DB_PREFIX_ . 'order_carrier oc
          ON oc.id_order = o.id_order
        LEFT JOIN ' . _DB_PREFIX_ . 'carrier c
-         ON c.id_carrier = o.id_carrier
+         ON (c.id_carrier = oc.id_carrier AND oc.id_carrier IS NOT NULL) 
+         OR (c.id_carrier = o.id_carrier AND oc.id_carrier IS NULL)
        JOIN ' . _DB_PREFIX_ . 'address a
          ON a.id_address = o.id_address_delivery
        LEFT JOIN ' . _DB_PREFIX_ . 'customer cu
@@ -729,7 +830,7 @@ class EnvoimoinscherModel
        LEFT JOIN ' . _DB_PREFIX_ . 'order_detail od
          ON od.id_order = o.id_order
        LEFT JOIN ' . _DB_PREFIX_ . 'emc_services es
-         ON es.ref_carrier = c.id_reference '. $active .' OR es.label_es = c.name
+         ON (es.ref_carrier = c.id_reference OR (BINARY es.label_es = BINARY c.name)) '. $active .'
        LEFT JOIN ' . _DB_PREFIX_ . 'emc_operators eo
          ON eo.code_eo = es.emc_operators_code_eo
        LEFT JOIN ' . _DB_PREFIX_ . 'emc_points ep
@@ -738,48 +839,57 @@ class EnvoimoinscherModel
          ON ct.id_cart = o.id_cart
        WHERE o.id_order = ' . (int)$order_id . ' GROUP BY od.id_order_detail';
         $row = $this->db->ExecuteS($sql);
-
-        $cart = new Cart((int)$row[0]['id_cart']);
-
+        
         if (isset($row) === false || count($row) == 0) {
             return array();
         }
 
         $row[0]['id_carrier'] = (int)isset($row[0]['carrierId']) ? $row[0]['carrierId'] : 0;
+        $cart = new Cart((int)$row[0]['id_cart']);
+        
         //POST weight value
         $products_desc = array();
         if (Tools::isSubmit('weight')) {
             $product_weight = (float)str_replace(',', '.', Tools::getValue('weight'));
         } else {
             $product_weight = 0;
-            foreach ($cart->getProducts() as $product) {
-                if ($product['weight'] != 0) {
+            $product_info =  $cart->getProducts();
+            if (!empty($product_info)) {
+                $product_info_weight = 'weight';
+                $product_info_quantity= 'cart_quantity';
+            } else {
+                $order = new Order((int)$row[0]['id_order']);
+                $product_info = $order->getProducts();
+                $product_info_weight = 'product_weight';
+                $product_info_quantity = 'product_quantity';
+            }
+            foreach ($product_info as $product) {
+                if ($product[$product_info_weight] != 0) {
                     $product_weight += EnvoimoinscherHelper::normalizeToKg(
                         self::getConfig('PS_WEIGHT_UNIT'),
-                        $product['cart_quantity'] * $product['weight']
+                        $product[$product_info_quantity] * $product[$product_info_weight]
                     );
                 } else {
                     $product_weight += EnvoimoinscherHelper::normalizeToKg(
                         self::getConfig('PS_WEIGHT_UNIT'),
-                        $product['cart_quantity'] * (float)$config['EMC_AVERAGE_WEIGHT']
+                        $product[$product_info_quantity] * (float)$config['EMC_AVERAGE_WEIGHT']
                     );
                 }
-                // option < 100g
-                if ((float)$product_weight != 0 && (float)$product_weight < 0.1 && EnvoimoinscherModel::getConfig('EMC_WEIGHTMIN')) {
-                    (float)$product_weight = 0.1;
-                }
-
                 $u = 0;
                 foreach ($row as $line) {
                     if ($row[$u]['product_id'] ==  $product['id_product']) {
                         $products_desc[] = $line['product_name'];
                         $row[$u]['product_shop_weight'] = EnvoimoinscherHelper::normalizeToKg(
                             self::getConfig('PS_WEIGHT_UNIT'),
-                            $product['weight']
+                            $product[$product_info_weight]
                         );
                     }
                     $u++;
                 }
+            }
+            // if shipping weight < 100g weight is set to 100g
+            if ((float)$product_weight != 0 && (float)$product_weight < 0.1) {
+                (float)$product_weight = 0.1;
             }
         }
 
@@ -926,9 +1036,8 @@ class EnvoimoinscherModel
         // prepare pro forma informations
         $proforma = $this->makeProforma($row);
         // put default informa
-
-        if (isset($config['EMC_PP_' . Tools::strtoupper(Tools::substr($row[0]['offerCode'], -25))])) {
-            $default_point = $config['EMC_PP_' . Tools::strtoupper(Tools::substr($row[0]['offerCode'], -25))];
+        if (self::getConfig('EMC_PP_' . Tools::strtoupper(Tools::substr($row[0]['offerCode'], -25)))) {
+            $default_point = self::getConfig('EMC_PP_' . Tools::strtoupper(Tools::substr($row[0]['offerCode'], -25)));
         } else {
             $default_point = null;
         }
@@ -1046,10 +1155,8 @@ class EnvoimoinscherModel
             'code_es' => pSQL($service['code']),
             'emc_operators_code_eo' => pSQL($carrier['code']),
             'label_es' => pSQL($service['label']),
-            'desc_es' => pSQL(($service['srvInfos']['label_backoffice'])),
             'desc_store_es' => pSQL(($service['srvInfos']['label_store'])),
             'label_store_es' => pSQL($service['label']),
-            'price_type_es' => 0,
             'is_parcel_dropoff_point_es' => (int)$service['delivery'] == 'DROPOFF_POINT',
             'is_parcel_pickup_point_es' => (int)$service['delivery'] == 'PICKUP_POINT',
             'family_es' => (int)$service['srvInfos']['offer_family'],
@@ -1325,7 +1432,9 @@ class EnvoimoinscherModel
             'parcels_eor' => count($data['parcels'])
         );
         $this->db->autoExecute(_DB_PREFIX_ . 'emc_orders', $order_data, 'REPLACE');
+        
         //insert parcels
+        $totalweight = 0;
         foreach ($data['parcels'] as $p => $parcel) {
             $parcel_data = array(
                 '' . _DB_PREFIX_ . 'orders_id_order' => (int)$order_id,
@@ -1336,50 +1445,33 @@ class EnvoimoinscherModel
                 'height_eop' => (int)$parcel['hauteur']
             );
             $this->db->autoExecute(_DB_PREFIX_ . 'emc_orders_parcels', $parcel_data, 'REPLACE');
+            $totalweight .= (float)$parcel['poids'];
         }
-        //insert new shipping documents into emc_documents (deprecated, documents are now loaded from push request)
-        /*foreach ($emc_order['labels'] as $label)  //labels
-        {
-            $this->db->autoExecute(
-                _DB_PREFIX_.'emc_documents',
-                array(
-                    ''._DB_PREFIX_.'orders_id_order' => (int)$order_id,
-                    'link_ed'                       => pSQL($label),
-                    'type_ed'                       => 'label',
-                    'generated_ed'                   => 0,
-                    ''._DB_PREFIX_.'cart_id_cart'   => (int)$data['order'][0]['id_cart']
-                ),
-                'REPLACE'
-            );
-        }
-        if (isset($emc_order['proforma']) && $emc_order['proforma'] != '')
-        {
-            $this->db->autoExecute(
-                _DB_PREFIX_.'emc_documents',
-                array(
-                    ''._DB_PREFIX_.'orders_id_order' => (int)$order_id,
-                    'link_ed'                       => pSQL($emc_order['proforma']),
-                    'type_ed'                       => 'proforma',
-                    'generated_ed'                   => 1,
-                    ''._DB_PREFIX_.'cart_id_cart'   => (int)$data['order'][0]['id_cart']
-                ),
-                'REPLACE');
-        }*/
+
         //update order (shipping_number with EnvoiMoinsCher referency)
-        $this->db->autoExecute(
-            _DB_PREFIX_ . 'orders',
+        $this->db->update(
+            'orders',
             array(
                 'shipping_number' => pSQL($emc_order['ref'])
             ),
-            'UPDATE',
             'id_order = ' . (int)$order_id . ''
         );
+        $this->db->update(
+            'order_carrier',
+            array(
+                'weight' => (float)$totalweight,
+                'date_add' => date('Y-m-d H:i:s')
+            ),
+            'id_order = ' . (int)$order_id
+        );
+        
         //insert the new order state into order_history
         $history = new OrderHistory();
         $history->id_order = $order_id;
         $history->changeIdOrderState($data['new_order_state'], $order_id);
         $history->id_employee = (int)$cookie->id_employee;
         $history->addWithemail();
+        
         //update parcel point info (event when it wasn't modified)
         if (isset($post['retrait_pointrelais']) && $post['retrait_pointrelais'] != '') {
             $this->db->autoExecute(
@@ -1508,21 +1600,50 @@ class EnvoimoinscherModel
      * @param array $config Config array used to web service connection.
      * @return array List with categories
      */
-    public function getCategoriesTree($config)
+    public function getCategoriesTree()
     {
-        $rows = $this->db->ExecuteS(
-            'SELECT * FROM ' . _DB_PREFIX_ . 'emc_categories
-            WHERE emc_categories_id_eca > 0
-            ORDER BY name_eca ASC'
-        );
+        $emc = Module::getInstanceByName('envoimoinscher');
+        $rows = $this->db->ExecuteS('SELECT * FROM ' . _DB_PREFIX_ . 'emc_categories');
         $categories = array();
-        $all_categories = array();
+        $category_groups = array();
         foreach ($rows as $row) {
-            $categories[$row['id_eca']] = array('id' => $row['id_eca'], 'name' => $row['name_eca']);
-            $all_categories[$row['id_eca']] = $row['id_eca'];
+            if ($row['emc_categories_id_eca'] != "0") {
+                $categories[$row['emc_categories_id_eca']]['categories'][$row['id_eca']] = $emc->l($row['name_eca']);
+            } else {
+                $category_groups[$row['id_eca']] = $emc->l($row['name_eca']);
+            }
         }
-        //check new categories
-        //$codes = array();
+
+        // alphabetical sorting
+        $return = array();
+        asort($category_groups);
+        foreach ($category_groups as $category_group_id => $category_name) {
+            $return[$category_group_id]['name'] = $category_name;
+            $return[$category_group_id]['categories'] = $categories[$category_group_id]['categories'];
+            asort($return[$category_group_id]['categories']);
+        }
+
+        return $return;
+    }
+
+    /**
+     * Updates categories.
+     * @access public
+     * @return boolean
+     */
+    public function updateCategories()
+    {
+        $emc = Module::getInstanceByName('envoimoinscher');
+        $config = EnvoimoinscherModel::getConfigData(); // Get configs
+        $config['wsName'] = $emc->ws_name; // add wsName to config
+        $config['localVersion'] = $emc->local_version; // Add localVersionto config
+        $rows = $this->db->ExecuteS('SELECT * FROM ' . _DB_PREFIX_ . 'emc_categories');
+        $categories = array();
+        foreach ($rows as $row) {
+            $categories[$row['id_eca']] = $row;
+        }
+
+        // check new categories
         if (isset($config['EMC_KEY_TEST']) && isset($config['EMC_KEY_PROD'])) {
             require_once(_PS_MODULE_DIR_ . $this->module_name . '/Env/WebService.php');
             require_once(_PS_MODULE_DIR_ . $this->module_name . '/Env/ContentCategory.php');
@@ -1533,32 +1654,41 @@ class EnvoimoinscherModel
                   'key' => $config['EMC_KEY_PROD']
                 )
             );
-            $emc = Module::getInstanceByName('envoimoinscher');
+            $content_cl->setEnv('prod');
             $content_cl->setPlatformParams($emc->ws_name, _PS_VERSION_, $emc->version);
             $content_cl->setParam(array('module' => $config['wsName'], 'version' => $config['localVersion']));
+            // set language to fr for translation to work
+            $content_cl->setLocale('fr-fr');
+
             $content_cl->setGetParams();
             $content_cl->getCategories();
             $content_cl->getContents();
-            foreach ($content_cl->categories as $category) {
-                if (isset($content_cl->contents[$category['code']])) {
-                    foreach ($content_cl->contents[$category['code']] as $child) {
-                        if (!isset($all_categories[$child['code']])) {
-                            //add new
+            foreach ($content_cl->categories as $categoryId => $category) {
+
+                if (!isset($categories[$categoryId])) {
+                    $data = array(
+                        'id_eca' => (int)$categoryId,
+                        'emc_categories_id_eca' => 0,
+                        'name_eca' => pSQL($category['label'])
+                    );
+                    $this->db->autoExecute(_DB_PREFIX_ . 'emc_categories', $data, 'INSERT');
+                }
+                if (isset($content_cl->contents[$categoryId])) {
+                    foreach ($content_cl->contents[$categoryId] as $content) {
+                        if (!isset($categories[$content['code']])) {
                             $data = array(
-                                'id_eca' => (int)$child['code'],
-                                'emc_categories_id_eca' => (int)$category['code'],
-                                'name_eca' => pSQL($child['label'])
+                                'id_eca' => (int)$content['code'],
+                                'emc_categories_id_eca' => (int)$content['category'],
+                                'name_eca' => pSQL($content['label'])
                             );
                             $this->db->autoExecute(_DB_PREFIX_ . 'emc_categories', $data, 'INSERT');
-                            $categories[] = array('id' => $data['id_eca'], 'name' => $data['name_eca']);
-                        } else {
-                            unset($all_categories[$child['code']]);
                         }
                     }
                 }
             }
         }
-        return $categories;
+
+        return true;
     }
 
     /**
@@ -1732,8 +1862,7 @@ class EnvoimoinscherModel
      */
     public function getSender()
     {
-        $helper = new EnvoimoinscherHelper;
-        $config = $helper->configArray(self::getConfigData());
+        $config = self::getConfigData();
         return array(
             'pays' => 'FR',
             'code_postal' => $config['EMC_POSTALCODE'],
@@ -1754,20 +1883,22 @@ class EnvoimoinscherModel
      * Returns recipient address from cart.
      * @access public
      * @param int $cartId Id of current cart.
-     * @param int $id_address_delivery
+     * @param array $addressParam Array with address (from 1.5 and multi-shipping delivery option)
      * @return array Array with address.
      */
-    public function getRecipient($cartId, $id_address_delivery)
+    public function getRecipient($cartId, $addressParam)
     {
-        $post_address_delivery = Tools::getValue('id_address_delivery');
+
         // find address id
-        if (!empty($post_address_delivery)) {
-            $this->id_address = $post_address_delivery;
+        if (isset($addressParam->id)) {
+            $id_address = $addressParam->id;
+        } elseif (is_array($addressParam)) {
+            return $this->getRecipient($cartId, $addressParam[0]);
         } else {
-            $this->id_address = $id_address_delivery;
+            $id_address = $addressParam;
         }
-        if ($this->id_address) {
-            $address_clause = 'a.id_address = ' . (int)$this->id_address;
+        if ($id_address) {
+            $address_clause = 'a.id_address = ' . (int)$id_address;
             $current = current($this->db->ExecuteS(
                 'SELECT a.firstname, a.lastname,  a.company, a.address1, a.address2, c.email, a.postcode, a.city,
                 co.iso_code, co.id_zone
@@ -1777,6 +1908,10 @@ class EnvoimoinscherModel
                 JOIN ' . _DB_PREFIX_ . 'country co ON co.id_country = a.id_country
                 WHERE ct.id_cart = ' . (int)$cartId
             ));
+
+            if (!$current || count($current) == 0) {
+                return array();
+            }
 
             // delivery address
             $street = $current['address1'];
@@ -1790,7 +1925,7 @@ class EnvoimoinscherModel
                 $type = 'entreprise';
             }
 
-            $this->address = array(
+            return array(
                 'prenom' => $current['firstname'],
                 'nom' => $current['lastname'],
                 'societe' => $current['company'],
@@ -1802,8 +1937,6 @@ class EnvoimoinscherModel
                 'id_zone' => $current['id_zone'],
                 'type' => $type,
             );
-
-            return $this->address;
 
         } else {
             return array();
@@ -1873,6 +2006,26 @@ class EnvoimoinscherModel
             return false;
         }
     }
+    
+    /**
+     * Returns country id from iso
+     * @access public
+     * @param id $countryId Country Id
+     * @return string country ISO code
+     */
+    public function getCountryIsoFromId($countryId)
+    {
+        $countryIso = $this->db->ExecuteS(
+            'SELECT iso_code
+            FROM ' . _DB_PREFIX_ . 'country
+            WHERE id_country = "' . (int)$countryId .'"'
+        );
+        if (isset($countryIso[0]['iso_code'])) {
+            return $countryIso[0]['iso_code'];
+        } else {
+            return false;
+        }
+    }
 
     /**
      * Gets order references to download.
@@ -1900,14 +2053,13 @@ class EnvoimoinscherModel
             //get parcel point informations
             require_once(_PS_MODULE_DIR_ . 'envoimoinscher/Env/WebService.php');
             require_once(_PS_MODULE_DIR_ . 'envoimoinscher/Env/ParcelPoint.php');
-            require_once(_PS_MODULE_DIR_ . 'envoimoinscher/includes/EnvoimoinscherHelper.php');
-            $helper = new EnvoimoinscherHelper;
-            $config = $helper->configArray(self::getConfigData());
+            $config = self::getConfigData();
             $poi_cl = new EnvParcelPoint(array('user' => $config['EMC_LOGIN'], 'pass' =>
                 $config['EMC_PASS'], 'key' => $config['EMC_KEY_' . $config['EMC_ENV']]));
             $emc = Module::getInstanceByName('envoimoinscher');
             $poi_cl->setPlatformParams($emc->ws_name, _PS_VERSION_, $emc->version);
             $poi_cl->setEnv(Tools::strtolower($config['EMC_ENV']));
+            $poi_cl->setLocale(Context::getContext()->language->language_code);
             $poi_cl->getParcelPoint(
                 'dropoff_point',
                 $order[0]['emc_operators_code_eo'] . '-' . $order[0]['point_ep'],
@@ -2113,19 +2265,22 @@ class EnvoimoinscherModel
      */
     public function saveCarrier($data, $service)
     {
-        $langs = Language::getLanguages(true);    //Get all langs enabled
-        $zones = Zone::getZones(true);    //Gel all zones enabled
+        $langs = Language::getLanguages(true); // get all enabled languages
+        $zones = Zone::getZones(true);    // get all enabled zones
         $emc = Module::getInstanceByName('envoimoinscher');
-
+        // we add <> 0 condition because of frequent bugs in databases
         $old_carrier = DB::getInstance()->ExecuteS(
-            'SELECT * FROM ' . _DB_PREFIX_ . 'carrier WHERE name = "' . $service['label_es'] .
-            '" ORDER BY id_carrier DESC LIMIT 1'
+            'SELECT * FROM ' . _DB_PREFIX_ . 'carrier WHERE id_reference = "' . (int)$service['ref_carrier'] .
+            '" AND id_reference <> 0 ORDER BY id_carrier DESC LIMIT 1'
         );
 
-        //Set Carrier
-        $carrier = new Carrier((int)$service['id_carrier']);
+        // if old carrier is not deleted, we keep the current information
+        if (isset($old_carrier[0]['id_reference']) && $old_carrier[0]['deleted'] == 0) {
+            return $old_carrier[0]['id_carrier'];
+        }
 
-        $carrier->id_reference = (int)$service['id_carrier'];
+        // set carrier
+        $carrier = new Carrier();
         $carrier->name = $data['name'];
         $carrier->active = (int)$data['active'];
         $carrier->is_module = (int)$data['is_module'];
@@ -2133,24 +2288,46 @@ class EnvoimoinscherModel
         $carrier->range_behavior = (int)$data['range_behavior'];
         $carrier->shipping_external = (int)$data['shipping_external'];
         $carrier->external_module_name = $data['external_module_name'];
+        $carrier->url = $data['url'];
         $carrier->delay = array();
-
         if ($langs && count($langs) > 0) {
             foreach ($langs as $lang) {
-                $carrier->delay[$lang['id_lang']] = Tools::substr(pSQL($service['desc_store_es']), 0, 128);
+                $carrier->delay[$lang['id_lang']] = Tools::substr(
+                    pSQL(EnvoimoinscherHelper::getTranslation($service['desc_store_es'], $lang['language_code'])),
+                    0,
+                    128
+                );
             }
         }
 
-        //Save carrier
+        // save carrier
         if ($carrier->save() === false) {
             return false;
+        } else {
+            // Remove backslash added to quotes in carrier description
+            if ($langs && count($langs) > 0) {
+                foreach ($langs as $lang) {
+                    DB::getInstance()->Execute(
+                        'UPDATE ' . _DB_PREFIX_ . 'carrier_lang SET delay = "'
+                        . stripcslashes(
+                            EnvoimoinscherHelper::getTranslation($service['desc_store_es'], $lang['language_code'])
+                        )
+                        . '" WHERE id_carrier = ' . (int)$service['id_carrier']
+                        . ' AND id_lang = ' . (int)$lang['id_lang']
+                    );
+                }
+            }
         }
-        /* copy old carriers datas if it's a new carier, not an update */
+        // copy old carriers data if the carrier has some and has only been deactivated
         if (isset($old_carrier[0]['id_reference']) && $old_carrier[0]['deleted'] == 1) {
             $carrier->copyCarrierData($old_carrier[0]['id_carrier']);
+        } else {
+            //update carrier reference
+            $carrier->id_reference = (int)$carrier->id;
+            $carrier->save();
         }
 
-        //Get carrier id and ref
+        // get carrier id and ref
         $carrier_id = (int)$carrier->id;
         $row = Db::getInstance()->executes(
             'SELECT * FROM ' . _DB_PREFIX_ .
@@ -2178,7 +2355,7 @@ class EnvoimoinscherModel
             DB::getInstance()->autoExecute(_DB_PREFIX_ . 'carrier_group', $datas, 'INSERT IGNORE');
         }
 
-        // Add price range if there is not one
+        // add price range if there is not one
         $ranges_price = RangePrice::getRanges((int)$carrier_id);
         if (count($ranges_price) === 0) {
             $ranges_price[] = array('id_range_price' => null);
@@ -2189,7 +2366,7 @@ class EnvoimoinscherModel
             $range_price->save();
         }
 
-        // Add weight range if there is not one
+        // add weight range if there is not one
         $ranges_weight = RangeWeight::getRanges((int)$carrier_id);
         if (count($ranges_weight) === 0) {
             $ranges_weight[] = array('id_range_weight' => null);
@@ -2423,6 +2600,18 @@ class EnvoimoinscherModel
             'DELETE FROM ' . _DB_PREFIX_ . 'emc_cache WHERE cache_key = "' . pSQL($cacheKey) . '"'
         );
     }
+    
+    /**
+     * Deletes expired values in cache
+     * @access public
+     * @return boolean
+     */
+    public function deleteExpiredFromCache()
+    {
+        return $this->db->Execute(
+            'DELETE FROM ' . _DB_PREFIX_ . 'emc_cache WHERE expiration_date < NOW()'
+        );
+    }
 
     /**
      * Returns point id from cart
@@ -2565,9 +2754,23 @@ class EnvoimoinscherModel
                 $order,
                 $ip_address
             );
-            Logger::addLog('[ENVOIMOINSCHER][' . time() . '] ' . $error_msg, 4, 1);
+            Logger::addLog('['.$this->l('ENVOIMOINSCHER').'][' . time() . '] ' . $error_msg, 4, 1);
         }
         return $return;
+    }
+
+    /**
+     * Return first admin employee
+     *
+     * @return Employee or false
+     */
+    public function getFirstAdminEmployee()
+    {
+        return Db::getInstance()->executeS(
+            'SELECT id_employee FROM '._DB_PREFIX_.'employee '
+            . 'WHERE id_profile=1 '
+            . 'AND active=1 ORDER BY id_employee DESC LIMIT 1'
+        );
     }
 
     public function updateTracking($order, $text, $localisation, $state, $date)
@@ -2617,7 +2820,8 @@ class EnvoimoinscherModel
             $history = new OrderHistory();
             $history->id_order = $order;
             $history->changeIdOrderState($new_state, $order);
-            $history->id_employee = (int)$cookie->id_employee;
+            $employee = $this->getFirstAdminEmployee();
+            $history->id_employee = (int)$employee[0]["id_employee"];
             $history->addWithemail();
         }
 

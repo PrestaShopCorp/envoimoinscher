@@ -1,6 +1,6 @@
 <?php
 /**
-* 2011-2015 Boxtale
+* 2011-2016 Boxtale
 *
 * NOTICE OF LICENSE
 *
@@ -15,7 +15,7 @@
 * GNU General Public License for more details.
 *
 * @author    Boxtale EnvoiMoinsCher <informationapi@boxtale.com>
-* @copyright 2011-2015 Boxtale
+* @copyright 2011-2016 Boxtale
 * @license   http://www.gnu.org/licenses/
 */
 
@@ -46,6 +46,13 @@ class EnvWebService
      */
     private $server_prod = 'https://www.envoimoinscher.com/';
 
+    /**
+     * Module version
+     * @access protected
+     * @var string
+     */
+    protected $api_version = '1.2.0';
+    
     /**
      * A private variable which stocks options to pass into curl query.
      * @access private
@@ -171,6 +178,13 @@ class EnvWebService
      * @var string
      */
     protected $uploadDir = '';
+
+    /**
+     * Return language code
+     * @access protected
+     * @var string
+     */
+    protected $lang_code = 'fr-FR';
 
     /**
      * Class constructor.
@@ -348,15 +362,11 @@ class EnvWebService
             CURLOPT_URL => $this->server . $options['action'] . $this->get_params,
             CURLOPT_HTTPHEADER => array(
                 'Authorization: ' . base64_encode($this->auth['user'] . ':' . $this->auth['pass']) . '',
-                'access_key : ' . $this->auth['key'] . ''),
+                'access_key : ' . $this->auth['key'] . '',
+                'Accept-Language: '.$this->lang_code,
+                'Api-Version: '.$this->api_version),
             CURLOPT_CAINFO => dirname(__FILE__) . '/../ca/ca-bundle.crt');
 
-        // Hard set in french
-        if (strpos($this->options[CURLOPT_URL], "?")) {
-            $this->options[CURLOPT_URL] .= "&locale=fr_FR";
-        } else {
-            $this->options[CURLOPT_URL] .= "?locale=fr_FR";
-        }
         if ($this->timeout != null) {
             $this->options[CURLOPT_TIMEOUT_MS] = $this->timeout;
         }
@@ -379,18 +389,11 @@ class EnvWebService
                 CURLOPT_URL => $this->server . $options['action'] . $param,
                 CURLOPT_HTTPHEADER => array(
                     'Authorization: ' . base64_encode($this->auth['user'] . ':' . $this->auth['pass']) . '',
-                    'access_key : ' . $this->auth['key'] . ''),
+                    'access_key : ' . $this->auth['key'] . '',
+                    'Accept-Language: '.$this->lang_code,
+                    'Api-Version: '.$this->api_version),
                 CURLOPT_CAINFO => dirname(__FILE__) . '/../ca/ca-bundle.crt')
                + ( ($this->timeout != null) ? array(CURLOPT_TIMEOUT_MS => $this->timeout) : array());
-        }
-
-        // Hard set in french
-        foreach ($this->options as $value) {
-            if (strpos($value[CURLOPT_URL], "?")) {
-                $value[CURLOPT_URL] .= "&locale=fr_FR";
-            } else {
-                $value[CURLOPT_URL] .= "?locale=fr_FR";
-            }
         }
     }
 
@@ -608,6 +611,17 @@ class EnvWebService
             $var = 'server_' . $env;
             $this->server = $this->$var;
         }
+    }
+
+    /**
+     * Sets locale.
+     * @access public
+     * @param String $lang_code language code. Ex: 'fr-FR', 'en-US'.
+     * @return Void
+     */
+    public function setLocale($lang_code)
+    {
+        $this->lang_code = $lang_code;
     }
 
     /**

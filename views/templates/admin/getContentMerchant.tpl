@@ -1,5 +1,5 @@
 {**
- * 2007-2015 PrestaShop
+ * 2007-2016 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
+ * @copyright 2007-2016 PrestaShop SA / 2011-2016 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -28,7 +28,14 @@
 </div>
 <form method="POST" action="{$EMC_link|escape:'htmlall':'UTF-8'}&EMC_tab=merchant">
 	<fieldset>
-		<legend>{l s='API account' mod='envoimoinscher'}</legend>
+        {if $EMC_config.EMC_USER == 0}
+            <label></label>
+            <div class="margin-form">
+                <a href='' class='button-orange text_align_center open_onboarding'>{l s='Create an account' mod='envoimoinscher'}</a>
+            </div>
+            <div class="clear both"></div>
+        {/if}
+        <legend>{l s='API account' mod='envoimoinscher'}</legend>
 		<label for="EMC_login">
 			{l s='Login:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 		</label>
@@ -43,26 +50,24 @@
 			<input type="password" id="EMC_pass" name="EMC_pass" value="{Tools::getValue('EMC_pass', $EMC_config.EMC_PASS)|escape:'htmlall':'UTF-8'}"/>
 		</div>
 		<div class="clear both"></div>
-		<label for="EMC_api_test">
-			{l s='API key (test):' mod='envoimoinscher'} <sup class="emc-required">*</sup>
-		</label>
-		<div class="margin-form add-tooltip" title="{l s='Your Test API key enables you to make test shipment requests via our module. This key must match the TEST work environment.' mod='envoimoinscher'}">
-			<input type="text" id="EMC_api_test" name="EMC_api_test" value="{Tools::getValue('EMC_api_test', $EMC_config.EMC_KEY_TEST)|escape:'htmlall':'UTF-8'}"/>
-		</div>
-		<div class="clear both"></div>
-		<label for="EMC_api_prod">
-			{l s='API key (production):' mod='envoimoinscher'} <sup class="emc-required">*</sup>
-		</label>
-		<div class="margin-form add-tooltip" title="{l s='Your Production API key enables you to make real shipment requests via our module. This key must match the LIVE work environment.' mod='envoimoinscher'}">
-			<input type="text" id="EMC_api_prod" name="EMC_api_prod" value="{Tools::getValue('EMC_api_prod', $EMC_config.EMC_KEY_PROD)|escape:'htmlall':'UTF-8'}"/>
-		</div>
-		<div class="clear both"></div>
-		<div class="margin-form">
-			<p class="preference_description">
-				{l s='Please check your email for your account information.' mod='envoimoinscher'}
-			</p>
-		</div>
-		<div class="clear both"></div>
+        
+        {if $EMC_config.EMC_USER >= 1}
+            <label for="EMC_api_test">
+                {l s='API key (test):' mod='envoimoinscher'} <sup class="emc-required">*</sup>
+            </label>
+            <div class="margin-form add-tooltip" title="{l s='Your Test API key enables you to make test shipment requests via our module. This key must match the TEST work environment.' mod='envoimoinscher'}">
+                <input type="text" id="EMC_api_test" name="EMC_api_test" value="{Tools::getValue('EMC_api_test', $EMC_config.EMC_KEY_TEST)|escape:'htmlall':'UTF-8'}"/>
+            </div>
+            <div class="clear both"></div>
+            <label for="EMC_api_prod">
+                {l s='API key (production):' mod='envoimoinscher'} <sup class="emc-required">*</sup>
+            </label>
+            <div class="margin-form add-tooltip" title="{l s='Your Production API key enables you to make real shipment requests via our module. This key must match the LIVE work environment.' mod='envoimoinscher'}">
+                <input type="text" id="EMC_api_prod" name="EMC_api_prod" value="{Tools::getValue('EMC_api_prod', $EMC_config.EMC_KEY_PROD)|escape:'htmlall':'UTF-8'}"/>
+            </div>
+            <div class="clear both"></div>
+        {/if}
+        
 	</fieldset>
 	<fieldset>
 		<legend>{l s='Pickup address' mod='envoimoinscher'}</legend>
@@ -178,6 +183,27 @@
 				<option value="{$dispo|escape:'htmlall':'UTF-8'}" {if Tools::getValue('EMC_exp_end_pickup', $EMC_config.EMC_DISPO_HLE) == $dispo}selected="selected"{/if}>{$dispo|escape:'htmlall':'UTF-8'}</option>
 				{/foreach}
 			</select>
+		</div>
+		<div class="clear both"></div>
+	</fieldset>
+    <fieldset>
+		<legend>{l s='Messages you want to send or receive' mod='envoimoinscher'}</legend>
+		<!-- Mail label -->
+		<label for="EMC_mail_label">{l s='Mail the slip:' mod='envoimoinscher'}</label>
+		<div class="margin-form add-tooltip" title="{l s='sent to the sender (ie you), this email contains the instructions and shipping or packing slips' mod='envoimoinscher'}">
+			<input type="checkbox" name="EMC_mail_label" id="EMC_mail_label" class="checkbox" value="1" {if isset($mailConfig.label) && $mailConfig.label == "true"}checked="checked"{/if}/>
+		</div>
+		<div class="clear both"></div>
+		<!-- Mail label -->
+		<label for="EMC_mail_notif">{l s='Mail notification to the receiver:' mod='envoimoinscher'}</label>
+		<div class="margin-form add-tooltip" title="{l s='sent to the recipient (your buyer), this mail informs the recipient that he will soon be sending delivered. Warning, this notification is sent and signed by Envoimoinscher and not by the carrier' mod='envoimoinscher'}">
+			<input type="checkbox" name="EMC_mail_notif" id="EMC_mail_notif" class="checkbox" value="1" {if isset($mailConfig.notification) && $mailConfig.notification == "true"}checked="checked"{/if} />
+		</div>
+		<div class="clear both"></div>
+		<!-- Mail label -->
+		<label for="EMC_mail_bill">{l s='Mail with invoice:' mod='envoimoinscher'}</label>
+		<div class="margin-form add-tooltip" title="{l s='sent to the email billing selected in your profile Envoimoinscher address, email can provide the invoice for items that you have made.' mod='envoimoinscher'}">
+			<input type="checkbox" name="EMC_mail_bill" id="EMC_mail_bill" class="checkbox" value="1" {if isset($mailConfig.bill) && $mailConfig.bill == "true"}checked="checked"{/if} />
 		</div>
 		<div class="clear both"></div>
 	</fieldset>

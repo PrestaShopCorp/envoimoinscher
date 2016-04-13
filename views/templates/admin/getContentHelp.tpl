@@ -1,5 +1,5 @@
 {**
- * 2007-2015 PrestaShop
+ * 2007-2016 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
+ * @copyright 2007-2016 PrestaShop SA / 2011-2016 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -80,7 +80,7 @@
 		</table>
 	{/if}
 	<li class="main-question"><h2>{l s='Carriers update' mod='envoimoinscher'}</h2></li>
-	<p>{l s='Update all the carriers:' mod='envoimoinscher'}<a id="loadAllCarriers" onclick="loadAllCarriers();" class="action_module" rel="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall':'UTF-8'}&option=loadAllCarriers">{l s='Update carriers' mod='envoimoinscher'}</a></p>
+	<p class="ml30-important">{l s='Update all the carriers:' mod='envoimoinscher'}<a id="loadAllCarriers" onclick="loadAllCarriers();" class="action_module" rel="{$link->getAdminLink('AdminEnvoiMoinsCher')|escape:'htmlall':'UTF-8'}&option=loadAllCarriers">{l s='Update carriers' mod='envoimoinscher'}</a></p>
 	<div id="carriers_update_result"></div>
 	</div>
 	
@@ -138,7 +138,7 @@
 									<p>
 										{l s='emc module require deferred paiement, error code displayed only in production mode' mod='envoimoinscher' js=1}
 										{l s='to switch to defered paiement, please go on emc website or contact us' mod='envoimoinscher' js=1}
-										<a href="mailto:compta@envoimoinscher.com">compta@envoimoinscher.com</a><br />
+										<a href="mailto:{l s='compta@envoimoinscher.com' mod='envoimoinscher'}">{l s='compta@envoimoinscher.com' mod='envoimoinscher'}</a><br />
 										{l s='you must give use login, iban and sepa contract' mod='envoimoinscher' js=1}
 									</p>
 								</div><!-- eod  -->
@@ -153,7 +153,7 @@
 							<div class="response">
 								<div>
 									<p>
-									 	{l s='thats a paiement issue, some exemples, please contact accountancy' mod='envoimoinscher' js=1}<a href="mailto:compta@envoimoinscher.com">compta@envoimoinscher.com</a>
+									 	{l s='thats a paiement issue, some exemples, please contact accountancy' mod='envoimoinscher' js=1}<a href="mailto:{l s='compta@envoimoinscher.com' mod='envoimoinscher'}">{l s='compta@envoimoinscher.com' mod='envoimoinscher'}</a>
 									</p>
 								</div><!-- eod  -->
 							</div>
@@ -189,7 +189,7 @@
 								<div class="response">
 									<div>
 										<p>
-											 {l s='login and password are the emc login' mod='envoimoinscher'} <a href="http://www.envoimoinscher.com/" target="_blank">www.envoimoinscher.com</a>. {l s='it allow you to login on emc website, the api key provided by emc' mod='envoimoinscher'}
+											 {l s='login and password are the emc login' mod='envoimoinscher'} <a href="{l s='http://www.envoimoinscher.com/' mod='envoimoinscher'}" target="_blank">{l s='www.envoimoinscher.com' mod='envoimoinscher'}</a>. {l s='it allow you to login on emc website, the api key provided by emc' mod='envoimoinscher'}
 										</p>
 										<ul>
 											<li>
@@ -243,6 +243,7 @@
 												{l s='contract: displayed shipping cost are those you set' mod='envoimoinscher' js=1}
 											</li>
 										</ul>
+                                        <br/>
 										<p>
 											{l s='to set you contract, go in shipping configuration and define shipping grid' mod='envoimoinscher'}
 										</p>
@@ -486,15 +487,15 @@
 									<div>
 										<ul>
 											<li>
-												{l s='clic on ship button on the right of the line' mod='envoimoinscher' js=1}<br/>
+												<b>{l s='clic on ship button on the right of the line' mod='envoimoinscher' js=1}</b><br/>
 												{l s='a confirmation appear, you can modify data like weight, date ...' mod='envoimoinscher' js=1}
 											</li>
 											<li>
-												{l s='end by ship button' mod='envoimoinscher' js=1}<br/>
+												<b>{l s='end by ship button' mod='envoimoinscher'}</b><br/>
 												{l s='in case of dropoff, dropoff demand is sent to the carrier' mod='envoimoinscher' js=1}
 											</li>
 											<li>
-												{l s='if all shipments went fine, an history list is updated' mod='envoimoinscher' js=1}<br/>
+												<b>{l s='if all shipments went fine, an history list is updated' mod='envoimoinscher' js=1}</b><br/>
 												{l s='in case of error, errors list and history list is updated' mod='envoimoinscher' js=1}
 											</li>
 										</ul>
@@ -514,11 +515,11 @@
 												{l s='select orders to ship' mod='envoimoinscher' js=1}
 											</li>
 											<li>
-												{l s='clic on ship with or without verfication' mod='envoimoinscher' js=1}<br/>
+												<b>{l s='clic on ship with or without verfication' mod='envoimoinscher'}</b><br/>
 												{l s='theres a bloc which show you the status, you can stop it anytime' mod='envoimoinscher' js=1}
 											</li>
 											<li>
-												{l s='end by ship button' mod='envoimoinscher' js=1}<br/>
+												<b>{l s='end by ship button' mod='envoimoinscher'}</b><br/>
 												{l s='in case of dropoff, dropoff demand is sent to the carrier' mod='envoimoinscher' js=1}
 											</li>
 											<li>
@@ -545,13 +546,13 @@
 												{l s='in emc orders, non emc list' mod='envoimoinscher' js=1}
 											</li>
 											<li>
-												{l s='select the order you want to ship' mod='envoimoinscher' js=1}
+												{l s='select the order you want to ship' mod='envoimoinscher'}
 											</li>
 											<li>
-												{l s='clic on ship in non emc carriers' mod='envoimoinscher' js=1}
+												{l s='clic on ship in non emc carriers' mod='envoimoinscher'}
 											</li>
 											<li>
-												{l s='choose the emc carrier and replace by this offer' mod='envoimoinscher' js=1}
+												{l s='choose the emc carrier and replace by this offer' mod='envoimoinscher'}
 											</li>
 											<li>
 												{l s='verify the order and ship' mod='envoimoinscher' js=1}
@@ -563,7 +564,7 @@
 							<li class="noliststyle">
 								<div class="subtitle closed">
 									<p>
-										{l s='how to use multi parcel' mod='envoimoinscher' js=1}
+										{l s='how to use multi parcel' mod='envoimoinscher'}
 									</p>
 								</div>
 								<div class="response">
@@ -573,23 +574,24 @@
 										</p>
 										<ol class="bold">
 											<li>
-												{l s='enable module multi parcel' mod='envoimoinscher' js=1}
+												{l s='enable module multi parcel' mod='envoimoinscher'}
 											</li>
 											<li>
-												{l s='check each order for multi parcel' mod='envoimoinscher' js=1}
+												{l s='check each order for multi parcel' mod='envoimoinscher'}
 											</li>
 										</ol>
 										<p class="bold italic">
-											{l s='configure module step1' mod='envoimoinscher' js=1}
+											{l s='configure module step1' mod='envoimoinscher'}
 										</p>
 										<p>
 											{l s='multi parcel will be avaliable if you check in config, in shipment details' mod='envoimoinscher' js=1}
 										</p>
 										<p class="bold italic">
-											{l s='multi parcel each order step2' mod='envoimoinscher' js=1}
+											{l s='multi parcel each order step2' mod='envoimoinscher'}
 										</p>
 										<p>
-											{l s='multi parcel is avaliable on each verification screen' mod='envoimoinscher' js=1}
+											<b>{l s='Multi-parcel is available every time you go through the shipment verification screen.' mod='envoimoinscher' js=1}</b>
+											{l s='Multi-parcel has to be indicated in the "Obligatory informations" block.' mod='envoimoinscher'}
 										</p>
 										<p>
 											{l s='to use multi parcel, set number of parcel superior or equal 2' mod='envoimoinscher' js=1}<br/>
@@ -622,7 +624,7 @@
 										</p> 
 										<p>
 											{l s='french description is made from product name of your articles' mod='envoimoinscher' js=1}<br/>
-											{l s='for the english description, you can use the link translate' mod='envoimoinscher' js=1}
+											<b>{l s='for the english description, you can use the link translate' mod='envoimoinscher'}</b>
 										</p>
 										<p class="italic">
 											{l s='notices' mod='envoimoinscher' js=1}
@@ -654,15 +656,15 @@
 										</p>
 										<ul>
 											<li>
-												{l s='from prestashop italic' mod='envoimoinscher' js=1}<br/>
+												<em>{l s='from prestashop italic' mod='envoimoinscher'}</em><br/>
 												{l s='go to orders then emc, history. clic on download slips or check and download severals slips' mod='envoimoinscher' js=1}
 											</li>
 											<li>
-												{l s='by email italic' mod='envoimoinscher' js=1}<br/>
+												<em>{l s='by email italic' mod='envoimoinscher'}</em><br/>
 												{l s='you can recieve by mail, check in configuration the correct settings' mod='envoimoinscher' js=1}
 											</li>
 											<li>
-												{l s='from emc website, account, preference' mod='envoimoinscher' js=1}
+												<em>{l s='from emc website, account, preference' mod='envoimoinscher'}</em>
 											</li>
 										</ul>
 									</div><!-- eod  -->
@@ -691,7 +693,7 @@
 								<div class="response">
 									<div>
 										<p class="bold">
-											{l s='After sending a Envoimoinscher order, a link to the slip must appear in the list of sent parcels.' mod='envoimoinscher' js=1} {l s='If ever this link is still being generated, here are the questions you have to ask yourself:' mod='envoimoinscher' js=1}
+											{l s='After sending a Envoimoinscher order, a link to the slip must appear in the list of sent parcels.' mod='envoimoinscher'} {l s='If ever this link is still being generated, here are the questions you have to ask yourself:' mod='envoimoinscher'}
 										</p>
 										<ul>
 											<li>
@@ -699,7 +701,7 @@
 											</li>
 											<li>
 												<em>{l s='Am I in a test environment?' mod='envoimoinscher' js=1}</em> {l s='If this is the case, the order was not accepted and the slips will not generate themselves.' mod='envoimoinscher' js=1} {l s='If your order was real, you must first enter the production environment (top left of this page: "Environment") and re-place your order on our website, do not forget to log into your account for the order to be added to your bill.' mod='envoimoinscher' js=1} 
-												<a href="http://www.envoimoinscher.com" target="_blank">{l s='Click <a href="http://www.envoimoinscher.com" target="_blank"> here </a> to access Envoimoinscher website.' mod='envoimoinscher' js=1}</a>
+												<a href="{l s='http://www.envoimoinscher.com' mod='envoimoinscher'}" target="_blank">{l s='Click here to access Envoimoinscher website.' mod='envoimoinscher'}</a>
 											</li>
 										</ul>
 										<p>
@@ -732,39 +734,36 @@
 										</p>
 										<p>
 											{l s='It is important to configure the module to choose the type of tracking number desired.' mod='envoimoinscher' js=1}<br/>
-											{l s='Go to "Settings".' mod='envoimoinscher' js=1} {l s='Two choices are available: display the "Envoimoinscher" tracking number or the "carrier" tracking number.' mod='envoimoinscher' js=1}
+											{l s='Go to "Settings".' mod='envoimoinscher'} {l s='Two choices are available: display the "Envoimoinscher" tracking number or the "carrier" tracking number.' mod='envoimoinscher' js=1}
 										</p>
 										<p>
-											<b>{l s='Attention:' mod='envoimoinscher' js=1}</b> {l s='We advise you to choose as a type of tracking number carrier so that your customer can track the parcel online through the carrier s website.' mod='envoimoinscher' js=1}
+											<b>{l s='Attention:' mod='envoimoinscher'}</b> {l s='We advise you to choose as a type of tracking number carrier so that your customer can track the parcel online through the carrier s website.' mod='envoimoinscher'}
 										</p>
 										<p>
 											{l s='The information will be more apparent to your client.' mod='envoimoinscher' js=1}
 										</p>
 										<p class="bold italic">
-											{l s='Configure the carrier tracking URLs (step 2)' mod='envoimoinscher' js=1}
+											{l s='Configure the carrier tracking URLs (step 2)' mod='envoimoinscher'}
 										</p>
 										<p>
-											{l s='Secondly you will have to configure the carrier tracking URLs.' mod='envoimoinscher' js=1} {l s='Go to the "Delivery" tab then the "Carrier" subtab.' mod='envoimoinscher' js=1} {l s='Fill the "tracking URL" box with the corresponding URL.' mod='envoimoinscher' js=1}
+											{l s='Secondly you will have to configure the carrier tracking URLs.' mod='envoimoinscher'} {l s='Go to the "Delivery" tab then the "Carrier" subtab.' mod='envoimoinscher' js=1} {l s='Fill the "tracking URL" box with the corresponding URL.' mod='envoimoinscher' js=1}
 										</p>
 										<p>
-											<em>{l s='Carrier tracking URLs with Envoimoinscher module (for information)' mod='envoimoinscher' js=1}</em><br/>
+											<em>{l s='Carrier tracking URLs with Envoimoinscher module (for information)' mod='envoimoinscher'}</em><br/>
 											{l s='Note: These URLs are provided for information only and can be changed without notice.' mod='envoimoinscher' js=1}
 										</p>
 										<ul>
 											<li>
-												<a href="http://www.chronopost.fr/transport-express/livraison-colis/cache/bypass/pid/701" target="_blank">Chronopost</a>
+												<a href="http://www.chronopost.fr/expedier/inputLTNumbersNoJahia.do?lang=fr_FR&listeNumeros=@" target="_blank">Chronopost</a>
 											</li>
 											<li>
-												<a href="https://www.colisprive.com/moncolis/pages/detailColis.aspx?numColis=@" target="_blank">Colis Privé </a>
+												<a href="http://www.mondialrelay.fr/ww2/public/mr_suivi.aspx?cab=@" target="_blank">Mondial relay</a>
+											</li>
+                                            <li>
+												<a href="http://relaiscolis.envoimoinscher.com/suivi-colis.html?reference=@" target="_blank">Relais Colis</a>
 											</li>
 											<li>
-												<a href="http://www.mondialrelay.fr/suivi-de-colis/" target="_blank">Mondial relay</a>
-											</li>
-											<li>
-												<a href="http://www.relaiscolis.com/index.php/application-suivi-colis" target="_blank">Relais colis</a>
-											</li>
-											<li>
-												<a href="http://wwwapps.ups.com/WebTracking/track?HTMLVersion=5.0&loc=fr_FR&Requester=UPSHome&WBPM_lid=homepage%2Fct1.html_pnl_trk&track.x=Suivi&trackNums=@" target="_blank">UPS</a>
+												<a href="https://wwwapps.ups.com/WebTracking/track?HTMLVersion=5.0&loc=fr_FR&Requester=UPSHome&WBPM_lid=homepage%252Fct1.html_pnl_trk&track.x=Suivi&trackNums=@" target="_blank">UPS</a>
 											</li>
 											<li>
 												<a href="http://www.dhl.fr/content/fr/fr/dhl_express/suivi_expedition.shtml?brand=DHL&AWB=@" target="_blank">DHL Express</a>
@@ -773,10 +772,10 @@
 												<a href="https://www.fedex.com/fedextrack/?tracknumbers=@" target="_blank">Fedex</a>
 											</li>
 											<li>
-												<a href="http://www.colissimo.fr/portail_colissimo/suivre.do?language=fr_FR" target="_blank">La Poste</a>
+												<a href="http://www.colissimo.fr/portail_colissimo/suivreResultat.do?parcelnumber=@" target="_blank">La Poste</a>
 											</li>
 											<li>
-												<a href="http://www.tnt.fr/public/suivi_colis/recherche/index.do;jsessionid=78654DB3C246ADA008279CE05E802C7A" target="_blank">TNT</a>
+												<a href="http://www.tnt.fr/public/suivi_colis/recherche/visubontransport.do?radiochoixrecherche=BT&bonTransport=@" target="_blank">TNT</a>
 											</li>
 										</ul>
 									</div><!-- eod  -->
@@ -794,7 +793,7 @@
 											<em>{l s='For the buyer:' mod='envoimoinscher' js=1}</em> {l s='the buyer will have access to the link in the customer area on your website (to configure in Prestashop).' mod='envoimoinscher' js=1}
 										</p>
 										<p>
-											<em>{l s='For the seller:' mod='envoimoinscher' js=1}</em> {l s='in the module shipping history, click on "track the shipment" in the last column of the table.' mod='envoimoinscher' js=1} {l s='You can also track the shipment from your account on EnvoiMoinsCher.com.' mod='envoimoinscher' js=1}
+											<em>{l s='For the seller:' mod='envoimoinscher'}</em> {l s='in the module shipping history, click on "track the shipment" in the last column of the table.' mod='envoimoinscher' js=1} {l s='You can also track the shipment from your account on EnvoiMoinsCher.com.' mod='envoimoinscher' js=1}
 										</p>
 									</div><!-- eod  -->
 								</div>
@@ -822,7 +821,7 @@
 											{l s='Yet, your orders will still have the contractual insurance carrier.' mod='envoimoinscher' js=1} {l s='For the conditions of compensation, see the carriers Terms & Conditions on the partner carriers page.' mod='envoimoinscher' js=1}
 										</p>
 										<p class="bold italic">
-											{l s='Configure your module (step 1)' mod='envoimoinscher' js=1}
+											{l s='Configure your module (step 1)' mod='envoimoinscher'}
 										</p>
 										<p>
 											{l s='Insurance will only be available if you check the option in the configuration of your Envoimoinscher module in the "description of the items" tab.' mod='envoimoinscher' js=1}
@@ -834,7 +833,7 @@
 											{l s='Make sure when you send the command that "ensure the shipment" is checked if you want to insure your shipment.' mod='envoimoinscher' js=1} {l s='The charged price is recalculated automatically at the top of the page.' mod='envoimoinscher' js=1}
 										</p>
 										<p>
-											<b>{l s='Attention:' mod='envoimoinscher' js=1}</b> {l s='Insurance costs do not affect the customer.' mod='envoimoinscher' js=1} {l s='If you want the customer to pay the insurance costs, you will have to adjust your rates (price package with insurance costs) or set a fixed cost in the PrestaShop handling fee.' mod='envoimoinscher' js=1}
+											<b>{l s='Attention:' mod='envoimoinscher'}</b> {l s='Insurance costs do not affect the customer.' mod='envoimoinscher' js=1} {l s='If you want the customer to pay the insurance costs, you will have to adjust your rates (price package with insurance costs) or set a fixed cost in the PrestaShop handling fee.' mod='envoimoinscher' js=1}
 										</p>
 									</div><!-- eod  -->
 								</div>
