@@ -56,6 +56,9 @@ class EnvoimoinscherAjaxModuleFrontController extends ModuleFrontController
             case 'push':
                 $this->result = (int)$emc->handlePush();
                 break;
+            case 'choixRelais':
+                die(require(_PS_MODULE_DIR_ . 'envoimoinscher/ajax/choix-relais.php'));
+                break;
         }
     }
 

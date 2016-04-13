@@ -67,8 +67,20 @@
     width: 100%;
 }
 
+.minWidthAuto {
+    min-width: auto !important;
+}
+
+.w5p {
+    width: 5%;
+}
+
 .width100 {
     width: 100px;
+}
+
+.d-inline-block {
+    display: inline-block;
 }
 
 .font-size10 {
@@ -93,6 +105,10 @@
     padding: 5px;
 }
 
+.mt5 {
+    margin-top: 5px;
+}
+
 .mt10 {
     margin-top: 10px;
 }
@@ -113,12 +129,20 @@
     margin-left: 20px;
 }
 
+.ml30-important {
+    margin-left: 30px !important;
+}
+
 .pl50 {
     padding-left: 50px;
 }
 
 .mr5 {
     margin-right: 5px;
+}
+
+.mb5 {
+    margin-bottom: 5px;
 }
 
 .mb10 {
@@ -141,6 +165,14 @@
     list-style-type: square;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
+.pointer-important {
+    cursor: pointer !important;
+}
+
 .presta_1_6 {
     margin: 0 0 0 -30px;
     width: 88%;
@@ -159,7 +191,14 @@
 .version {
     font-weight: normal;
     font-size: 12px;
-    margin-left: 20px
+    margin-left: 10px;
+    display:inline-block;
+    vertical-align:bottom;
+    height:70px;
+}
+
+.version > div {
+    padding-top:43px;
 }
 
 /*-- HELP SECTION --*/
@@ -233,15 +272,16 @@
 }
 
 /*--       --*/
-#EMC_cfg_bg > #EMC_Content {
+#EMC_cfg_bg > #popup_onboarding {
+    position:relative;
     width: 75%;
-    margin: 30px auto;
+    margin: 50px auto;
     background: white;
     padding: 15px;
     display: block;
 }
 
-#EMC_cfg_bg > #EMC_Content > .EMC_steps {
+#EMC_cfg_bg > #popup_onboarding > .EMC_steps {
     position: relative;
     display: block;
     float: left;
@@ -252,16 +292,16 @@
     width: 100%;
 }
 
-#EMC_cfg_bg > #EMC_Content > .EMC_steps > li {
+#EMC_cfg_bg > #popup_onboarding > .EMC_steps > li {
     position: relative;
     display: block;
     margin: 0;
     padding: 0;
     float: left;
-    width: 20%;
+    width: 50%;
 }
 
-#EMC_cfg_bg > #EMC_Content > .EMC_steps > li > a {
+#EMC_cfg_bg > #popup_onboarding > .EMC_steps > li > a {
     height: 32px;
     display: block;
     position: relative;
@@ -276,18 +316,26 @@
     background: #cbcccb url('../img/steps-carrierwizard.png') no-repeat right -64px;
 }
 
-#EMC_cfg_bg > #EMC_Content > .EMC_steps > li > a.selected {
+#EMC_cfg_bg > #popup_onboarding > .EMC_steps > li > a.selected {
     background-position: right -32px;
     background-color: #404956;
     color: #F8F8F8;
 }
 
-#EMC_cfg_bg > #EMC_Content > .EMC_steps > li > a.selected.old {
+#EMC_cfg_bg > #popup_onboarding > .EMC_steps > li > a.selected.old {
     background-position: right 0px;
     color: #A9B6C8;
 }
 
-#EMC_cfg_bg > #EMC_Content > .EMC_steps > li > a > label.stepNumber {
+#EMC_cfg_bg > #popup_onboarding > .EMC_steps > li:last-child > a {
+    background-position: right -128px;
+}
+
+#EMC_cfg_bg > #popup_onboarding > .EMC_steps > li:last-child > a.selected {
+    background-position: right -96px;
+}
+
+#EMC_cfg_bg > #popup_onboarding > .EMC_steps > li > a > label.stepNumber {
     position: relative;
     float: left;
     width: 24px;
@@ -303,11 +351,11 @@
     font-style: normal;
 }
 
-#EMC_cfg_bg > #EMC_Content > .EMC_steps > li > a.old > label.stepNumber {
+#EMC_cfg_bg > #popup_onboarding > .EMC_steps > li > a.old > label.stepNumber {
     color: #A9B6C8;
 }
 
-#EMC_cfg_bg > #EMC_Content > .EMC_steps > li > a > span.stepDesc {
+#EMC_cfg_bg > #popup_onboarding > .EMC_steps > li > a > span.stepDesc {
     position: relative;
     text-align: left;
     font-size: 15px;
@@ -317,24 +365,43 @@
     line-height: 13px;
 }
 
-#EMC_cfg_bg > #EMC_Content > div {
+#EMC_cfg_bg > #popup_onboarding > div {
     overflow: auto;
     height: 605px;
     width: 100%;
     margin-bottom: 10px;
 }
 
-#EMC_cfg_bg > #EMC_Content > div > fieldset {
+#EMC_cfg_bg > #popup_onboarding > div.bootstrap {
+    height: auto;
+    margin-bottom: 0px;
+}
+
+#EMC_cfg_bg > #popup_onboarding > div > fieldset {
     max-width: 100%;
     box-sizing: border-box;
     overflow: hidden;
 }
 
-#EMC_cfg_bg > #EMC_Content > div > fieldset input[type=submit] {
+#EMC_cfg_bg > #popup_onboarding > div > fieldset input[type=submit] {
     display: none;
 }
 
-#EMC_cfg_bg > #EMC_Content > .actionBar {
+#EMC_cfg_bg > #popup_onboarding > .close_onboarding {
+    position:absolute;
+    top:-10px;
+    right:-20px;
+    background-image: url('../img/icon-close.png');
+    background-repeat: no-repeat;
+    background-position: right top;
+    width:40px;
+    height:40px;
+    z-index:500;
+    margin-bottom: 0px;
+    margin-top: -5px;
+}
+
+#EMC_cfg_bg > #popup_onboarding > .actionBar {
     display: block;
     position: relative;
     clear: both;
@@ -349,7 +416,7 @@
     text-align: right;
 }
 
-#EMC_cfg_bg > #EMC_Content > .actionBar > a {
+#EMC_cfg_bg > #popup_onboarding > .actionBar > a {
     display: inline-block;
     margin: 5px 10px 0 3px;
     padding: 5px 10px;
@@ -365,7 +432,7 @@
     cursor: not-allowed;
 }
 
-#EMC_cfg_bg > #EMC_Content > .actionBar > a.selected {
+#EMC_cfg_bg > #popup_onboarding > .actionBar > a.selected {
     color: #FFF;
     background-color: #5A5655;
     border: 1px solid #5A5655;
@@ -376,13 +443,17 @@
     min-width: 1px;
 }
 
-#EMC_Content .EMC_error {
+#EMC_content .EMC_error, #popup_onboarding .EMC_error {
     color: red;
 }
 
-#EMC_Content > div > fieldset {
+#EMC_content > div > fieldset, #popup_onboarding > div > fieldset {
     min-height: 500px;
     margin-bottom: 0px;
+}
+
+#EMC_Content a.open_onboarding {
+    padding: 0px 20px;
 }
 
 #allOffersTable .error_size {
@@ -474,29 +545,27 @@
 
 /**** Carriers Simple & Advanced ****/
 #EMC_Menu > ul > li.simulator > a,
-#EMC_Menu > ul > li.simple_carriers > a,
-#EMC_Menu > ul > li.advanced_carriers > a {
+#EMC_Menu > ul > li.simple_carriers > a {
     background-position: 0px -48px;
 }
-
+#EMC_Menu > ul > li.advanced_carriers > a {
+    background-position: -285px -48px;
+}
+#EMC_Menu > ul > li.advanced_carriers > a {
+    width: 64px;
+}
 #EMC_Menu > ul > li.simulator:hover > a,
 #EMC_Menu > ul > li.simple_carriers:hover > a,
-#EMC_Menu > ul > li.advanced_carriers:hover > a,
 #EMC_Menu > ul > li.simulator.active > a,
-#EMC_Menu > ul > li.simple_carriers.active > a,
-#EMC_Menu > ul > li.advanced_carriers.active > a {
+#EMC_Menu > ul > li.simple_carriers.active > a {
     background-position: 0px 0px;
+}
+#EMC_Menu > ul > li.advanced_carriers:hover > a,
+#EMC_Menu > ul > li.advanced_carriers.active > a {
+    background-position: -285px 2px;
 }
 
 /**** Sends ****/
-
-.pickupDaylist {
-    width: 30px;
-}
-
-.pickupFrom_date {
-    width: 70px;
-}
 
 .labelDeliveryDate {
     width: 250px;
@@ -585,26 +654,26 @@
 }
 
 /** Content **/
-#EMC_Content {
+#EMC_Content, #popup_onboarding {
     border: 1px solid #ddd;
     background-color: #fafcff;
 }
 
-#EMC_Content fieldset {
+#EMC_Content fieldset, #popup_onboarding fieldset {
     font-size: 12px;
     border: 1px solid #ddd;
     background-color: #fafcff;
 }
 
-#EMC_Content legend {
+#EMC_Content legend, #popup_onboarding legend {
     border: 1px solid #ddd;
     background-color: #fff;
 }
-#EMC_Content .margin-form.submit{
+#EMC_Content .margin-form.submit, #popup_onboarding .margin-form.submit{
   width: 100%;
   text-align: center;
 }
-#EMC_Content .margin-form input[type="submit"]{
+#EMC_Content .margin-form input[type="submit"], #popup_onboarding .margin-form input[type="submit"]{
     color: #fff;
     background: #00aff0;
     -webkit-box-shadow: #008abd 0 -2px 0 inset;
@@ -614,7 +683,7 @@
     font-size: 16px;
 }
 
-#EMC_Content .margin-form input[type="submit"]:hover{
+#EMC_Content .margin-form input[type="submit"]:hover, #popup_onboarding .margin-form input[type="submit"]:hover{
     background: #e07b79;
     -webkit-box-shadow: #d95250 0 -2px 0 inset;
     box-shadow: #d95250 0 -2px 0 inset;
@@ -625,23 +694,25 @@
     min-height: 160px;
 }
 
-#EMC_Infos a, #EMC_top a, #EMC_Content a {
+#EMC_Infos a, #EMC_top a, #EMC_Content a, #popup_onboarding a {
     color: #268CCD;
     text-decoration: underline;
 }
 
 #EMC_Content fieldset + fieldset,
-#EMC_Content + #EMC_help {
+#EMC_Content + #EMC_help,
+#popup_onboarding fieldset + fieldset {
     margin-top: 10px;
 }
 
-#EMC_Content .margin-form {
+#EMC_Content .margin-form, #popup_onboarding .margin-form {
     clear: none;
     padding: 0 0 1em 0px;
     display: inline-block;
 }
 
-#EMC_Content .margin-form + .tooltip + .clear + .margin-form {
+#EMC_Content .margin-form + .tooltip + .clear + .margin-form,
+#popup_onboarding .margin-form + .tooltip + .clear + .margin-form {
     padding-top: 0;
     padding-left: 260px;
     margin-top: -1em;
@@ -659,22 +730,28 @@
     z-index: 1;
 }
 
-#EMC_Content .margin-form > label {
+#EMC_Content .margin-form > label,
+#popup_onboarding .margin-form > label {
     width: auto;
     float: none;
 }
 
-#EMC_Content .margin-form select {
+#EMC_Content .margin-form select,
+#popup_onboarding .margin-form select {
     min-width: 80px;
 }
 
 #EMC_Content .margin-form input[type=text],
 #EMC_Content .margin-form input[type=password],
-#EMC_Content .margin-form textarea {
+#EMC_Content .margin-form textarea,
+#popup_onboarding .margin-form input[type=text],
+#popup_onboarding .margin-form input[type=password],
+#popup_onboarding .margin-form textarea {
     width: 210px;
 }
 
-#EMC_Content .margin-form sup {
+#EMC_Content .margin-form sup,
+#popup_onboarding .margin-form sup {
     vertical-align: top;
 }
 
@@ -686,60 +763,218 @@
 #EMC_Content table.offersList tr.disabled {
     background-color: #EEE;
 }
-
-#EMC_Content table.offersList tr.disabled > td,
-#EMC_Content table.offersList tr.disabled > td label {
-    color: #999;
-}
-
 /** Carriers **/
-
-#EMC_carriers > table.offersList > thead > tr > th {
-    text-align: center;
-    background-color: #fff;
-    padding: 15px 0;
-    text-transform: uppercase;
+.bootstrap table.offersList,
+.bootstrap table.offersList thead>tr,
+.bootstrap table.offersList thead>tr>th,
+.bootstrap table.offersList tbody>tr,
+.bootstrap table.offersList tbody>tr>td{
+  border: none;
+  color: #585a69;
 }
-
+#EMC_carriers > table.offersList > thead > tr > th,
+#EMC_carriers > table.offersList > tbody > tr:not(.labelType) > td{
+  padding: 1px 5px 0 10px;
+  height: 60px;
+}
+#EMC_carriers > table.offersList > tbody > tr:not(.labelType){
+  min-height: 60px;
+  vertical-align: middle;
+  white-space:nowrap;
+}
+.bootstrap #EMC_carriers > table.offersList > thead > tr,
+.bootstrap #EMC_carriers > table.offersList > tbody > tr.labelType{
+  border-top: solid 1px #ffdead;
+  border-bottom: solid 1px #ffdead;
+}
+.bootstrap #EMC_carriers > table.offersList > tbody > tr.labelType:first-child{
+  border-top: none;
+}
+.bootstrap #EMC_carriers > table.offersList > tbody >tr:last-child{
+  border-bottom: solid 1px #ffdead;
+}
+.bootstrap #EMC_carriers > table.offersList > thead > tr > th{
+  text-align: left;
+  background-color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  vertical-align: middle;
+}
+#EMC_carriers > table.offersList > tbody > tr.labelType > td{
+  color: #f06800;;
+  font-weight: bold;
+  vertical-align: middle;
+  text-align: left;
+}
+#EMC_carriers > table.offersList > tbody > tr.labelType.marker > td{
+  background: 10px 17px no-repeat url('../img/ico-marker-orange.png');
+  padding-left: 30px;
+}
+#EMC_carriers > table.offersList > tbody > tr.labelType.home > td{
+  background: 10px 16px no-repeat url('../img/ico-home-orange.png');
+  padding-left: 37px;
+}
+#EMC_carriers > table.offersList > tbody > tr.labelType.express > td{
+  background: 10px 18px no-repeat url('../img/ico-truck-orange.png');
+  padding-left: 47px;
+}
+/** Delivery type **/
+#EMC_carriers > table.offersList tr.delivery_type{
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  height: 60px;
+}
+/**** Operator ****/
+#EMC_carriers > table.offersList tr > th.operator,
+#EMC_carriers > table.offersList tr > td.operator {
+  font-weight: bold;
+}
 /**** Offer ****/
 #EMC_carriers > table.offersList tr > th.offer,
 #EMC_carriers > table.offersList tr > td.offer {
-    width: 25%;
+  font-weight: bold;
 }
-
-#EMC_carriers > table.offersList tr > td.offer {
-    text-align: right;
+#EMC_carriers > table.offersList tr > td.offer .parcelPoint{
+  padding-top: 5px;
 }
-
-/**** Price ****/
-#EMC_carriers > table.offersList tr > td.price {
-    text-align: right;
+#EMC_carriers > table.offersList tr > td.offer .tooltip{
+  position: inherit;
 }
-
-#EMC_carriers > table.offersList tr > td.price label,
+#EMC_carriers > table.offersList tr > td.offer input[type=text]{
+  width: 110px;
+  height: 25px;
+  text-align: center;
+  color: #767885;
+  font-weight: normal;
+}
+#EMC_carriers > table.offersList tr > td.offer label,
+#EMC_carriers > table.offersList tr > td.offer button{
+  margin: 0;
+}
 #EMC_carriers > table.offersList tr > td.offer label {
-    float: none;
-    display: inline-block;
-    width: auto;
+  float: none;
+  display: inline-block;
+  width: auto;
+  font-weight: normal;
+  text-align: left;
+  padding: 0;
+  color: #767885;
 }
-
-/**** Description ****/
-#EMC_carriers > table.offersList tr > th.desc,
-#EMC_carriers > table.offersList tr > td.desc {
-    width: 45%;
+#EMC_carriers > table.offersList tr > td.offer>label{
+  font-weight: bold;
 }
+/**** Price ****/
+#EMC_carriers > table.offersList tr > th.price,
+#EMC_carriers > table.offersList tr > td.price,
+#EMC_carriers > table.offersList tr > td.price div{
+  width: 140px;
+}
+.bootstrap #EMC_carriers .prestashop-switch{
+  float: none;
+  width: 120px;
+  margin: 0;
+}
+.bootstrap #EMC_carriers .switch a{
+  border: solid 1px #2076a1;
+  background-color: #009bd4;
+  box-shadow: #2076a1 0 -1px 0 inset;
+}
+.bootstrap #EMC_carriers .switch input:last-of-type:checked ~ a{
+  border: solid 1px #f06800;
+  background-color: #ff8800;
+  box-shadow: #f06800 0 -1px 0 inset;
+}
+.bootstrap #EMC_carriers .prestashop-switch label{
+  width: 70px;
+  text-align: center;
+  padding: 0 5px;
+}
+#EMC_carriers #disabled-carrier{
+  color: #d9534f;
+  background: 0 50% no-repeat url('../img/forbidden.png');
+}
+#EMC_carriers #disabled-carrier p{
+  padding: 0 0 0 25px;
+  margin: 0;
+  white-space: pre-wrap;
+  display: inline-block;
+  vertical-align: middle;
+}
+/**** Area ****/
+#EMC_carriers > table.offersList tr > td.area span{
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 3px;
+  color: #FFF;
+  font-weight: bold;
+}
+#EMC_carriers > table.offersList tr > td.area sup{
+  font-weight: bold;
+}
+#EMC_carriers > table.offersList tr > td.area span.zone_fr{
+  background-color: #f7a500;
+}
+#EMC_carriers > table.offersList tr > td.area span.zone_eu{
+  background-color: #ff8800;
+}
+#EMC_carriers > table.offersList tr > td.area span.zone_int{
+  background-color: #f06800;
+}
+#EMC_carriers > table.offersList tr > td.area .tooltip{
+  position: inherit;
+}
+/**** departure & destination ****/
+#EMC_carriers > table.offersList tr > td.departure span.point,
+#EMC_carriers > table.offersList tr > td.departure span.home,
+#EMC_carriers > table.offersList tr > td.destination span.point,
+#EMC_carriers > table.offersList tr > td.destination span.home{
+  display: inline-block;
+  vertical-align: middle;
+  padding: 1px 7px;
+  border-radius: 3px;
+  color: #FFF;
+  font-weight: bold;
+}
+#EMC_carriers > table.offersList tr > td.departure span.point,
+#EMC_carriers > table.offersList tr > td.destination span.point{
+  background-color: #009bd4;
+}
+#EMC_carriers > table.offersList tr > td.departure span.ico-marker,
+#EMC_carriers > table.offersList tr > td.destination span.ico-marker{
+  padding: 0 10px 0 4px;
+  display: inline-block;
+  vertical-align: middle;
+  width: 25px;
+  height: 17px;
+  background: 5px 0 no-repeat url('../img/ico-marker.png');
+}
+#EMC_carriers > table.offersList tr > td.departure span.ico-home,
+#EMC_carriers > table.offersList tr > td.destination span.ico-home{
+  padding: 0 10px 0 0;
+  display: inline-block;
+  vertical-align: middle;
+  width: 28px;
+  height: 20px;
+  background: 0 0 no-repeat url('../img/ico-home.png');
+}
+#EMC_carriers > table.offersList tr > td.departure span.home,
+#EMC_carriers > table.offersList tr > td.destination span.home{
+  background-color: #2076a1;
+}
+/**** delivery due time ****/
+#EMC_carriers > table.offersList tr > td.delivery_due_time span{
+  display: inline-block;
+  vertical-align: middle;
+  white-space:nowrap;
+}
+/**** Status ****/
 
 #EMC_carriers > table.offersList tr > th.status,
 #EMC_carriers > table.offersList tr > td.status {
-    width: 10%;
-    text-align: center;
-}
 
-#EMC_carriers > table.offersList tr > td input[type=checkbox],
-#EMC_carriers > table.offersList tr > td input[type=radio] {
-    margin-top: 3px;
-}
 
+}
 #EMC_carriers > table.offersList tr > td .toggleCarrier {
     cursor: pointer;
 }
@@ -752,7 +987,10 @@
 #EMC_carriers > table.offersList tr > td div.hide {
     display: none;
 }
-
+/* edit */
+#EMC_carriers > table.offersList tr > td div.disable-edit {
+  padding-left: 14px;
+}
 /** Sends **/
 #EMC_Sends > form > .margin-form > p.preference_description > input[type=checkbox] {
     margin-top: -3px;
@@ -837,6 +1075,20 @@
     width: 50%;
     float: left;
     padding-right: 40px;
+}
+
+#emc-infos .logoemc {
+    background-image: url('../img/logo-emc-large.png');
+    background-repeat: no-repeat;
+    background-position: 34% 50%;
+    width: 310px;
+    height: 70px;
+    display:inline-block;
+}
+
+#emc-infos a.button-orange {
+    padding: 0px 20px;
+    margin-right: 40px;
 }
 
 #emc-news {
@@ -1237,106 +1489,130 @@
     margin-top: 20px;
 }
 
-#content-wrapper #box1 .content #img-operators table {
+#content-wrapper #box1 .content #img-operators ul {
     margin: auto;
+    list-style-type: none;
+    padding-left: 0;
 }
 
-#content-wrapper #box1 .content #img-operators table img {
-    padding: 2px 5px;
+#content-wrapper #box1 .content #img-operators li {
+    display: inline-block;
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: 0;
 }
 
-#content-wrapper #box1 .content #img-operators table .laposte {
+#content-wrapper #box1 .content #img-operators .laposte {
+    width: 130px;
+}
+#content-wrapper #box1 .content #img-operators .laposte div {
     background-image: url('../img/logo-POFR.png');
     background-repeat: no-repeat;
     background-position: center;
-    min-width: 150px;
-    width: 180px;
+    min-width: 130px;
     height: 92px;
+    display: inline-block;
 }
 
-#content-wrapper #box1 .content #img-operators table .chronopost {
+#content-wrapper #box1 .content #img-operators .chronopost {
+    width: 150px;
+} 
+#content-wrapper #box1 .content #img-operators .chronopost div {
     background-image: url('../img/logo-chrono-intl.png');
     background-repeat: no-repeat;
     background-position: center;
     min-width: 150px;
-    width: 180px;
     height: 92px;
+    display: inline-block;
 }
 
-#content-wrapper #box1 .content #img-operators table .tnt {
+#content-wrapper #box1 .content #img-operators .tnt {
+    width: 120px;
+} 
+#content-wrapper #box1 .content #img-operators .tnt div {
     background-image: url('../img/logo-tnt.png');
     background-repeat: no-repeat;
     background-position: center;
-    min-width: 150px;
-    width: 180px;
+    min-width: 120px;
     height: 92px;
+    display: inline-block;
 }
 
-#content-wrapper #box1 .content #img-operators table .mondialrelay {
+#content-wrapper #box1 .content #img-operators .mondialrelay {
+    width: 85px;
+} 
+#content-wrapper #box1 .content #img-operators .mondialrelay div {
     background-image: url('../img/logo-mondial-relay.png');
     background-repeat: no-repeat;
     background-position: center;
-    min-width: 150px;
-    width: 180px;
+    min-width: 85px;
     height: 92px;
+    display: inline-block;
 }
 
-#content-wrapper #box1 .content #img-operators table .relaiscolis {
+#content-wrapper #box1 .content #img-operators .relaiscolis {
+    width: 130px;
+} 
+#content-wrapper #box1 .content #img-operators .relaiscolis div {
     background-image: url('../img/logo-relais-colis.png');
     background-repeat: no-repeat;
     background-position: center;
-    min-width: 150px;
-    width: 180px;
+    min-width: 130px;
     height: 92px;
+    display: inline-block;
 }
 
-#content-wrapper #box1 .content #img-operators table .fedex {
+#content-wrapper #box1 .content #img-operators .fedex {
+    width: 145px;
+} 
+#content-wrapper #box1 .content #img-operators .fedex div {
     background-image: url('../img/logo-fedex.png');
     background-repeat: no-repeat;
     background-position: center;
-    min-width: 150px;
-    width: 180px;
+    min-width: 145px;
     height: 92px;
+    display: inline-block;
 }
 
-#content-wrapper #box1 .content #img-operators table .tripledot {
+#content-wrapper #box1 .content #img-operators .tripledot {
     font-size: 1.2em;
 }
 
-#content-wrapper #box1 .content #img-operators table .dhl {
+#content-wrapper #box1 .content #img-operators .dhl {
+    width: 150px;
+} 
+#content-wrapper #box1 .content #img-operators .dhl div {
     background-image: url('../img/logo-dhle.png');
     background-repeat: no-repeat;
     background-position: center;
     min-width: 150px;
-    width: 180px;
     height: 92px;
+    display: inline-block;
 }
 
-#content-wrapper #box1 .content #img-operators table .sodexi {
-    background-image: url('../img/logo-sodexi.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    min-width: 150px;
-    width: 180px;
-    height: 92px;
-}
-
-#content-wrapper #box1 .content #img-operators table .happypost {
+#content-wrapper #box1 .content #img-operators .happypost {
+    width: 110px;
+} 
+#content-wrapper #box1 .content #img-operators .happypost div {
     background-image: url('../img/detail_imxe.jpg');
     background-repeat: no-repeat;
     background-position: center;
-    min-width: 150px;
-    width: 180px;
+    min-width: 110px;
     height: 92px;
+    display: inline-block;
 }
 
-#content-wrapper #box1 .content #img-operators table .ups {
+#content-wrapper #box1 .content #img-operators .ups {
+    width: 90px;
+} 
+#content-wrapper #box1 .content #img-operators .ups div {
     background-image: url('../img/logo-ups.png');
     background-repeat: no-repeat;
     background-position: center;
-    min-width: 150px;
-    width: 180px;
+    min-width: 90px;
     height: 92px;
+    display: inline-block;
 }
 
 /*--- box End  ---*/

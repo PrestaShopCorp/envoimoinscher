@@ -1,6 +1,6 @@
 <?php
 /**
-* 2011-2015 Boxtale
+* 2011-2016 Boxtale
 *
 * NOTICE OF LICENSE
 *
@@ -15,7 +15,7 @@
 * GNU General Public License for more details.
 *
 * @author    Boxtale EnvoiMoinsCher <informationapi@boxtale.com>
-* @copyright 2011-2015 Boxtale
+* @copyright 2011-2016 Boxtale
 * @license   http://www.gnu.org/licenses/
 */
 
@@ -115,13 +115,17 @@ class EnvContentCategory extends EnvWebService
                 $contents = $this->xpath->query('/contents/content');
                 foreach ($contents as $content) {
                     $category_id = $this->xpath->query('./category', $content)->item(0)->nodeValue;
-                    if (isset($this->contents[$category_id])) {
-                        $i = count($this->contents[$category_id]);
-                        $this->contents[$category_id][$i] = array(
+                    if (!isset($this->contents[$category_id])) {
+                        $this->contents[$category_id] = array();
+                    }
+                    array_push(
+                        $this->contents[$category_id],
+                        array(
                             'code' => $this->xpath->query('./code', $content)->item(0)->nodeValue,
                             'label' => $this->xpath->query('./label', $content)->item(0)->nodeValue,
-                            'category' => $category_id);
-                    }
+                            'category' => $category_id
+                        )
+                    );
                 }
             }
         }

@@ -117,7 +117,8 @@ class EnvoimoinscherOrder
             'partnership' => $this->model->getPartnership()
         );
         $cot_cl->setEnv(Tools::strtolower($this->order_data['config']['EMC_ENV']));
-
+        $cot_cl->setLocale(Context::getContext()->language->language_code);
+        
         //////////////////////////////////////////////////
         ////// add the delivery and shipper address //////
         //////////////////////////////////////////////////
@@ -321,7 +322,7 @@ class EnvoimoinscherOrder
                 $cookie->emc_error_send = 1;
             }
             Logger::addLog(
-                '[ENVOIMOINSCHER] Une erreur pendant l\'envoi de la commande ' . $this->order_id . ' ' .
+                '['.$emc->l('ENVOIMOINSCHER').'] Une erreur pendant l\'envoi de la commande ' . $this->order_id . ' ' .
                 $cookie->emc_error_txt,
                 4
             );

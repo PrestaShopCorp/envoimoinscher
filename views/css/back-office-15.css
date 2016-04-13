@@ -4155,6 +4155,10 @@ i.mce-i-backcolor { background: #bbbbbb; }
 	text-align: left;
 }
 
+#EMC_Content .open_onboarding{
+	font-weight: normal;
+}
+
 #EMC_Content legend{
 background: none repeat scroll 0 0 #ebedf4;
 border: 1px solid #ccced7;

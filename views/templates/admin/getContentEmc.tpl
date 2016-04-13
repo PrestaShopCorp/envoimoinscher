@@ -1,5 +1,5 @@
 {**
- * 2007-2015 PrestaShop
+ * 2007-2016 PrestaShop
  *
  * NOTICE OF LICENSE
  *
@@ -18,7 +18,7 @@
  * needs please refer to http://www.prestashop.com for more information.
  *
  * @author    EnvoiMoinsCher <informationapi@boxtale.com>
- * @copyright 2007-2015 PrestaShop SA / 2011-2015 EnvoiMoinsCher
+ * @copyright 2007-2016 PrestaShop SA / 2011-2016 EnvoiMoinsCher
  * @license   http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  * International Registred Trademark & Property of PrestaShop SA
  *}
@@ -305,7 +305,7 @@
 			
 			<div class="margin-form">
 				<input type="checkbox" name="cgv" {if Tools::getValue('cgv')}checked="checked"{/if} />
-				<label for="cgv">{l s='I acknowledge having read the General Terms and Conditions of Sale and of Use of the website EnvoiMoinsCher.com and the General Terms and Conditions of Use of the EnvoiMoinsCher.com API in full and agree to the terms thereof.' mod='envoimoinscher'} <a target="_blank" href="http://ecommerce.envoimoinscher.com/cgvu/">{l s='General Terms and Conditions of Sale and of Use' mod='envoimoinscher'}</a> {l s='and ' mod='envoimoinscher'} <a target="_blank" href="http://ecommerce.envoimoinscher.com/api/download/cgu_api_envoimoinscher_fr.pdf">{l s='Conditions of Use of the EnvoiMoinsCher.com API ' mod='envoimoinscher'}</a> {l s='in full and agree to the terms thereof.' mod='envoimoinscher'}</label>
+				<label for="cgv">{l s='I acknowledge having read the General Terms and Conditions of Sale and of Use of the website EnvoiMoinsCher.com and the General Terms and Conditions of Use of the EnvoiMoinsCher.com API in full and agree to the terms thereof.' mod='envoimoinscher'} <a target="_blank" href="{l s='http://ecommerce.envoimoinscher.com/cgvu/' mod='envoimoinscher'}">{l s='General Terms and Conditions of Sale and of Use' mod='envoimoinscher'}</a> {l s='and ' mod='envoimoinscher'} <a target="_blank" href="http://ecommerce.envoimoinscher.com/api/download/cgu_api_envoimoinscher_fr.pdf">{l s='Conditions of Use of the EnvoiMoinsCher.com API ' mod='envoimoinscher'}</a> {l s='in full and agree to the terms thereof.' mod='envoimoinscher'}</label>
 			</div>
 			<div class="clear both"></div>
 			
@@ -378,11 +378,11 @@
 			<div class="clear both"></div>
 			
 			<!-- Email -->
-			<label for="contact_email">
-				{l s='Your email address:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
+			<label for="password">
+				{l s='Password:' mod='envoimoinscher'} <sup class="emc-required">*</sup>
 			</label>
 			<div class="margin-form">
-				<input type="text" name="contact_email" value="{Tools::getValue('contact_email')|escape:'htmlall':'UTF-8'}" />
+				<input type="password" name="password" value="{Tools::getValue('password')|escape:'htmlall':'UTF-8'}" />
 			</div>
 			<div class="clear both"></div>
 			
@@ -395,7 +395,7 @@
 			
 			<div class="margin-form">
 				<input type="checkbox" name="cgv" {if Tools::getValue('cgv')}checked="checked"{/if} />
-				<label for="cgv">{l s='I acknowledge having read the General Terms and Conditions of Sale and of Use of the website EnvoiMoinsCher.com and the General Terms and Conditions of Use of the EnvoiMoinsCher.com API in full and agree to the terms thereof.' mod='envoimoinscher'} <a target="_blank" href="http://ecommerce.envoimoinscher.com/cgvu/">{l s='General Terms and Conditions of Sale and of Use' mod='envoimoinscher'}</a> {l s='and ' mod='envoimoinscher'} <a target="_blank" href="http://ecommerce.envoimoinscher.com/api/download/cgu_api_envoimoinscher_fr.pdf">{l s='Conditions of Use of the EnvoiMoinsCher.com API ' mod='envoimoinscher'}</a> {l s='in full and agree to the terms thereof.' mod='envoimoinscher'}</label>
+				<label for="cgv">{l s='I acknowledge having read the General Terms and Conditions of Sale and of Use of the website EnvoiMoinsCher.com and the General Terms and Conditions of Use of the EnvoiMoinsCher.com API in full and agree to the terms thereof.' mod='envoimoinscher'} <a target="_blank" href="{l s='http://ecommerce.envoimoinscher.com/cgvu/' mod='envoimoinscher'}">{l s='General Terms and Conditions of Sale and of Use' mod='envoimoinscher'}</a> {l s='and ' mod='envoimoinscher'} <a target="_blank" href="http://ecommerce.envoimoinscher.com/api/download/cgu_api_envoimoinscher_fr.pdf">{l s='Conditions of Use of the EnvoiMoinsCher.com API ' mod='envoimoinscher'}</a> {l s='in full and agree to the terms thereof.' mod='envoimoinscher'}</label>
 			</div>
 			<div class="clear both"></div>
 			

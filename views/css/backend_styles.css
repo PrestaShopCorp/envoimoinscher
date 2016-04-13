@@ -276,6 +276,10 @@ display:inline !important;
 display:inline-block;
 }
 
+.inline-block-important{
+display:inline-block !important;
+}
+
 .block-important{
 display:block !important;
 }

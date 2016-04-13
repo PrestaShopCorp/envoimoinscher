@@ -147,7 +147,7 @@ class EnvoimoinscherHelper
 
     /**
      * Keys of options stocked in configuration table.
-     * @access proteced
+     * @access public
      * @var array
      */
     public static $config_keys = array('EMC_LOGIN', 'EMC_PASS', 'EMC_KEY_TEST', 'EMC_KEY_PROD', 'EMC_ENV',
@@ -155,14 +155,14 @@ class EnvoimoinscherHelper
         'EMC_ADDRESS', 'EMC_COMPL', 'EMC_POSTALCODE', 'EMC_CITY', 'EMC_TEL', 'EMC_MAIL',
         'EMC_PICKUP', 'EMC_MODE', 'EMC_ORDER', 'EMC_RELAIS_SOGP', 'EMC_RELAIS_MONR',
         'EMC_DISPO_HDE', 'EMC_DISPO_HLE', 'EMC_ANN', 'EMC_ENVO', 'EMC_CMD',
-        'EMC_LIV', 'EMC_USER', 'EMC_WEIGHTMIN', 'EMC_DELIVERY_LABEL', 'EMC_AVERAGE_WEIGHT',
+        'EMC_LIV', 'EMC_USER', 'EMC_DELIVERY_LABEL', 'EMC_AVERAGE_WEIGHT',
         'EMC_CONTENT_AS_DESC', 'EMC_SERVICES', 'EMC_NO_FREESHIP', 'EMC_MULTIPARCEL',
         'EMC_TRACK_MODE', 'EMC_ASSU', 'EMC_INDI', 'EMC_LABEL_DELIVERY_DATE', 'EMC_LAST_CARRIER_UPDATE',
-        'EMC_MASS', 'EMC_PICKUP_F1', 'EMC_PICKUP_F2', 'EMC_PICKUP_J1', 'EMC_PICKUP_J2',
-        'EMC_PICKUP_T1', 'EMC_PICKUP_T2', 'EMC_PP_CHRP_CHRONORELAIS', 'EMC_PP_MONR_CPOURTOI',
-        'EMC_PP_MONR_CPOURTOIEUROPE', 'EMC_PP_SOGP_RELAISCOLIS', 'EMC_PP_IMXE_PACKSUIVIEUROPE',
-        'EMC_SRV_MODE', 'EMC_WRAPPING', 'EMC_PARTNERSHIP','EMC_FILTER_STATUS', 'EMC_FILTER_TYPE_ORDER',
-        'EMC_FILTER_CARRIERS','EMC_FILTER_START_DATE', 'EMC_DISABLE_CART', 'EMC_ENABLED_LOGS');
+        'EMC_MASS', 'EMC_PICKUP_SPLIT', 'EMC_PICKUP_J1', 'EMC_PICKUP_J2', 'EMC_PP_CHRP_CHRONORELAIS',
+        'EMC_PP_MONR_CPOURTOI', 'EMC_PP_MONR_DOMICILEEUROPE', 'EMC_PP_MONR_CPOURTOIEUROPE', 'EMC_PP_SOGP_RELAISCOLIS',
+        'EMC_PP_UPSE_STANDARDAPDEPOT', 'EMC_PP_UPSE_STANDARDDEPOT', 'EMC_SRV_MODE', 'EMC_WRAPPING', 'EMC_PARTNERSHIP',
+        'EMC_FILTER_STATUS', 'EMC_FILTER_TYPE_ORDER', 'EMC_FILTER_CARRIERS','EMC_FILTER_START_DATE',
+        'EMC_DISABLE_CART', 'EMC_ENABLED_LOGS');
 
 
     /**
@@ -194,18 +194,8 @@ class EnvoimoinscherHelper
      * @var array
      * @access protected
      */
-    protected $days = array(1 => 'lundi', 2 => 'mardi', 3 => 'mercredi', 4 => 'jeudi', 5 => 'vendredi',
-        6 => 'samedi', 7 => 'dimanche');
-
-    /**
-     * Proformas' labels translations.
-     * @access protected
-     * @var array
-     */
-    protected $proforma = array('sale' => 'vente', 'repair' => 'réparation', 'return' => 'retour',
-        'gift' => 'cadeau, don', 'sample' => 'echantillon, maquette', 'personnal' => 'usage personnel',
-        'document' => 'documents inter-entreprises', 'other' => 'autre'
-    );
+    protected $days = array(1 => 'monday', 2 => 'tuesday', 3 => 'wednesday', 4 => 'thursday', 5 => 'friday',
+        6 => 'saturday', 7 => 'sunday');
 
     /**
      * Disponibilites for pickup.
@@ -240,6 +230,44 @@ class EnvoimoinscherHelper
      * @var string
      */
     protected $pass_phrase = 'T+sGKCHeRddqiGb+tot/q2hzGRh5oP3GlB1NEMHEGTw=';
+
+    /**
+     * Default tracking urls.
+     * @access public
+     * @var array
+     */
+    public static $tracking_urls = array(
+        "CHRP_Chrono13" => "http://www.chronopost.fr/expedier/inputLTNumbersNoJahia.do?lang=fr_FR&listeNumeros=@",
+        "CHRP_Chrono18" => "http://www.chronopost.fr/expedier/inputLTNumbersNoJahia.do?lang=fr_FR&listeNumeros=@",
+        "CHRP_ChronoRelais" => "http://www.chronopost.fr/expedier/inputLTNumbersNoJahia.do?lang=fr_FR&listeNumeros=@",
+        "CHRP_ChronoRelaisEurope" =>
+            "http://www.chronopost.fr/expedier/inputLTNumbersNoJahia.do?lang=fr_FR&listeNumeros=@",
+        "CHRP_ChronoInternationalClassic" =>
+            "http://www.chronopost.fr/expedier/inputLTNumbersNoJahia.do?lang=fr_FR&listeNumeros=@",
+        "MONR_CpourToi" => "http://www.mondialrelay.fr/ww2/public/mr_suivi.aspx?cab=@",
+        "MONR_CpourToiEurope" => "http://www.mondialrelay.fr/ww2/public/mr_suivi.aspx?cab=@",
+        "MONR_DomicileEurope" => "http://www.mondialrelay.fr/ww2/public/mr_suivi.aspx?cab=@",
+        "SOGP_RelaisColis" => "http://relaiscolis.envoimoinscher.com/suivi-colis.html?reference=@",
+        "POFR_ColissimoAccess" => "http://www.colissimo.fr/portail_colissimo/suivreResultat.do?parcelnumber=@",
+        "POFR_ColissimoExpert" => "http://www.colissimo.fr/portail_colissimo/suivreResultat.do?parcelnumber=@",
+        "IMXE_PackSuiviEurope" => "http://www.happy-post.com/envoyer-colis/followUp/",
+        "IMXE_PackSuiviEurope" => "http://www.happy-post.com/envoyer-colis/followUp/",
+        "TNTE_ExpressNational" =>
+            "http://www.tnt.fr/public/suivi_colis/recherche/visubontransport.do?radiochoixrecherche=BT&bonTransport=@",
+        "TNTE_EconomyExpressInternational" =>
+            "http://www.tnt.fr/public/suivi_colis/recherche/visubontransport.do?radiochoixrecherche=BT&bonTransport=@",
+        "FEDX_InternationalEconomy" => "https://www.fedex.com/apps/fedextrack/?tracknumbers=@",
+        "FEDX_InternationalPriorityCC" => "https://www.fedex.com/apps/fedextrack/?tracknumbers=@",
+        "SODX_ExpressStandardInterColisMarch" => "http://www.sodexi.fr/fr/services/tracing/102.html",
+        "DHLE_DomesticExpress" => "http://www.dhl.fr/content/fr/fr/dhl_express/suivi_expedition.shtml?brand=DHL&AWB=@",
+        "DHLE_EconomySelect" => "http://www.dhl.fr/content/fr/fr/dhl_express/suivi_expedition.shtml?brand=DHL&AWB=@",
+        "DHLE_ExpressWorldwide" => "http://www.dhl.fr/content/fr/fr/dhl_express/suivi_expedition.shtml?brand=DHL&AWB=@",
+        "UPSE_ExpressSaver" => "https://wwwapps.ups.com/WebTracking/track?HTMLVersion=5.0&loc=fr_FR&Requester=UPSHome&WBPM_lid=homepage%252Fct1.html_pnl_trk&track.x=Suivi&trackNums=@",
+        "UPSE_Standard" => "https://wwwapps.ups.com/WebTracking/track?HTMLVersion=5.0&loc=fr_FR&Requester=UPSHome&WBPM_lid=homepage%252Fct1.html_pnl_trk&track.x=Suivi&trackNums=@",
+        "UPSE_StandardAP" => "https://wwwapps.ups.com/WebTracking/track?HTMLVersion=5.0&loc=fr_FR&Requester=UPSHome&WBPM_lid=homepage%252Fct1.html_pnl_trk&track.x=Suivi&trackNums=@",
+        "UPSE_StandardDepot" => "https://wwwapps.ups.com/WebTracking/track?HTMLVersion=5.0&loc=fr_FR&Requester=UPSHome&WBPM_lid=homepage%252Fct1.html_pnl_trk&track.x=Suivi&trackNums=@",
+        "UPSE_StandardAPDepot" => "https://wwwapps.ups.com/WebTracking/track?HTMLVersion=5.0&loc=fr_FR&Requester=UPSHome&WBPM_lid=homepage%252Fct1.html_pnl_trk&track.x=Suivi&trackNums=@"
+    );
 
     /**
      * Constructor to set additional fields that needs to be prefixed with parcel type.
@@ -325,30 +353,6 @@ class EnvoimoinscherHelper
     }
 
     /**
-     * Creates configuration array
-     * @param array Array with values to parse.
-     * @return array List with new values.
-     */
-    public function configArray($array)
-    { /*
-        $config = array();
-        foreach (self::$config_keys as $v) {
-            $config[$v] = '';
-        }
-
-        foreach ($array as $value) {
-            $config[$value['name']] = $value['value'];
-        }
-        if (!isset($config['EMC_NO_FREESHIP']) || trim($config['EMC_NO_FREESHIP']) == '') {
-            $config['EMC_NO_FREESHIP'] = array();
-        } else {
-            $config['EMC_NO_FREESHIP'] = Tools::jsonDecode($config['EMC_NO_FREESHIP'], true);
-        }
-        */
-        return $array;
-    }
-
-    /**
      * Makes a services array which service code as an array key.
      * @param array $services List of services.
      * @return array New list of services.
@@ -385,14 +389,18 @@ class EnvoimoinscherHelper
     public function setSchedule($schedule)
     {
         $day = array();
+        $emc = Module::getInstanceByName('envoimoinscher');
         foreach ($schedule as $sched) {
             $day_arr = $this->setDay($sched);
             if (count($day_arr['hours']) > 0) {
                 $from_to = array();
                 foreach ((array)$day_arr['hours'] as $hour) {
-                    $from_to[] = Tools::safeOutput('de ' . $hour['from'] . ' à ' . $hour['to'] . '');
+                    $from_to[] = Tools::safeOutput(
+                        $emc->l('from').' '.$hour['from'].' '. $emc->l('to').' '. $hour['to']
+                    );
                 }
-                $day[] = '<b>' . Tools::safeOutput($day_arr['day']) . '</b> <br />' . implode('<br />', $from_to);
+                $day[] = '<b>' . Tools::safeOutput($emc->l($day_arr['day']))
+                    . '</b> <br />' . implode('<br />', $from_to);
             }
         }
         return $day;
@@ -413,9 +421,33 @@ class EnvoimoinscherHelper
             $html .= '<select name="' . $code . '' . (isset($info['nom']) ? $info['nom'] : '') . '">';
             // get informations to options
             $source = explode('/', $info['source']);
+
             if ($source[0] == 'this') {
                 $params = isset($info['params']) ? (array)$info['params'] : array();
-                $options = $this->$source[1]($params, Tools::safeOutput($order_page));
+                // $options = $this->$source[1]($params, Tools::safeOutput($order_page));
+                /* Fix for PHP7 */
+                $options = array();
+                switch($source[1]) {
+                    case 'getCivilities':
+                        $options = $this->getCivilities($params, Tools::safeOutput($order_page));
+                        break;
+
+                    case 'getDispo':
+                        $options = $this->getDispo($params, Tools::safeOutput($order_page));
+                        break;
+
+                    case 'getReasons':
+                        $options = $this->getReasons($params, Tools::safeOutput($order_page));
+                        break;
+
+                    case 'getInsuranceChoices':
+                        $options = $this->getInsuranceChoices($params, Tools::safeOutput($order_page));
+                        break;
+
+                    default:
+                        break;
+                }
+
                 foreach ($options as $o => $option) {
                     $selected = '';
                     if ($o == Tools::safeOutput($default)) {
@@ -430,7 +462,7 @@ class EnvoimoinscherHelper
     }
 
     /**
-     * Get reasons for international shippment.
+     * Get reasons for international shipment.
      * @access public
      * @return array Array with reasons.
      */
@@ -439,7 +471,13 @@ class EnvoimoinscherHelper
         require_once(_PS_MODULE_DIR_ . '/envoimoinscher/Env/WebService.php');
         require_once(_PS_MODULE_DIR_ . '/envoimoinscher/Env/Quotation.php');
         $cot_cl = new EnvQuotation(array());
-        return $cot_cl->getReasons($this->proforma);
+        $reasons = $cot_cl->getReasons();
+        $reasons_translated = array();
+        $emc = Module::getInstanceByName('envoimoinscher');
+        foreach ($reasons as $key => $value) {
+            $reasons_translated[$key] = $emc->l($value);
+        }
+        return $reasons_translated;
     }
 
     public static function getConfigKeys()
@@ -498,6 +536,7 @@ class EnvoimoinscherHelper
      */
     public function putNewInsuranceChoice($key, $values)
     {
+        asort($values);
         $this->insurance_choices[$key] = $values;
     }
 
@@ -543,7 +582,7 @@ class EnvoimoinscherHelper
             default:
                 break;
         }
-        return round($weight, 2);
+        return round($weight, 6);
     }
 
     /**
@@ -629,7 +668,7 @@ class EnvoimoinscherHelper
      */
     public function getCartRules($cartId)
     {
-        $result = Db::getInstance()->ExecuteS('SELECT * FROM 
+        $result = Db::getInstance()->ExecuteS('SELECT * FROM
         '._DB_PREFIX_.'cart_cart_rule WHERE id_cart='.(int)$cartId);
         $cart_rules_in_cart = array();
         foreach ($result as $row) {
@@ -800,7 +839,7 @@ class EnvoimoinscherHelper
         }
     }
 
-     /**
+    /**
      * Simplifies product carriers array to get product carrier IDs
      *
      * @access public
@@ -819,6 +858,56 @@ class EnvoimoinscherHelper
                 }
             }
             return $productCarrierIds;
+        }
+    }
+
+    /**
+     * Gets translation for custom multilingual field, returns fr (or en) if translation is empty or does not exist
+     * @param string $serialized_field : the serialized multilingual field
+     * @param string $lang : the target language, 5 characters string (fr-fr, en-us, ...)
+     * @return mixed $translation
+     */
+    public static function getTranslation($serialized_field, $language)
+    {
+        $field = @unserialize($serialized_field);
+        // sometimes iso_code is in uppercase
+        $language = Tools::strtolower($language);
+
+        if ($field == false) {
+            return $serialized_field;
+        } else {
+            if (!isset($field[$language])) {
+                // return any target language
+                foreach ($field as $lang => $value) {
+                    if ((Tools::strtolower(Tools::substr($language, 0, 2)) ==
+                      Tools::strtolower(Tools::substr($lang, 0, 2))) && $value != '') {
+                        return $value;
+                    }
+                }
+                // return any french language
+                foreach ($field as $lang => $value) {
+                    if ('fr' == Tools::strtolower(Tools::substr($lang, 0, 2))) {
+                        return $value;
+                    }
+                }
+                // return any english language
+                foreach ($field as $lang => $value) {
+                    if ('en' == Tools::strtolower(Tools::substr($lang, 0, 2))) {
+                        return $value;
+                    }
+                }
+                // return any target language if empty
+                foreach ($field as $lang => $value) {
+                    if (Tools::strtolower(Tools::substr($language, 0, 2)) ==
+                      Tools::strtolower(Tools::substr($lang, 0, 2))) {
+                        return $value;
+                    }
+                }
+                // return any language
+                return current($field);
+            } else {
+                return $field[$language];
+            }
         }
     }
 }

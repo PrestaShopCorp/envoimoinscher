@@ -1,6 +1,6 @@
 <?php
 /**
-* 2011-2015 Boxtale
+* 2011-2016 Boxtale
 *
 * NOTICE OF LICENSE
 *
@@ -15,7 +15,7 @@
 * GNU General Public License for more details.
 *
 * @author    Boxtale EnvoiMoinsCher <informationapi@boxtale.com>
-* @copyright 2011-2015 Boxtale
+* @copyright 2011-2016 Boxtale
 * @license   http://www.gnu.org/licenses/
 */
 
@@ -23,11 +23,11 @@ class EnvUser extends EnvWebService
 {
 
     /**
-     * Array with user configuration informations. Actually we put only email informations.
+     * Array with user configuration informations.
      * @access public
      * @var array
      */
-    public $user_configuration = array('emails' => array());
+    public $user_configuration = array();
 
     /**
      * String with user partnership code.
@@ -49,6 +49,7 @@ class EnvUser extends EnvWebService
 
     /**
      * Gets information about e-mail configuration for logged user.
+     * This function is rendered useless by getUserDetails function
      * @access public
      * @return Void
      */
@@ -75,7 +76,7 @@ class EnvUser extends EnvWebService
     }
 
     /**
-     * Parses API response and puts the values into e-mail configuration array.
+     * Parses API response and puts the values into user configuration array.
      * @access private
      * @return Void
      */
@@ -89,6 +90,47 @@ class EnvUser extends EnvWebService
                 foreach ($mails->childNodes as $config_line) {
                     if (!($config_line instanceof DOMText)) {
                         $this->user_configuration['emails'][$config_line->nodeName] = $config_line->nodeValue;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Gets information about user from server.
+     * @access public
+     * @return Void
+     */
+    public function getUserDetails()
+    {
+        $this->setOptions(array('action' => 'api/v1/user_details'));
+        $this->setUserDetails();
+    }
+
+    /**
+     * Parses API response and puts the values into user configuration array.
+     * @access private
+     * @return Void
+     */
+    private function setUserDetails()
+    {
+        $source = parent::doRequest();
+        if ($source !== false) {
+            parent::parseResponse($source);
+            $user = $this->xpath->query('/user')->item(0);
+            if ($user) {
+                foreach ($user->childNodes as $config_line) {
+                    if (!($config_line instanceof DOMText)) {
+                        if ($config_line->childNodes->length > 1) {
+                            foreach ($config_line->childNodes as $sub_config_line) {
+                                if (!($sub_config_line instanceof DOMText)) {
+                                    $this->user_configuration[$config_line->nodeName][$sub_config_line->nodeName]
+                                        = $sub_config_line->nodeValue;
+                                }
+                            }
+                        } else {
+                            $this->user_configuration[$config_line->nodeName] = $config_line->nodeValue;
+                        }
                     }
                 }
             }
